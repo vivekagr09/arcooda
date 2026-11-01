@@ -1,0 +1,70 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - member:
+#}
+
+{% set global_page_title           = inputs.title|default('News Letter') %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/register'                          %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'},
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set member    = inputs.member                                                  %}
+{% set email    = inputs.email                                                  %}
+{% set country_list = countries() %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+	{% include '/blocks/block-header.twig' with {inputs: {
+        title: 'Newsletter',
+        breadcrumb: global_page_breadcrumbs,
+    }} %}
+    <div class="block"><div class="container"><div class="row justify-content-center"><div class="col-sm-10 col-md-8 col-lg-6 bg-white border p-sm-5">
+    <form  method="post" action="/account/newsletter-reg">
+        {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+        <div class="form-group">
+			<label for="account-register-username">Email Address*</label>
+			<input autocomplete="section-signup billing username" class="form-control{{ (issues.username) ? ' is-invalid' : '' }}" id="account-register-username" name="username" placeholder="name@mail.com" required="required" type="email" value="{{ email|e }}" readonly/>
+			<span class="invalid-feedback"><strong>{{ issues.username }}</strong></span>
+		</div>
+		<div class="form-group">
+			<label for="account-register-given-name">First Name*</label>
+			<input autocomplete="section-signup billing given-name" class="form-control{{ (issues['given-name']) ? ' is-invalid' : '' }}" id="account-register-given-name" name="given-name" placeholder="First Name" required="required" type="text" value="{{ member.name|e }}" />
+			<span class="invalid-feedback"><strong>{{ issues['given-name'] }}</strong></span>
+		</div>
+		<div class="form-group">
+			<label for="account-register-family-name">Last Name*</label>
+			<input autocomplete="section-signup billing family-name" class="form-control{{ (issues['family-name']) ? ' is-invalid' : '' }}" id="account-register-family-name" name="family-name" placeholder="Last Name" required="required" type="text" value="{{ member.surname|e }}" />
+			<span class="invalid-feedback"><strong>{{ issues['family-name'] }}</strong></span>
+		</div>
+		<div class="form-group">
+			<label for="account-register-country">Country*</label>
+			<select autocomplete="section-signup billing country" class="form-control form-control-select2{{ (issues.country) ? ' is-invalid' : '' }}" id="account-register-country" name="country" required="required">
+				<option value="">Select a country...</option>
+				{% for country in country_list %}<option value="{{ country.code }}"{{ (country.code == member.country) ? ' selected="selected"' : '' }}>{{ country.name|e }}</option>{% endfor %}
+			</select>
+			<span class="invalid-feedback"><strong>{{ issues.country }}</strong></span>
+		</div>
+		{% if issues.action %}<div class="alert alert-danger">{{ issues.action }}</div>{% endif %}
+		<div class="form-group text-center">
+			<input type="hidden" name="action" value="newsletter" />
+			<input type="submit" value="SUBSCRIBE" class="btn btn-primary" />
+		</div>
+	</form></div></div></div></div>
+
+	{% include '/blocks/block-space.twig' with {inputs: {layout: 'before-footer'}} %}
+{% endblock %}

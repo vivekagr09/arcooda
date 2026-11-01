@@ -1,0 +1,131 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+@media print
+{
+	.print_hide
+	{
+		display:none;
+	}
+}
+
+div.project_content .unfinished
+{
+	background-color:yellow;
+}
+
+div.project_content a
+{
+	color: black;
+}
+
+div.project_content
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div.project_content table
+{
+	text-align: left;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div.project_content tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-weight: normal;
+}
+
+div.project_content pre {margin: 0 0 0 0;}
+div.project_content pre.alt {background-color: #EEEEEE;}
+
+div.project_content td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.project_content th, div.project_content thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	font-size:75%;
+}
+
+div.project_content table.vbox td, div.project_content table.vbox th, div.project_content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div.project_content table.buttons {	text-align: center; }
+div.project_content table.wide {	width: 95%; }
+div.project_content tr.alt		{ background-color: #EEEEE0; }
+div.project_content tr.highlight { background-color: #90EEA0; }
+div.project_content td.highlight { background-color: #90EEA0; }
+div.project_content tr.mylock	{ background-color: #90A0EE; }
+div.project_content tr.locked	{ background-color: #EE90A0; }
+div.project_content td.collapse {	width: 1px; }
+div.project_content th.collapse {	width: 1px; }
+div.project_content td.left_title
+{
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+}
+div.project_content input.intext,
+div.project_content input.infile,
+div.project_content textarea,
+div.project_content select
+{
+	width: 98%;
+}
+
+div.project_content th a
+{
+	color: #000000;
+}
+
+div.project_content td a
+{
+	color: #000000;
+}
+
+div.project_content table.spacetable td
+{
+	border:2px solid white;
+}
+
+div.project_content div.flagHeader
+{
+	border-bottom: 1px solid green;
+	text-align: left;
+	width: 95%
+}
+div.project_content div.flagHeader span
+{
+	color: white;
+	background-color: green;
+	padding: 0px 20px;
+}
+div.project_content div.flagHeader span a
+{
+	color: white;
+}
+

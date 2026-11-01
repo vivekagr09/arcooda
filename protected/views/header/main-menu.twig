@@ -1,0 +1,92 @@
+{#
+// inputs:
+#}
+
+{% set menu = data('header-main-menu.json') %}
+{% set season_graphics    = inputs.season_graphic %}
+{% set preOrderProduct    = preOrderProduct() %}
+{% set salesProduct    = salesProduct() %}
+{% set isClearanceAllow    = isClearanceAllow() %}
+{% set secondProduct    = secondProduct() %}
+<style>
+    .main-menu .main-menu__item:hover .main-menu__link-pre-order {
+        background-color: #ffc107;
+    }
+    .main-menu .main-menu__item:hover .main-menu__link-special {
+        background-color: #28a745;
+    }
+    .main-menu .main-menu__item:hover .main-menu__link-second {
+        background-color: #dc3545;
+    }
+</style>
+<div class="main-menu">
+    <ul class="main-menu__list">
+        {% for item in menu %}{% if not item.ignore_in %}
+            {% set item_classes = classnames('main-menu__item', {
+                'main-menu__item--has-submenu': item.submenu,
+                'main-menu__item--submenu--menu': item.submenu.type == 'menu',
+                'main-menu__item--submenu--megamenu': item.submenu.type == 'megamenu'
+            }) %}
+
+            <li class="{{ item_classes }}" >
+                <a href="{{ item.url|e }}" class="main-menu__link" {% if item.external=="new" %} target="_blank"{% endif %}>
+                    {{ item.title|e }}
+                    {% if item.submenu %}
+                        {{ svg('arrow-down-sm-7x5.svg') }}
+                    {% endif %}
+                </a>
+                {% if item.submenu %}
+                    <div class="main-menu__submenu">
+                        {% if item.submenu.type == 'menu' %}
+                            {% include '/header/menu.twig' with {inputs: {
+                                menu: item.submenu.links,
+                            }} %}
+                        {% elseif item.submenu.type == 'megamenu' %}
+                            <div class="{{ classnames('main-menu__megamenu', 'main-menu__megamenu--size--'~item.submenu.size) }}">
+                                {% include '/header/megamenu.twig' with {inputs: {
+                                    megamenu: item.submenu,
+                                }} %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </li>
+        {% endif %}{% endfor %}
+        {% if salesProduct|length > 0 %}
+         <li class="main-menu__item" style="float: left; margin-left: auto; color: #212529; background-color: #f2f2f2">
+            <a href="/specials-product" class="main-menu__link main-menu__link-special">
+                Specials
+            </a>
+        </li>
+        {% endif %}
+        {% if isClearanceAllow %}
+            <li class="main-menu__item" style="float: left; margin-left: 10px; color: #fff; background-color: red">
+                <a href="/clearance" class="main-menu__link main-menu__link-special">
+                    Clearance
+                </a>
+            </li>
+         {% endif %}
+         {% if secondProduct|length > 0 %}
+         <li class="main-menu__item" style="float: left; margin-left: 3px; color: #212529; background-color: #f2f2f2;">
+            <a href="/second-product" class="main-menu__link main-menu__link-second">
+                Second
+            </a>
+        </li>
+        {% endif %}
+                {% if preOrderProduct|length > 0 %}
+         <li class="main-menu__item" style="float: left; margin-left: 3px; color: #212529; background-color: #f2f2f2;">
+            <a href="/pre-order-product" class="main-menu__link main-menu__link-pre-order">
+                Pre Order
+            </a>
+        </li>
+        {% endif %}
+        {% if season_graphics.menu_graphic %}
+        <li class="main-menu__item" style="width: 160px;">
+            <a  class="main-menu__link">
+                     <img class="w-100" src="/graphicsimage/{{season_graphics.menu_graphic}}" alt="logo"/>
+             </a>
+           
+        </li>
+        {% endif %}
+    </ul>
+</div>

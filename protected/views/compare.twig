@@ -1,0 +1,235 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - error:
+// - success:
+// - tab:
+// - updated:
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set products   = inputs.products %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    <div class="site__body">
+            {% include '/blocks/block-header.twig' with {inputs: {
+                breadcrumb: global_page_breadcrumbs,
+                cart_items: [],
+                title: global_page_title
+            }} %}
+            <div class="block">
+               <div class="container">
+                  <div class="compare card">
+                    {% if products | length > 0 %}
+                     <div class="table-responsive" style="transform: rotateX(180deg);">
+                        <table class="compare__table compare-table" style="transform: rotateX(180deg );">
+                           <tbody>
+                              <tr class="compare-table__row">
+                                 <th class="compare-table__column compare-table__column--header">Product</th>
+                                {% for product in products %}
+                                 <td class="compare-table__column compare-table__column--product">
+                                    <a href="{{ product.url|e }}" class="compare-table__product">
+                                       <div class="compare-table__product-image">
+                                          <img src="{{ image(product.images[0], {size: 150}) }}" width="150">
+                                       </div>
+                                       <div class="compare-table__product-name">
+                                          {{ product.name|e }}
+                                       </div>
+                                    </a>
+                                 </td>
+                                {% endfor %}
+                                <td class="compare-table__column compare-table__column--fake"></td>
+                              </tr>
+                                <tr class="compare-table__row">
+                                 <th class="compare-table__column compare-table__column--header">Product Id</th>
+                                {% for product in products %}
+                                 <td class="compare-table__column compare-table__column--product">
+                                    <a href="{{ product.url|e }}" class="compare-table__product">
+                                       <div class="compare-table__product-name">
+                                          {{ product.id|e }}
+                                       </div>
+                                    </a>
+                                 </td>
+                                {% endfor %}
+                                <td class="compare-table__column compare-table__column--fake"></td>
+                              </tr>
+                              <tr class="compare-table__row">
+                                <th class="compare-table__column compare-table__column--header">Availability</th>
+                                {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product">
+                                    {% if product.availability in ['In Stock', 'Stock'] %}
+                                    <div class="status-badge status-badge--style--success status-badge--has-text">
+                                       <div class="status-badge__body">
+                                          <div class="status-badge__text">{{ product.availability|e }}</div>
+                                       </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="status-badge status-badge--style--danger status-badge--has-text">
+                                       <div class="status-badge__body">
+                                          <div class="status-badge__text">{{ product.availability|e }}</div>
+                                       </div>
+                                    </div>
+                                    {% endif %}
+                                 </td>
+                                {% endfor %}
+                                <td class="compare-table__column compare-table__column--fake"></td>
+                              </tr>
+                              <tr class="compare-table__row">
+                                 <th class="compare-table__column compare-table__column--header">Price</th>
+                                {% for product in products %}
+                                 <td class="compare-table__column compare-table__column--product">
+                                    {{ product.price }}
+                                 </td>
+                                {% endfor %}
+                                <td class="compare-table__column compare-table__column--fake"></td>
+                              </tr>
+                              <tr class="compare-table__row">
+                                 <th class="compare-table__column compare-table__column--header">Add to cart</th>
+                                 {% for product in products %}
+                                 <td class="compare-table__column compare-table__column--product">
+                                    <form action="{{ product.url|e }}" method="post">
+                                      <input  name="product_qty" type="hidden"  value="1" />
+                                      <input type="hidden" name="product_name" value="{{ product.name|e }}" />
+                                      <input type="hidden" name="product_id" value="{{ product.id|e }}" />
+                                      <input type="hidden" name="product_price" value="{{ product.priceValue|e }}" />
+                                      <input type="hidden" name="product_img" value="{{ product.images[0]|e }}" />
+                                      <input type="hidden" name="product_url" value="{{ product.url|e }}" />
+                                      <button type="submit" class="btn btn-sm btn-primary">Add to cart</button>
+                                    </form>
+                                 </td>
+                                {% endfor %}
+
+                              </tr>
+                            {% set comparedetail   = products[0].comparePageDetail %}
+                              {% if   products[0].compare_product_monitor_val | length >0 %}
+                              <tr class="compare-table__row" style="background-color: grey;">
+                              <td class="compare-table__column compare-table__column--fake" colspan="{{(products | length)+1 }}" style="height: 30px; text-align: center;">MONITOR</td>
+                              </tr>
+                              
+                              {% for monitors in comparedetail.monitor %}
+                               {% for monitor in monitors %}
+                               <tr class="compare-table__row">
+                                
+                                   <th class="compare-table__column compare-table__column--header">{{monitor.name}}</th>
+                                   {% for monitorval in monitor.value %}
+                                   <td class="compare-table__column compare-table__column--product">{{ monitorval }}</td>
+                                   {% endfor %} 
+                                   <td class="compare-table__column compare-table__column--fake"></td>
+                                    
+                              </tr>
+                              {% endfor %}
+                              <tr class="compare-table__row">
+                                
+                                   <td class="compare-table__column compare-table__column--product"></td>
+                                   <td class="compare-table__column compare-table__column--product" colspan="{{products | length}}"></td> 
+                                   <td class="compare-table__column compare-table__column--fake"></td>
+                                    
+                              </tr>
+                              {% endfor %}
+                              {% endif %}
+                               <tr class="compare-table__row" style="background-color: grey;">
+                              <td class="compare-table__column compare-table__column--fake" colspan="{{(products | length)+1 }}" style="height: 30px; text-align: center;">Cabinet Information</td>
+                              </tr>
+                              {% for cabinet in comparedetail.cabinet %}
+                                   <tr class="compare-table__row">
+                                
+                                     <th class="compare-table__column compare-table__column--header">{{cabinet.name}}</th>
+                                     {% for cabval in cabinet.value %}
+                                     <td class="compare-table__column compare-table__column--product">{{ cabval }}</td>
+                                     {% endfor %} 
+                                     <td class="compare-table__column compare-table__column--fake"></td>
+                                      
+                                </tr>
+                              {% endfor %}
+                              <tr class="compare-table__row" style="background-color: grey;">
+                              <td class="compare-table__column compare-table__column--fake" colspan="{{(products | length)+1 }}" style="height: 30px; text-align: center;">Dimensions, Weight & Container Packing</td>
+                             </tr>
+                              {% for dimention in comparedetail.dimentions %}
+                                  <tr class="compare-table__row">
+                                      
+                                         <th class="compare-table__column compare-table__column--product" colspan="{{products | length +1}}">{{dimention.name}}</th>
+                                          
+                                  </tr>
+                                   {% for dimn in dimention.data %}
+                                     <tr class="compare-table__row">
+                                      
+                                         <th class="compare-table__column compare-table__column--header">{{dimn.name}}</th>
+                                         {% for dimnval in dimn.value %}
+                                         <td class="compare-table__column compare-table__column--product">{{ dimnval }}</td>
+                                         {% endfor %} 
+                                         <td class="compare-table__column compare-table__column--fake"></td>
+                                          
+                                    </tr>
+                                {% endfor %}
+                                <tr class="compare-table__row">
+                                  
+                                     <td class="compare-table__column compare-table__column--product"></td>
+                                     <td class="compare-table__column compare-table__column--product" colspan="{{products | length}}"></td> 
+                                     <td class="compare-table__column compare-table__column--fake"></td>
+                                      
+                                </tr>
+                                {% endfor %}
+                                <tr class="compare-table__row">
+                                    <th class="compare-table__column compare-table__column--header">Total Shipping Weight</th>
+                                 {% for product in products %}
+                                    <td class="compare-table__column compare-table__column--product">
+                                       <div class="compare-table__product-name">
+                                          {{ product.weight }}
+                                       </div>
+                                    </td>
+                                 {% endfor %}
+                                 <td class="compare-table__column compare-table__column--fake"></td>
+                                 </tr>
+                                {% for container in comparedetail.container %}
+                                   <tr class="compare-table__row">
+                                
+                                     <th class="compare-table__column compare-table__column--header">{{container.name}}</th>
+                                     {% for cabval in container.value %}
+                                     <td class="compare-table__column compare-table__column--product">{{ cabval }}</td>
+                                     {% endfor %} 
+                                     <td class="compare-table__column compare-table__column--fake"></td>
+                                      
+                                </tr>
+                              {% endfor %}
+                              
+                              <tr class="compare-table__row">
+                                 <th class="compare-table__column compare-table__column--header"></th>
+                                {% for product in products %}
+                                 <td class="compare-table__column compare-table__column--product">
+                                    <a href="/p/removecompare/{{product.encryptid}}">
+                                      <button type="button" class="btn btn-sm btn-secondary">Remove</button>
+                                    </a>
+                                 </td>
+                                {% endfor %}
+                                <td class="compare-table__column compare-table__column--fake"></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                    {% else %}
+                    <div style="text-align: center; padding: 10px; font-size: 16px;">
+                      <div>
+                        <img src="/svg/compare-16.svg" style="vertical-align:top;" width="16" height="16">
+                        <span style="padding: 5px;"> Add to compare,</span>
+
+                      <span>Please use the "Add to compare" in the product section to compare products .</span>
+                     </div>
+                    </div>
+                    {% endif %}
+                  </div>
+               </div>
+            </div>
+            <div class="block-space block-space--layout--before-footer"></div>
+         </div>
+{% endblock %}

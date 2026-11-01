@@ -1,0 +1,1 @@
+<p align="right"><a href="search.php">Search/View</a> | <a href="add_freight.php">Add New</a></p>

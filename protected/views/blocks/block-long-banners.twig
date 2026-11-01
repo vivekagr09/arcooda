@@ -1,0 +1,38 @@
+{#
+// inputs:
+// - banners: TwigBanner[]
+// - - url
+// - - image:      TwigImage
+// - - blur_image: TwigImage
+// - - title
+// - - details
+// - - button
+// - - alt
+#}
+
+{% set banner = inputs.banner %}
+
+<div class="block-banners block">
+    <div class="container">
+        <div class="block-banners__list">
+
+            <a href="{{ banner.url|e }}" class=" {% if banner.black_shading == 'n' %} hide-block-shadow {% endif %} {% if banner.image_movement == 'n' %} block-image-movement  {% endif %} block-banners__item block-banners__item--style--one w-100">{# TODO:one->two #}
+                {% if banner.image -%}
+                    <span class="block-banners__item-image">{{ banner.image.html }}</span>
+                {% endif %}
+                {% if banner.blur_image -%}
+                    <span class="block-banners__item-image block-banners__item-image--blur">{{ banner.blur_image.html }}</span>
+                {% endif %}
+                {% if banner.title -%}
+                    <span class="block-banners__item-title">{{ banner.title|e|nl2br }}</span>
+                {% endif %}
+                {% if banner.details -%}
+                    <span class="block-banners__item-details">{{ banner.details|e|nl2br }}</span>
+                {% endif %}
+                {% if banner.button -%}
+                    <span class="block-banners__item-button btn btn-primary btn-sm">{{ banner.button|e|nl2br }}</span>
+                {% endif %}
+            </a>
+        </div>
+    </div>
+</div>

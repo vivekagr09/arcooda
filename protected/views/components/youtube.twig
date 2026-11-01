@@ -1,0 +1,161 @@
+<style>
+.youtube {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.youtube .play-button {
+  width: 68px;
+  height: 48px;
+  background: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PScwIDAgNjggNDgnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTAgMGg2OHY0OGgtNjh6JyBmaWxsPSdibGFjaz8nLz48cGF0aCBkPSdNNDkgMjQgMjIgMzdWMTF6JyBmaWxsPSdyZWQnLz48L3N2Zz4=") no-repeat center;
+  background-size: contain;
+  background-size: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
+{% set youtube = inputs.youtube %}
+{% set title = inputs.title %}
+{% set displayrieiew = inputs.displayrieiew %}
+{% set userreviews = inputs.userreviews %}
+{% set links  = inputs.links|default([]) %}
+{% set groups = inputs.groups|default([]) %}
+<div class="container">
+  <div class="row" style="width: 100%;{{(displayrieiew and userreviews|length > 0 ) ?'display: flex;':''}}">
+    {% if displayrieiew and userreviews|length > 0 %}
+      <div class="col-md-6">
+          <div class="block block-posts-carousel block-posts-carousel--layout--list"  data-layout="single">
+            <div class="container">
+              {% include '/components/section-header.twig' with {inputs: {
+                title  : title,
+                arrows : true,
+                links  : links,
+                groups : groups,
+              }} %}
+              <div class="block-posts-carousel__carousel">
+                <div class="owl-carousel">
+                  {% for video in youtube %}
+                   <div class="col-md-12 videoHome">
+                      <div class="youtube" data-id="{{getvideoid(video.link)}}" style="max-height:500px;margin:auto;">
+                        <div class="play-button"></div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    {% else %}
+      <div>
+        <div class="section-header">
+          <div class="section-header__body">
+            <h2 class="section-header__title">{{ title|e }}</h2>
+            <div class="section-header__divider"></div>
+          </div>
+        </div>
+
+       <div class="col-md-12 videoHome">
+          <div class="youtube" data-id="{{getvideoid(youtube.link)}}" style="max-height:500px;margin:auto;">
+            <div class="play-button"></div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    
+    {% if displayrieiew and userreviews|length > 0 %}
+      <div class="col-md-6">
+      <div class="block block-posts-carousel block-posts-carousel--layout--list layout-review-mobile-view"  data-layout="single">
+        <div class="container">
+        {% include '/components/section-header.twig' with {inputs: {
+          title  : 'Testimonials',
+          arrows : true,
+          links  : links,
+          groups : groups,
+        }} %}
+        <div class="col-md-12">
+            <div class="block-posts-carousel__carousel">
+                <div class="owl-carousel">
+                    {% for review in userreviews %}
+                    <div  style="width: 100%;">
+
+                      <!-- HEADER -->
+                      <div class="review-header"
+                           style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:15px;">
+
+                          <!-- LEFT -->
+                          <div class="product-name" style="font-weight:bold; margin-right:25px;">
+                              <a href="{{review.product_url}}" target="_blank" style="color:#262626">
+                                  {{review.product_name}}
+                              </a>
+                          </div>
+
+                          <!-- RIGHT -->
+                          <div class="product-review-detail review-mobile-view" style="gap:15px; align-items:center;">
+                              {% if review.avatar_image %}
+                                  <img src="/avatar/svgavatars/ready-avatars/{{review.avatar_image}}" width="32" height="32">
+                              {% else %}
+                                  <div>{{ svg('person-32.svg') }}</div>
+                              {% endif %}
+                              <div><b>{{review.user_name}}</b></div>
+                              <div><i class="flagicon-{{review.user_country|lower}}"></i></div>
+                          </div>
+                      </div>
+
+                      <!-- CONTENT SECTION (Starts on new line now) -->
+                      <div style="max-width: 100%; display: flex; overflow-x: auto; overflow-y: hidden;">
+                          {% for attachment in review.attachments %}
+
+
+                              <a href="{{attachment.url}}?width=700&height=700" target="_blank" style="padding:20px;">
+                                  <img src="{{attachment.url}}" style="width:100px;height: 100px;" alt="{{productname}} review {{review.user_country | getCountryName }}" title="{{productname}} review {{review.user_country | getCountryName }}"></a>
+                          {% endfor %}      
+                      </div>
+                     <div style="margin-top:10px; max-height:150px; overflow-y:auto; overflow-x:hidden;">
+                        <p>{{ markdown(review.comment) }}</p>
+                    </div>
+                  </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+      </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".youtube").forEach(function (el) {
+    const videoId = el.dataset.id;
+    const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    el.style.backgroundImage = `url(${thumbnail})`;
+
+    el.addEventListener("click", function () {
+      const iframe = document.createElement("iframe");
+      iframe.setAttribute("src", `https://www.youtube.com/embed/${videoId}?autoplay=1`);
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute("allowfullscreen", "1");
+      iframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      el.innerHTML = ""; // remove play button
+      el.appendChild(iframe);
+    });
+  });
+});
+
+</script>

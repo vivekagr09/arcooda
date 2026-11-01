@@ -1,0 +1,25 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - icon:
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set icon = inputs.icon %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/components/icon-page.twig' with {inputs: {
+    	icon: icon
+	}} %}
+{% endblock %}

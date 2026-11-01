@@ -1,0 +1,156 @@
+{#
+// inputs:
+// - reviews:
+#}
+
+{% set global_page_title           = inputs.title|default('Comments')                     %}
+{% set global_page_description     = inputs.description|default('')  %}
+{% set global_page_keywords        = input.keywords|default('')  %}
+{% set global_page_canonical       = '/account/comments' %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical  %}
+
+{% set blogs    = inputs.blogs  %}
+{% extends '/layouts/account.twig' %}
+
+{% block account_body %}
+ <style type="text/css">
+  </style>
+    <link rel="stylesheet" href="/css/flagicons.css" type="text/css" />
+    <div class="card display-comment-data">
+    {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+        <div class="card-header" style="margin: 10px;
+    padding: 10px;"><h5 class="content_heading_color"><i class="far fa-comment-alt" style="font-size: 26px;margin-right: 10px;"></i>My Comments</h5></div>
+        <div class="card-divider"></div>
+        <div class="card-table">
+        {% if blogs | length > 0 %}
+            <div id="blog_section">
+                {% for key,blog in blogs %}
+                    <div class="well well-sm">
+                        <div class="media">
+                        <div class="media-left media-top" style="padding-right: 10px;">
+                            {% if blog.image %}
+                            <img src="/blogimage/{{blog.image}}?crop=true&width=200&height=200" class="media-object" width="96px" height="96px" />
+                            {% endif %}
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading"><a href="{{blog.url}}" target="_blank">{{blog.title}} </a></h5>
+                            {{blog.blog}}
+                        </div>
+                        </div>
+                        <div class="media-footer" style="text-align: right; border-top: 1px solid #e0e0e0;">
+                            <small>{{blog.createdat}}</small> <small style="color: #c0c0c0;">&nbsp;•&nbsp;</small>
+                            <a href="#" onclick="return openComment(this);"><small>Comments: {{blog.blogCommentsCount}}</small></a>
+                        </div>
+
+                        <div class="comment-area" style="display: none;">
+                            {{blog.HTMLBlogCommentArea(blog.getid,0)}}
+                            <div style="border-top: 1px solid #e0e0e0; margin-top: 10px; padding-top: 10px;">
+                                        {{ blog.HTMLBlogComments(blog.getid, 0) }}
+                            </div>
+                        </div>
+                        <div class="my-comment wishlist">
+                            <table class="wishlist__table">
+                                <tbody>
+                                    <tr class="wishlist__row wishlist__row--head">
+                                        <th class="wishlist__column wishlist__column--head wishlist__column--stock" style="text-align:center;">Date</th>
+                                        <th class="wishlist__column wishlist__column--head wishlist__column--product" width="75%" style="text-align:center;">My Comments</th>
+                                        <th class="wishlist__column wishlist__column--head wishlist__column--button" style="width: 15%;">&nbsp;</th>
+                                    </tr>
+                                </tbody>
+                                <tbody class="wishlist_body">
+                                {%if blog.MemberBlogComments|length > 0 %}
+                                    {% for comment in blog.MemberBlogComments %}
+                                    <tr>
+                                        <td class="wishlist__column wishlist__column--body wishlist__column--product">{{ comment.created|date('m/d/Y') }}</td>
+                                        <td class="wishlist__column wishlist__column--body wishlist__column--product" style="width:75%;">{{ comment.comment }}</td>
+                                        <td class="wishlist__column wishlist__column--body wishlist__column--product" style="display:flex;">
+                                            <a href="#" class="editReview" data-id="" data-toggle="modal" data-target="#comment-edit-modal-{{ comment.id }}" style="margin-left:10px;color:#c6c6c6;" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                            <a href="#" class="deleteReview" data-id="" data-toggle="modal" data-target="#comment-delete-{{ comment.id }}"style="margin-left:10px;color:#c6c6c6;" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if blogs|length > 5 %}
+                    <div style="text-align: center;" class="load-more-blogs">
+                        <button class="btn btn-primary" type="button" onclick="loadMoreBlogs(this,5)">Load More</button>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+        <div class="m-3"> No Comment Available</div>
+        {% endif %}
+        </div>
+    </div>
+
+{% for key,blog in blogs %}
+{% if blog.MemberBlogComments|length > 0 %}   
+    {% for comment in blog.MemberBlogComments %}
+        <div class="modal fade" id="comment-edit-modal-{{ comment.id }}" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="width: 100%;">
+                    Edit Comment
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="dashboardComment{{ comment.id }}">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="hidden" id="id" name="id" value="{{comment.id}}" />
+                                <div class="form-group">
+                                    <label for="comment" class="col-form-label"><b>Your Comment</b></label></br>
+                                    <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="Please leave your comments." required>{{ comment.comment }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <input type="hidden" value="do_edit" name="action" />
+                            <input type="submit" value="Update Your Comment" class="btn btn-lg- btn-primary"/>
+                        </div>
+                    </form>
+                </div>
+        </div></div></div>
+        {% set prefix = 'comment-delete-' ~ comment.id %}
+            <div class="modal fade" id="{{ prefix }}" tabindex="-1" role="dialog">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title">Delete Comment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                     </div>
+                     <div class="modal-body display-review-data">
+                        <form action="" method="post">
+                           <p>
+                              Deleting the following Comment: <br />
+                              <br />
+                               <div style="margin-top:10px;width: 100%;">
+                                    <p>{{markdown(comment.comment)}}</p>
+                               </div>
+                           </p>
+                           <hr />
+                           <div class="form-group">
+                              <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                              <input type="hidden" value="{{ comment.id }}" name="id" />
+                              <input type="hidden" value="delete" name="action" />
+                              <input type="submit" value="Delete" class="btn btn-lg btn-danger" />
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+    {% endfor %}
+{% endif %}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,145 @@
+{% set product  = inputs.product  %}
+{% if ((product.checkpreorder == 'Pre Order' and product.bonus == 'y') or (product.is_promotion_gift_available )) %}
+<style type="text/css">
+	.order-bonous-container{
+		width: 100%;
+		padding: 10px;
+		font-size: 20px;
+		padding-left: 40px;
+	}
+	.order-bonous-close-date{
+		text-align: center; 
+		font-size: 16px; 
+		font-style: italic; 
+		color: red; 
+		display: flex; 
+		align-items: center;
+		justify-content: right;
+	}
+	@media (max-width: 767px) {
+		.order-bonous-container {
+			padding-left: 0; /* Remove padding-left on mobile */
+		}
+
+		.order-bonous-close-date {
+			justify-content: center; /* Center content on mobile */
+		}
+	}
+	.typography .wishlist__row img {
+   		 max-width: none;
+   	}
+</style>
+ <div class="{{ root_classes }}" >
+    <div class="products-view__list products-list products-list--grid--4" data-layout="list" data-with-features="false">
+        <div class="product-tabs__content">
+            <div >
+	             <div class="typography"> 
+					<div class="wishlist">
+					   <table class="wishlist__table" style="border: 5px solid {{(product.checkpreorder == 'Pre Order' and product.bonus == 'y')?'#ffc107':'#28a745'}};">
+					   		<thead class="">
+					   			<tr class="wishlist__row wishlist__row--head">
+					   				<th colspan="5" class="order-bonous-container" style="background-color: {{(product.checkpreorder == 'Pre Order' and product.bonus == 'y')?'#ffc107':'#28a745'}};">
+					   					<div class="row">
+					   						<div class="col-md-6"> {{(product.checkpreorder == 'Pre Order' and product.bonus == 'y')?'PRE':''}} ORDER BONUS
+					   						</div>
+					   						<div class="col-md-6 order-bonous-close-date">
+					   							{% if product.pre_order_close_date or product.promotion_gift_close_date %}
+											 			<p style="margin: 0;background-color:{{(product.checkpreorder == 'Pre Order' and product.bonus == 'y')?'':'#ffc107'}};padding:4px;">This offer closes on {{(product.checkpreorder == 'Pre Order' and product.bonus == 'y')?product.pre_order_close_date|date('d/m/Y'):product.promotion_gift_close_date|date('d/m/Y')}}</p>
+											 		{% endif %}
+												</div>
+					   					</div></th>
+					   			</tr>
+					   		</thead>
+					      <tbody class="wishlist__body">
+					      	{% if (product.bonus == 'y' and product.free_gifts == 'y') or (product.is_promotion_gift_available)%}
+						        {% for prodata in product.getGiftProducts %}
+						         <tr class="wishlist__row wishlist__row--body">
+						            <td class="wishlist__column wishlist__column--body wishlist__column--image">
+						              <a href="{{ prodata.product.url|e }}">
+						                <img src="{{ image(prodata.product.images(prodata.color_id)[0], {size: 50}) }}" width="50">
+						              </a>
+						            </td>
+						            <td class="wishlist__column wishlist__column--body wishlist__column--product">
+						               <div class="wishlist__product-name">
+						                  <a href="{{ prodata.product.url|e }}">{{ prodata.name|e }}</a>
+						               </div>
+
+						            </td>
+									 <td class="wishlist__column wishlist__column--body wishlist__column--quantity" style="text-align: center;">
+					               <span style="font-weight: 900;">{{ prodata.qty }}x</span>
+					            </td>
+						            <td class="wishlist__column wishlist__column--body wishlist__column--price" style="text-align: left;">
+						               <span class="product__price--old" >${{ prodata.price }} USD </span>
+						            </td>
+						            <td class="wishlist__column wishlist__column--body wishlist__column--price">
+						            	<span style="color: #28a745; font-size: 14px; font-weight: 900;">
+						            		FREE
+						            	</span>
+						            </td>
+						         </tr>
+						       	{% endfor %}
+
+						    {% endif %}
+						    {% if product.bonus == 'y' and product.free_freight == 'y'%}
+						    	<tr class="wishlist__row wishlist__row--body">
+						            <td class="wishlist__column wishlist__column--body wishlist__column--image">
+						              <a href="{{ prodata.product.url|e }}">
+						                <img src="/svg/freight.png" style="vertical-align:top;width:45px" />
+						              </a>
+						            </td>
+						            <td class="wishlist__column wishlist__column--body wishlist__column--product" colspan="2">
+						               <div class="wishlist__product-name">
+						                  Free Delivery
+						               </div>
+						            </td>
+						            <td class="wishlist__column wishlist__column--body wishlist__column--price">
+						            	<span style="color: #28a745; font-size: 14px; font-weight: 900;">
+						            		FREE
+						            	</span>
+						            </td>
+						         </tr>
+						    {% endif %}
+						    {% if product.bonus_discount == 'y' %}
+							
+						    	<tr class="wishlist__row wishlist__row--body">
+						            <td class="wishlist__column wishlist__column--body wishlist__column--image">
+						             <img src="/svg/price-down.png" style="width:45px;">
+						            </td>
+						            <td class="wishlist__column wishlist__column--body wishlist__column--product">
+						               <div class="wishlist__product-name">
+						                   Pre Order Discount
+						               </div>
+						            </td>
+									 <td class="wishlist__column wishlist__column--body wishlist__column--quantity" style="text-align: center;">
+					               <span style="font-weight: 900;">{% if product.bonus_discount_qty is defined %}{{ product.bonus_discount_qty }}{% else %}1{% endif %}x</span>
+					            </td>
+						            <td class="wishlist__column wishlist__column--body wishlist__column--price"  style="text-align: left;">
+						            		 <span class="product__price--old" >${{ product.bonus_discount_amount }} USD </span>
+						            	</span>
+						            </td>
+									
+						            <td class="wishlist__column wishlist__column--body wishlist__column--price">
+						            	<span style="color: #28a745; font-size: 14px; font-weight: 900;">
+						            		SAVE
+						            	</span>
+						            </td>
+						         </tr>
+						    {% endif %}
+						    {% if product.bonus == 'y' and product.display_comment == 'y'%}
+						    	<tr class="wishlist__row wishlist__row--body">
+						            <td class="wishlist__column wishlist__column--body wishlist__column--product" colspan="5">
+						               <div class="wishlist__product-name" style="color: #28a745; font-size: 14px;">
+						                  <i>{{product.display_comment_description}}</i>
+						               </div>
+						            </td>
+						         </tr>
+						    {% endif %}
+					      </tbody>
+					   </table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}

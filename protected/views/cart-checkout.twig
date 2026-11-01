@@ -1,0 +1,1451 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - payment_methods:
+// - invoice:
+// - invoice_charges:
+// - invoice_courier_quotes:
+// - invoice_products:
+// - issues:
+// - addresses:
+#}
+
+{% set global_page_title = inputs.title|default('Checkout') %}
+{% set global_page_description = inputs.description|default('') %}
+{% set global_page_keywords = input.keywords|default('') %}
+{% set global_page_canonical = '/cart/checkout' %}
+{% set global_page_breadcrumbs = [
+{title : 'Home', url : '/'},
+{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_cart_page = global_page_canonical %}
+{% set member = inputs.member %}
+{% set cart = cart() %}
+{% set type =inputs.type %}
+{% set invoice_discounts  = inputs.invoice_discounts %}
+{% set payment_methods = inputs.payment_methods %}
+{% set invoice = inputs.invoice %}
+{% set invoice_charges = inputs.invoice_charges %}
+{% set invoice_courier_quotes = inputs.invoice_courier_quotes %}
+{% set invoice_products = inputs.invoice_products %}
+{% set invoice_gifts = inputs.invoice_gifts %}
+{% set issues = inputs.issues %}
+{% set coupon = inputs.coupon %}
+{% set country_list = countries() %}
+{% set totalPrice = 0 %}
+{% set user = user() %}
+{% set addresses = inputs.addresses                                               %}
+{% set member_couriers    = inputs.member_couriers                                                  %}
+{% set courier_list    = inputs.courier_list                                                  %}
+{% set shipingaddress = inputs.ship_addr                                               %}
+{% set product = inputs.product %}
+{% from '/macros/controls.twig' import input_check, input_radio %}
+
+{% extends '/layouts/default.twig' %}
+
+
+
+{% block site_body %}
+{% include '/blocks/block-header.twig' with {inputs: {
+title: 'Checkout',
+breadcrumb: global_page_breadcrumbs,
+}} %}
+
+<div class="checkout block">
+
+    <div class="container container-xl" style="max-width: 1300px;"><hr class="border-line" style="border: 1.5rem solid #1A79FF;">
+
+        <form action="" method="post"
+            onsubmit="document.getElementById('submit-btn').setAttribute('disabled', 'disabled')" id="payment-checkout-form">
+
+            <div class="card checkout-cardBox mb-lg-0">
+                <div class="row">
+                    <div class="col">
+                        <div class="card-body card-body--padding--2 top-card">
+                            <h3 class="card-title" style="display: flex; justify-content: space-between;">
+                                <span>Billing Details</span>
+                                <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" data-html="true" title=""
+                                    data-original-title="<div><b>We will make the invoice based on billing details. It will be our default contact</b></div>"
+                                    aria-describedby="tooltip865053"></i>
+                            </h3>
+                            <div class="checkout-cardCont">
+                               
+                                {{ invoice.bill_address_full|raw|nl2br }}
+                             </div>                                             
+                            <div class="checkout-cardCont billing-card" style="margin-top: 0.2rem"y>
+                                <div class="card-btnBox">
+                                    <a href="javascript:void(0)" data-toggle="modal"
+                                        data-target="#account-billing-add-modal" class="addAddress-btn">+&nbsp;CHANGE BILLING</a>
+                                </div>
+                                
+                            </div>
+
+                           
+                        </div>
+                        <div class="card-divider"></div>
+                    </div>
+                    {% if user.ship_addr %}
+                    <div class="col">
+                        <div class="card-body card-body--padding--2 top-card">
+                            <h3 class="card-title" style="display: flex; justify-content: space-between;"><span>Shipping Details</span><i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" data-html="true" title="" data-original-title="<div><b>We will send your order to this address. Please recheck the delivery address carefully as once goods are sent, its difficult or costly to make redirection changes.</b></div>" aria-describedby="tooltip865053"></i></h3>
+                                <div class="checkout-table-Wrapper">
+                                    <table class="table table-striped table-hover">
+                                        
+                                        {% set ship_num = 0 %}
+                                        {% for key,ship in user.ship_addr %}
+                                            <tr class="{{(ship.id != invoice.shipaddr_id)?'hide-address hide-address-class':''}}">
+                                                <td style="width: 35px;"><input type="radio" name="checkout[shipaddr_id]" value="{{ ship.id }}"{{ (ship.id == invoice.shipaddr_id) ? ' checked="checked"' : '' }} /></td>
+                                                
+                                                <td>
+                                                    <div class=""><b>{{ ((ship.company)?ship.company:ship.contact)|e }}</b></br>
+                                                    {{ ship.address|e }} <br>
+                                                    {{ ship.city|e }}, {{ ship.state|e }} {{ship.zip|e}}<br>
+                                                              
+                                                        {% for country in country_list %}
+                                                        {% if ship.country == country.code %}
+                                                        {{ country.name|e }}
+                                                        {%endif%}
+                                                        {% endfor %} 
+                                                    </div><br>
+                                                    <div class="">
+                                                     {% if ship.phone %}Ph: {{ ship.phone|e }}{% endif %}
+                                                     {% if ship.email %}<br />Email: {{ ship.email|e }}{% endif %}
+                                                     {% if ship.name %}<br>Attn: {{ ship.name|e }}{% endif %}
+                                                     </div>
+                                                </td>
+                                            </tr>
+                                            {% set ship_num = ship_num + 1 %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="checkout-cardCont">
+                                    <div class="card-btnBox" style="display: flex; justify-content: space-between; margin-top: -0.2rem">
+                                        {% if ship_num>1 %}
+                                        <a href="javascript:void(0)" class="show_less_more otherAddress-btn"style="">SHOW MORE</a>
+                                        {% endif %}
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#account-shipping-add-modal" class="addAddress-btn" style="">+&nbsp;ADD NEW</a>
+                                       
+                                    </div>
+                                </div>                    
+                        </div>
+                    </div>
+                        {% endif %}
+                    <div class="col">
+                        <div class="card-divider"></div>
+                        <div class="card-body card-body--padding--2 top-card" style="height: 90%;">
+                            <h3 class="card-title" style="display: flex; justify-content: space-between;"><span>Notify Party</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                    data-html="true" title=""
+                                    data-original-title="<div><b>If you have your own customs broker, or a department/company responsible to receive shipping information please add above. Only one company will be listed on any shipping documents.</b></div>"
+                                    aria-describedby="tooltip865053"></i></h3>
+                            {% if user.notify_parties %}
+                            <div class="checkout-table-Wrapper">
+                                <table class="table table-striped table-hover">
+                                    {% for key,notify_party in user.notify_parties %}
+                                    <tr
+                                        class="{{(notify_party.default != 'y')?'hide-address hide-address-notify-class':''}}">
+                                        <td style="width: 35px;"><input type="radio" name="checkout[notify][]"
+                                                value="{{ notify_party.id }}" {{(notify_party.default=='y'
+                                                )?'checked':''}} /></td>
+                                        <td><div class=""><b>{{ notify_party.company_name|e }}</b></br>
+                                            {{ notify_party.address|e }}<br>{{ notify_party.city|e }}, {{ notify_party.state|e }} {{notify_party.post_code|e}}<br>
+                                                              
+                                                        {% for country in country_list %}
+                                                        {% if notify_party.country == country.code %}
+                                                        {{ country.name|e }}
+                                                        {%endif%}
+                                                        {% endfor %} </div><br>
+                                            <div class="">
+                                            Ph: {{ notify_party.phone_no|e }}</br>
+                                            Email: {{ notify_party.email|e }}<br>
+                                           
+                                        </div>
+                                        </td>
+                                        <!-- 
+                                    <td> {% if notify_party.default == 'y' %}<div class="tag-badge tag-badge--theme">Default</div>{% endif %}</td> -->
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            {% endif %}
+                            <div class="checkout-cardCont">
+                                <div class="card-btnBox" style="margin-top: 1rem; {{(user.notify_parties | length == 0)?'margin-top: 60%;':''}}">
+                                    {% if user.notify_parties | length > 1 %}
+                                    <a href="javascript:void(0)" class="otherAddress-btn show_less_more_notify">OTHER
+                                        NOTIFY PARTY</a>
+                                    {% endif %}
+                                    <a href="javascript:void(0)" data-toggle="modal"
+                                        data-target="#account-notify-add-modal" class="addAddress-btn" style="float:right;">+&nbsp;ADD
+                                        NOTIFY
+                                        PARTY</a>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col">
+                        <div class="card-divider"></div>
+                        <div class="card-body card-body--padding--2">
+                            <h3 class="card-title" style="display: flex; justify-content: space-between;"><span>Contacts</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                    data-html="true" title=""
+                                    data-original-title="<div><b>Add your colleagues & family members to your account. We can send emails/tracking/updates to everyone listed in this section, but only you have access to you user account/login.</b></div>"
+                                    aria-describedby="tooltip865053"></i></h3>
+                            {% if user.contacts %}
+                            <table class="table table-striped table-hover">
+                                {% for contact in user.contacts %}
+                                 
+
+                                <tr>
+                                    <td><input type="checkbox" name="checkout[contact][]" value="{{ contact.id }}"
+                                            {{(contact.default=='y' )?'checked':''}} /></td>
+                                    <td class= "d-flex justify-content-between"><span><b>{{ contact.name|e }} {{ contact.last_name|e }}</b> <em>({{ contact.email|e }})</em></span> {{(contact.default=='y')?'<div class="tag-badge tag-badge--theme">Default</div>':''}}</td> 
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            {% endif %}
+                            <div class="checkout-cardCont">
+                                <div class="card-btnBox">
+                                    <a href="javascript:void(0)" data-toggle="modal"
+                                        data-target="#account-contact-add-modal" class="addAddress-btn">+&nbsp;ADD
+                                        CONTACT</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      {% if user.ship_addr %}
+                    <div class="col">
+                        <div class="card-body card-body--padding--2 accordion">
+                            <h3 class="card-title">Other Instructions</h3>
+                            <div class="checkout-cardCont">
+                                <div class="form-group">
+                                    <label for="checkout-ship-needs">My Shipping Instructions</label>
+                                    <textarea id="checkout-ship-needs" class="form-control" rows="4"
+                                        name="checkout[ship_needs]">{{ invoice.ship_needs|e }}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="checkout-proforma-purchaseorder">Purchase Order No. (If
+                                        applicable)</label>
+                                    <input type="text" name="checkout[proforma_purchaseorder]" class="form-control"
+                                        id="checkout-proforma-purchaseorder"
+                                        value="{{ invoice.proforma_purchaseorder|e }}" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-divider"></div>
+                    </div>
+                        {% endif %}
+                    <div class="col">
+                        <div class="card-body card-body--padding--2">
+                            <h3 class="card-title" style="display: flex; justify-content: space-between;"><span>Coupons/Gift Voucher</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                    data-html="true" title=""
+                                    data-original-title="<div><b>Please use your gift voucher/coupons. We often issue coupons during sales promotions  and social media.</b></div>"
+                                    aria-describedby="tooltip865053"></i></h3>
+                            <div class="checkout-cardCont">
+                                <div class=" mx-2 d-flex" style="margin-top:1.45rem">
+                                     {% if coupon.name %}
+                                        <span style="color: green;">Code Applied!<br>
+                                        {{ coupon.description }} <br> Code: {{ coupon.name }} <br><br><button style="width:8rem; background-color:#1A79FF; color: white" name="removecoupon" type="button" class="btn btn-sm btn-danger"  onclick="document.getElementById('removecoupon').submit();">Remove Coupon</button> </span>                                       
+                                    {% else %}
+                                       <div class="form-group mt-1" style="width: 73%">
+                                            <input type="text"  class="form-control"  name="couponcode"  placeholder="Coupon Code" />  
+                                       </div>
+                                       <div class="form-group mt-1">
+                                            <button name="couponaction"  type="button" class="btn btn-sm btn-primary mx-2 form-control" style="width:8rem; background-color:#1A79FF; color: white" value="applycoupon" onclick="document.getElementById('payment-checkout-form').submit();">Apply Coupon</button>                                      
+                                           {% if coupon.coupon_avl == false %}<br><span style='color:red'>{{coupon.description}}</span>{% endif %}
+                                        </div>
+                                     {% endif %}
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if invoice_courier_quotes |length > 0 %}
+                <div class="row">
+                    
+                    <div class="card-divider"></div>
+                    {% if user.ship_addr %}
+                    <div class="col">
+                        <div class="card-body card-body--padding--2 accordion">
+                            <h3 class="card-title" style="display: flex; justify-content: space-between;"><span>Freight & Insurance</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                    data-html="true" title=""
+                                    data-original-title="<div><b>Please check carefully the various freight options. If you are using your own freight courier account, please guide us what service you would like to use and whether we should insure your shipment.</b></div>"
+                                    aria-describedby="tooltip865053"></i></h3>
+                            <div class="row">
+                                <div class="col checkout-cardCont">
+                                    <div>
+                                        <h4>FREIGHT : </h4>
+                                    </div>
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Service</th>
+                                                <th>Price</th>
+                                                <th>Transmit Time</th>
+                                                <th>Tracking</th>
+                                                <th>Notes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr {{ invoice.shipping_method=='pickup'
+                                                ? ' style="background-color:#b2d6ab" ' : '' }}>
+                                                <td> <input type="radio" name="checkout[ship_number]" value="pickup" {{
+                                                        invoice.shipping_method=='pickup'
+                                                        ? ' checked="checked"' : '' }} />
+                                                    Pickup</td>
+                                                <td>N/A</td>
+                                                <td>N/A</td>
+                                                <td>N/A</td>
+                                                <td>N/A</td>
+                                                
+                                                
+                                            </tr>
+                                            {% for courier_quote in invoice_courier_quotes|sort((a, b) => a.sell_priceus <=> b.sell_priceus) %}
+                                                <tr {{ invoice.ship_number == courier_quote.ship_number ? 'style="background-color:#b2d6ab"' : '' }} >
+                                                    <td><input type="radio" name="checkout[ship_number]" value="{{ courier_quote.ship_number }}"{{ invoice.ship_number == courier_quote.ship_number ? ' checked="checked"' : '' }} /> {{ courier_quote.name|e }}
+
+                                                      {% if invoice.ship_discount > 0 %}
+                                                      <br/>
+                                                        <span class="product-warranty" style="color:red">
+                                                            Total Fright {{invoice.ship_weight}} kg = ${{ courier_quote.sell_price|e }}  freight costs , less {{invoice.ship_weight_free}} kg (free freight for {{invoice.ship_weight_free}} kg) = ${{ invoice.ship_online }} 
+                                                        </span>
+                                                        <br/>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td><span class="{{courier_quote.is_free ? 'product__price product__price--old':''}}"}}>${{courier_quote.sell_priceus}}</span></td>
+                                                    <td> {% if courier_quote.del_time %}  {{ courier_quote.del_time|e }}{% else %} N/A {% endif %}</td>
+                                                    <td>{{(courier_quote.track == 'y')?'Yes':'No'}}</td>
+                                                    <td>
+                                                    {% if courier_quote.freight_notes != '' %}
+                                                    <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ courier_quote.freight_notes|e }}"></i>
+                                                    {% else %} N/A {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            {% if member_couriers|length > 0 %}
+                                            {% for courier in member_couriers %}
+                                            <tr {{ invoice.shipping_method == 'customer_forwarder' and invoice.ship_account_num == courier.account_num and invoice.ship_id ==courier.courier_id ? 'style="background-color:#b2d6ab"' : '' }}> 
+                                                <td> <input type="radio" id="freight-need-own" name="checkout[ship_number]" class="" value="own_0" {{ invoice.shipping_method == 'customer_forwarder' and invoice.ship_account_num == courier.account_num and invoice.ship_id ==courier.courier_id ? ' checked="checked"' : '' }} data-account_num = "{{ courier.account_num }}" data-courier_name = "{{ courier.courier_name }}"
+                                                data-courier_id = "{{ courier.courier_id }}" />
+                                                    Use my Courier Account
+                                                </td>
+                                                <td colspan="3">{{ courier.courier_name }} ({{courier.account_num}})</td>
+                                                <td>
+                                                    <a href="#" class="addAddress-btn" data-toggle="modal" data-target="#account-Freight-add-modal">
+                                                    +&nbsp;ADD YOUR FREIGHT ACCOUNT 
+                                                    </a>
+                                                
+                                                </td>
+                                                
+                                            </tr>
+                                              
+                                             {% endfor %}
+                                              <input type="hidden" name="checkout[own_account_num]" value="{{invoice.ship_account_num}}">
+                                               <input type="hidden" name="checkout[own_courier_name]" value="{{member_courier.courier_name}}">
+                                               <input type="hidden" name="checkout[own_courier_id]" value="{{invoice.ship_id}}">
+                                            {% else %}
+                                            <tr> <td colspan="4"> </td>
+                                                    
+                                                    <td><a href="#" class="addAddress-btn" data-toggle="modal" data-target="#account-Freight-add-modal">
+                                                   +&nbsp;ADD YOUR FREIGHT ACCOUNT </a></td>
+                                            </tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col checkout-cardCont">
+                                    <div>
+                                        <h4>INSURANCE : </h4>
+                                    </div>
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Price</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr {{ invoice.terms_id != 4 ? 'style="background-color:#b2d6ab"' : ''}} >
+                                                <td> <input type="radio" id="freight-need-coe" name="checkout[ship_insurance]" class="" value="n" {{invoice.terms_id!=4?'checked':''}}/> NO - Does not include insurance for this shipment<br><span class="comment"><i>Loss of goods, damage in transit and non-delivery is not covered</i></span></td>
+                                                <td>$0.00 USD </td>
+                                                
+                                            </tr>
+                                            {% if invoice.ship_insurance=='o' %}
+                                            <tr {{ invoice.terms_id == 4 ? 'style="background-color:#b2d6ab"' : ''}} >
+                                                <td><input type="radio" id="freight-need-ins" name="checkout[ship_insurance]" class="" value="y" {{invoice.terms_id==4?'checked':''}} /> YES - Include insurance for this shipment <br><span class="comment"><i>Covers damage in transit, loss of goods or non-delivery up to {{invoice.products_offer}} USD </i></span></td>
+                                                <td>{{invoice.insurance_offer}} USD</td>
+                                             {%  elseif invoice.ship_insurance=='y'  %}
+                                                <td><i>Free insurance is available for this freight service<i></td>
+                                             {% else %} 
+                                             <td><span class="comment" style="color:red">No insurance available for this freight service. Please choose another freight option for insurance cover. </span></td>
+                                             {% endif %}  
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--  <div class="form-group">
+                        <input type="radio" id="freight-need-coe" name="checkout[freight_need]" class="" value="coe" />
+                        <label class="ml-1" for="freight-need-coe">Please quote me freight costs for this order <b>WITHOUT</b> shipping insurance.</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" id="freight-need-ins" name="checkout[freight_need]" class="" value="ins" />
+                        <label class="ml-1" for="freight-need-ins">Please quote me freight costs for this order <b>WITH</b> shipping insurance.</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" id="freight-need-own" name="checkout[freight_need]" class="" value="own" />
+                        <label class="ml-1" for="freight-need-own">I want to use my own freight forwarder/courier for this order.</label>
+                    </div> -->
+                        </div>
+                        <div class="card-divider"></div>
+                    </div>
+                        {% endif %}
+                    
+                </div>
+                {% endif %}
+                <div class="row">
+                  
+                        <div class="col">
+                        <div class="card-body card-body--padding--2 accordion" style="margin-bottom: 0px;">
+                            <h3 class="card-title">Payment Method</h3>
+                            <div class="checkout-cardCont">
+                                <ul class="payment-methods__list">
+                                    {% for method in payment_methods %}
+                                    <li
+                                        class="payment-methods__item payment-methods__item{{ invoice.paymenttype_id == method.payment_method_id ? '--active' : '' }}">
+                                        <label class="payment-methods__item-header">
+                                            {{ input_radio({
+                                            classes: 'payment-methods__item-radio',
+                                            name: 'checkout[paymenttype_id]',
+                                            value: method.payment_method_id,
+                                            checked: invoice.paymenttype_id == method.payment_method_id,
+                                            required : true
+                                            }) }}
+                                            <span class="payment-methods__item-title">{{ method.payment_method_name|e
+                                                }}</span>
+                                        </label>
+
+                                        <div class="payment-methods__item-container">
+                                            <div class="payment-methods__item-details text-muted" id="{{method.payment_method_id}}">{{
+                                                markdown(method.payment_method_description) }}</div>
+                                             {% if method.payment_method_id == 'EUR_BANK5' %}
+                                             <i class="payment-methods__item-details text-muted" style="color: red!important;display: inline-block;">This EURO account can only accept payments in EURO. Payments made in USD to this account will be rejected by the bank.Please send ${{invoice.invoice_offereu}} Euro.  </i>
+                                             {%  endif %}
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                                                  
+                                </ul>
+                            </div>
+                        </div>
+                   
+                        {#% endif %#}
+                        {% if user.ship_addr %}
+                       
+
+                        {#
+                        <div class="checkout-cardCont">
+                            <div class="form-group">
+                                <label for="checkout-customer-requests">My Order Requirements</label>
+                                <textarea id="checkout-customer-requests" class="form-control" rows="4"
+                                    name="checkout[customer_requests]">{{ invoice.customer_requests|e }}</textarea>
+                            </div>
+                        </div>
+                        #}
+                        <div class="card-body card-body--padding--2 accordion">
+                            <div class="checkout-cardCont">
+                                <div class="checkout__agree form-group">
+                                    <div class="form-check">
+                                        {{ input_check({
+                                        classes: 'form-check-input',
+                                        id: 'checkout-terms',
+                                        required: true
+                                        }) }}
+                                        <label class="form-check-label" for="checkout-terms">I have read and agree to
+                                            the
+                                            <a onclick="window.open('/contact/terms.php?ship_insurance={{invoice.ship_insurance}}&terms_id={{invoice.terms_id}}', 'quoteWin', 'width=576,height=600,resizable,scrollbars');"
+                                                style="cursor:pointer;color: #0064f0;">terms and conditions</a>
+                                        </label>
+                                    </div>
+                                </div>
+                                {% if invoice_products| length>0 %}
+                                <button type="submit" class="btn btn-primary btn-xl btn-block" id="submit-btn"
+                                    formaction="?action=submit_order" name="action" value="submit_order">Place
+                                    Order</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% else %}
+                        Please <a href="/account/shipping">add a shipping address</a> to your account to continue.
+                    
+                        {% endif %}
+                    </div>
+                        <div class="col">
+                            <div class="card-body card-body--padding--2" style="border: 2px solid #dee2e6;">
+                            <h3 class="card-title">Your Order</h3>
+                            <div class="checkout-table-Wrapper checkout-cardCont">
+                                <table class="checkout__totals">
+                                    <thead class="checkout__totals-header">
+                                        <tr>
+                                            <th colspan="3">Product</th>
+                                            <th colspan="2">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="checkout__totals-products">
+
+                                        {% for item in invoice_products %} 
+                                          
+                                        {% if item.generic_code !='C39'%}
+                                        <tr>
+
+                                            <td style="width: 10%;"> 
+                                            {% if item.product.images %}
+                                                {% set image =
+                                                item.product.images(item.colour_id,item.sub_product_id)[0] %}
+                                                <a href="{{ item.product.url|e }}"><img src="{{ image(image, {size: 160})|e }}"
+                                                        alt="{{ image.alt|e }}"
+                                                        style="max-width: 96px;max-height: 96px;float:left;margin: 0 38px 0px 0;min-height: 75px;" /></a>
+                                                {% endif %}
+
+                                            </td>
+                                            
+                                            <td style="text-align: left;width: 50%;">
+                                                <a href="{{ item.product.url|e }}">{{ item.product_name }}{% if
+                                                    item.colour_id>0 %}
+                                                    ({{item.product.Singlecolor_name(item.colour_id)}}) {% endif %}</a>
+                                                    <br/><span class="product-warranty">Product Id : {{(item.generic == 'y')? item.generic_code : item.product_id }} {% if item.colour_id>0 and item.generic != 'y' %} {{item.colour_code}} {% endif %}</span>
+                                                   {% if item.product.location %}
+                                                   <br/><span class="product-warranty">Location : {{item.product.location}}</span>
+                                                   {% endif %}
+                                                   {% if item.product.warranty %}
+                                                   <br/><span class="product-warranty">Warranty : {{item.product.warranty}}</span>
+                                                   {# {% endif %} #}
+                                                   {% endif %}
+                                           
+                                                {% if item.product.availability=='Pre Order' %}
+                                                <div class="row" style="margin-bottom: 37px;">
+                                                    <div class="col-md-12">
+                                                       <span class="badge badge-warning" style="height:17px;">{{ item.product.availability|e }}
+                                                       </span>
+                                                   </div>
+                                                   <div class="col-md-12 product-warranty">
+                                                        <div><i>* 
+                                                        {% if item.product.full_payment=='y' %}
+                                                            Full payment needed 
+                                                            {% if item.product.pre_order_close_date %}
+                                                            by {{item.product.pre_order_close_date | date('jS F, Y')}}
+                                                            {% endif %}
+                                                        {% else %}
+                                                        {{item.product.deposit_needed}} USD deposit needed, balance prior to shipping
+                                                        {% endif %}
+                                                        </i></div>
+                                                        <div><i>* Estimated delivery date is {{item.product.arival_date}}</i></div>
+                                                    </div>
+
+                                                </div>
+                                               
+                                               
+                                                 {% endif %}
+                                                                                           
+                                        
+                                            </td>
+                                            <td style="text-align: center;width: 10%;">×{{ item.product_qty }}</td>
+
+                                            <td>
+
+                                                {% if item.product_offer_total > 0 %}{{ item.product_offer_total| number_format(2, '.', ',') }} USD{%
+                                                else %}
+                                                   {{item.is_free == 'y' ? '$0.00' : 'Please Ask' }} 
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                         {# gifts listing #}
+                                    {% if invoice_gifts | length > 0 %}
+                                    {% for gift in invoice_gifts %}
+                                        {% if gift.product_id == item.product_id %}
+                                        <tr>
+                                            <td> 
+                                            {% if gift.image_url %}
+                                                <a href="{{ gift.url|e }}"><img src="{{ image(gift.image_url, {size: 160})|e }}"
+                                                        alt=""
+                                                        style="max-width: 96px;max-height: 96px;float:left;margin: 0 38px 0px 0;min-height: 75px;" /></a>
+                                            {% endif %}
+
+                                            </td>
+                                            
+                                            <td style="text-align: left;width: 60%;">
+                                                <a href="{{ gift.url|e }}">{{ gift.name }}</a>
+                                                <br />
+                                                <span class="product-warranty">Product Id: {{ gift.id }}</span><br/>
+                                                <span class="product-warranty">Warranty: {{ gift.warranty }}</span><br/>
+                                                <span class="product-warranty">Location: {{ gift.location }}</span><br/>
+                                            </td>
+                                            <td>×{{ gift.qty }}</td>
+
+                                            <td class="product__price product__price--old">{{ gift.price }} {{ invoice.invoice_currency|e }}</td>
+                                        </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                    {# end #}
+                                        {% endif %}
+                                        {% endfor %}
+
+                                    </tbody>
+                                    {% if invoice_discounts | length > 0 %}
+                                      <tbody>
+                                        {% for discount in invoice_discounts %}
+                                        {% if discount.price_deducted > 0 %}
+                                      <tr>
+                                          <th colspan="3">{{discount.name == 'Monitor Bracket Discount' ? 'Monitor Bracket Discount' : 'Coupon Applied'}}</th>
+                                          <td style="color: green ;">-{{ discount.price_deducted| round(2, 'floor') }} USD</td>
+                                      </tr>
+                                      {% endif %}
+                                      {% endfor %}
+                                      </tbody>
+                                      {% endif %}
+                                    {% if (invoice.shipping_method == 'customer_forwarder') and (member_couriers|length > 0) and (cart.items|length > 0) %}
+                                    <tbody class="checkout__totals-shipping">
+                                        <tr>
+                                            <td></td>
+                                            <td colspan="2">{{ invoice.ship_supplier_name|e }} (my account #{{ invoice.ship_account_num|e }})</td>
+                                            <td>{{ invoice.ship_online }} USD</td>
+                                        </tr>
+                                    </tbody>
+                                    {% elseif(invoice.shipping_method == 'other') %}
+                                    <tbody class="checkout__totals-shipping">
+                                        <tr>
+                                            <td>{{ invoice.ship_number|e }}</td>
+                                            <td>{{ invoice.ship_product_name|e }}</td>
+                                            <td style="text-align: center; width: 10%;">×1</td>
+                                            <td>{{ invoice.ship_online }} USD</td>
+                                        </tr>
+                                    </tbody>
+                                    {% else %}
+                                    {% endif %}
+                                    <tbody class="checkout__totals-charges">
+                                        
+                                        {% for item in invoice_charges %}
+                                        <tr>
+                                            <td>C{{ item.charge_id }}</td>
+                                            <td colspan="2" style="text-align: left;">{{ item.charge_name }}</td>
+                                            <td>{{ item.charge_offer | number_format(2, '.', ',') }} USD</td>
+                                        </tr>{% endfor %}
+                                    </tbody>
+
+                                     {% if coupon.value %}
+                                    
+                                     
+                                      <tbody>
+                                        <tr>
+                                          <th colspan="2">Coupon Applied </th>
+                                          <td colspan="2">- {{ coupon.value }} USD</td>
+                                        </tr>
+                                      </tbody>
+                                      {% endif %}
+                                    <tbody class="checkout__totals-subtotals"></tbody>
+                                    <tfoot class="checkout__totals-footer">
+                                        <tr>
+                                            <th colspan="">Total</th>
+                                            <input type="hidden" name="pay-amount" value="{{ invoice.invoice_offer }}">
+                                            <td colspan="3">{{ invoice.invoice_offer }} USD</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+{% set prefix = 'account-profile-edit' %}
+<div class="modal fade" id="account-billing-add-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Billing Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          
+                            <label for="{{ prefix }}-account_type" class="">Account Type <span class="color-red">*</span><i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="This will help us better understand how to handle your order and the level of information we need to provide to you for complicated purchases (Bill of Ladings, Certificates of Conformity)."></i></label>
+                            <select name="account-type" required="required" class="form-control custom-select" id="{{ prefix }}-account_type">
+                                <option value=""></option>
+                                <option value="company"{{ member.account_type == 'company' ? ' selected="selected"' : '' }}>Commercial Customer</option>
+                                <option value="private"{{ member.account_type == 'private' ? ' selected="selected"' : '' }}>Residential Customer</option>
+                            </select>
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-given-name" class="">First Name<span class="color-red">*</span></label>
+                            <input type="text" name="given-name" required="required" class="form-control {{ (issues['given-name']) ? 'is-invalid' : '' }}" id="{{ prefix }}-given-name" autocomplete="section-{{ prefix }} billing given-name" value="{{ member.first_name|e }}" />
+                            {% if (issues['given-name']) %}<span class="invalid-feedback"><strong>{{ issues['given-name'] }}</strong></span>{% endif %}
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-family-name" class="">Last Name<span class="color-red">*</span></label>
+                            <input type="text" name="family-name" required="required" class="form-control {{ (issues['family-name']) ? 'is-invalid' : '' }}" id="{{ prefix }}-family-name" autocomplete="section-{{ prefix }} billing family-name" value="{{ member.last_name|e }}" />
+                            {% if (issues['family-name']) %}<span class="invalid-feedback"><strong>{{ issues['family-name'] }}</strong></span>{% endif %}
+                        </div>
+                         <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                                <label for="{{ prefix }}-organization_title" class="">Title(Owner, Purchase Officer, Technician) <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Often we receive orders from Companies who have many different departments and staff. Please help to share your details for easier handling when we contact your team (owner, accounts, sales, freight dept, etc.)" data-original-title="If no Zip please use N/A."></i></label>
+                                <input type="text" id="organization_title" class="form-control" name="organization_title" autocomplete="section-register billing organization-title" value="{{member.organization_title}}"> <small class="form-text text-muted "></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-address-level1" class="">Email<span class="color-red">*</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="For security reasons, your account email address can only be changed by the administration team. Please contact our office with your new details for account update."></i></label>
+                            <input type="email" readonly name="username" required="required" class="form-control {{ (issues['username']) ? 'is-invalid' : '' }}" id="{{ prefix }}-username" value="{{ member.email_address|e }}" autocomplete="section-{{ prefix }} billing username" />
+                            {% if (issues['username']) %}<span class="invalid-feedback"><strong>{{ issues['username'] }}</strong></span>{% endif %}
+                        </div>
+                        <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                            <label for="{{ prefix }}-organization" class="">Company <span class="color-red company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>*</span>'</label>
+                            <input type="text" name="organization" class="form-control {{ (issues['organization']) ? 'is-invalid' : '' }}" id="{{ prefix }}-organization" value="{{ member.company_name|e }}" autocomplete="section-{{ prefix }} billing organization" {{ member.account_type == 'company' ? 'required="required"' : '' }} />
+                            {% if (issues['organization']) %}<span class="invalid-feedback"><strong>{{ issues['organization'] }}</strong></span>{% endif %}
+                        </div>
+                        <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                             <label for="abn_number">ABN Number</label>
+                                <input type="text" id="abn_number" class="form-control" name="abn_number" value="{{member.abn_number}}">  
+                                <div class="invalid-feedback "></div>
+                        </div>
+                        <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }} >
+                            <label for="{{ prefix }}-company_number" class="">Company Number</label>
+                            <input type="text" name="company_number" class="form-control {{ (issues['company_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-company_number" value="{{ member.company_number|e }}" />
+                            {% if (issues['company_number']) %}<span class="invalid-feedback"><strong>{{ issues['company_number'] }}</strong></span>{% endif %}
+                        </div>
+                         <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                                <label for="{{ prefix }}-vat_number" class="">VAT Number</label>
+                                <input type="text" name="vat_number" class="form-control {{ (issues['vat_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-vat_number" value="{{ member.vat_number|e }}" />
+                                {% if (issues['vat_number']) %}<span class="invalid-feedback"><strong>{{ issues['vat_number'] }}</strong></span>{% endif %}
+                        </div>
+                        <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                                <label for="{{ prefix }}-eori_number" class="">EORI Number</label>
+                                <input type="text" name="eori_number" class="form-control {{ (issues['eori_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-eori_number" value="{{ member.eori_number|e }}" />
+                                {% if (issues['eori_number']) %}<span class="invalid-feedback"><strong>{{ issues['eori_number'] }}</strong></span>{% endif %}
+                        </div>
+                        <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                            <label for="{{ prefix }}-url" class="">Website</label>
+                            <input type="text" name="url" class="form-control {{ (issues['url']) ? 'is-invalid' : '' }}" id="{{ prefix }}-url" value="{{ member.website|e }}" autocomplete="section-{{ prefix }} billing url" />
+                            {% if (issues['url']) %}<span class="invalid-feedback"><strong>{{ issues['url'] }}</strong></span>{% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                         <div class="form-group">
+                             <label for="addresstype">Address Type<span class="text-danger">*</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Different couriers have certain requirements for delivery to residential addresses or commercial addresses. For example, some couriers deliver over the weekend, whilst others will only ship to commercial buyers."></i></label>
+                             
+                                <select id="addresstype" class="form-control" name="addresstype">
+                                   <option value=""></option>
+                                   <option value="commercial" {{(member.address_type=='commercial')?'selected':''}}>Commercial Property</option>
+                                   <option value="residential" {{(member.address_type=='residential')?'selected':''}}>Residential Property</option>
+                                </select>
+                                {% if (issues['addresstype']) %}<span class="invalid-feedback"><strong>{{ issues['addresstype'] }}</strong></span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-street-address" class="">Street Address<span class="color-red">*</span></label>
+                            <textarea name="street-address" required="required" class="form-control {{ (issues['street-address']) ? 'is-invalid' : '' }}" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} billing street-address" >{{ member.address|e }}</textarea>
+                            {% if (issues['street-address']) %}<span class="invalid-feedback"><strong>{{ issues['street-address'] }}</strong></span>{% endif %}
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-address-level2" class="">City/Suburb<span class="color-red">*</span></label>
+                            <input type="text" name="address-level2" required="required" class="form-control {{ (issues['address-level2']) ? 'is-invalid' : '' }}" id="{{ prefix }}-address-level2" value="{{ member.city|e }}" autocomplete="section-{{ prefix }} billing address-level2" />
+                            {% if (issues['address-level2']) %}<span class="invalid-feedback"><strong>{{ issues['address-level2'] }}</strong></span>{% endif %}
+                        </div>
+                          <div class="form-group">
+                            <label for="{{ prefix }}-address-level1" class="">State<span class="color-red">*</span></label>
+                            <input type="text" name="address-level1" required="required" class="form-control {{ (issues['address-level1']) ? 'is-invalid' : '' }}" id="{{ prefix }}-address-level1" value="{{ member.state|e }}" autocomplete="section-{{ prefix }} billing address-level1" />
+                            {% if (issues['address-level1']) %}<span class="invalid-feedback"><strong>{{ issues['address-level1'] }}</strong></span>{% endif %}
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-postal-code" class="">Zip / Postal Code <span class="color-red">*</span><i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="If no Zip please use N/A."></i></label>
+                            <input type="text" name="postal-code" class="form-control {{ (issues['postal-code']) ? 'is-invalid' : '' }}" id="{{ prefix }}-postal-code" value="{{ member.post_code|e }}" autocomplete="section-{{ prefix }} billing postal-code" />
+                            {% if (issues['postal-code']) %}<span class="invalid-feedback"><strong>{{ issues['postal-code'] }}</strong></span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-country" class="">Country<span class="color-red">*</span></label>
+                            <select name="country" class="form-control custom-select" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} billing country">
+                                <option disabled="disabled" value="">Please choose country...</option>
+                                {% for country in country_list %}<option value="{{ country.code }}"{{ (country.code == member.country) ? ' selected="selected"' : '' }}>{{ country.name|e }}</option>{% endfor %}
+                            </select>
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-home-tel" class="">Main Phone Number<span class="color-red">*</span></label>
+                            <input type="tel" name="home-tel" required="required" class="form-control {{ (issues['home-tel']) ? 'is-invalid' : '' }}" id="{{ prefix }}-home-tel" value="{{ member.phone_no|e }}" autocomplete="section-{{ prefix }} billing home tel" />
+                            {% if (issues['home-tel']) %}<span class="invalid-feedback"><strong>{{ issues['home-tel'] }}</strong></span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-home-tel2" class="">2nd Contact Number</label>
+                            <input type="tel" name="home-tel2" class="form-control" id="{{ prefix }}-home-tel2" value="{{ member.phone_no2|e }}" autocomplete="section-{{ prefix }} billing home tel 2" />
+                            {% if (issues['home-tel2']) %}<span class="invalid-feedback"><strong>{{ issues['home-tel2'] }}</strong></span>{% endif %}
+                        </div>
+
+                          <div class="form-group">
+                            <label for="{{ prefix }}-mobile-tel" class="">Mobile Number</label>
+                            <input type="tel" name="mobile-tel" class="form-control {{ (issues['mobile-tel']) ? 'is-invalid' : '' }}" id="{{ prefix }}-mobile-tel" value="{{ member.mobile_no|e }}" autocomplete="section-{{ prefix }} billing mobile tel" />
+                            {% if (issues['mobile-tel']) %}<span class="invalid-feedback"><strong>{{ issues['mobile-tel'] }}</strong></span>{% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-fax-tel" class="">Fax Number</label>
+                            <input type="tel" name="fax-tel" class="form-control {{ (issues['fax-tel']) ? 'is-invalid' : '' }}" id="{{ prefix }}-fax-tel" value="{{ member.fax_no|e }}" autocomplete="section-{{ prefix }} billing fax tel" />
+                            {% if (issues['fax-tel']) %}<span class="invalid-feedback"><strong>{{ issues['fax-tel'] }}</strong></span>{% endif %}
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <input type="hidden" value="update_billing" name="action" />
+                    <input type="submit" value="Save" class="btn btn-lg btn-primary" />
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% set prefix = 'account-notify-add' %}
+
+ <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Notify Party </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+             <form action="" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-organization">Company<span class="color-red">*</span></label>
+                            <input type="text" name="company_name" class="form-control" id="{{ prefix }}-company_name"  value="{{ address.company_name|e }}" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-address">Address<span class="color-red">*</span></label>
+                            <textarea name="address" required="required" class="form-control" id="{{ prefix }}-address"  rows="5">{{ address.address|e }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-city">City<span class="color-red">*</span></label>
+                            <input type="text" name="city" required="required" class="form-control" id="{{ prefix }}-city"  value="{{ address.city|e }}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-state">State / Province / Region<span class="color-red"><span class="color-red">*</span></span></label>
+                            <input type="text" name="state" required="required" class="form-control" id="{{ prefix }}-address-level1" value="{{ address.state|e }}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-country">Country<span class="color-red">*</span></label>
+                            <select class="form-control custom-select" name="country" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} shipping country" required="required">
+                                <option  selected="selected" value="">Please choose country...</option>
+                                {% for country in country_list %}<option value="{{ country.code }}"{{ (address.country == country.code) ? ' selected="selected"' : '' }}>{{ country.name|e }}</option>{% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                        <label for="{{ prefix }}-contact">Attention To*</label>
+                        <input type="text" name="contact" required="contact" class="form-control" id="{{ prefix }}-contact" value="{{ address.contact|e }}"/>
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-phone_no">Phone Number<span class="color-red">*</span></label>
+                            <input type="tel" name="phone_no" class="form-control" id="{{ prefix }}-phone_no"  value="{{ address.phone_no|e }}" required/>
+                        </div>
+                        <div class="form-group">
+                        <label for="{{ prefix }}-phone_no2">2nd Contact Number</label>
+                        <input type="tel" name="phone_no2" class="form-control" id="{{ prefix }}-phone_no2" value="{{ address.phone_no2|e }}"/>
+                        </div>
+                        <div class="form-group">
+                        <label for="{{ prefix }}-fax_no">Fax Number</label>
+                        <input type="tel" name="fax_no" class="form-control" id="{{ prefix }}-fax_no" value="{{ address.fax_no|e }}"/>
+                        </div>
+                        <div class="form-group">
+                        <label for="{{ prefix }}-mobile_no">Mobile Number</label>
+                        <input type="tel" name="mobile_no" class="form-control" id="{{ prefix }}-mobile_no" value="{{ address.mobile_no|e }}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-post_code">Post Code</label>
+                            <input type="text" name="post_code" class="form-control" id="{{ prefix }}-post_code" value="{{ address.post_code|e }}"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-vat_number">VAT/Company #</label>
+                            <input type="text" name="vat_number" class="form-control" id="{{ prefix }}-vat_number" value="{{ address.vat_number|e }}" />
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-email">Email<span class="color-red">*</span><span class="color-red">*</span></label>
+                            <input type="text" name="email" class="form-control" id="{{ prefix }}-email" value="{{ address.email|e }}" required/>
+                        </div>
+                        <div class="form-group">
+                        <label for="{{ prefix }}-home-email">Set as Default</label>
+                        <select  name="default" class="form-control" id="{{ prefix }}-home-email">
+                        <option value="n" {{ (address.default =='n') ? ' selected="selected"' : '' }}>No</option>
+                        <option value="y" {{ (address.default =='y') ? ' selected="selected"' : '' }}>Yes</option>
+                        </select>
+                    </div>
+                    </div>
+                    </div>
+                <hr />
+                <div class="form-group">
+                    <input type="hidden" value="{{ address.id }}" name="id" />
+                    <input type="hidden" value="add-notify-party" name="action" />
+                    <input type="submit" class="btn btn-lg- btn-primary" value="Save" />
+                </div>
+            </form></div>
+        </div></div></div>
+{% set prefix = 'account-contact-add' %}
+<div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Contact Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ prefix }}-name">Contact Name<span class="color-red">*</span></label>
+                                <input type="text" name="name" class="form-control" id="{{ prefix }}-name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ prefix }}-street-title">Title<span class="color-red">*</span></label>
+                                <input type="text" name="title" required="required" class="form-control"
+                                    id="{{ prefix }}-street-address" rows="5" />
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ prefix }}-email">Email Address<span class="color-red">*</span></label>
+                                <input type="text" name="email" required="required" class="form-control"
+                                    id="{{ prefix }}-email" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ prefix }}-address-level1">Phone<span class="color-red">*</span></label>
+                                <input type="text" name="phone" required="required" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ prefix }}-home-email">Emails sent to this address</label>
+                                <select name="send_email_cc" class="form-control" id="{{ prefix }}-home-email">
+                                    <option value="n">No</option>
+                                    <option value="y">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ prefix }}-home-email">Set as Default</label>
+                                <select name="main" class="form-control" id="{{ prefix }}-home-email1">
+                                    <option value="n">No</option>
+                                    <option value="y">Yes</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <input type="hidden" value="add-contact" name="action" />
+                        <input type="submit" value="Add" class="btn btn-lg- btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% set prefix = 'account-shipping-add' %}
+<div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Add Shipping Address</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         </div>
+         <div class="modal-body">
+            <form action="" method="post">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="{{ prefix }}-organization">Company<span class="color-red address_type0">*</span></label>
+                      <input type="text" name="organization" class="form-control" id="organization0" autocomplete="section-{{ prefix }} shipping organization" required }} />
+                   </div>
+                   <div class="form-group company-data address_type0">
+                     <label for="{{ prefix }}-company_number" class="">Company Number</label>
+                     <input type="text" name="company_number" class="form-control {{ (issues['company_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-company_number"  />
+                     {% if (issues['company_number']) %}<span class="invalid-feedback"><strong>{{ issues['company_number'] }}</strong></span>{% endif %}
+                  </div>
+                  <div class="form-group company-data address_type0">
+                     <label for="{{ prefix }}-eori_number" class="">EORI Number</label>
+                     <input type="text" name="eori_number" class="form-control {{ (issues['eori_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-eori_number"  />
+                     {% if (issues['eori_number']) %}<span class="invalid-feedback"><strong>{{ issues['eori_number'] }}</strong></span>{% endif %}
+                  </div>
+                  <div class="form-group company-data address_type0" >
+                       <label for="{{ prefix }}-vat_number">VAT Number #</label>
+                       <input type="text" name="vat_number" class="form-control" id="{{ prefix }}-vat_number" />
+                  </div>
+                  <div class="form-group company-data address_type0">
+                     <label for="abn_number">ABN Number</label>
+                     <input type="text" id="abn_number1" class="form-control" name="abn_number" >  
+                     <div class="invalid-feedback "></div>
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-name">Contact Person-First Name</label>
+                     <input type="text" name="name-first" class="form-control" id="{{ prefix }}-name" autocomplete="section-{{ prefix }} shipping name" />
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-name">Contact Person-Last Name</label>
+                     <input type="text" name="name-last" class="form-control" id="{{ prefix }}-last-name" autocomplete="section-{{ prefix }} shipping name" />
+                  </div>
+                   <div class="form-group">
+                       <label for="{{ prefix }}-home-email">Contact Email<span class="color-red">*</span></label>
+                       <input type="email" name="home-email" class="form-control" id="{{ prefix }}-home-email" autocomplete="section-{{ prefix }} shipping home email" required />
+                    </div>
+                    <div class="form-group">
+                       <label for="{{ prefix }}-home-email">Set as Default</label>
+                       <select  name="default" class="form-control" id="{{ prefix }}-home-email1">
+                       <option value="n">No</option>
+                       <option value="y">Yes</option>
+                       </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                        <label for="addresstype">Address Type<span class="text-danger">*</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Different couriers have certain requirements for delivery to residential addresses or commercial addresses. For example, some couriers deliver over the weekend, whilst others will only ship to commercial buyers."></i></label>
+                        <select  class="form-control" name="addresstype" required="required" onchange="updateshipingAddressType(0,this)">
+                           <option value="commercial" >Commercial Property</option>
+                           <option value="residential" >Residential Property</option>
+                        </select>
+                        {% if (issues['addresstype']) %}<span class="invalid-feedback"><strong>{{ issues['addresstype'] }}</strong></span>{% endif %}
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-street-address">Address<span class="color-red">*</span></label>
+                     <textarea name="street-address" required="required" class="form-control" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} shipping street-address" ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="{{ prefix }}-address-level2">City<span class="color-red">*</span></label>
+                    <input type="text" name="address-level2" required="required" class="form-control" id="{{ prefix }}-address-level2" autocomplete="section-{{ prefix }} shipping address-level2" />
+                  </div>
+                  <div class="form-group">
+                      <label for="{{ prefix }}-address-level1">State / Province / Region<span class="color-red">*</span></label>
+                      <input type="text" name="address-level1" required="required" class="form-control" id="{{ prefix }}-address-level1" autocomplete="section-{{ prefix }} shipping address-level1" />
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-postal-code">Zip / Post Code<span class="color-red">*</span>(If no Zip please use N/A)</label>
+                     <input type="text" name="postal-code" class="form-control" id="{{ prefix }}-postal-code" autocomplete="section-{{ prefix }} shipping postal-code" required="required"/>
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-country">Country<span class="color-red">*</span></label>
+                     <select class="form-control custom-select" name="country" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} shipping country" required="required">
+                     <option value="" selected="selected">Please choose country...</option>
+                     {% for country in country_list %}<option value="{{ country.code }}">{{ country.name|e }}</option>{% endfor %}
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-home-tel">Phone Number<span class="color-red">*</span></label>
+                     <input type="tel" name="home-tel" class="form-control" id="{{ prefix }}-home-tel" autocomplete="section-{{ prefix }} shipping home tel" required="required" />
+                  </div>
+                  <div class="form-group">
+                       <label for="{{ prefix }}-phone_no2">2nd Contact Number</label>
+                       <input type="tel" name="phone_no2" class="form-control" id="{{ prefix }}-phone_no2" />
+                    </div>
+                    <div class="form-group">
+                       <label for="{{ prefix }}-mobile-tel">Mobile Number</label>
+                       <input type="tel" name="mobile-tel" class="form-control" id="{{ prefix }}-mobile-tel" autocomplete="section-{{ prefix }} shipping mobile tel" />
+                    </div>
+                    <input type="hidden" name="address-level3" class="form-control" id="{{ prefix }}-address-level3" autocomplete="off" />
+                    <div class="form-group">
+                       <label for="{{ prefix }}-fax-tel">Fax Number</label>
+                       <input type="tel" name="fax-tel" class="form-control" id="{{ prefix }}-fax-tel" autocomplete="section-{{ prefix }} shipping fax tel" />
+                    </div>
+                </div>
+              </div>
+              <hr />
+              <div class="form-group">
+              <input type="hidden" value="add_shiping_address" name="action" />
+              <input type="submit" value="Add" class="btn btn-lg- btn-primary" />
+              </div>
+            </form>
+        </div>
+</div></div></div>
+ {% set prefix = 'account-Freight-add' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Add Freight Detail</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="" method="post">
+            <div class="row">
+                    <input type="hidden" name="courier_acc_id" value="" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-name">Courier<span class="color-red">*</span></label>
+                            <select name="courier_id" class="form-control">
+                            {% for keycou,courier_data in courier_list %}
+                            <option value="{{keycou}}">{{courier_data}}</option>
+                            {% endfor %}
+                            <option value="0">Other</option>
+                        </select>
+                        </div>
+                        <div class="form-group courier_name-add" style="display:none;">
+                            <label for="{{ prefix }}-street-title">Courier Name<span class="color-red">*</span></label>
+                            <input class="form-control" type="text" name="courier_name" id="courier_name"  placeholder="Courier Number" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-street-title">Account Number<span class="color-red">*</span></label>
+                            <input class="form-control" type="text" name="account_number" required placeholder="Account Number" />
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-main">Courier Insurance<span class="color-red">*</span></label>
+                            <select  name="insurance" class="form-control" id="{{ prefix }}-insurance">
+                            <option value="n" >No</option>
+                            <option value="y">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-main">Default</label>
+                            <select  name="main" class="form-control" id="{{ prefix }}-main">
+                            {% if member_couriers | length > 0 %}
+                            <option value="n" >No</option>
+                            {% endif %}
+                            <option value="y">Yes</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-email">Notes<span class="color-red">*</span></label>
+                            <textarea rows="5"  name="notes" class="form-control" required placeholder="Please tell us what service you would like to use, whether we choose your courier's insurance, and any other instructions"></textarea>
+                        </div>
+                    </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="hidden" value="add" name="action" />
+                <input type="submit" value="Add" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+{% for address in addresses %}
+{% set prefix = 'account-shipping-edit' ~ address.id %}
+<div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog">
+   <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title">Edit Shipping Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                      <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="{{ prefix }}-organization">Company<span class="color-red address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>*</span></label>
+                              <input type="text" name="organization" class="form-control" id="organization{{ address.id }}" autocomplete="section-{{ prefix }} shipping organization" value="{{ address.company|e }}" {{ address.address_type == 'commercial' ? 'required="required"' : '' }} />
+                           </div>
+                            <div class="form-group company-data address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>
+                               <label for="{{ prefix }}-company_number" class="">Company Number</label>
+                               <input type="text" name="company_number" class="form-control {{ (issues['company_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-company_number"  value="{{ address.company_number|e }}"/>
+                               {% if (issues['company_number']) %}<span class="invalid-feedback"><strong>{{ issues['company_number'] }}</strong></span>{% endif %}
+                            </div>
+                            <div class="form-group company-data address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>
+                                <label for="{{ prefix }}-eori_number" class="">EORI Number</label>
+                                <input type="text" name="eori_number" class="form-control {{ (issues['eori_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-eori_number" value="{{ address.eori_number|e }}" />
+                                {% if (issues['eori_number']) %}<span class="invalid-feedback"><strong>{{ issues['eori_number'] }}</strong></span>{% endif %}
+                            </div>
+                            <div class="form-group company-data address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>
+                                <label for="{{ prefix }}-vat_number">VAT Number #</label>
+                                <input type="text" name="vat_number" class="form-control" id="{{ prefix }}-vat_number" value="{{ address.vat_number|e }}"/>
+                             </div>
+                              <div  class="form-group company-data address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>
+                                <label for="abn_number">ABN Number</label>
+                                <input type="text" id="abn_number" class="form-control" name="abn_number" value="{{ address.abn_number|e }}">  
+                             <div class="invalid-feedback "></div>
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-name">Contact Person-First Name</label>
+                             <input type="text" name="name-first" class="form-control" id="{{ prefix }}-name-first" autocomplete="section-{{ prefix }} shipping name-first" value="{{ address.contact|e }}" />
+                          </div>
+                          <div class="form-group">
+                                 <label for="{{ prefix }}-last-name">Contact Person-Last Name</label>
+                                 <input type="text" name="name-last" class="form-control" id="{{ prefix }}-name-last" autocomplete="section-{{ prefix }} shipping name-last" value="{{ address.contact_last|e }}" />
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-home-email">Contact Email<span class="color-red">*</span></label>
+                             <input type="email" name="home-email" class="form-control" id="{{ prefix }}-home-email" autocomplete="section-{{ prefix }} shipping home email" value="{{ address.email|e }}" required="required" />
+                          </div>
+                          <div class="form-group">
+                                <label for="{{ prefix }}-home-email">Set as Default</label>
+                                <select  name="default" class="form-control" id="{{ prefix }}-home-email">
+                                <option value="n" {{ (address.default =='n') ? ' selected="selected"' : '' }}>No</option>
+                                <option value="y" {{ (address.default =='y') ? ' selected="selected"' : '' }}>Yes</option>
+                                </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="addresstype">Address Type<span class="text-danger">*</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Different couriers have certain requirements for delivery to residential addresses or commercial addresses. For example, some couriers deliver over the weekend, whilst others will only ship to commercial buyers."></i></label>
+                            <select  class="form-control" name="addresstype" required="required" onchange="updateshipingAddressType({{address.id}},this)">
+                               <option value=""></option>
+                               <option value="commercial" {{(address.address_type=='commercial')?'selected':''}}>Commercial Property</option>
+                               <option value="residential" {{(address.address_type=='residential')?'selected':''}}>Residential Property</option>
+                            </select>
+                            {% if (issues['addresstype']) %}<span class="invalid-feedback"><strong>{{ issues['addresstype'] }}</strong></span>{% endif %}
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-street-address">Address<span class="color-red">*</span></label>
+                             <textarea name="street-address" required="required" class="form-control" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} shipping street-address" >{{ address.address}}</textarea>
+                          </div>
+                          <input type="hidden" name="address-level3" class="form-control" id="{{ prefix }}-address-level3" autocomplete="off" />
+                          <div class="form-group">
+                                <label for="{{ prefix }}-address-level2">City<span class="color-red">*</span></label>
+                                <input type="text" name="address-level2" required="required" class="form-control" id="{{ prefix }}-address-level2" autocomplete="section-{{ prefix }} shipping address-level2" value="{{ address.city|e }}" />
+                          </div>
+                          <div class="form-group">
+                            <label for="{{ prefix }}-address-level1">State / Province / Region<span class="color-red">*</span></label>
+                            <input type="text" name="address-level1" required="required" class="form-control" id="{{ prefix }}-address-level1" autocomplete="section-{{ prefix }} shipping address-level1" value="{{ address.state|e }}" />
+                         </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-postal-code">Zip / Post Code<span class="color-red">*</span>(If no Zip please use N/A)</label>
+                             <input type="text" name="postal-code" class="form-control" id="{{ prefix }}-postal-code" autocomplete="section-{{ prefix }} shipping postal-code" value="{{ address.zip|e }}" />
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-country">Country<span class="color-red">*</span></label>
+                             <select class="form-control custom-select" name="country" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} shipping country" required="required">
+                                <option  selected="selected" value="">Please choose country...</option>
+                                {% for country in country_list %}<option value="{{ country.code }}"{{ (address.country == country.code) ? ' selected="selected"' : '' }}>{{ country.name|e }}</option>{% endfor %}
+                             </select>
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-home-tel">Phone Number<span class="color-red">*</span></label>
+                             <input type="tel" name="home-tel" class="form-control" id="{{ prefix }}-home-tel" autocomplete="section-{{ prefix }} shipping home tel" value="{{ address.phone_number|e }}" required="required" />
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-phone_no2">2nd Contact Number</label>
+                             <input type="tel" name="phone_no2" class="form-control" id="{{ prefix }}-phone_no2" value="{{ address.phone_no2|e }}"/>
+                          </div>
+                          <div class="form-group">
+                               <label for="{{ prefix }}-mobile-tel">Mobile Number</label>
+                               <input type="tel" name="mobile-tel" class="form-control" id="{{ prefix }}-mobile-tel" autocomplete="section-{{ prefix }} shipping mobile tel" value="{{ address.mobile_number|e }}" />
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-fax-tel">Fax Number</label>
+                             <input type="tel" name="fax-tel" class="form-control" id="{{ prefix }}-fax-tel" autocomplete="section-{{ prefix }} shipping fax tel" value="{{ address.fax_number|e }}" />
+                          </div>
+                        </div>
+                      </div>
+                     <div class="form-group">
+                         <input type="hidden" value="{{ address.id }}" name="id" />
+                         <input type="hidden" value="update" name="action" />
+                         <input type="submit" class="btn btn-lg- btn-primary" value="Save" style="    margin-left: 10px;"/>
+                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% set prefix = 'account-shipping-delete' ~ address.id %}
+<div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Delete Shipping Address</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         </div>
+         <div class="modal-body">
+            <form action="" method="post">
+               <p>
+                  Deleting the following address: <br />
+                  <br />
+                  {% if address.name %}Contact: {{ address.name|e }} {{ address.surname|e }}<br />{% endif %}
+                  {{ markdown(address.address_full)}}
+                  {% if address.email %}<br />Email: {{ address.email|e }}{% endif %}
+               </p>
+               <hr />
+               <div class="form-group">
+                  <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                  <input type="hidden" value="{{ address.id }}" name="id" />
+                  <input type="hidden" value="delete" name="action" />
+                  <input type="submit" value="Delete" class="btn btn-lg btn-danger" />
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}
+<form method="post" style="display:flex;" id="removecoupon">
+   <input type="hidden" name="action" value="removecoupon" />                      
+</form>
+<script src="https://unpkg.com/imask"></script>
+<script src="/js/creditcardnew.js"></script>
+ <script type="text/javascript">
+//<![CDATA[
+
+if (window.addEventListener) {
+    window.addEventListener('load', function() {
+        $("[name='checkout[shipaddr_id]'],[name='checkout[ship_number]'],[name='checkout[ship_insurance]'],[name='checkout[paymenttype_id]']").change(function(e) {
+             if($(this).val() == 'own_0'){
+                $("[name='checkout[own_account_num]']").val($(this).data('account_num'));
+                $("[name='checkout[own_courier_name]']").val($(this).data('courier_name'));
+                $("[name='checkout[own_courier_id]']").val($(this).data('courier_id'));
+            }
+            $('form#payment-checkout-form').submit();
+            e.preventDefault();
+        });
+         $("[name='checkout[paymenttype_id]']").change(function(e) {
+                $('.payment-methods__item').removeClass('payment-methods__item--active');
+                $( this ).parent().parent().parent().parent().addClass('payment-methods__item--active');
+                /* if(['CREDIT_AX','CREDIT_MC', 'CREDIT_VC','VISA','MASTERCARD','CREDIT'].includes($(this).val())){
+                    ['CREDIT_AX','CREDIT_MC', 'CREDIT_VC','VISA','MASTERCARD','CREDIT'].forEach(function(item) {
+                        $('#'+item).html('');
+                    });
+                     $(this).parent().parent().parent().parent().find('.payment-methods__item-details').load('card-html-new.php');
+                      setTimeout(function() { 
+                        intcreditcard();
+                      }, 1000);
+                }else{
+                     ['CREDIT_AX','CREDIT_MC', 'CREDIT_VC','VISA','MASTERCARD','CREDIT'].forEach(function(item) {
+                        $('#'+item).html('');
+                    });
+                }*/
+        });
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            if (scroll >= 260) {
+                //clearHeader, not clearheader - caps H
+                $(".yourOrder-sectionWrap").addClass("yourOrder-stiky");
+            }else{
+                $(".yourOrder-sectionWrap").removeClass("yourOrder-stiky");
+            }
+        });
+        $('.show_less_more').click(function(e){
+            e.preventDefault();
+            if($(this).html()=='SHOW MORE'){
+                $(this).html('SHOW LESS');
+                $('.hide-address-class').removeClass('hide-address');
+            }else{
+                $(this).html('SHOW MORE');
+                $('.hide-address-class').addClass('hide-address');
+            }
+        })
+         $('.show_less_more_notify').click(function(e){
+            if($(this).html()=='OTHER NOTIFY PARTY'){
+                $(this).html('SHOW LESS');
+                $('.hide-address-notify-class').removeClass('hide-address');
+            }else{
+                $(this).html('OTHER NOTIFY PARTY');
+                $('.hide-address-notify-class').addClass('hide-address');
+            }
+        })
+    }, false);
+} else if (window.attachEvent) {
+    window.attachEvent('onload', function() {
+        $("[name='checkout[shipaddr_id]'],[name='checkout[ship_number]']").change(function(e) {
+             if($(this).val() == 'own_0'){
+                $("[name='checkout[own_account_num]']").val($(this).data('account_num'));
+                $("[name='checkout[own_courier_name]']").val($(this).data('courier_name'));
+                $("[name='checkout[own_courier_id]']").val($(this).data('courier_id'));
+            }
+            this.form.submit();
+            e.preventDefault();
+        });
+         $("[name='checkout[paymenttype_id]']").change(function(e) {
+                $('.payment-methods__item').removeClass('payment-methods__item--active');
+                $( this ).parent().parent().parent().parent().addClass('payment-methods__item--active');
+               /* if(['CREDIT_AX','CREDIT_MC', 'CREDIT_VC','VISA','MASTERCARD','CREDIT'].includes($(this).val())){
+                   ['CREDIT_AX','CREDIT_MC', 'CREDIT_VC','VISA','MASTERCARD','CREDIT'].forEach(function(item) {
+                        $('#'+item).html('');
+                    }); 
+                    $(this).parent().parent().parent().parent().find('.payment-methods__item-details').load('card-html-new.php');
+                      setTimeout(function() { 
+                        intcreditcard();
+                      }, 1000);
+                    
+                }else{
+                     ['CREDIT_AX','CREDIT_MC', 'CREDIT_VC','VISA','MASTERCARD','CREDIT'].forEach(function(item) {
+                        $('#'+item).html('');
+                    });
+                }*/
+        });
+    });
+}
+
+/*if (window.addEventListener) {
+    window.addEventListener('load', function() {
+        $("[name='checkout[shipaddr_id]'][name='checkout[ship_number]']").change(function(e) {
+            this.form.submit();
+            alert('table-striped');
+            //e.preventDefault();
+        });
+        $("[name='checkout[paymenttype_id]']").change(function(e) {
+                $('.payment-methods__item').removeClass('payment-methods__item--active');
+                $( this ).parent().parent().parent().parent().addClass('payment-methods__item--active');
+        });
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            if (scroll >= 260) {
+                //clearHeader, not clearheader - caps H
+                $(".yourOrder-sectionWrap").addClass("yourOrder-stiky");
+            }else{
+                $(".yourOrder-sectionWrap").removeClass("yourOrder-stiky");
+            }
+        });
+        $('.show_less_more').click(function(e){
+            e.preventDefault();
+            if($(this).html()=='OTHER ADDRESSES'){
+                $(this).html('SHOW LESS');
+                $('.hide-address-class').removeClass('hide-address');
+            }else{
+                $(this).html('OTHER ADDRESSES');
+                $('.hide-address-class').addClass('hide-address');
+            }
+        });
+         $('.show_less_more_notify').click(function(e){
+            e.preventDefault();
+            if($(this).html()=='OTHER NOTIFY PARTY'){
+                $(this).html('SHOW LESS');
+                $('.hide-address-notify-class').removeClass('hide-address');
+            }else{
+                $(this).html('OTHER NOTIFY PARTY');
+                $('.hide-address-notify-class').addClass('hide-address');
+            }
+        })
+    }, false);
+} else if (window.attachEvent) {
+    window.attachEvent('onload', function() {
+        $("[name='checkout[shipaddr_id]'],[name='checkout[ship_number]']").change(function(e) {
+             alert('table-striped');
+            this.form.submit();
+          // e.preventDefault();
+        });
+        $("[name='checkout[paymenttype_id]']").change(function(e) {
+                $('.payment-methods__item').removeClass('payment-methods__item--active');
+                $( this ).parent().parent().parent().parent().addClass('payment-methods__item--active');
+        });
+    });
+}*/
+
+//]]>
+    </script>
+<style type="text/css">a.addAddress-btn,a.otherAddress,.otherAddress-btn { font-size: 12px!important; }
+.form-container{
+    width:100%;
+}
+.table-striped tbody tr:nth-of-type(odd) {background-color: #fff; }
+span.comment {    font-size: 12px; /*border-top: 2px solid #dee2e6;*/ }
+
+</style> {% include '/blocks/block-space.twig' with {inputs: {
+layout: 'before-footer',
+}} %}
+{% endblock %}

@@ -1,0 +1,139 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+}
+
+.todo
+{
+	background-color:yellow;
+}
+
+div#content a
+{
+	color: white;
+}
+
+div#content
+{
+	width:		100%;
+	margin-left:	10px;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div#content table.invisible, div#content table.invisible tr.invisible, div#content table.invisible td.invisible
+{
+	width: 100%;
+	text-align: center;
+	background: none;
+	border: none;
+	margin: 0px;
+	padding-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+div#content table
+{
+	text-align: left;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div#sposcontent table.summary td {
+	padding: 5px;
+	text-align: center;
+	width: 25%;
+}
+
+div#content tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+pre {margin: 0 0 0 0; display: none;}
+
+div#content td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div#sposcontent td.selectwidthhack {
+	width: 30% !important;
+}
+
+div#content th, div#content thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+}
+
+div#content table.vbox td, div#content table.vbox th, div#content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div#content table.notes
+{
+	width: 90%;
+}
+
+div#content table.notes th
+{
+	font-weight: bold;
+	background-color: #E3EBF7;
+	border: 1px #CCCCCC solid;
+}
+
+div#content table.notes td
+{
+	border: 1px #CCCCCC solid;
+}
+
+div#content table.buttons {	text-align: center; }
+div#content table.wide {	width: 90%; }
+div#content tr.alt		{ background-color: #EEEEE0; }
+div#content tr.highlight { background-color: #90EEA0; }
+div#content tr.mylock	{ background-color: #90A0EE; }
+div#content tr.locked	{ background-color: #EE90A0; }
+div#content tr.hidden	{ display: none; }
+div#content td.collapse {	width: 1px; }
+div#content th.collapse {	width: 1px; }
+div#content td.bgtitle {	background-color: #EEEEE0; }
+div#content td.left_title {	width: 30%;
+				text-align: right !important;
+				background-color: #EEEEE0;
+				color: #000000;
+				width: 20% !important;
+				font-weight: bold; }
+div#content input.intext, div#content input.infile, div#content textarea, div#content select {	width: 98%; }
+
+div#content th a
+{
+	color: #000000;
+}
+
+div#content td a
+{
+	color: #000000;
+}
+
+div#content table.spacetable td
+{
+	border:2px solid white;
+}
+
+
+
+

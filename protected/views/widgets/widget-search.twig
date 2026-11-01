@@ -1,0 +1,16 @@
+{#
+// inputs:
+// - action:
+// - s:
+#}
+
+{% set action = inputs.action %}
+{% set s = inputs.s %}
+
+<div class="card widget widget-search">
+    <form action="{{ action|e }}" class="widget-search__form">
+        <input name="s" class="widget-search__input" type="search" placeholder="News search..." value="{{ s|e }}" />
+        <button class="widget-search__button">{{ svg('search-20.svg') }}</button>
+        <div class="widget-search__field"></div>
+    </form>
+</div>

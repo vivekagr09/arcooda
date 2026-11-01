@@ -1,0 +1,319 @@
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+    .secure-img img {
+        width: 28%;
+        margin-left: auto;
+        display: block;
+        margin-right: 9rem;
+    }
+    .iti--allow-dropdown .iti__flag-container, .iti--separate-dial-code .iti__flag-container {
+        right: 0px;
+        left: auto;
+    }
+    .iti-mobile .iti__country-list {
+        max-height: 100%;
+        width: 86%;
+    }
+    .dropdown.currency-dropdown .btn {
+        width: 67px;
+    }
+    .secure-img {
+        font-size: 28px;
+    }
+    .login-user input.form-control {
+        margin-top: 14px;
+    }
+    .iti-mobile .iti--container {
+        left: 0px;
+        right: 0px;
+    }
+    .iti-mobile .iti--container {
+        top: 0px !important;
+        bottom: 30px !important;
+        left: 10px !important;
+        right: 0px !important;
+        position: fixed;
+        width: 300px;
+    }
+    .payment-width .col-sm-4 {
+        width: 49%;
+    }
+    .payment-width form.needs-validation img {
+        margin-bottom: 15px;
+        width: 73%;
+        height: 63px;
+        margin-left: 7px;
+    }
+    .currency-dropdown .btn {
+        height: 39px;
+        line-height: 1;
+        width: 96%;
+        padding: 0px 5px;
+        font-size: 14px !important;
+    }
+    .dropdown.currency-dropdown {
+        top: 10px;
+        right: 0px;
+        left: auto;
+        margin: 0px 0px;
+    }
+    .white-bg p.text-right {
+        margin-bottom: 0px;
+    }
+    .review-bg img {
+        padding: 0px;
+    }
+    .white-bg {
+        padding: 8px;
+    }
+    .login-btn-popup .btn {
+        width: 39%;
+        padding: 0px;
+        height: 40px;
+        font-size: 20px !important;
+        line-height: 0;
+    }
+    .col-6 {
+        flex: 0 0 auto;
+        width: 100% !important;
+    }
+}
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+    .login-user input.form-control {
+        margin-top: 14px;
+    }
+    .dropdown.currency-dropdown {
+    left: auto;
+    right: 7rem;
+    top: 4rem;
+    margin: 0px 3px 5px 0px;
+ }
+    .dropdown.currency-dropdown .btn {
+        width: 77px;
+    }
+    .secure-img {
+        font-size: 30px;
+    }
+    .white-bg {
+        padding: 8px;
+    }
+    .payment-width .col-sm-4 {
+        width: 32%;
+    }
+    .currency-dropdown .btn {
+        height: 39px;
+        line-height: 1;
+        width: 96%;
+        padding: 0px 5px;
+        font-size: 14px !important;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .secure-img {
+        text-align: left;
+        font-size: 35px;
+    }
+    .dropdown.currency-dropdown .btn {
+        width: 77px;
+    }
+    .iti-mobile .iti__country-list {
+        max-height: 100%;
+        width: 79%;
+    }
+    .iti-mobile .iti--container {
+        top: 0px !important;
+        bottom: 30px !important;
+        left: 29rem !important;
+        right: auto !important;
+        position: fixed;
+        width: 300px;
+    }
+    .currency-dropdown .btn {
+        height: 39px;
+        line-height: 1;
+        width: 96%;
+        padding: 0px 5px;
+        font-size: 16px !important;
+    }
+    .dropdown.currency-dropdown {
+        top: 0px;
+        right: 7.5rem;
+        left: auto;
+        margin: 0px 10px!important;
+    }
+    .text-muted {
+        font-size: 14px !important;
+    }
+    h6.my-0.mx-2 {
+        font-size: 14px;
+    }
+    .white-bg {
+        padding: 8px;
+    }
+}
+@media only screen and (min-width: 992px) and (max-width: 1000px) {
+    .dropdown.currency-dropdown {
+        top: 0px;
+        right: 8.4rem;
+        left: auto;
+        margin: 0px 10px!important;
+    }
+    .dropdown.currency-dropdown .btn {
+        width: 77px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1100px) {
+    .secure-img {
+        font-size: 40px;
+        text-align: left;
+    }
+    .currency-dropdown .btn {
+        height: 39px;
+        line-height: 1;
+        width: 96%;
+        padding: 0px 5px;
+        font-size: 16px !important;
+    }
+    .guarantee-container {
+        padding: 1rem 0px;
+    }
+    button.btn {
+        font-size: 20px !important;
+    }
+    .text-muted {
+        font-size: 14px !important;
+    }
+    h6.my-0.mx-2 {
+        font-size: 14px;
+    }
+    .img-resolution img {
+        display: inline-block;
+        width: 22.8%;
+        height: auto;
+    }
+    .iti-mobile .iti--container {
+        top: 0px !important;
+        bottom: 30px !important;
+        left: 27rem !important;
+        right: 0px !important;
+        position: fixed;
+        width: 300px;
+    }
+}
+@media only screen and (min-width: 1001px) and (max-width: 1100px) {
+    .dropdown.currency-dropdown {
+        top: 0px;
+        right: 10.9rem;
+        left: auto;
+        margin: 0px 10px!important;
+    }
+    .dropdown.currency-dropdown .btn {
+        width: 77px;
+    }
+    .iti-mobile .iti--container {
+        top: 239px !important;
+        bottom: 30px !important;
+        left: 29rem !important;
+        right: 0px !important;
+        position: fixed;
+        width: 300px;
+    }
+}
+@media only screen and (min-width: 1101px) and (max-width: 1300px) {
+    .dropdown.currency-dropdown {
+        top: 0px;
+        right: 14rem;
+        left: auto;
+        margin: 0px 10px!important;
+    }
+    .iti-mobile .iti--container {
+        top: 250px !important;
+        bottom: 30px !important;
+        left: 29rem !important;
+        right: 0px !important;
+        position: fixed;
+        width: 300px;
+    }
+}
+@media (min-width: 1101px) and (max-width: 1600px) {
+    .secure-img {
+        font-size: 40px;
+        text-align: left;
+    }
+    .dropdown.currency-dropdown .btn {
+        width: 77px;
+    }
+    .iti--allow-dropdown .iti__flag-container, .iti--separate-dial-code .iti__flag-container {
+        right: 0px;
+        left: auto;
+    }
+    .currency-dropdown .btn {
+        height: 39px;
+        line-height: 1;
+        width: 96%;
+        padding: 0px 5px;
+        font-size: 16px !important;
+    }
+    .text-muted {
+        font-size: 14px !important;
+    }
+    .img-resolution img {
+        display: inline-flex;
+        width: 22.8%;
+        height: auto;
+    }
+    h6.my-0.mx-2 {
+        font-size: 14px;
+    }
+    button.btn {
+        font-size: 20px !important;
+    }
+}
+@media only screen and (min-width: 1301px) and (max-width: 1700px) {
+    .dropdown.currency-dropdown {
+        top: 0px;
+        right: 21.5rem;
+        left: auto;
+        margin: 0px 10px!important;
+    }
+    .iti-mobile .iti--container {
+        top: 252px !important;
+        bottom: 30px !important;
+        left: 37rem !important;
+        right: 0px !important;
+        position: fixed;
+        width: 300px;
+    }
+    .secure-img {
+        font-size: 40px;
+        text-align: left;
+    }
+    .currency-dropdown .btn {
+        height: 39px;
+        line-height: 1;
+        width: 96%;
+        padding: 0px 5px;
+        font-size: 16px !important;
+    }
+}
+@media only screen and (min-width: 1701px) and (max-width: 1900px) {
+    .dropdown.currency-dropdown {
+        top: 0px;
+        right: 29rem;
+        left: auto;
+        margin: 0px 10px!important;
+    }
+    .secure-img {
+        font-size: 40px;
+        text-align: left;
+    }
+    .dropdown.currency-dropdown .btn {
+        width: 77px;
+    }
+    .currency-dropdown .btn {
+        height: 39px;
+        line-height: 1;
+        width: 96%;
+        padding: 0px 5px;
+        font-size: 16px !important;
+    }
+}

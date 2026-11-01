@@ -1,0 +1,24 @@
+Brateck Fixed TV  Wall Mount - LCD 201
+
+width = 140mm
+height = 120mm
+depth = 15mm
+weight = 500g
+boxed weight = 600g
+box dimensions = 150x140x20mm
+
+vesa support 50, 75, 100
+vesa hole size = 6.9mm
+wall mount hole size =7.95mm *4 , 6.9mm *2
+rated for 30kg/66lbs
+recommended screen sizes =13"~27"
+
+Includes :-
+- 2* 50mm wall plugs
+- 2* M5x50mm screws (wall mounting)
+
+- 4* M4x14mm bolts  (vesa Mounting)
+- 4* M5x14mm bolts  (vesa Mounting)
+- 4* D5 Washer  (vesa Mounting)
+
+- 2* M5x8mm bolts (bracket fastening)

@@ -1,0 +1,42 @@
+{% set product = inputs.product %}
+{% set faqs = inputs.faqs %}
+{% set faqCategory = product.faqCategory() %}
+    <div class="container">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    	{% for key,faq in faqs %}
+	      <li class="nav-item">
+	        <a class="nav-link {{loop.index0 == 0 ? 'active' : ''}}" id="{{faqCategory[key]}}-tab" data-toggle="tab" href="#{{faqCategory[key]}}" role="tab" aria-controls="{{faqCategory[key]}}" aria-selected="true">{{faqCategory[key]}}</a>
+	      </li>
+	    {% endfor %}
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content" id="myTabContent">
+    {% for key,faq in faqs %}
+      <div class="tab-pane fade show {{loop.index0 == 0 ? 'active' : ''}}" id="{{faqCategory[key]}}" role="tabpanel" aria-labelledby="{{faqCategory[key]}}">
+      		<div class="container mt-5 faq-accordian">
+		 		<div id="accordion{{key}}">
+		        	{% for key1,faqdata in faq %}
+		        		<div class="card">
+					        <div class="card-header" id="heading{{key1}}">
+					          <h5 class="mb-0">
+					            <button class="btn collapsed" data-toggle="collapse" data-target="#collapse{{key1}}" aria-expanded="false" aria-controls="collapse{{key1}}">
+					              {{faqdata.question}}
+					            </button>
+					          </h5>
+					        </div>
+
+					        <div id="collapse{{key1}}" class="collapse" aria-labelledby="heading{{key1}}" data-parent="#accordion{{key}}">
+					          <div class="card-body">
+					            {{faqdata.answer}}
+					          </div>
+					        </div>
+					      </div>
+		        	{% endfor %}
+		        </div>
+			</div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>

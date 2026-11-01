@@ -1,0 +1,129 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+@media print
+{
+	.print_hide
+	{
+		display:none;
+	}
+}
+
+div.permissions_content .unfinished
+{
+	background-color:yellow;
+}
+
+div.permissions_content a
+{
+	color: black;
+}
+
+div.permissions_content
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div.permissions_content table
+{
+	text-align: left;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px solid #CCCCCC;
+}
+
+div.permissions_content tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-weight: normal;
+}
+
+div.permissions_content pre {margin: 0 0 0 0;}
+div.permissions_content pre.alt {background-color: #EEEEEE;}
+
+div.permissions_content td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.permissions_content th, div.permissions_content thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	font-size:75%;
+}
+
+div.permissions_content table.vbox td, div.permissions_content table.vbox th, div.permissions_content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div.permissions_content table.buttons {	text-align: center; }
+div.permissions_content table.wide {	width: 95%; }
+div.permissions_content tr.alt		{ background-color: #EEEEE0; }
+div.permissions_content tr.highlight { background-color: #90EEA0; }
+div.permissions_content tr.mylock	{ background-color: #90A0EE; }
+div.permissions_content tr.locked	{ background-color: #EE90A0; }
+div.permissions_content td.collapse {	width: 1px; }
+div.permissions_content th.collapse {	width: 1px; }
+div.permissions_content td.left_title
+{
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+}
+div.permissions_content input.intext,
+div.permissions_content input.infile,
+div.permissions_content textarea,
+div.permissions_content select
+{
+	width: 98%;
+}
+
+div.permissions_content th a
+{
+	color: #000000;
+}
+
+div.permissions_content td a
+{
+	color: #000000;
+}
+
+div.permissions_content table.spacetable td
+{
+	border:2px solid white;
+}
+
+div.permissions_content div.flagHeader
+{
+	border-bottom: 1px solid green;
+	text-align: left;
+	width: 95%
+}
+div.permissions_content div.flagHeader span
+{
+	color: white;
+	background-color: green;
+	padding: 0px 20px;
+}
+div.permissions_content div.flagHeader span a
+{
+	color: white;
+}

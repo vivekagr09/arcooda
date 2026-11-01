@@ -1,0 +1,604 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - addresses:
+// - member:
+// - orders:
+#}
+
+{% set global_page_title           = inputs.title|default('')                     %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/dashboard'                         %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set address   = inputs.addresses|first                                         %}
+{% set member    = inputs.member                                                  %}
+{% set currOrders    =   inputs.currOrders   %}
+{% set oldOrders    = inputs.oldOrders       %}
+{% set alert     = inputs.alert                                                    %}
+{% set issues    = inputs.issues                                                   %}
+{% set result    = inputs.result                                                   %}
+{% for shipping_address in inputs.addresses %}{% if shipping_address.default == 'y' %}
+    {% set address = shipping_address %}
+{% endif %}{% endfor %}
+{% extends '/layouts/account-new.twig' %}
+
+{% block account_body %}
+ <style type="text/css">
+    .card-table tbody td {
+        vertical-align: top;
+    }
+    .card-new {
+        border:1px solid rgba(0,0,0,.125);
+        box-shadow: 0 1px 3px rgba(0,0,0,.09);
+        min-height: 200px;
+    }
+    .line-separator {
+        width: 2px;              /* Thickness of the line */
+        height: 100%;            /* Full height of the container */
+        background-color: #ccc;   /* Line color */
+    }
+   table thead tr th {
+        background: #e6e6e6;
+    }
+    .border-top-blue{
+        border-bottom: 1px solid blue;
+    }
+    .text-align-center{
+        text-align: center;
+    }
+    .text-align-right{
+        text-align: right;
+    }
+    .text-align-left{
+        text-align: left;
+    }
+    .tooltip-container {
+    position: relative; /* Position the container */
+}
+
+.custom-tooltip {
+    position: absolute;
+    z-index: 1000;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: none; /* Hidden by default */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: black;
+
+    /* Center the tooltip horizontally */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tooltip-item {
+    display: flex; /* Use Flexbox for alignment */
+    gap: 20px;
+    padding: 5px 0; /* Add some vertical padding */
+}
+
+.tooltip-date {
+    text-align: left; /* Left-align the date */
+    color: #fff;
+}
+
+.tooltip-message {
+    text-align: left;
+    white-space: normal; /* Allow line breaks for long messages */
+    width: 400px;
+    color: #fff;
+}
+
+
+
+</style>
+{% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+    {# <div class="container account-nav p-2">
+        <div class="row">
+            <!-- First Column: Centered Content -->
+            <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
+                <div class="row w-100">
+                    <div class="col-md-6 justify-content-center" style="text-align:center;">
+                        {% if member.avatar_image %}
+                            <img src="/avatar/svgavatars/ready-avatars/{{ member.avatar_image }}" style="vertical-align: top;" width="90" height="90" title="">
+                        {% else %}
+                            <img src="/images/avatar.jpeg" style="vertical-align: top;" width="90" height="90" title="Make your own Avatar to use for comments, posts and product reviews">
+                        {% endif %}
+                        <div class="profile-card__name">{{ member.full_name|e }}</div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div class="profile-card__edit">
+                            <a href="/account/profile" class="btn btn-secondary btn-sm">Edit Profile</a>
+                        </div>
+                        <div class="profile-card__edit" style="margin-top:10px;">
+                            <button onclick="openAvatorModel()" class="btn btn-secondary btn-sm">Edit Avatar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vertical Separator -->
+            <div class="col-md-1 d-flex align-items-center">
+                <div class="line-separator"></div>
+            </div>
+
+            <!-- Second Column: Bill to Details -->
+            <div class="col-md-6 p-4">
+                <div class="row">
+                    <div class="col-md-12">
+                    <h5 >My Details</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" style="font-size: 15px;">
+                            <div class="col-md-6">
+                               
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {% if member.company_name != '' %}
+                                            {{ member.company_name }}
+                                        {% else %}
+                                            {{ member.full_name }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row"> <div class="col-md-12">{{ member.address_1 }}</div></div>
+                                <div class="row"> <div class="col-md-12">{{ member.city }}, {{ member.state }} {{ member.post_code }}</div></div>
+                                <div class="row"> <div class="col-md-12">{{ getCountryName(member.country) }}</div></div>
+                            </div>
+                            <div class="col-md-6">
+                                {% if member.company_name != '' %}
+                                    <div class="row">
+                                         <div class="col-md-12">
+                                        Attn: {{ member.full_name != '' ? member.full_name : '' }}
+                                    </div>
+                                    </div>
+                                {% endif %}
+                                <div class="row">
+                                     <div class="col-md-12">
+                                     Ph: {{ member.phone_no != '' ? member.phone_no : '' }}
+                                 </div>
+                                </div>
+                                {% if member.email_address != '' %}
+                                 <div class="col-md-12">
+                                    <div class="row">
+                                      Email: {{member.email_address}}
+                                    </div>
+                                </div>
+                                 {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> #}
+
+    <div class="dashboard">
+
+        {% if currOrders %}<div class="dashboard__orders card">
+            <div class="card-header"><h5>Current Orders & Inquiries</h5></div>
+            <div class="card-divider"></div>
+            <div class="card-table"><div class="table-responsive-sm">
+                <table>
+                <thead>
+                    <tr>
+                        <th width="10%">Order</th>
+                        <th width="15%">Date</th>
+                        <th width="15%">Total</th>
+                        <th width="15%">Status</th>
+                        <th width="15%">Tracking</th>
+                        <th width="10%">Notes</th>
+                        <th width="10%">Message</th>
+                        <th width="10%">Reorder</th> 
+                    </tr>
+            </thead>
+                <tbody>
+                {% if currOrders|length > 0 %}
+                {% for order in currOrders[:5] %}
+                    {% set class = (currOrders|length > 1 and order.display_to_customer_all|length == 0) ? 'border-top-blue' : '' %}
+                     <tr>
+                        <td class="{{ class }}" style="text-align:center"><a href="/account/invoice?invoice_id={{order.id}}" target="_blank">{{ order.number }}</a>
+                            {% if order.status == 'Awaiting Payment' or order.status == 'Open' %}
+                                <button  type="button" class="btn btn-danger" style="border-color: #333; background: #333;    font-size: 12px; padding: 5px 16px;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#c82333'" onclick="openCancelModel('{{order.number}}','{{order.id}}')">Cancel</button> {% endif %}
+                        </td>
+                        <td class="{{ class }}">{{ order.date }}</td>
+                        <td class="{{ class }}">{{ order.total|currency }}</td>
+                        <td class="{{ class }}" style="text-align:center">
+                            {{ order.status }}
+                            {% if order.status == 'Awaiting Payment' %}
+                            <button  type="button" class="btn btn-primary" style="border-color: #333; background: #333;    font-size: 12px; padding: 5px 16px;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#0069d9'" onclick='window.location.href="/payment/payment-checkout?id={{order.id}}&crc={{order.rand_num}}"'>Pay</button>
+                            {% endif %}
+                        </td>
+                        <td class="{{ class }}">
+                            {% if order.tracking_number %}
+                                {% if order.frieght_traking_url %}
+                                    <a href="{{order.frieght_traking_url}}" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{order.fright_tracking_service}}">
+                                    {{order.tracking_number}}</a>
+                                {% else %}
+                                    <span target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{order.fright_tracking_service}}"> {{order.tracking_number}} </span>
+                                {% endif %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td class="text-align-center {{ class }}">
+                           {% if order.display_to_customer_all|length > 0 %}
+                                <div class="tooltip-container" style="display:inline-block;">
+                                    <img src="/img/favicon.ico" width="30" class="tooltip-trigger">
+                                    <div class="custom-tooltip" style="display:none;">
+                                        {% for note in order.display_to_customer_all %}
+                                            <div class="tooltip-item">
+                                                <span class="tooltip-date">{{ note.date|date('d/m/Y') }}</span>
+                                                <span class="tooltip-message">{{ note.message }}</span>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        </td>
+                        <td class="{{ class }}"><i class="fas fa-comments" onclick="openMsgModel('{{order.number}}','{{order.id}}')" style="font-size: 30px;cursor:pointer;"></i></td>
+                        <td class="{{ class }}"><i class="fas fa-shopping-cart"  data-toggle="modal" data-target="#account-reorder{{ order.id }}-modal" style="font-size: 30px;cursor:pointer;"></i>
+                        </td>
+                    
+                    </tr>
+                    {% if order.display_to_customer_all|length > 0 %}
+                    <tr>
+                        <td colspan="8" class="border-top-blue" style="border-top:none;">
+                            <div class="container">
+                                <div class="row" style="padding:14px;border: 1px solid #b5e61d">
+                                    <div class="col-md-2" style="background:#b5e61d"><b>Arcooda Updates</b></div>
+                                    <div class="col-md-10" style="color:red">{{ order.display_to_customer_all[0].message }} on {{ order.display_to_customer_all[0].date|date("d/m/Y") }}
+                                    </div>
+                                </div>                        
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+
+                {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="8" style="font-style:italic;">No Orders or Inquiries</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+            </table></div></div>
+        </div>{% endif %}
+        {% if oldOrders %}<div class="dashboard__orders card">
+            <div class="card-header"><h5>Recent Orders & Inquiries</h5></div>
+            <div class="card-divider"></div>
+            <div class="card-table"><div class="table-responsive-sm"><table>
+                <thead><tr>
+                    <th class="text-align-center" width="10%">Order</th>
+                    <th class="text-align-center" >Date</th>
+                    <th class="text-align-right" >Total</th>
+                    <th class="text-align-right" >Status</th>
+                    <th class="text-align-center" width="20%">Tracking</th>
+                    <th class="text-align-right">Notes</th>
+                    <th class="text-align-right" >Message</th>
+                    <th class="text-align-right" >Reorder</th>
+                    
+                </tr></thead>
+                <tbody>
+                {% if oldOrders|length > 0 %}
+                {% for order in oldOrders[:5] %}
+                    <tr>
+                        <td class="text-align-center"><a href="/account/invoice?invoice_id={{order.id}}" target="_blank">{{ order.number }}</a>
+                            {% if order.status == 'Awaiting Payment' or order.status == 'Open' %}
+                                <button  type="button" class="btn btn-danger" style="border-color: #333; background: #333;    font-size: 12px; padding: 5px 16px;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#c82333'" onclick="openCancelModel('{{order.number}}','{{order.id}}')">Cancel</button>
+                            {% endif %}
+                        </td>
+                        <td class="text-align-center">{{ order.date }}</td>
+                        <td class="text-align-right">{{ order.total|currency }}</td>
+                        <td class="text-align-center">
+                            {{ order.status }}
+                            {% if order.status == 'Awaiting Payment' %}
+                            {# <a href="/payment/airwallex-checkout?id={{order.number}}&crc={{invoice[0].rand_num}}"> #}
+                            <button  type="button" class="btn btn-primary" style="border-color: #333; background: #333;    font-size: 12px; padding: 5px 16px;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#0069d9'" onclick='window.location.href="/payment/payment-checkout?id={{order.id}}&crc={{order.rand_num}}"'>Pay</button> {# </a> #}
+                            {% endif %}
+                        </td>
+                        <td class="text-align-center">
+                             {% if order.tracking_number %}
+                                {% if order.frieght_traking_url %}
+                                    <a href="{{order.frieght_traking_url}}" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{order.fright_tracking_service}}">
+                                    {{order.tracking_number}}</a>
+                                {% else %}
+                                    <span target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{order.fright_tracking_service}}"> {{order.tracking_number}} </span>
+                                {% endif %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td class="text-align-right">
+                           {% if order.display_to_customer_all|length > 0 %}
+                                <div class="tooltip-container" style="display:inline-block;">
+                                    <img src="/img/favicon.ico" width="30" class="tooltip-trigger">
+                                    <div class="custom-tooltip" style="display:none;">
+                                        {% for note in order.display_to_customer_all %}
+                                            <div class="tooltip-item">
+                                                <span class="tooltip-date">{{ note.date|date('d/m/Y') }}</span>
+                                                <span class="tooltip-message">{{ note.message }}</span>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        </td>
+                        <td class="text-align-right"><i class="fas fa-comments" onclick="openMsgModel('{{order.number}}','{{order.id}}')" style="font-size: 30px;cursor:pointer;"></i></td>
+                        <td class="text-align-right"><i class="fas fa-shopping-cart"  data-toggle="modal" data-target="#account-reorder{{ order.id }}-modal" style="font-size: 30px;cursor:pointer;"></i>
+                        </td>
+                    
+                    </tr>
+                {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="8" style="font-style:italic;">No Orders or Inquiries</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table></div></div>
+        </div>{% endif %}
+    </div>
+    {% set prefix = 'account-contact' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Send Message to our team</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="/account/orders" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <div class="row">
+                        <div class="col-md-4">
+                            <label for="{{ prefix }}-company_name">Our Reference <span class="color-red">*</span></label>
+                            <input type="text" name="order_id" class="form-control" id="order_id" readonly="true" required/>
+                            <input type="hidden" name="id" class="form-control" id="invoice_id"/>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="{{ prefix }}-company_name">Subject/Title <span class="color-red">*</span></label>
+                            <input type="text" name="subject" class="form-control" id="{{ prefix }}-company_name" required/>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="{{ prefix }}-company_name">Message<span class="color-red">*</span></label>
+                            <textarea name="message" class="form-control" id="{{ prefix }}-company_name" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group center-align">
+                <input type="hidden" value="contact" name="action" />
+                <input type="submit" value="Send Message" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+    {% set prefix = 'account-cancel' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Do you want to cancel this order?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <div class="row">
+                        <div class="col-md-4">
+                            <label for="{{ prefix }}-company_name">Our Reference<span class="color-red">*</span></label>
+                            <input type="text" name="cancel_order_id" class="form-control" id="cancel_order_id" readonly="true" required/>
+                            <input type="hidden" name="id" class="form-control" id="cancel_invoice_id"/>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="{{ prefix }}-company_name">Reason of cancellation<span class="color-red">*</span></label>
+                            <textarea name="message" class="form-control" id="{{ prefix }}-company_name" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group center-align">
+                <input type="hidden" value="cancelorder" name="action" />
+                <input type="submit" value="Send Message" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+       {# {% for order in orders %} #}
+       {% for order in currOrders[:5] %}
+        {% set prefix = 'account-reorder' ~ order.id %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reorder </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-table">
+            <div class="table-responsive-sm">
+             <form action="/account/orders" method="post">
+                <input type="hidden" value="{{order.id}}" name="invoice_id">
+                <table>
+                    <thead><tr>
+                        <th></th>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th width="10%">Quantity</th>
+                        <th>Total</th>
+                    </tr></thead>
+                    <tbody>
+        {% set invoicepro = order.invoiceProduct(order.id) %}
+        {% set key =0 %}
+        {% for pro in invoicepro %}
+        {% if pro.product_id > 0 %}
+                   <tr>
+            {% set product = product_det(pro.product_id) %}
+            {% set image   = product.images(pro.colour_id)[0] %}
+                       <td><input type="checkbox" name="product[{{key}}][product_checked]" checked><br/><span>{{ (product.stockavailable(pro.product_id,pro.colour_id)<product.minOrder) ?((product.soldout)? 'Sorry this product is no longer available' : ''):'' }}</span></td>
+                       <td><img src="{{ image|e }}" alt="{{ image.alt|e }}" style="max-width:48px;max-height:48px;float:left;margin:0 8px 8px 0;min-height:48px;" /></td>
+                       <td>{{ product.name|e }}</td>
+                       <td>
+            {% if product.compareAtPrice %}
+                        <div class=" product__price--old">{{ product.compareAtPrice|currency }}</div>
+                        <div class=" product__price--new">{{ product.price|currency }}</div>
+            {% else %}
+                        <div class=" product__price--current">{{ product.price|currency }}</div>
+            {% endif %}</td>
+                       <td>
+                            <input type="hidden" value="{{ product.priceValue }}" name="product[{{key}}][product_price]" class="product_price">
+                            <input type="hidden" value="{{ pro.colour_id}}" name="product[{{key}}][color_cart]" class="colour_id">
+                            <input type="hidden" value="{{ pro.product_id}}" name="product[{{key}}][product_id]">
+                            <input type="hidden" value="{{ product.name|e }}" name="product[{{key}}][product_name]">
+                            <input type="hidden" value="{{ image|e }}" name="product[{{key}}][product_img]">
+                            <input type="hidden" value="{{ product.url|e }}" name="product[{{key}}][product_url]">
+                            <div class="input-number">
+                                <input class="input-number__input form-control form-control-lg product-qty-input"  name="product[{{key}}][product_qty]" type="number" min="{{ max(1, product.minOrder) }}" value="{{pro.product_qty}}" readonly/>
+                                <div class="input-number__add" onclick="functionadd(this)"></div>
+                                <div class="input-number__sub" onclick="functionsub(this)"></div>
+                            </div>
+                        </td>
+                       <td class="product_cost">{{ product.priceMultiplied(pro.product_qty)|currency }}</td>
+                   </tr>
+                    </tbody>
+            {% set key =key+1 %}
+            {% endif %}
+        {% endfor %}
+                </table>
+                <div class="form-group center-align">
+                    <input type="hidden" value="{{ order.id }}" name="id" />
+                    <input type="hidden" value="reorder" name="action" />
+                    <input type="submit" class="btn btn-lg- btn-primary " value="Add to Cart" />
+                </div>
+            </form>
+        </div>
+     </div>
+        </div>
+        </div></div></div>
+     
+    {% endfor %}
+
+    {% for order in oldOrders[:5] %}
+        {% set prefix = 'account-reorder' ~ order.id %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reorder </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-table">
+            <div class="table-responsive-sm">
+             <form action="/account/orders" method="post">
+                <input type="hidden" value="{{order.id}}" name="invoice_id">
+                <table>
+                    <thead><tr>
+                        <th></th>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th width="10%">Quantity</th>
+                        <th>Total</th>
+                    </tr></thead>
+                    <tbody>
+        {% set invoicepro = order.invoiceProduct(order.id) %}
+        {% set key =0 %}
+        {% for pro in invoicepro %}
+        {% if pro.product_id > 0 %}
+                   <tr>
+            {% set product = product_det(pro.product_id) %}
+            {% set image   = product.images(pro.colour_id)[0] %}
+                       <td><input type="checkbox" name="product[{{key}}][product_checked]" checked><br/><span>{{ (product.stockavailable(pro.product_id,pro.colour_id)<product.minOrder) ?((product.soldout)? 'Sorry this product is no longer available' : ''):'' }}</span></td>
+                       <td><img src="{{ image|e }}" alt="{{ image.alt|e }}" style="max-width:48px;max-height:48px;float:left;margin:0 8px 8px 0;min-height:48px;" /></td>
+                       <td>{{ product.name|e }}</td>
+                       <td>
+            {% if product.compareAtPrice %}
+                        <div class=" product__price--old">{{ product.compareAtPrice|currency }}</div>
+                        <div class=" product__price--new">{{ product.price|currency }}</div>
+            {% else %}
+                        <div class=" product__price--current">{{ product.price|currency }}</div>
+            {% endif %}</td>
+                       <td>
+                            <input type="hidden" value="{{ product.priceValue }}" name="product[{{key}}][product_price]" class="product_price">
+                            <input type="hidden" value="{{ pro.colour_id}}" name="product[{{key}}][color_cart]" class="colour_id">
+                            <input type="hidden" value="{{ pro.product_id}}" name="product[{{key}}][product_id]">
+                            <input type="hidden" value="{{ product.name|e }}" name="product[{{key}}][product_name]">
+                            <input type="hidden" value="{{ image|e }}" name="product[{{key}}][product_img]">
+                            <input type="hidden" value="{{ product.url|e }}" name="product[{{key}}][product_url]">
+                            <div class="input-number">
+                                <input class="input-number__input form-control form-control-lg product-qty-input"  name="product[{{key}}][product_qty]" type="number" min="{{ max(1, product.minOrder) }}" value="{{pro.product_qty}}" readonly/>
+                                <div class="input-number__add" onclick="functionadd(this)"></div>
+                                <div class="input-number__sub" onclick="functionsub(this)"></div>
+                            </div>
+                        </td>
+                       <td class="product_cost">{{ product.priceMultiplied(pro.product_qty)|currency }}</td>
+                   </tr>
+                    </tbody>
+            {% set key =key+1 %}
+            {% endif %}
+        {% endfor %}
+                </table>
+                <div class="form-group center-align">
+                    <input type="hidden" value="{{ order.id }}" name="id" />
+                    <input type="hidden" value="reorder" name="action" />
+                    <input type="submit" class="btn btn-lg- btn-primary " value="Add to Cart" />
+                </div>
+            </form>
+        </div>
+     </div>
+        </div>
+        </div></div></div>
+     
+    {% endfor %}
+    <script type="text/javascript">
+        function openMsgModel(orderid,invoiceid){
+            $('#order_id').val(orderid);
+            $('#invoice_id').val(invoiceid);
+            $('#account-contact-modal').modal('show');
+        }
+        function openCancelModel(orderid,invoiceid){
+            $('#cancel_order_id').val(orderid);
+            $('#cancel_invoice_id').val(invoiceid);
+            $('#account-cancel-modal').modal('show');
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+
+            tooltipTriggers.forEach(function (tooltipTrigger) {
+                const customTooltip = tooltipTrigger.nextElementSibling; // Select the corresponding tooltip
+
+                tooltipTrigger.addEventListener('mouseover', function () {
+                    customTooltip.style.display = 'block'; // Show the tooltip
+                });
+
+                tooltipTrigger.addEventListener('mouseout', function () {
+                    customTooltip.style.display = 'none'; // Hide the tooltip
+                });
+            });
+        });
+
+
+
+        </script>
+{% endblock %}

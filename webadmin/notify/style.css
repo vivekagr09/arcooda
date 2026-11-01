@@ -1,0 +1,113 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+@media print
+{
+	.print_hide
+	{
+		display:none;
+	}
+}
+
+div.notify_content .unfinished
+{
+	background-color:yellow;
+}
+
+div.notify_content a
+{
+	color: black;
+}
+
+div.notify_content
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div.notify_content table
+{
+	text-align: left;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div.notify_content tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-weight: normal;
+}
+
+div.notify_content pre {margin: 0 0 0 0;}
+div.notify_content pre.alt {background-color: #EEEEEE;}
+
+div.notify_content td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.notify_content th, div.notify_content thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	font-size:75%;
+}
+
+div.notify_content table.vbox td, div.notify_content table.vbox th, div.notify_content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div.notify_content table.buttons {	text-align: center; }
+div.notify_content table.wide {	width: 95%; }
+div.notify_content tr.alt		{ background-color: #EEEEE0; }
+div.notify_content tr.highlight { background-color: #90EEA0; }
+div.notify_content tr.mylock	{ background-color: #90A0EE; }
+div.notify_content tr.locked	{ background-color: #EE90A0; }
+div.notify_content td.collapse {	width: 1px; }
+div.notify_content th.collapse {	width: 1px; }
+div.notify_content td.left_title
+{
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+}
+div.notify_content input.intext,
+div.notify_content input.infile,
+div.notify_content textarea,
+div.notify_content select
+{
+	width: 98%;
+}
+
+div.notify_content th a
+{
+	color: #000000;
+}
+
+div.notify_content td a
+{
+	color: #000000;
+}
+
+div.notify_content table.spacetable td
+{
+	border:2px solid white;
+}
+

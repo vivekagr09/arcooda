@@ -1,0 +1,28 @@
+.language-changer {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    z-index: 999;
+    color: #2d394f;
+}
+.language-changer>a {
+    background-color: #fff;
+    color: #2d394f;
+    border: #829ab075 solid 1px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+}
+.language-changer>a:hover, .language-changer>a:focus {
+    background-color: #2d394f;
+    color: #fff;
+}
+.selected-language {
+    width: 24px;
+    margin-right: 8px;
+}
+.country-wrap .dropdown-item img {
+    width: 20px;
+    margin-right: 8px;
+}

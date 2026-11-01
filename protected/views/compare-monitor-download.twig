@@ -1,0 +1,439 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - error:
+// - success:
+// - tab:
+// - updated:
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set products   = inputs.products %}
+{% set helpText = inputs.helpText %}
+{% set sortby = inputs.sortby %}
+{% set prodWidth = inputs.prodWidth %}
+
+
+{% block site_body %}
+<style>
+  .spec-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  .spec-label {
+    width: 33%;
+    font-weight: 500;
+  }
+
+  .spec-values {
+    width: 67%;
+    display: flex;
+    gap: 15px; /* spacing between cm and inch */
+  }
+
+  .spec-values div {
+    white-space: nowrap;
+  }
+    .spec-table td {
+    padding: 4px 6px;
+    white-space: nowrap; /* prevents "Widt h" problem */
+    font-size: 12px;
+  }
+
+  .label-col {
+    width: 60px;  /* fixes Width/Height column */
+    font-weight: 600;
+  }
+
+  .cm-col {
+    width: 70px;  /* fixes cm column */
+  }
+
+  .inch-col {
+    width: 70px; /* fixes inch column */
+  }
+</style>
+    <table border="1" cellpadding="4" cellspacing="0" width="100%">
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Price</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{ product.price.format('[symbol_e]<span class="product-price-update">[price_inc_gst_e]</span> <span style="font-size:60%" id="labelUSD">[currency_e]</span>')|currency }}
+                       
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Monitor Size</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_size')[product.monitoOptions.monitor_size] }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Monitor Resolution </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_resolution')[product.monitor_resolution] }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Monitor Aspect Ratio </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_ratio')[product.monitor_ratio] }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Software Aspect Ratio </td>
+            {% for product in products %}
+                {% set aspect_ratio_software = product.monitoOptions.aspect_ratio_software|split(',') %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{% for ratio in aspect_ratio_software %}{{product.productGetOptionListData('monitor_ratio')[ratio] }}{% if not loop.last %}, {% endif %}{% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;"> Inputs</td>
+            {% for product in products %}
+           <td width="{{prodWidth}}mm">
+                {%- set inputs = [] -%}
+
+                {%- if product.monitoOptions.input_vga > 0 -%}
+                    {%- set inputs = inputs|merge([product.monitoOptions.input_vga ~ ' * VGA']) -%}
+                {%- endif -%}
+
+                {%- if product.monitoOptions.input_hdmi > 0 -%}
+                    {%- set inputs = inputs|merge([product.monitoOptions.input_hdmi ~ ' * HDMI']) -%}
+                {%- endif -%}
+
+                {%- if product.monitoOptions.input_dvi > 0 -%}
+                    {%- set inputs = inputs|merge([product.monitoOptions.input_dvi ~ ' * DVI']) -%}
+                {%- endif -%}
+
+                {%- if product.monitoOptions.input_displayport > 0 -%}
+                    {%- set inputs = inputs|merge([product.monitoOptions.input_displayport ~ ' * DisplayPort']) -%}
+                {%- endif -%}
+
+                {%- if product.monitoOptions.input_usb > 0 -%}
+                    {%- set inputs = inputs|merge([product.monitoOptions.input_usb ~ ' * USB (type A)']) -%}
+                {%- endif -%}
+
+                {%- if product.monitoOptions.input_usb_type_c > 0 -%}
+                    {%- set inputs = inputs|merge([product.monitoOptions.input_usb_type_c ~ ' * USB (type C)']) -%}
+                {%- endif -%}
+
+                {{- inputs|join('<br>')|trim|raw -}}
+                </td>
+                        {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Panel Type</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_type')[product.monitor_type] }}
+                </td>
+            {% endfor %}
+        </tr>
+                        
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Brightness</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_brightness')[product.monitoOptions.monitor_brightness] }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Contrast Ratio</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_contrast_ratio')[product.monitoOptions.monitor_contrast_ratio] }}
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Viewing Angle</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_viewing_angle')[product.monitoOptions.monitor_viewing_angle] }}
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Display Color</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_display_color')[product.monitoOptions.monitor_display_color] }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Refresh Rate </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_refresh_rate')[product.monitoOptions.monitor_refresh_rate] }}
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Display Surface </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_display_surface')[product.monitoOptions.monitor_display_surface] }}
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Power</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_power')[product.monitoOptions.monitor_power] }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td  width="40mm" style="word-wrap: break-word; white-space: normal;">Low Resolution Support</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{% set monitor_low_resolution_support_value = product.monitoOptions.monitor_low_resolution_support_value|split(',') %}{% for ratio in monitor_low_resolution_support_value %}{{product.productGetOptionListData('monitor_low_resolution_support')[ratio] }}<br>{% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Low Resolution Auto Picture </td>
+            {% for product in products %}
+                <td  width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{ product.monitoOptions.low_resolution_option|capitalize }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Low Resolution Analysis</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.low_resolution_analysis_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td  width="40mm" style="word-wrap: break-word; white-space: normal;">Screen Mirror Mode </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.screen_mirror_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Low Resolution Rotate </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{% set monitor_low_resolution_rotate = product.monitoOptions.monitor_low_resolution_rotate|split(',') %} {% for ratio in monitor_low_resolution_rotate %}{{product.productGetOptionListData('monitor_low_resolution_support')[ratio] }}{% if not loop.last %}, {% endif %}{% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">PC Monitor Resolution </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.productGetOptionListData('monitor_pc_resolution')[product.monitoOptions.monitor_pc_resolution] }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Screen Rotate PC Mode </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{% if product.monitoOptions.screen_rotate_option == 'yes' %}{% set screen_rotate_option_value = product.monitoOptions.screen_rotate_option_value|split(',') %}{% for ratio in screen_rotate_option_value %}{{product.productGetOptionListData('screen_rotate_option_value')[ratio] }}{% if not loop.last %}, {% endif %}{% endfor %}{% else  %}No{% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Audio Output</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{% if product.monitoOptions.audio_output_jack == 'yes' %}{{markdown(product.monitoOptions.audio_output_jack_comment) }}<br>{% else  %}No{% endif %} 
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Audio Input </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{% if product.monitoOptions.audio_input_jack == 'yes' %}{{markdown(product.monitoOptions.audio_input_jack_comment)}}<br>{% else  %}No{% endif %} 
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Mounting Brackets</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{% if product.monitoOptions.mounting_brackets == 'yes' %}{{product.monitoOptions.mounting_brackets_value }} pieces<br>{% else  %}No{% endif %} 
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">VESA Mount</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{% if product.monitoOptions.monitor_vesa_mount == 'yes' %}{% set monitor_vesa_mount_value = product.monitoOptions.monitor_vesa_mount_value|split(',') %}{% for ratio in monitor_vesa_mount_value %}{{product.productGetOptionListData('monitor_vesa_mount')[ratio] }}<br>{% endfor %}{% else  %}N/A{% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;"> OSD Button Extension Option</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.osd_buton_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">RGB Board Option </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.rgb_board_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+          <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Cable Management</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.cable_management_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">DDCCI </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.ddcci_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">FreeSync Pro </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.freesync_Pro_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Ultra HDR </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.ultra_hdr_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Ultra Vivid</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.ultra_vivid_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Over Drive</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.over_drive_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Over Scan </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.over_scan_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">DisplayPort MST</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.displayport_mst_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Screen Clone </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.screen_clone_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Picture in Picture </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.pinp_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Multi Display</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.multi_display|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">OSD Board Extention Option</td>{% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.osd_board_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Remote Control Option</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.monitoOptions.remote_controll_option|capitalize}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Screen Viewing Size </td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">
+                  Width: {{product.monitoOptions.screen_width}} cm 
+                    ({{product.monitoOptions.convertToInch(product.monitoOptions.screen_width)}})<br>
+
+                  Height: {{product.monitoOptions.screen_height}} cm 
+                    ({{product.monitoOptions.convertToInch(product.monitoOptions.screen_height)}})
+
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+        <td width="40mm" style="word-wrap: break-word; white-space: normal;">Monitor Dimensions</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">
+                    Width: {{product.width}} cm 
+                    ({{product.monitoOptions.convertToInch(product.width)}})<br>
+                    Height: {{product.height}} cm 
+                    ({{product.monitoOptions.convertToInch(product.height)}})<br>
+                    Depth: {{product.depth}} cm 
+                    ({{product.monitoOptions.convertToInch(product.depth)}})
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Monitor Dimensions with Brackets</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">
+                    Width: {{product.monitoOptions.screen_width_brackets}} cm 
+                    ({{product.monitoOptions.convertToInch(product.monitoOptions.screen_width_brackets)}})<br>
+                    Height: {{product.monitoOptions.screen_height_brackets}} cm 
+                    ({{product.monitoOptions.convertToInch(product.monitoOptions.screen_height_brackets)}})<br>
+                    Depth: {{product.monitoOptions.screen_depth_brackets}} cm 
+                    ({{product.monitoOptions.convertToInch(product.monitoOptions.screen_depth_brackets)}})
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Monitor Weight</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{product.item_weight }} kg
+                </td>
+            {% endfor %}
+        </tr>
+         <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Best Uses</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{markdown(product.monitoOptions.best_uses) }}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td width="40mm" style="word-wrap: break-word; white-space: normal;">Notes</td>
+            {% for product in products %}
+                <td width="{{prodWidth}}mm" style="word-wrap: break-word; white-space: normal;">{{markdown(product.monitoOptions.notes) }}
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+{% endblock %}
+

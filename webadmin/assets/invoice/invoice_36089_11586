@@ -1,0 +1,40 @@
+Received: from smtp.witbe.net (81.88.96.48) by ex-fr-01.witbe.local
+ (192.168.0.22) with Microsoft SMTP Server (TLS) id 14.2.347.0; Wed, 11 Jun
+ 2014 14:47:56 +0000
+Received: from john.ourhunter.com (john.ourhunter.com [192.96.215.110])	by
+ smtp.witbe.net (8.13.8/8.13.8) with ESMTP id s5BElpV1008973	for
+ <gdp@witbe.net>; Wed, 11 Jun 2014 14:47:52 GMT
+Received: by john.ourhunter.com (Postfix, from userid 48)	id C597E2661B3B;
+ Thu, 12 Jun 2014 00:45:01 +1000 (EST)
+From: Converters.TV <sales@converters.tv>
+To: Gregory de Pauw <gdp@witbe.net>
+Subject: Payment Received: Converters.TV
+Thread-Topic: Payment Received: Converters.TV
+Thread-Index: AQHPhYQiEm2d0BdaWU+TrpGT6aadaw==
+Date: Wed, 11 Jun 2014 14:45:01 +0000
+Message-ID: <20140611144501.C597E2661B3B@john.ourhunter.com>
+Content-Language: fr-FR
+X-MS-Exchange-Organization-AuthSource: EX-FR-01.witbe.local
+X-MS-Has-Attach: 
+X-MS-Exchange-Organization-SenderIdResult: Neutral
+X-MS-Exchange-Organization-PCL: 2
+X-MS-Exchange-Organization-PRD: converters.tv
+X-MS-TNEF-Correlator: 
+received-spf: Neutral (EX-FR-01.witbe.local: 81.88.96.48 is neither
+ permitted nor denied by domain of sales@converters.tv)
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+Dear Jean Michel Planche,
+
+Thank you for your payment to Converters.TV. Your details have been sent to our accounts department which will process your order as soon as possible. The details of your payment are below:
+
+Receipt Number: 416300333998
+
+Payment To: Converters.TV
+Payment Amount: 1075 USD
+Transaction Date: 12 June 2014
+
+With thanks
+Converters.TV

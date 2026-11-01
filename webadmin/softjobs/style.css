@@ -1,0 +1,114 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+@media print
+{
+	.print_hide
+	{
+		display:none;
+	}
+}
+
+div.softjob_content .unfinished
+{
+	background-color:yellow;
+}
+
+div.softjob_content a
+{
+	color: black;
+}
+
+div.softjob_content
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div.softjob_content table
+{
+	text-align: left;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div.softjob_content tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-weight: normal;
+}
+
+div.softjob_content pre {margin: 0 0 0 0;}
+div.softjob_content pre.alt {background-color: #EEEEEE;}
+
+div.softjob_content td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.softjob_content th, div.softjob_content thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	font-size:75%;
+}
+
+div.softjob_content table.vbox td, div.softjob_content table.vbox th, div.softjob_content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div.softjob_content table.buttons {	text-align: center; }
+div.softjob_content table.wide {	width: 95%; }
+div.softjob_content tr.alt		{ background-color: #EEEEE0; }
+div.softjob_content tr.highlight { background-color: #90EEA0; }
+div.softjob_content td.highlight { background-color: #90EEA0; }
+div.softjob_content tr.mylock	{ background-color: #90A0EE; }
+div.softjob_content tr.locked	{ background-color: #EE90A0; }
+div.softjob_content td.collapse {	width: 1px; }
+div.softjob_content th.collapse {	width: 1px; }
+div.softjob_content td.left_title
+{
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+}
+div.softjob_content input.intext,
+div.softjob_content input.infile,
+div.softjob_content textarea,
+div.softjob_content select
+{
+	width: 98%;
+}
+
+div.softjob_content th a
+{
+	color: #000000;
+}
+
+div.softjob_content td a
+{
+	color: #000000;
+}
+
+div.softjob_content table.spacetable td
+{
+	border:2px solid white;
+}
+

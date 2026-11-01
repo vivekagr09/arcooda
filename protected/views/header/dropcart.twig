@@ -1,0 +1,66 @@
+{#
+// inputs:
+#}
+
+{% set cart = cart() %}
+
+<div class="dropcart">
+    <ul class="dropcart__list">{% for item in cart.items %}
+        <li class="dropcart__item">
+            <div class="dropcart__item-image"><a href="{{ item.url|e }}"><img src="{{ image(item.image, {size: 70}) }}" alt="{{ item.image.alt|e }}" width="96" height="96"/></a></div>
+            <div class="dropcart__item-info">
+                <div class="dropcart__item-name"><a href="{{ item.url|e }}">{{ item.name }}{% if item.colour_id > 0 %} ({{ item.colour_name|e }}) {% endif %}</a></div>
+                <ul class="dropcart__item-features">
+                        <li>Product Id: {{item.product_id}}{% if item.colour_id>0 %}{{item.colour_code}} {% endif %}</li>
+                        <li>Warranty: {{item.Warranty}}</li>
+                        <li>Location: {{item.location}}</li>
+                </ul>
+                <div class="dropcart__item-meta">
+                    <div class="dropcart__item-quantity">{{ item.quantity }}</div>
+                    <span style="padding:6px;">x</span>
+                    <div class="dropcart__item-price">{{ item.price}}</div>
+                </div>
+            </div>
+            <form action="/cart/" method="post">
+                <input type="hidden" name="id" value="{{ item.id }}" />
+                <input type="hidden" name="action" value="remove" />
+                <button type="submit" class="dropcart__item-remove">{{ svg_inline('cross-10.svg') }}</button>
+            </form>
+        </li>
+        <li class="dropcart__divider" role="presentation"></li>
+        {% if cart.invoice_gifts|length > 0 %}
+            {% for product in cart.invoice_gifts %}
+                {% if product.product_id == item.product_id %}
+                    <li class="dropcart__item">
+                        <div class="dropcart__item-image"><a href="{{ product.url|e }}"><img src="{{ product.image_url }}" width="96" height="96" /></a></div>
+                        <div class="dropcart__item-info">
+                            <div class="dropcart__item-name"><a href="{{ product.url|e }}">{{ product.name }}</a></div>
+                            <ul class="dropcart__item-features">
+                                    <li>Product Id: {{product.product_id}}</li>
+                                    <li>Warranty: {{product.warranty}}</li>
+                                    <li>Location: {{product.location}}</li>
+                            </ul>
+                            <div class="dropcart__item-meta">
+                                <div class="dropcart__item-quantity">{{ product.qty }}</div>
+                                <span style="padding:6px;">x</span>
+                                <div class="dropcart__item-price" style="color:red">$0.00 <span style="font-size:60%">USD</span></div>
+                            </div>
+                        </div>
+                    </li>   
+                {% endif %}
+            {% endfor %} 
+        {% endif %}               
+    {% endfor %}</ul>
+    <div class="dropcart__totals"><table>{% for total in cart.totals %}<tr>
+        {% if total.title=='Subtotal' %}
+        <th>{{ total.title }}</th>
+        <td>{{ total.value | number_format(2, '.', ',') }} USD</td>
+        {% endif %}
+    </tr>{% endfor %}</table></div>
+    <div class="dropcart__actions">
+        <a href="/cart" class="btn btn-secondary">View Cart</a>
+        {#<a href="/checkout" class="btn btn-primary">Checkout</a>#}
+        {#<a href="/cart/express-checkout" class="btn btn-primary">Checkout</a>#}
+        <a href="/checkout" class="btn btn-primary">Checkout</a>
+    </div>
+</div>

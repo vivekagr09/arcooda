@@ -1,0 +1,64 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - member:
+#}
+
+{% set global_page_title           = inputs.title|default('Account Registration') %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/currency-calculator'                          %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'},
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set surveys     = inputs.surveys %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+	{% include '/blocks/block-header.twig' with {inputs: {
+        title: 'Arcooda Survey',
+        breadcrumb: global_page_breadcrumbs,
+    }} %}
+    <div class="block">
+        <div class="container">
+        	<div class="block">
+                <div class="categories-list">
+                   <ul class="categories-list__body" style="background-color: #fafafa;box-shadow:none;">
+                    {% for survey in surveys %}
+                      <li class="categories-list__item" style="width:47%;margin:1%;background-color: #fff;box-shadow:0 1px 3px rgba(0, 0, 0, .09);">
+                        <div class="section-header">
+                           <div class="section-header__body">
+                              <h2 class="section-header__title">{{ survey.name|e }}</h2>
+                              <div class="section-header__divider"></div>
+                           </div>
+                        </div>
+                         <a href="{{survey.link}}" target="_blank">
+                            <div class="image image--type--category" style="    max-width: 300px;">
+                               <div class="image__body"><img class="image__tag" src="/survey-image/{{ survey.image|e }}?width=300&height=300" alt="Survey Image"></div>
+                            </div>
+                         </a>
+                         <div class="categories-list__item-name">
+                            <a  class="btn btn-primary" href="{{survey.link}}" style="margin: auto;width: 30%;    color: #fff;">Start</a>
+                         </div>
+                      </li>
+                      {% endfor %}
+                   </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	{% include '/blocks/block-space.twig' with {inputs: {layout: 'before-footer'}} %}
+{% endblock %}

@@ -1,0 +1,10 @@
+@import url("/css/yui_reset.css");
+@import url("/css/yui_fonts.css");
+@import url("/css/yui_base.css");
+@import url("/css/yui_grids.css");
+
+@page	{ size:landscape; /*margin:1cm;*/ }
+#left_menu, .print_hide, .unfinished	{ display:none; }
+input	{ border-style:none; padding:0; margin:0; }
+table	{ width:100%; margin:0; }
+a	{ text-decoration:inherit; }

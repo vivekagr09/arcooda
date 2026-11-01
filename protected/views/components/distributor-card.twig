@@ -1,0 +1,64 @@
+{#
+// inputs:
+// - product: object - product data object
+// - layout:  string - one of [grid, list, table]
+// - exclude: array  - indicates which content should be excluded from the template (default: [])
+#}
+
+{% set distributor = inputs.distributor %}
+{% set layout  = inputs.layout %}
+{% set exclude = inputs.exclude|default([]) %}
+
+{% set root_classes = classnames('product-card') %}
+
+{% if layout %}
+    {% set root_classes = classnames(root_classes, 'product-card--layout--'~layout) %}
+{% endif %}
+
+<div class="{{ root_classes }}">
+
+    <div class="product-card__image" style="text-align: center;">
+            <img src="{{distributor.image }}?size=245" alt="{{ distributor.alt|e }}" title="{{ distributor.name|e }}" width="245"/>
+        </a>
+    </div>
+
+    <div class="product-card__info">
+        <div class="product-card__name">
+            <div style="font-size:20px;">
+               <a href="{{distributor.url}}" target="_blank">{{ distributor.name|e }}</a>
+            </div>
+        </div>
+
+        <div class="product-card__features" style="display:flex">
+            <div style="width: 40%;background-color: #F3F1F1;padding: 10px;">{{ markdown(distributor.full_address) }}</div>
+             <div style="width: 40%;background-color: #F3F1F1;padding: 10px;margin-left:15px;">{{ markdown(distributor.formated_address) }}</div>
+              <div style="width: 20%;padding: 10px;margin-left:15px;">
+                 <ul>
+                    {% for item in distributor.category() %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+              </div>
+        </div>
+        <div style="padding-top: 20px;display: flex;">
+            <button class="product-card__addtocart-full" type="button" onclick="window.open('{{ distributor.url|e('js') }}', '_blank')" style="margin-top: 15px;width: 100px;margin-right: 25px;">
+                        Website
+          </button>
+            {% for key, product in distributor.getProduct %}
+                <a href="{{ product.url|e }}" target="_blank">
+                    <img src="{{ image(product.imagescategory[0], {size: 70}) }}" alt="{{ product.imagescategory[0].alt|e }}" title="{{ product.name|e }}" target="_blank"/>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="product-card__footer">
+        <div class="product-card__prices">
+            <div class="dd product-card__price product-card__price--new"></div>
+        </div>
+            <div style="text-align: center;">
+             <a href="https://www.arcooda.com/mapviewer/index.php?code={{ distributor.mapLink|e }}" target="_blank"><img src="{{distributor.image }}?size=150&type=mapimage" alt="{{ distributor.alt|e }}" title="{{ distributor.name|e }}" width="150"/></a>
+
+          </div>
+    </div>
+</div>

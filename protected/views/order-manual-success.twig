@@ -1,0 +1,63 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - orders:
+// - page:
+#}
+
+{% set global_page_title           = inputs.title|default('Payment Success')        %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/payment_manual_success'                            %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : 'payment',      url : '/payment_manual_success' },
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+{% set payment = inputs.payment                                               %}
+{% set error = inputs.error %}
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+{% set title_front           = inputs.title_front  %}
+{% include '/blocks/block-header.twig' with {inputs: {
+  title: '',
+  breadcrumb: global_page_breadcrumbs,
+}} %}
+<link rel="stylesheet" href="/css/checkout.css" />
+<div class="site__body">
+   <div class="block order-success">
+      <div class="container">
+         <div class="order-success__body">
+            <div class="order-success__header" style="padding: 0px 0 52px;">
+               <div class="order-success__icon" style="text-align: center;display: table;">
+                  <div class="row">
+                  <svg width="100" height="100">
+                     <path d="M50,100C22.4,100,0,77.6,0,50S22.4,0,50,0s50,22.4,50,50S77.6,100,50,100z M50,2C23.5,2,2,23.5,2,50
+                        s21.5,48,48,48s48-21.5,48-48S76.5,2,50,2z M44.2,71L22.3,49.1l1.4-1.4l21.2,21.2l34.4-34.4l1.4,1.4L45.6,71
+                        C45.2,71.4,44.6,71.4,44.2,71z"></path>
+                  </svg>
+                  <div style="text-align: left; margin-left: 20px; margin-top: -17px;">
+                     <h1 class="order-success__title">Thank You</h1>
+                     <div class="order-success__subtitle">Your payment has been received</div>
+                  </div>
+               </div>
+               </div>
+               <div class="order-success__icon row" style="text-align: center;display: table;margin-top: 10px;">
+                  <p><span style="font-size: 22px;"><b>Reference </b>: </span><span style="color: #5ac144; font-weight: 600; font-size: 22px;">{{payment.reference}}</span></p>
+               </div>
+               <div class="order-success__icon row" style="text-align: center;display: table;margin-top: 10px;">
+                  <p>Thank you for your payment. We will reply as soon as possible, However for any urgent matters, Please call our office and quote the above reference number.</p>
+               </div>
+               <div class="order-success__actions"><a href="/" class="btn btn-sm btn-secondary">Go To Homepage</a> <a href="/account/orders" class="btn btn-primary">My Account</a></div>
+            </div>
+         </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'before-footer',
+    }} %}
+{% endblock %}

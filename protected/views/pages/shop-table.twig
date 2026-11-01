@@ -1,0 +1,16 @@
+{#
+// inputs:
+#}
+
+{% set products = inputs.product %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/components/shop-page.twig' with {inputs: {
+        layout: 'table',
+        grid: 'grid-4-sidebar',
+        sidebar: 'left',
+        products: products,
+    }} %}
+{% endblock %}

@@ -1,0 +1,112 @@
+<?php
+
+if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+class Storeapp {
+
+    private $data;
+
+    private $CI;
+
+    public function __construct(){
+
+        $this->CI =& get_instance();
+
+    }
+
+    public function view($page, $data = array(), $skip_layout = false, $return = false){
+
+        $this->CI->load->model("Product_model");
+
+        $this->CI->load->model("User_model");
+
+        $data['page'] = $page;
+
+        $data['LanguageHtml'] = $this->CI->Product_model->getLanguageHtml('store', 'store-default');
+
+        $data['CurrencyHtml'] = $this->CI->Product_model->getCurrencyHtml('store', 'store-default');
+
+        $data['languages'] = $this->CI->Product_model->getLanguageHtml('store', 'store-default', true);
+
+    	$settingdata = array();
+
+        $this->CI->db->where('setting_type', 'store');
+
+        $getSetting = $this->CI->db->get_where('setting', array('setting_status' => 1))->result_array();
+       
+
+        $this->CI->db->where('setting_type', 'site');
+
+        $SiteSetting = $this->CI->db->get_where('setting', array('setting_status' => 1))->result_array();
+
+        foreach ($SiteSetting as $key => $value) {
+
+            $data['SiteSetting'][$value['setting_key']] = $value['setting_value'];
+
+        }
+
+        foreach ($getSetting as $setting) {
+
+            $settingdata[$setting['setting_key']] = $setting['setting_value'];
+
+        }
+
+        $data['add_tocart_url'] = $this->CI->cart->getStoreUrl('add_to_cart');
+
+        $data['store_setting'] = $settingdata;
+
+        $data['is_logged'] = $this->CI->cart->is_logged();
+
+        $data['home_link'] = base_url("store/");
+
+        $data['base_url'] = base_url("store/");
+
+    	$data['referid'] = (int)$this->CI->cart->getReferId();
+
+        $data['client'] = $this->CI->User_model->get_user_by_id($this->CI->cart->getUserId());
+
+        $theme = $settingdata['theme'];
+        $theme = $theme ? $theme : 0;
+        $path = "store/{$theme}/{$page}.php";
+
+        if((int)$theme != 0){
+            $path = "store/{$theme}/{$page}.php";
+            if(!file_exists(APPPATH."views/".$path)){
+                $path = "store/default/{$page}.php";
+
+            }
+
+        } else {
+
+            $path = "store/default/{$page}.php";
+
+        }
+        
+        $this->data['content'] = $this->CI->load->view($path,  $data, true);
+
+        if($skip_layout === 'classified-checkout') {
+            $this->CI->load->view("store/classified/checkout_layout.php", $this->data);
+        } else if($skip_layout === 'lms') {
+            $this->CI->load->view("store/default/lms/template-1", $this->data);
+        } else {
+            if($skip_layout){
+                if($return)  return $this->data['content'];
+                echo $this->data['content'];
+                die;
+
+            } else {
+                $path = '';
+                if($theme != '0'){
+                    $path = "store/{$theme}/layout.php";
+                    if(!file_exists(APPPATH."views/".$path)){
+                        $path = "store/default/layout.php";
+                    }
+                } else {
+                    $path = "store/default/layout.php";
+                } 
+                
+                $this->CI->load->view($path, $this->data);   
+            }
+        }
+    }
+} 

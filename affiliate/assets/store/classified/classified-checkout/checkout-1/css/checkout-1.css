@@ -1,0 +1,263 @@
+a {
+    color: #007BFF !important;
+    text-decoration: underline;
+}
+.bg-color {}
+.container {
+    max-width: 960px;
+}
+.img-resolution img {
+    display: inline-block;
+}
+.img-resolution img {
+    display: inline-block;
+    width: 23.8%;
+    height: auto;
+}
+h4 {
+    color: hsl(213, 34%, 32%);
+}
+h6 {
+    color: #eb9080;
+}
+.text-muted {
+    color: #eb9080 !important;
+    font-weight: bold;
+}
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+.border-top-gray {
+    border-top-color: #adb5bd;
+}
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+.lh-condensed {
+    line-height: 1.25;
+}
+.checkout-btn {
+    background: linear-gradient(0deg, #019875, #029875);
+    color: #fff;
+    border-color: linear-gradient(0deg, #019875, #029875);
+}
+.form-check-input:checked {
+    background-color: #12487f;
+    border-color: #12487f;
+}
+.form-check-input {
+    border: 1px solid #12487f
+}
+.form-check-input:active {
+    filter: brightness(100%);
+}
+.form-check-input:focus {
+    border-color: #12487f;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(18 72 127 / 30%);
+}
+.checkout-bg {
+    background: #2f2c33;
+    padding: 30px;
+}
+.checkout-bg h4 {
+    color: #fff;
+}
+.form-label {
+    margin-bottom: 0.5rem;
+    color: #78757c;
+}
+label.form-check-label {
+    color: #78757c;
+}
+.order-md-last {
+    padding: 30px;
+}
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+.height-img {
+    height: 91px;
+    width: 100%;
+}
+.detail {
+    font-size: 14px;
+    line-height: 1rem;
+    color: #395270;
+    background-color: #007BFF73;
+    border: solid 1px #395270;
+    padding: 1rem 1rem 1rem 1rem;
+}
+.detail li {
+    margin: 16px 0px;
+}
+.guarantee-container {
+    padding: 1rem 1rem 1rem 2rem;
+}
+.guarantee-container h5 {
+    font-size: 1rem;
+    margin: 4px 0;
+    color: #5f5f5f
+}
+a {
+    color: #fb5303;
+}
+.review-bg h4 {
+    color: #fff;
+}
+.review-bg {
+    background: #2f486661;
+    padding: 20px 30px;
+}
+.style-none {
+    border: none !important;
+}
+.white-bg {
+    background: #fff;
+    padding: 20px;
+}
+.review-bg img {
+    border: 1px solid #5f5f5f;
+    padding: 10px;
+    width: 40%;
+}
+.orange {
+    color: #007BFF;
+}
+.round-img img {
+    border: 1px solid #007BFF;
+    padding: 5px;
+    border-radius: 100%;
+}
+.legal-footer {
+    font-size: 16px;
+    text-align: center;
+}
+.legal-footer a {
+    text-decoration: none;
+}
+.legal-footer ul li {
+    display: inline-block;
+}
+.legal-footer ul li:not(:last-child) {
+    margin-right: 0.5rem;
+}
+select#Quantity {
+    margin-bottom: 13px;
+}
+p.text-right {
+    text-align: right;
+}
+.secure-img img {
+    width: 20%;
+    width: 10%;
+}
+.secure-img {
+    background: #354f6d;
+    /* Old browsers */
+    background: -moz-linear-gradient(left, #354f6d 43%, #007BFF 83%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #354f6d 43%, #007BFF 83%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #354f6d 43%, #007BFF 83%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#354f6d', endColorstr='#007BFF', GradientType=1);
+    /* IE6-9 */
+    padding: 5px;
+    text-align: center;
+    color: #fff;
+    font-size: 69px;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #fff !important;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: background: #354f6d;
+    /* Old browsers */
+    background: -moz-linear-gradient(left, #354f6d 43%, #007BFF 83%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #354f6d 43%, #007BFF 83%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #354f6d 43%, #007BFF 83%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#354f6d', endColorstr='#007BFF', GradientType=1);
+    /* IE6-9 */
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 24px !important;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    width: 100%;
+    height: 65px;
+}
+.detail li {
+    margin: 16px 0px;
+    color: #395270;
+    list-style: none;
+}
+.detail a {
+    text-decoration: none;
+}
+.detail li a {
+    color: #395270;
+}
+li.list-group-item img {
+    width: 33%;
+}
+form.needs-validation img {
+    margin-bottom: 15px;
+    width: auto;
+    height: 73px;
+    margin-left: 7px;
+}
+.payment-width .form-check-input {
+    margin-top: 1.6rem;
+}
+.login-btn-popup .btn {
+    width: 60%;
+}
+.login-btn-popup .form-check {
+    padding-right: 1rem;
+}
+.modal-footer.checkout-page-model {
+    justify-content: flex-start !important;
+    display: block;
+}
+.iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag, .iti--separate-dial-code .iti__selected-flag {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-top-left-radius: 19px;
+    border-bottom-left-radius: 19px;
+}
+.dropdown.currency-dropdown {
+    left: auto;
+    right: 28.5rem;
+    top: 7rem;
+    margin: 0px 3px 5px 0px;
+}
+.dropdown.currency-dropdown .btn {
+    width: 151px;
+    height: 53px;
+}
+.iti-mobile .iti--container {
+    top: 266px !important;
+    bottom: 30px !important;
+    left: 35rem !important;
+    right: 0px !important;
+    position: fixed;
+    width: 300px;
+}

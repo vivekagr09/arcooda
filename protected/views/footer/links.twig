@@ -1,0 +1,35 @@
+{#
+// inputs:
+// - title: string - links title
+// - links: array  - array of {title: '', url: ''}
+#}
+
+{% set title = inputs.title %}
+{% set links = inputs.links %}
+
+<div class="site-footer__widget footer-links">
+    <h5 class="footer-links__title">{{ title }}</h5>
+    <ul class="footer-links__list">
+        {% for link in links %}
+            <li class="footer-links__item"><a href="{{ link.url }}" class="footer-links__link">{{ link.name }}</a></li>
+        {% endfor %}
+        {% if title=='Information' %}
+        <li class="footer-links__item"><a href="/arcooda-survey" class="footer-links__link">Survey</a></li>
+         <li class="footer-links__item"><a href="/newsletters" class="footer-links__link">Newsletter</a></li>
+            <li class="footer-links__item"><a href="/discontinued-product" class="footer-links__link">Discontinued Products</a></li>
+         {% endif %}
+    </ul>
+    {% if title=='My Account' %}
+    <h5 class="footer-links__title" style="margin-top: 22px;">Tools</h5>
+     <ul class="footer-links__list">
+     	<li class="footer-links__item"><a href="/currency-calculator" class="footer-links__link">Currency Calculator</a></li>
+     	<li class="footer-links__item"><a href="/freight-calculator" class="footer-links__link">Freight Calculator</a></li>
+        <li class="footer-links__item"><a href="/payment" class="footer-links__link">Payment</a></li>
+      <li class="footer-links__item"><a href="/arcooda-monitor-comparison-table.html" class="footer-links__link">Monitor Comparison Table</a></li>
+        <li class="footer-links__item"><a href="/product-builder.html" class="footer-links__link">Product Builder</a></li>
+     </ul>
+    {% endif %}
+</div>
+   {% if title=='Work with Us' %}
+         {% include '/footer/newsletter.twig' %}
+    {% endif %}

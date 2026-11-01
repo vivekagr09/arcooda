@@ -1,0 +1,41 @@
+{#
+// inputs:
+// - title:  string - section title
+// - layout: string - one of [grid, list]
+// - links:  array  - object of {title: string, url: string} (default: [])
+// - groups: array  - object of {name: string, active: boolean} (default: [])
+// - posts:  TwigNews[]
+#}
+
+{% set title  = inputs.title %}
+{% set layout = inputs.layout %}
+{% set links  = inputs.links|default([]) %}
+{% set groups = inputs.groups|default([]) %}
+{% set posts  = inputs.posts[:6] %}
+
+{% set root_classes = classnames('block block-posts-carousel', {
+    'block-posts-carousel--layout--grid': layout == 'grid',
+    'block-posts-carousel--layout--list': layout == 'list',
+}) %}
+
+<div class="{{ root_classes }}" data-layout="{{ layout }}">
+<div class="container">
+	{% include '/components/section-header.twig' with {inputs: {
+		title  : title,
+		arrows : true,
+		links  : links,
+		groups : groups,
+	}} %}
+
+	<div class="block-posts-carousel__carousel"><div class="owl-carousel">
+		{% for post in posts %}
+			<div class="block-posts-carousel__item">
+				{% include '/components/post-card.twig' with {inputs: {
+					post: post,
+					width : 280,
+					height : 250
+				}} %}
+			</div>
+		{% endfor %}
+	</div></div>
+</div></div>

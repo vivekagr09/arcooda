@@ -1,0 +1,98 @@
+<div class="form-container">
+    <h2>{{ "Keyword Search" | rt }}</h2>
+
+    <form action="" method="POST">
+        {% if is_embedded %}
+        <input type="hidden" name="ref" value="{{ embed_referer }}">
+        <input type="hidden" name="ref_hash" value="{{ embed_referer_hash }}">
+        {% endif %}
+
+        <div class="tool-form">
+            <div class="input">
+                <input type="text" class="text-input" name="keyword" value="{{ keyword | e('html_attr') }}" />
+            </div>
+            <div class="input">
+                <select name="country" class="select-input">
+                    {% for code, name in countries %}
+                        <option value="{{ code }}" {% if code == activeCountry %} selected {% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="button">
+                <button type="submit" class="loadable">{{ "Submit" | rt }}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% if show_tables %}
+<div class="table-container">
+    <div class="table-actions" data-target="#keywords">
+        <h2>{{ "Results" | rt }}</h2>
+        <div class="actions-container">
+            {% if results %}
+                {% include 'actions/copy.html' %}
+                {% include 'actions/download.html' %}
+            {% endif %}
+        </div>
+    </div>
+
+    <table id="keywords" data-name="{{ keyword | lower | e('html_attr') }}-{{ activeCountry | lower }}">
+        <thead>
+            <tr>
+                <th style="min-width: 150px;">{{ "Keyword" | rt }}</th>
+                <th class="center" style="min-width: 75px;">{{ "CPC" | rt }} (USD)</th>
+
+                {% if currency_code and currency_code != "USD" %}
+                <th class="center" title="1 USD = {{ currency_value }} {{ currency_code }}" style="min-width: 75px;">
+                    {{ "CPC" | rt }} ({{ currency_code }})
+                </th>
+                {% endif %}
+
+                <th class="center" style="min-width: 100px;">{{ "Volume" | rt }}</th>
+
+                {% if trends_available %}
+                <th class="center" style="min-width: 100px;">{{ "Difficulty" | rt }}</th>
+                <th class="center" data-split="{{ trends_months | join(',') }}">{{ "Trend" | rt }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.text }}</td>
+                    <td class="center" data-value="{{ result.cpc }}">${{ result.cpc }}</td>
+
+                    {% if currency_code and currency_code != "USD" %}
+                    <td class="center" data-value="{{ result.cpc_local }}">
+                        {{ currency_symbol }}{{ result.cpc_local ?? result.cpc }} {% if not currency_symbol %}
+                            {{ currency_code }}
+                        {% endif %}
+                    </td>
+                    {% endif %}
+
+                    <td class="center" data-value="{{ result.vol }}">{{ result.vol | number_format }}</td>
+
+                    {% if trends_available %}
+                    <td class="center" data-value="{{ (result.competition * 100) }}">{{ (result.competition * 100) }}%</td>
+                    <td class="center" data-split-values="{{ result.trend | join(',') }}">
+                        <div class="sparklines"><!-- {{ result.trend | join(',') }} --></div>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">{{ "Nothing to show." | rt }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if trends_available %}
+<script type="text/javascript">
+    var renderSparklines = true;
+    var sparklineKeys = [{{ trends_months | map(value => "'#{value}'") | join(',') | raw }}];
+</script>
+{% endif %}
+{% endif %}

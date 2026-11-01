@@ -1,0 +1,29 @@
+Analysis and Recommendations: index3.html
+
+    * TOTAL_HTML - Congratulations, the total number of HTML files on this page (including the main HTML file) is 1 which most browsers can multithread. Minimizing HTTP requests is key for web site optimization.
+    * TOTAL_OBJECTS - Warning! The total number of objects on this page is 17 - consider reducing this to a more reasonable number. Combine, refine, and optimize your external objects. Replace graphic rollovers with CSS rollovers to speed display and minimize HTTP requests.
+    * TOTAL_IMAGES - Warning! The total number of images on this page is 13 , consider reducing this to a more reasonable number. Combine, refine, and optimize your graphics. Replace graphic rollovers with CSS rollovers to speed display and minimize HTTP requests.
+    * TOTAL_CSS - Congratulations, the total number of external CSS files on this page is 1 . Because external CSS files must be in the HEAD of your HTML document, they must load first before any BODY content displays. Although they are cached, CSS files slow down the initial display of your page.
+    * TOTAL_SIZE - Warning! The total size of this page is 147584 bytes, which will load in 29.61 seconds on a 56Kbps modem. Consider reducing total page size to less than 30K to achieve sub eight second response times on 56K connections. Pages over 100K exceed most attention thresholds at 56Kbps, even with feedback. Consider contacting us about our optimization services.
+    * TOTAL_SCRIPT - Congratulations, the total number of external script files on this page is 2 . External scripts are less reliably cached than CSS files so consider combining scripts into one, or even embedding them into high-traffic pages.
+    * HTML_SIZE - Caution. The total size of this HTML file is 34757 bytes, which is above 20K but below 100K. With a 10K ad and a logo this means that your page will load in over 8.6 seconds. Consider optimizing your HTML and eliminating unnecessary features. To give your users feedback, consider layering your page or using positioning to display useful content within the first two seconds.
+    * IMAGES_SIZE - Warning! The total size of your images is 92232 bytes, which is over 30K. Consider optimizing your images for size, combining them, and replacing graphic rollovers with CSS.
+    * SCRIPT_SIZE - Warning! The total size of your external scripts is 17607 bytes, which is over 8K. Consider optimizing your scripts for size, combining them, and using compression where appropriate for any scripts placed in the HEAD of your documents.
+    * CSS_SIZE - Congratulations, the total size of your external CSS is 2988 bytes, which is less than 4080 bytes. This will fit into three higher-speed TCP-IP packets.
+    * MULTIM_SIZE - Congratulations, the total size of all your external multimedia files is 0 bytes, which is less than 4K. 
+
+
+
+Analysis and Recommendations: index.html
+
+    * TOTAL_HTML - Congratulations, the total number of HTML files on this page (including the main HTML file) is 1 which most browsers can multithread. Minimizing HTTP requests is key for web site optimization.
+    * TOTAL_OBJECTS - Warning! The total number of objects on this page is 23 - consider reducing this to a more reasonable number. Combine, refine, and optimize your external objects. Replace graphic rollovers with CSS rollovers to speed display and minimize HTTP requests.
+    * TOTAL_IMAGES - Warning! The total number of images on this page is 19 , consider reducing this to a more reasonable number. Combine, refine, and optimize your graphics. Replace graphic rollovers with CSS rollovers to speed display and minimize HTTP requests.
+    * TOTAL_CSS - Congratulations, the total number of external CSS files on this page is 1 . Because external CSS files must be in the HEAD of your HTML document, they must load first before any BODY content displays. Although they are cached, CSS files slow down the initial display of your page.
+    * TOTAL_SIZE - Warning! The total size of this page is 239023 bytes, which will load in 47.84 seconds on a 56Kbps modem. Consider reducing total page size to less than 30K to achieve sub eight second response times on 56K connections. Pages over 100K exceed most attention thresholds at 56Kbps, even with feedback. Consider contacting us about our optimization services.
+    * TOTAL_SCRIPT - Congratulations, the total number of external script files on this page is 2 . External scripts are less reliably cached than CSS files so consider combining scripts into one, or even embedding them into high-traffic pages.
+    * HTML_SIZE - Caution. The total size of this HTML file is 32664 bytes, which is above 20K but below 100K. With a 10K ad and a logo this means that your page will load in over 8.6 seconds. Consider optimizing your HTML and eliminating unnecessary features. To give your users feedback, consider layering your page or using positioning to display useful content within the first two seconds.
+    * IMAGES_SIZE - Warning! The total size of your images is 185764 bytes, which is over 30K. Consider optimizing your images for size, combining them, and replacing graphic rollovers with CSS.
+    * SCRIPT_SIZE - Warning! The total size of your external scripts is 17607 bytes, which is over 8K. Consider optimizing your scripts for size, combining them, and using compression where appropriate for any scripts placed in the HEAD of your documents.
+    * CSS_SIZE - Congratulations, the total size of your external CSS is 2988 bytes, which is less than 4080 bytes. This will fit into three higher-speed TCP-IP packets.
+    * MULTIM_SIZE - Congratulations, the total size of all your external multimedia files is 0 bytes, which is less than 4K. 

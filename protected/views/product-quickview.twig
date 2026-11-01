@@ -1,0 +1,156 @@
+{#
+// inputs:
+// - product:          TrigProduct - The product to display
+// - categories:
+#}
+
+{% set global_page_title       = inputs.product.title            %}
+{% set global_page_description = inputs.product.description      %}
+{% set global_page_keywords    = inputs.product.keywords         %}
+{% set global_page_canonical   = inputs.product.url              %}
+{% set global_page_breadcrumbs = inputs.product.breadcrumbs      %}
+
+{% set categories              = inputs.categories               %}
+{% set product                 = inputs.product                  %}
+
+<div class="quickview modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <button type="button" class="quickview__close">
+            {{ svg('cross-12.svg') }}
+        </button>
+        <div class="quickview__body">
+            {% include '/components/product-gallery.twig' with {inputs: {
+                classes: 'quickview__gallery',
+                layout:  'quickview',
+                product: product,
+            }} %}
+
+            <div class="quickview__product">
+                <div class="quickview__product-name">
+                    {{ product.name|e }}
+                </div>
+                
+                <div class="quickview__product-rating">
+                    <div class="quickview__product-rating-stars">
+                        {% include '/components/rating.twig' with {inputs: {
+                            rating: product.rating,
+                        }} %}
+                    </div>
+                    <div class="quickview__product-rating-title">{{ product.rating }} reviews</div>
+                </div>
+               
+                <div class="quickview__product-meta">
+                    <table>
+                        {#
+                        <tr>
+                            <th>Availability</th>
+                            <td>
+                                {% if product.availability == 'In Stock' %}
+                                    <span class="badge badge-success">{{ product.availability|e }}</span>
+                                {% else %}
+                                    <span class="badge badge-danger">{{ product.availability|e }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        #}
+                        {% if product.sku %}
+                            <tr>
+                                <th>Product No.</th>
+                                <td>{{ product.sku|e }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if product.condition %}
+                            <tr>
+                                <th>Condition</th>
+                                <td>{{ product.condition|e }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if product.manufacturer %}
+                            <tr>
+                                <th>Manufacturer</th>
+                                <td><a href="{{ product.category.url|e }}?m={{ product.manufacturer_id }}">{{ product.manufacturer|e }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if product.location %}
+                            <tr>
+                                <th>Location</th>
+                                <td><a href="{{ product.category.url|e }}?cl[]={{ product.locationId }}">{{ product.location|e }}</a></td>
+                            </tr>
+                        {% endif %}
+                        {% if product.style %}
+                            <tr>
+                                <th>Product Style</th>
+                                <td>{{ product.style|e }}</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+                <div class="quickview__product-description">
+                    {{ markdown(product.excerpt) }}
+                </div>
+                <div class="quickview__product-prices-stock">
+                    <div class="quickview__product-prices">
+                        {% if product.compareAtPrice %}
+                            <div class="quickview__product-price quickview__product-price--old">{{ product.compareAtPrice }}</div>
+                            <div class="quickview__product-price quickview__product-price--new">{{ product.price }} <span style="padding-left:5px;font-size: 16px;">USD</span></div>
+                        {% else %}
+                            <div class="quickview__product-price quickview__product-price--current">{{ product.price }} <span style="padding-left:5px;font-size: 16px;">USD</span></div>
+                        {% endif %}
+
+                    </div>
+                    {% include '/components/status-badge.twig' with {inputs: {
+                        classes: 'quickview__product-stock',
+                        style: product.availability in ['In Stock', 'Stock'] ? 'success' : 'failure',
+                        text: product.availability,
+                    }} %}
+                </div>
+
+                {% include 'components/product-form.twig' with {inputs: {
+                    classes: 'quickview__product-form',
+                }} %}
+
+                <form action="/checkout/addtocart_{{ product.id|e }}.html" method="post">
+                    <div class="quickview__product-actions">
+                        <div class="quickview__product-actions-item quickview__product-actions-item--quantity">
+                            <div class="input-number">
+                                <input name="product_qty" class="input-number__input form-control" type="number" min="{{ max(1, product.minOrder) }}" value="{{ max(1, product.minOrder) }}" />
+                                <div class="input-number__add"></div>
+                                <div class="input-number__sub"></div>
+                            </div>
+
+                            {% if product.minOrder > 1 %}
+                                <small class="text-secondary">Min Quantity: {{ product.minOrder }}</small>
+                            {% endif %}
+                        </div>
+                        <input type="hidden" name="product_name" value="{{ product.name|e }}" />
+                        <input type="hidden" name="product_id" value="{{ product.id|e }}" />
+                        <input type="hidden" name="product_price" value="{{ product.priceValue|e }}" />
+                        <input type="hidden" name="product_img" value="{{ product.images[0]|e }}" />
+                        <input type="hidden" name="product_url" value="{{ product.url|e }}" />
+                        <div class="quickview__product-actions-item quickview__product-actions-item--addtocart">
+                             {% if product.orderRule == 'inquiry_for_everyone' %}
+                             <button class="btn btn-warning btn-lg btn-block"> &nbsp; &nbsp; &nbsp; &nbsp; Add to Inquiry &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </button>
+                               
+                            {% else %}
+                                 <button class="btn btn-primary btn-lg btn-block"> &nbsp; &nbsp; &nbsp; &nbsp; Add to Cart &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </button>
+                            {% endif %}
+                        </div>
+                        {#
+                        <div class="quickview__product-actions-item quickview__product-actions-item--wishlist">
+                            <button class="btn btn-muted btn-icon" type="button">
+                                {{ svg('wishlist-16.svg') }}
+                            </button>
+                        </div>
+                        <div class="quickview__product-actions-item quickview__product-actions-item--compare">
+                            <button class="btn btn-muted btn-icon" type="button">
+                                {{ svg('compare-16.svg') }}
+                            </button>
+                        </div>
+                        #}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <a href="{{ product.url|e }}" class="quickview__see-details">See full details</a>
+    </div>
+</div>

@@ -1,0 +1,482 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - orders:
+// - page:
+#}
+
+{% set global_page_title           = inputs.title|default('Inquiry/Order History') %}
+{% set global_page_description     = inputs.description|default('')                %}
+{% set global_page_keywords        = input.keywords|default('')                    %}
+{% set global_page_canonical       = '/account/orders'                             %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : 'My Account',      url : '/account/dashboard' },
+    {title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                         %}
+
+{% set chunks    = inputs.orders|batch(25)                                         %}
+{% set page      = max(0, min(chunks|length - 1, inputs.page))                     %}
+{% set orders    = chunks[page]                                                    %}
+{% set chunksenq = inputs.inquiry|batch(25)                                        %}
+{% set pageenq   = max(0, min(chunksenq|length - 1, inputs.page))                  %}
+{% set inquiry   = chunksenq[pageenq]                                                 %}
+{% set alert     = inputs.alert                                                    %}
+{% set issues    = inputs.issues                                                   %}
+{% set result    = inputs.result                                                   %}
+{% extends '/layouts/account.twig' %}
+
+{% block account_body %}
+    <style type="text/css">
+        .card-table tbody td {
+            vertical-align: top;
+        }
+        .tooltip-container {
+            position: relative; /* Position the container */
+        }
+
+        .custom-tooltip {
+            position: absolute;
+            z-index: 1000;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: none; /* Hidden by default */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: black;
+
+            /* Center the tooltip horizontally */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .tooltip-item {
+            display: flex; /* Use Flexbox for alignment */
+            gap: 20px;
+            padding: 5px 0; /* Add some vertical padding */
+        }
+
+        .tooltip-date {
+            text-align: left; /* Left-align the date */
+            color: #fff;
+        }
+
+        .tooltip-message {
+            text-align: left;
+            white-space: normal; /* Allow line breaks for long messages */
+            width: 400px;
+            color: #fff;
+        }
+    </style>
+    <div class="card">
+    {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+        <div class="card-header" style="margin: 10px;
+    padding: 10px;"><h5 class="content_heading_color"><i class="fas fa-store" style="font-size: 26px;margin-right: 10px;"></i>Order History</h5></div>
+        <div class="card-divider"></div>
+        <div class="card-table"><div class="table-responsive-sm"><table>
+            <thead><tr>
+                    <th width="15%">Order</th>
+                    <th width="15%">Date</th>
+                    <th width="15%">Total</th>
+                    <th width="15%">Status</th>
+                    <th width="20%">Tracking</th>
+                    <th width="10%">Notes</th>
+                    <th width="10%">Message</th>
+                    <th width="10%">Reorder</th>
+            </tr></thead>
+            <tbody>
+    {% for order in orders %}
+              <tr>
+                <td><a href="{{ order.url|e }}" target="_blank">{{ order.number }}</a>
+                    {% if order.status == 'Awaiting Payment' or order.status == 'Open' %}
+                    <button  type="button" class="btn btn-danger" style="border-color: #333; background: #333;    font-size: 12px; padding: 5px 16px;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#c82333'" onclick="openCancelModel('{{order.number}}','{{order.id}}')">Cancel</button>
+                    {% endif %}
+                </td>
+                <td>{{ order.date }}</td>
+                <td>{{ order.total|currency }}</td>
+                <td>
+                    {{ order.status }}
+                    {% if order.status == 'Awaiting Payment' %}
+                    {# <a href="/payment/payment-checkout?id={{order.number}}&crc={{invoice[0].rand_num}}"> #}
+                    <button  type="button" class="btn btn-primary" style="border-color: #333; background: #333;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#0069d9'" onclick='window.location.href="/payment/payment-checkout?id={{order.id}}&crc={{order.rand_num}}"'>Pay</button>
+                    {# </a> #}
+                    {% endif %}
+                </td>
+                <td>
+                     {% if order.tracking_number %}
+                        {% if order.frieght_traking_url %}
+                            <a href="{{order.frieght_traking_url}}" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{order.fright_tracking_service}}">
+                            {{order.tracking_number}}</a>
+                        {% else %}
+                            <span target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{order.fright_tracking_service}}"> {{order.tracking_number}} </span>
+                        {% endif %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td class="text-align-center {{ class }}">
+                   {% if order.display_to_customer_all|length > 0 %}
+                        <div class="tooltip-container" style="display:inline-block;">
+                            <img src="/img/favicon.ico" width="30" class="tooltip-trigger">
+                            <div class="custom-tooltip" style="display:none;">
+                                {% for note in order.display_to_customer_all %}
+                                    <div class="tooltip-item">
+                                        <span class="tooltip-date">{{ note.date|date('d/m/Y') }}</span>
+                                        <span class="tooltip-message">{{ note.message }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </td>
+                <td><i class="fas fa-comments" onclick="openMsgModel('{{order.number}}','{{order.id}}')" style="font-size: 30px;cursor:pointer;"></i></td>
+                <td><i class="fas fa-shopping-cart"  data-toggle="modal" data-target="#account-reorder{{ order.id }}-modal" style="font-size: 30px;cursor:pointer;"></i></td>
+              </tr>
+    {% endfor %}
+            </tbody>
+        </table></div></div>
+        <div class="card-divider"></div>
+    {% if chunks|length > 1 %}
+          <div class="card-footer">
+            {% include '/components/pagination.twig' with {inputs: {
+                page_url: '?p=',
+                page:     page,
+                pages:    chunks|length
+            }} %}
+          </div>
+    {% endif %}
+    </div>
+    <div class="card">
+        <div class="card-header" style="margin: 10px;
+    padding: 10px;padding-top: 50px;"><h5 class="content_heading_color"><i class="far fa-question-circle" style="font-size: 26px;margin-right: 10px;"></i>Inquiry History</h5></div>
+        <div class="card-divider"></div>
+        <div class="card-table"><div class="table-responsive-sm"><table>
+            <thead><tr>
+                <th width="15%">Order</th>
+                    <th width="15%">Date</th>
+                    <th width="15%">Total</th>
+                    <th width="15%">Status</th>
+                    <th width="20%">Tracking</th>
+                    <th width="10%">Notes</th>
+                    <th width="10%">Message</th>
+                    <th width="10%">Reorder</th>
+            </tr></thead>
+            <tbody>
+    {% for order in inquiry %}
+              <tr>
+                <td><a href="{{ order.url|e }}" target="_blank">{{ order.number }}</a>
+                     {% if order.status == 'Awaiting Payment' or order.status == 'Open' %}
+                    <button  type="button" class="btn btn-danger" style="border-color: #333; background: #333;    font-size: 12px; padding: 5px 16px;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#c82333'"  onclick="openCancelModel('{{order.number}}','{{order.id}}')">Cancel</button>
+                    {% endif %}
+                </td>
+                <td>{{ order.date }}</td>
+                <td>{{ order.total|currency }}</td>
+                <td>{{ order.status }}</td>
+                 <td>
+                    {% if order.tracking_number %}
+                        {% if order.frieght_traking_url %}
+                            <a href="{{order.frieght_traking_url}}" target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{order.fright_tracking_service}}">
+                            {{order.tracking_number}}</a>
+                        {% else %}
+                            <span target="_blank" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{order.fright_tracking_service}}"> {{order.tracking_number}} </span>
+                        {% endif %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                 </td>
+                 <td class="text-align-center {{ class }}">
+                   {% if order.display_to_customer_all|length > 0 %}
+                        <div class="tooltip-container" style="display:inline-block;">
+                            <img src="/img/favicon.ico" width="30" class="tooltip-trigger">
+                            <div class="custom-tooltip" style="display:none;">
+                                {% for note in order.display_to_customer_all %}
+                                    <div class="tooltip-item">
+                                        <span class="tooltip-date">{{ note.date|date('d/m/Y') }}</span>
+                                        <span class="tooltip-message">{{ note.message }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </td>
+                <td><i class="fas fa-comments" onclick="openMsgModel('{{order.number}}','{{order.id}}')" style="font-size: 30px;cursor:pointer;"></i></td>
+                <td><i class="fas fa-shopping-cart" data-toggle="modal" data-target="#account-reorder{{ order.id }}-modal" style="font-size: 30px;cursor:pointer;"></i></td>
+              </tr>
+    {% endfor %}
+            </tbody>
+        </table></div></div>
+        <div class="card-divider"></div>
+    {% if chunksenq|length > 1 %}
+        <div class="card-footer">
+            {% include '/components/pagination.twig' with {inputs: {
+                page_url: '?p=',
+                page:     pageenq,
+                pages:    chunksenq|length
+            }} %}
+        </div>
+    {% endif %}
+    </div>
+    {% set prefix = 'account-contact' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Send Message to our team</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <div class="row">
+                        <div class="col-md-4">
+                            <label for="{{ prefix }}-company_name">Our Reference<span class="color-red">*</span></label>
+                            <input type="text" name="order_id" class="form-control" id="order_id" readonly="true" required/>
+                            <input type="hidden" name="id" class="form-control" id="invoice_id"/>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="{{ prefix }}-company_name">Subject/Title<span class="color-red">*</span></label>
+                            <input type="text" name="subject" class="form-control" id="{{ prefix }}-company_name" required/>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="{{ prefix }}-company_name">Message<span class="color-red">*</span></label>
+                            <textarea name="message" class="form-control" id="{{ prefix }}-company_name" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group center-align">
+                <input type="hidden" value="contact" name="action" />
+                <input type="submit" value="Send Message" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+    {% set prefix = 'account-cancel' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Do you want to cancel this order?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <div class="row">
+                        <div class="col-md-4">
+                            <label for="{{ prefix }}-company_name">Our Reference<span class="color-red">*</span></label>
+                            <input type="text" name="cancel_order_id" class="form-control" id="cancel_order_id" readonly="true" required/>
+                            <input type="hidden" name="id" class="form-control" id="cancel_invoice_id"/>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="{{ prefix }}-company_name">Reason of cancellation<span class="color-red">*</span></label>
+                            <textarea name="message" class="form-control" id="{{ prefix }}-company_name" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group center-align">
+                <input type="hidden" value="cancelorder" name="action" />
+                <input type="submit" value="Send Message" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+    {% for order in orders %}
+        {% set prefix = 'account-reorder' ~ order.id %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reorder </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-table">
+            <div class="table-responsive-sm">
+             <form action="" method="post">
+                <input type="hidden" value="{{order.id}}" name="invoice_id">
+                <table>
+                    <thead><tr>
+                        <th></th>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th width="10%">Quantity</th>
+                        <th>Total</th>
+                    </tr></thead>
+                    <tbody>
+        {% set invoicepro = order.invoiceProduct(order.id) %}
+        {% set key =0 %}
+        {% for pro in invoicepro %}
+            {% if pro.product_id > 0 %}
+                   <tr>
+            {% set product = product_det(pro.product_id) %}
+            {% set image   = product.images(pro.colour_id)[0] %}
+                       <!-- <td><input type="checkbox" name="product[{{key}}][product_checked]" {{ (product.stockavailable(pro.product_id,pro.colour_id)<product.minOrder) ?((product.soldout)? 'disabled' : ''):'checked' }}><br/><span>{{ (product.stockavailable(pro.product_id,pro.colour_id)<product.minOrder) ?((product.soldout)? 'Sory this product is no longer available' : ''):'' }}</span></td> -->
+                       <td><input type="checkbox" name="product[{{key}}][product_checked]" checked><br/><span>{{ (product.stockavailable(pro.product_id,pro.colour_id)<product.minOrder) ?((product.soldout)? 'Sory this product is no longer available' : ''):'' }}</span></td>
+                       <td><img src="{{ image|e }}" alt="{{ image.alt|e }}" style="max-width:48px;max-height:48px;float:left;margin:0 8px 8px 0;min-height:48px;" /></td>
+                       <td>{{ product.name|e }}</td>
+                       <td>
+            {% if product.compareAtPrice %}
+                        <div class=" product__price--old">{{ product.compareAtPrice|currency }}</div>
+                        <div class=" product__price--new">{{ product.price|currency }}</div>
+            {% else %}
+                        <div class=" product__price--current">{{ product.price|currency }}</div>
+            {% endif %}</td>
+                       <td>
+                            <input type="hidden" value="{{ product.priceValue }}" name="product[{{key}}][product_price]" class="product_price">
+                            <input type="hidden" value="{{ pro.colour_id}}" name="product[{{key}}][color_cart]" class="colour_id">
+                            <input type="hidden" value="{{ pro.product_id}}" name="product[{{key}}][product_id]">
+                            <input type="hidden" value="{{ product.name|e }}" name="product[{{key}}][product_name]">
+                            <input type="hidden" value="{{ image|e }}" name="product[{{key}}][product_img]">
+                            <input type="hidden" value="{{ product.url|e }}" name="product[{{key}}][product_url]">
+                            <div class="input-number">
+                                <input class="input-number__input form-control form-control-lg product-qty-input"  name="product[{{key}}][product_qty]" type="number" min="{{ max(1, product.minOrder) }}" value="{{pro.product_qty}}" readonly/>
+                                <div class="input-number__add" onclick="functionadd(this)"></div>
+                                <div class="input-number__sub" onclick="functionsub(this)"></div>
+                            </div>
+                        </td>
+                       <td class="product_cost">{{ product.priceMultiplied(pro.product_qty)|currency }}</td>
+                   </tr>
+                    </tbody>
+            {% set key =key+1 %}
+            {% endif %}
+        {% endfor %}
+                </table>
+                <div class="form-group center-align">
+                    <input type="hidden" value="{{ order.id }}" name="id" />
+                    <input type="hidden" value="reorder" name="action" />
+                    <input type="submit" class="btn btn-lg- btn-primary " value="Add to Cart" />
+                </div>
+            </form>
+        </div>
+     </div>
+        </div>
+        </div></div></div>
+    {% endfor %}
+    {% for order in inquiry %}
+        {% set prefix = 'account-reorder' ~ order.id %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reorder </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-table">
+            <div class="table-responsive-sm">
+             <form action="" method="post">
+                <input type="hidden" value="{{order.id}}" name="invoice_id">
+                <table>
+                    <thead><tr>
+                        <th></th>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th width="10%">Quantity</th>
+                        <th>Total</th>
+                    </tr></thead>
+                    <tbody>
+        {% set invoicepro = order.invoiceProduct(order.id) %}
+        {% set key =0 %}
+        {% for pro in invoicepro %}
+        {% if pro.product_id > 0 %}
+                   <tr>
+            {% set product = product_det(pro.product_id) %}
+            {% set image   = product.images(pro.colour_id)[0] %}
+                      <!--  <td><input type="checkbox" name="product[{{key}}][product_checked]" {{ (product.stockavailable(pro.product_id,pro.colour_id)<product.minOrder) ?((product.soldout)? 'disabled' : ''):'' }}></td> -->
+                       <td><input type="checkbox" name="product[{{key}}][product_checked]" checked></td>
+                       <td><img src="{{ image|e }}" alt="{{ image.alt|e }}" style="max-width:48px;max-height:48px;float:left;margin:0 8px 8px 0;min-height:48px;" /></td>
+                       <td>{{ product.name|e }}</td>
+                       <td>
+            {% if product.compareAtPrice %}
+                        <div class=" product__price--old">{{ product.compareAtPrice|currency }}</div>
+                        <div class=" product__price--new">{{ product.price|currency }}</div>
+            {% else %}
+                        <div class=" product__price--current">{{ product.price|currency }}</div>
+            {% endif %}
+                        </td>
+                       <td>
+                            <input type="hidden" value="{{ product.priceValue }}" name="product[{{key}}][product_price]" class="product_price">
+                            <input type="hidden" value="{{ pro.colour_id }}" name="product[{{key}}][color_cart]" class="colour_id">
+                            <input type="hidden" value="{{ pro.product_id }}" name="product[{{key}}][product_id]">
+                            <input type="hidden" value="{{ product.name|e }}" name="product[{{key}}][product_name]">
+                            <input type="hidden" value="{{ image|e }}" alt="{{ image.alt|e }}" name="product[{{key}}][product_img]">
+                            <input type="hidden" value="{{ product.url|e }}" name="product[{{key}}][product_url]">
+                            <div class="input-number">
+                                <input class="input-number__input form-control form-control-lg product-qty-input"  name="product[{{key}}][product_qty]" type="number" min="{{ max(1, product.minOrder) }}" value="{{pro.product_qty}}" readonly/>
+                                <div class="input-number__add" onclick="functionadd(this)"></div>
+                                <div class="input-number__sub" onclick="functionsub(this)"></div>
+                            </div>
+                        </td>
+                       <td class="product_cost">{{ product.priceMultiplied(pro.product_qty)|currency }}</td>
+                   </tr>
+                    </tbody>
+            {% set key =key+1 %}
+            {% endif %}
+        {% endfor %}
+                </table>
+                <div class="form-group">
+                    <input type="hidden" value="{{ order.id }}" name="id" />
+                    <input type="hidden" value="reorder" name="action" />
+                    <input type="submit" class="btn btn-lg- btn-primary" value="Checkout" />
+                </div>
+            </form>
+        </div>
+     </div>
+        </div>
+        </div></div></div>
+    {% endfor %}
+<script type="text/javascript">
+function openMsgModel(orderid,invoiceid){
+    $('#order_id').val(orderid);
+    $('#invoice_id').val(invoiceid);
+    $('#account-contact-modal').modal('show');
+}
+function openCancelModel(orderid,invoiceid){
+    $('#cancel_order_id').val(orderid);
+    $('#cancel_invoice_id').val(invoiceid);
+    $('#account-cancel-modal').modal('show');
+}
+function functionadd(data){
+/*e.preventDefault();*/
+var price=$(data).parent().parent().parent().find('.product_price').val();
+var qun=$(data).parent().parent().parent().find('.product-qty-input').val();
+$(data).parent().parent().parent().find('.product_cost').html('$'+price*qun);
+
+};
+function functionsub(data){
+var price=$(data).parent().parent().parent().find('.product_price').val();
+var qun=$(data).parent().parent().parent().find('.product-qty-input').val();
+$(data).parent().parent().parent().find('.product_cost').html('$'+price*qun);
+};
+document.addEventListener('DOMContentLoaded', function () {
+    const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+
+    tooltipTriggers.forEach(function (tooltipTrigger) {
+        const customTooltip = tooltipTrigger.nextElementSibling; // Select the corresponding tooltip
+
+        tooltipTrigger.addEventListener('mouseover', function () {
+            customTooltip.style.display = 'block'; // Show the tooltip
+        });
+
+        tooltipTrigger.addEventListener('mouseout', function () {
+            customTooltip.style.display = 'none'; // Hide the tooltip
+        });
+    });
+});
+</script>
+{% endblock %}

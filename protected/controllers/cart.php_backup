@@ -1,0 +1,639 @@
+<?php
+namespace app\controllers;
+
+use app\forms\AssistedCheckoutForm;
+use app\forms\ExpressCheckoutForm;
+use app\models\TwigCart;
+use app\models\TwigCurrency;
+use app\models\TwigInvoice;
+use Freight_Service_Handler;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
+
+/**
+ * @var string             $action
+ * @var \app\models\MyTwig $twig
+ */
+?><?php
+
+//Actions:
+// /cart/index
+// /cart/checkout
+// /cart/creditcard
+// /cart/payment
+// /cart/freight
+
+switch ($action) {
+    case 'index':
+        $type                 = $_POST['type'] ?? $_GET['type'] ?? 'shopping';
+        $cart                 = new TwigCart($type);
+        $issues               = [];
+        $_REQUEST['redirect'] = null;
+
+        if (isset($_POST['applycoupon'])) {
+            include_once __DIR__ . '/../webadmin/cart/query.inc.php';
+            $postarray = array();
+            $CartLoop  = array_values($cart->Getcart('shopping'));
+            for ($i = 0;$i < count($CartLoop);$i++) {
+                $postarray['id']         = $CartLoop[$i]['id'];
+                $postarray['couponcode'] = $_POST['couponcode'];
+                cartApplyCoupon($postarray);
+            }
+            //cartApplyCoupon();
+            redirect($_REQUEST['redirect'] ?? $_SERVER['HTTP_REFERER'] ?? '');
+            die();
+        }
+
+        if ('remove' == ($_POST['action'] ?? '')) {
+            $cart->remove($_POST['id'] ?? 0, $type);
+            $cart->save();
+            redirect($_REQUEST['redirect'] ?? $_SERVER['HTTP_REFERER'] ?? '');
+            die();
+        }
+
+        if ('remove_fright' == ($_POST['action'] ?? '')) {
+            $_REQUEST['checkout']['ship_number'] = 'pickup';
+        }
+
+        if ('update' == ($_POST['action'] ?? '')) {
+            foreach ($_POST['product_qty'] ?? [] as $id => $qty) {
+                $cart->update($id, $qty);
+            }
+            $cart->save();
+            redirect($_REQUEST['redirect'] ?? $_SERVER['HTTP_REFERER'] ?? '');
+            die();
+        }
+
+        /**
+         * @var mixed[]   $invoice
+         * @var mixed[][] $invoice_products
+         * @var mixed[][] $invoice_charges
+         * @var mixed[][] $invoice_courier_quotes
+         */
+        include __DIR__ . '/../build_invoice.inc.php';
+
+        die($twig->load('cart-index.twig')->render(['inputs' => [
+            'cart'                   => $cart,
+            'type'                   => $type,
+            'title'                  => ucfirst($type . ' Cart'),
+            'titletop'               => ('quote' == $type) ? 'Inquiry/Quote Request Cart' : 'Shopping Cart',
+            'invoice_courier_quotes' => $invoice_courier_quotes,
+            'invoice_charges'        => $invoice_charges,
+            'invoice'                => $invoice,
+        ]]));
+
+    case 'checkout':
+        global $_GLOBALS;
+
+        moduleLoad('invoice'); //invoiceChargesToDatabase, invoiceCourierQuotesToDatabase, invoiceProductsToDatabase, invoiceToDatabase, invoiceTemplateVars
+        moduleLoad('member'); //memberContactToDatabase, memberContactSetMain, memberNotifyPartyToDatabase, memberNotifyPartySetDefault, memberShippingAddressToDatabase, memberShippingAddressSetDefault, memberToDatabase
+        moduleLoad('notify');
+        moduleLoad('product');
+
+        if (!isset($_GLOBALS['member']) || 0 == $_GLOBALS['member']['id']) {
+            redirect('/account/login?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+            die();
+        }
+
+        $issues = [];
+
+        $type = $_POST['type'] ?? $_GET['type'] ?? 'shopping';
+
+        $shipaddr_id = 0;
+
+        if ('add_shipping_address' === ($_POST['action'] ?? '')) {
+            $address = [
+                'member_id'  => $_GLOBALS['member']['id'],
+                'updated_by' => 0,
+            ];
+            foreach ([
+                'street-address',
+                //'country',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            foreach ([
+                'company_name'  => 'organization',
+                'company'       => 'organization',
+                'address'       => 'street-address',
+                'address_1'     => 'street-address',
+                'address_2'     => 'address-level3',
+                'city'          => 'address-level2',
+                'state'         => 'address-level1',
+                'post_code'     => 'postal-code',
+                'zip'           => 'postal-code',
+                'country'       => 'country',
+                'phone_no'      => 'home-tel',
+                'phone_number'  => 'home-tel',
+                'fax_no'        => 'fax-tel',
+                'fax_number'    => 'fax-tel',
+                'mobile_no'     => 'mobile-tel',
+                'mobile_number' => 'mobile-tel',
+                'email'         => 'home-email',
+                'phone_no2'     => 'phone_no2',
+                'vat_number'    => 'vat_number',
+                'default'       => 'default',
+            ] as $k => $v) {
+                if (array_key_exists($v, $_POST)) {
+                    $address[$k] = trim($_POST[$v]);
+                }
+            }
+            if (array_key_exists('name', $_POST)) {
+                $split                   = preg_split('/\\s+/', trim($_POST['name']), 2);
+                $address['contact']      = $address['name']    = $split[0] ?? '';
+                $address['contact_last'] = $address['surname'] = $split[1] ?? '';
+            }
+            if (!count($issues)) {
+                $shipaddr_id = memberShippingAddressToDatabase($_GLOBALS['member']['id'], $address);
+                if ('y' == ($address['default'] ?? '')) {
+                    memberShippingAddressSetDefault($_GLOBALS['member']['id'], $shipaddr_id);
+                }
+            }
+        }
+
+        if ('update_billing' === ($_POST['action'] ?? '')) {
+            $member = [
+                'member_id'  => $_GLOBALS['member']['id'],
+                'updated_by' => 0,
+            ];
+            $issues = [];
+            foreach ([
+                'given-name',
+                'family-name',
+                'street-address',
+                'address-level2',
+                'address-level1',
+                'country',
+                'home-tel',
+                'account-type',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            foreach ([
+                'name'          => 'given-name',
+                'first_name'    => 'given-name',
+                'surname'       => 'family-name',
+                'last_name'     => 'family-name',
+                'address_1'     => 'street-address',
+                'address_2'     => 'address-level3',
+                'city'          => 'address-level2',
+                'state'         => 'address-level1',
+                'zip'           => 'postal-code',
+                'country'       => 'country',
+                'account_type'  => 'account-type',
+                'company'       => 'organization',
+                'phone_number'  => 'home-tel',
+                'fax_number'    => 'fax-tel',
+                'vat_number'    => 'vat_number',
+                'mobile_number' => 'mobile-tel',
+                'web_page_url'  => 'url',
+            ] as $k => $v) {
+                if (array_key_exists($v, $_POST)) {
+                    $member[$k] = trim($_POST[$v]);
+                }
+            }
+            if (!count($issues)) {
+                memberToDatabase($member);
+                redirect('');
+                die();
+            }
+        }
+
+        if ('add-notify-party' === ($_POST['action'] ?? '')) {
+            foreach ([
+                'company_name',
+                'phone_no',
+                'city',
+                'address',
+                'state',
+                'email',
+                'country',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = '' . $k . ' field is required';
+                }
+            }
+            foreach ([
+                'company_name' => 'company_name',
+                'address'      => 'address',
+                'city'         => 'city',
+                'state'        => 'state',
+                'country'      => 'country',
+                'contact'      => 'contact',
+                'phone_no'     => 'phone_no',
+                'phone_no2'    => 'phone_no2',
+                'fax_no'       => 'fax_no',
+                'mobile_no'    => 'mobile_no',
+                'post_code'    => 'post_code',
+                'vat_number'   => 'vat_number',
+                'email'        => 'email',
+                'default'      => 'default',
+            ] as $k => $v) {
+                if (array_key_exists($v, $_POST)) {
+                    $address[$k] = trim($_POST[$v]);
+                }
+            }
+            if (!count($issues)) {
+                $member_notifyparty_id = memberNotifyPartyToDatabase($_GLOBALS['member']['id'], $address);
+                if ('y' == ($address['default'] ?? '')) {
+                    memberNotifyPartySetDefault($_GLOBALS['member']['id'], $member_notifyparty_id);
+                }
+
+                redirect('');
+                die();
+            }
+            redirect('');
+            die();
+        }
+
+        if ('add-contact' === ($_POST['action'] ?? '')) {
+            $issues = [];
+            foreach ([
+                'name',
+                'title',
+                'email',
+                'phone',
+                'send_email_cc',
+                'main',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = '' . $k . ' field is required';
+                }
+            }
+            foreach ([
+                'name'          => 'name',
+                'title'         => 'title',
+                'email'         => 'email',
+                'phone'         => 'phone',
+                'send_email_cc' => 'send_email_cc',
+                'main'          => 'main',
+            ] as $k => $v) {
+                if (array_key_exists($v, $_POST)) {
+                    $contact[$k] = $_POST[$v];
+                }
+            }
+            if (!count($issues)) {
+                $contact_id = memberContactToDatabase($_GLOBALS['member']['id'], $contact);
+                if ('y' == ($contact['main'] ?? '')) {
+    				memberContactSetMain($_GLOBALS['member']['id'], $contact_id);
+                }
+
+                redirect('');
+                die();
+            }
+            redirect('');
+            die();
+        }
+
+        /**
+         * @var mixed[]   $invoice
+         * @var mixed[][] $invoice_products
+         * @var mixed[][] $invoice_charges
+         * @var mixed[][] $invoice_courier_quotes
+         * @var string[]  $payment_methods
+         */
+        include __DIR__ . '/../build_invoice.inc.php';
+
+        if ('submit_order' === ($_REQUEST['action'] ?? '')) {
+            $invoice['salesman'] = 'online';
+            $remaincart          = [];
+            if ('quote' == $type) {
+                $remaincart              = $_GLOBALS['shopping_cart'];
+                $invoice['invoice_type'] = 'quote';
+            } else {
+                $remaincart              = $_GLOBALS['quote_cart'];
+                $invoice['invoice_type'] = 'shopping';
+            }
+            $backorder = false;
+
+            //Update invoices...
+            $invoice_id            = invoiceToDatabase($invoice);
+            $invoice['invoice_id'] = $invoice_id;
+            invoiceProductsToDatabase($invoice_id, $invoice_products);
+            invoiceChargesToDatabase($invoice_id, $invoice_charges);
+            invoiceCourierQuotesToDatabase($invoice_id, $invoice_courier_quotes);
+
+            //Update shopping cart...
+            foreach ($remaincart as $cart_key => $cart_item) {
+                $min_order = productGetValue($cart_item['product_id'], 'min_order');
+                if ($cart_item['product_qty'] < $min_order) {
+                    $cart_item['product_qty']             = $min_order;
+                    $remaincart[$cart_key]['product_qty'] = $min_order;
+                }
+                // @fixme $product is undefined
+                $remaincart[$cart_key]['product_offer']    = (string) (new TwigCurrency($product['sales_price'], $product['sales_currency'], $product['precision']));
+                $remaincart[$cart_key]['product_offer_us'] = $remaincart[$cart_key]['product_offer'];
+                $remaincart[$cart_key]['offer_currency']   = 'USD';
+            }
+            cartSaveContents($_GLOBALS['member']['id'], $remaincart);
+            updateShoppingCartStatus($_COOKIE['shopping_cart_id'], 'ordered');
+            setcookie("shopping_cart_id", "", strtotime('-1 hour'));
+            $_COOKIE['shopping_cart_id'] = '';
+
+            //Notify staff...
+            if (function_exists('notifyActionMade')) {
+                notifyActionMade(
+                    NOTIFY_INVOICE_CREATED,
+                    $invoice['site_id'],
+                    invoiceTemplateVars($invoice, $invoice_products, $invoice_charges)
+                );
+            }
+
+            //Redirect to orders...
+            if ($invoice_id) {
+                redirect('/payment_success?invoice=' . base64_encode((string)$invoice_id));
+                die();
+            }
+        }
+
+        if ($shipaddr_id) {
+            $invoice['shipaddr_id'] = $shipaddr_id;
+        }
+
+        die($twig->load('cart-checkout.twig')->render(['inputs' => [
+            'payment_methods'        => $payment_methods,
+            'invoice'                => $invoice,
+            'invoice_charges'        => $invoice_charges,
+            'invoice_courier_quotes' => $invoice_courier_quotes,
+            'invoice_products'       => $invoice_products,
+            'issues'                 => $issues,
+            'member'                 => $_GLOBALS['member'],
+        ]]));
+
+    case 'payment_success':
+        global $_GLOBALS;
+
+        $invoice = TwigInvoice::search([
+            'member_id'      => $_GLOBALS['member']['member_id'],
+            'invoice_id'     => base64_decode($_REQUEST['invoice']),
+            'invoice_status' => ['proforma', 'sales', 'processed', 'inquiry'],
+        ]);
+
+        die($twig->load('order-success.twig')->render(['inputs' => [
+            'invoice'     => $invoice,
+            'title_front' => ($invoice[0]->invoicestatus() == 'quote') ? 'Inquiry/Quote Request' : 'Checkout',
+        ]]));
+
+    case 'creditcard':
+        die($twig->load('cart-creditcard.twig')->render(['inputs' => [
+        ]]));
+
+    case 'payment':
+        Stripe::setApiKey('sk_test_16EI0qL0OKM3UT2Rwc5Oovxq00Tq70GT37');
+        header('Content-Type: application/json');
+        $json_str = file_get_contents('php://input') ?: 'null';
+        $json_obj = json_decode($json_str);
+        $intent   = null;
+
+        // Get total amount
+        $totalAmount = 0;
+        foreach ($cart_items as $item) {
+            $totalAmount += $item['price'];
+        }
+
+        // Get currency
+        $currency = (new TwigCurrency())->getCurrency();
+        try {
+            if (isset($json_obj->payment_method_id)) {
+                $intent = PaymentIntent::create([
+                    'payment_method'      => $json_obj->payment_method_id,
+                    'amount'              => $totalAmount * 100,
+                    'currency'            => strtolower($currency),
+                    'confirmation_method' => 'manual',
+                    'confirm'             => true,
+                ]);
+            }
+            if (isset($json_obj->payment_intent_id)) {
+                $intent = PaymentIntent::retrieve(
+                    $json_obj->payment_intent_id
+                );
+                $intent->confirm();
+            }
+
+            if ('requires_action' == $intent->status && 'use_stripe_sdk' == $intent->next_action->type) {
+                echo json_encode([
+                    'requires_action'              => true,
+                    'payment_intent_client_secret' => $intent->client_secret,
+                ]);
+            } else if ('succeeded' == $intent->status) {
+                echo json_encode([
+                    "success" => true,
+                ]);
+            } else {
+                http_response_code(500);
+                echo json_encode(['error' => 'Invalid PaymentIntent status']);
+            }
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            echo json_encode([
+                'error' => $e->getMessage(),
+            ]);
+        }
+        die();
+
+    case 'freight':
+        global $DB;
+
+        moduleLoad('freight');
+
+        header('Access-Control-Allow-Origin: *');
+        header("Content-type: application/json; charset=utf-8");
+
+        if (1 == $_REQUEST['type']) {
+            $start_location = $_REQUEST['startpoint'] ?? 'CN';
+            if (empty($start_location)) {
+                $start_location = 'CN';
+            }
+
+            $freightService = Freight_Service_Handler::getInstance();
+            $hints          = $freightService->hintInternational(
+                $start_location,
+                $_REQUEST['destination'],
+                $_REQUEST['width'],
+                $_REQUEST['depth'],
+                $_REQUEST['height'],
+                $_REQUEST['mass']
+            );
+            $list           = $freightService->calculateServices(
+                $hints,
+                $_REQUEST['value'],
+                $_REQUEST['currency']
+            );
+            usort($list, function ($firstService, $secondService) {
+                return bccomp($firstService['offer_price'], $secondService['offer_price'], 2);
+            });
+            die(json_encode($list));
+        } else {
+            $response       = [];
+            $destination    = $_REQUEST['destination'];
+            $start          = (isset($_REQUEST['location'])) ? $_REQUEST['location'] : null;
+            $start_location = (isset($_REQUEST['startpoint'])) ? $_REQUEST['startpoint'] : null;
+            $shipping       = (isset($_REQUEST['shipping'])) ? $_REQUEST['shipping'] : null;
+            if ($destination && ($start || $start_location)) {
+                if ($start) {
+                    $result = $DB->query_first(sprintf(
+                        "SELECT `code` FROM `product_country_location` WHERE `deleted_at` IS NULL AND `id` = %d",
+                        $start
+                    ), MYSQLI_ASSOC);
+                    $start_location = $result['code'];
+                }
+                if ($query = $DB->query(sprintf(
+                    "SELECT * FROM `coinop`.`freight_services_quotes` WHERE `country_from` = %s AND `country_to` = %s %s ORDER BY `id` DESC LIMIT 10",
+                    formatSQLString($start_location),
+                    formatSQLString($destination),
+                    ($shipping) ? ' AND `sea_air` = ' . formatSQLString($shipping) . ' ' : ''
+                ))) {
+                    while ($row = $DB->fetch_assoc($query)) {
+                        $temp                    = [];
+                        $temp['type']            = $row['sea_air'];
+                        $temp['container_flags'] = $row['container_flags'];
+                        //$temp['shipping_weight']=$row['shipping_weight'];
+                        $temp['cubic_weight']    = round($row['cubic_weight'], 2);
+                        $temp['shipping_weight'] = round($row['shipping_weight'], 0);
+                        $temp['price']           = (string) (new TwigCurrency($row['sale_price'], $row['quote_currency']));
+                        $temp['port_from']       = getPortName($row['port_to'], $row['country_to'], $row['sea_air']) . '-' . $row['country_to'];
+                        $response[]              = $temp;
+                    }
+                    $DB->free_result($query);
+                }
+                if ($query = $DB->query(sprintf(
+                    "SELECT * FROM `highwaygroup`.`freight_services_quotes` WHERE `country_from` = %s AND `country_to` = %s %s ORDER BY `id` DESC LIMIT 10",
+                    formatSQLString($start_location),
+                    formatSQLString($destination),
+                    ($shipping) ? ' AND `sea_air` = ' . formatSQLString($shipping) . ' ' : ''
+                ))) {
+                    while ($row = $DB->fetch_assoc($query)) {
+                        $temp                    = [];
+                        $temp['type']            = $row['sea_air'];
+                        $temp['container_flags'] = $row['container_flags'];
+                        //$temp['shipping_weight']=$row['shipping_weight'];
+                        $temp['cubic_weight']    = round($row['cubic_weight'], 2);
+                        $temp['shipping_weight'] = round($row['shipping_weight'], 0);
+                        $temp['price']           = (string) (new TwigCurrency($row['sale_price'], $row['quote_currency']));
+                        $temp['port_from']       = getPortName($row['port_to'], $row['country_to'], $row['sea_air']) . '-' . $row['country_to'];
+                        $response[]              = $temp;
+                    }
+                    $DB->free_result($query);
+                }
+            }
+
+            die(json_encode($response));
+        }
+
+    case 'assisted-checkout':
+        global $_GLOBALS;
+
+        $model = new AssistedCheckoutForm();
+
+        if ($_GLOBALS['member']['id'] ?? 0) {
+            $model->loadMember($_GLOBALS['member']);
+        }
+
+        switch ($_POST['action'] ?? '') {
+            case 'send':
+                //no break
+            case 'do_add':
+                $model->load($_POST);
+                if ($model->validate() && $id = $model->save()) {
+                    //Update shopping cart tracking...
+                    $shopping_cart_id = $_COOKIE['shopping_cart_id'] ?? 0;
+                    if ($shopping_cart_id) {
+                        updateShoppingCartStage($shopping_cart_id, 7); // @todo what is 7?
+                        updateShoppingCartStatus($shopping_cart_id, 'ordered');
+                        updateShoppingCartInvoice($shopping_cart_id, $id);
+                        setcookie('shopping_cart_id', '', strtotime('-1 hour'));
+                        $_COOKIE['shopping_cart_id'] = '';
+                    }
+
+                    //Clear the specific cart
+                    if ('quote' == ($_POST['type'] ?? $_GET['type'] ?? 'shopping')) {
+                        cartSaveContents($_GLOBALS['member']['id'] ?? 0, $_GLOBALS['shopping_cart']);
+                    } else {
+                        cartSaveContents($_GLOBALS['member']['id'] ?? 0, $_GLOBALS['quote_cart']);
+                    }
+
+                    redirect('/cart/thank-you?invoice_number=' . urlencode(invoiceGetValue($id, 'invoice_number')));
+                    die();
+                }
+                break;
+        }
+
+        die($twig->load('cart/assisted-checkout.twig')->render(['inputs' => [
+            'page_title'       => 'Assisted Checkout',
+            'page_description' => null,
+            'page_keywords'    => null,
+            'page_canonical'   => '/cart/assisted-checkout',
+            'page_breadcrumbs' => [
+                ['title' => 'Home', 'url' => '/'],
+                ['title' => 'Assisted Checkout', 'url' => '/cart/assisted-checkout'],
+            ],
+
+            'model' => $model,
+        ]]));
+
+    case 'express-checkout':
+        global $_GLOBALS;
+
+        $model = new ExpressCheckoutForm();
+
+        if ($_GLOBALS['member']['id'] ?? 0) {
+            $model->loadMember($_GLOBALS['member']);
+        }
+
+        switch ($_POST['action'] ?? '') {
+            case 'do_add':
+                $model->load($_POST);
+                if ($model->validate() && $id = $model->save()) {
+                    //Update shopping cart tracking...
+                    $shopping_cart_id = $_COOKIE['shopping_cart_id'] ?? 0;
+                    if ($shopping_cart_id) {
+                        updateShoppingCartStage($shopping_cart_id, 7); // @todo what is 7?
+                        updateShoppingCartStatus($shopping_cart_id, 'ordered');
+                        updateShoppingCartInvoice($shopping_cart_id, $id);
+                        setcookie('shopping_cart_id', '', strtotime('-1 hour'));
+                        $_COOKIE['shopping_cart_id'] = '';
+                    }
+
+                    //Clear the specific cart
+                    if ('quote' == ($_POST['type'] ?? $_GET['type'] ?? 'shopping')) {
+                        cartSaveContents($_GLOBALS['member']['id'] ?? 0, $_GLOBALS['shopping_cart']);
+                    } else {
+                        cartSaveContents($_GLOBALS['member']['id'] ?? 0, $_GLOBALS['quote_cart']);
+                    }
+
+                    redirect('/cart/thank-you?invoice_number=' . urlencode(invoiceGetValue($id, 'invoice_number')));
+                    die();
+                }
+                break;
+        }
+
+        die($twig->load('cart/express-checkout.twig')->render(['inputs' => [
+            'page_title'       => 'Express Checkout',
+            'page_description' => null,
+            'page_keywords'    => null,
+            'page_canonical'   => '/cart/express-checkout',
+            'page_breadcrumbs' => [
+                ['title' => 'Home', 'url' => '/'],
+                ['title' => 'Express Checkout', 'url' => '/cart/express-checkout'],
+            ],
+
+            'model' => $model,
+        ]]));
+
+    case 'thank-you':
+        die($twig->load('cart/thank-you.twig')->render(['inputs' => [
+            'page_title'       => 'Thank You',
+            'page_description' => null,
+            'page_keywords'    => null,
+            'page_canonical'   => '/cart/thank-you',
+            'page_breadcrumbs' => [
+                ['title' => 'Home', 'url' => '/'],
+                ['title' => 'Thank You', 'url' => '/cart/thank-you'],
+            ],
+
+            'invoice_number' => $_GET['invoice_number'] ?? null,
+        ]]));
+}

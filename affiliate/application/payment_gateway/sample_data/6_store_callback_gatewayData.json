@@ -1,0 +1,7 @@
+{
+  "method": "callback",
+  "id": "7",
+  "action": "cancel",
+  "return_url": "http://localhost/aff/6-0-0-0/store/thankyou/7",
+  "cancel_url": "http://localhost/aff/6-0-0-0/store/checkout"
+}

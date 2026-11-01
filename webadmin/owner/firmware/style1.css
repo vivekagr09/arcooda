@@ -1,0 +1,176 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+}
+.pageMenu {
+	background-color: #DFE1F7;
+	color: #000;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: normal;
+}
+.hidden
+{
+	display: none;
+}
+
+div.meta_content .unfinished
+{
+	background-color:yellow;
+}
+
+div.meta_content a
+{
+	color: white;
+}
+
+div.meta_content
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+	font-size: 9pt;
+}
+
+div.meta_content table
+{
+	text-align: left;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #ccc solid;
+}
+
+div.meta_content tr
+{
+	background-color: #fff;
+	color: #000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+div.meta_content pre {margin: 0 0 0 0;}
+div.meta_content pre.alt {background-color: #eee;}
+
+div.meta_content td
+{
+/*	padding: 3px; */
+	padding: 2px;
+}
+
+div.meta_content th, div.meta_content thead
+{
+	background-color: #fec;
+	color: #000;
+	font-weight: bold;
+	text-align: center;
+}
+
+div.meta_content table.vbox td, div.meta_content table.vbox th, div.meta_content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div.meta_content table.buttons {	text-align: center; }
+div.meta_content table.wide {	width: 90%; padding-left: 3 }
+div.meta_content table.wide1 {	width: 95%; border: 1px solid white; text-align:center }
+div.meta_content table.wide1 th  {	border: 1px solid white; }
+div.meta_content table.wide1 td  {	border: 1px solid white; }
+div.meta_content tr.alt		{ background-color: #eed; }
+div.meta_content tr.highlight { background-color: #90EEA0; }
+div.meta_content tr.mylock	{ background-color: #90A0EE; }
+div.meta_content tr.locked	{ background-color: #EE90A0; }
+div.meta_content td.collapse {	width: 1px; }
+div.meta_content th.collapse {	width: 1px; }
+div.meta_content td.left_title {	width: 30%;
+				text-align: right;
+				background-color: #eed;
+				color: #000;
+				font-weight: bold; }
+div.meta_content input.intext, div.meta_content input.infile, div.meta_content textarea, div.meta_content select {	width: 98%; }
+
+div.meta_content div.flagHeader
+{
+	border-bottom: 1px solid green;
+	text-align: left;
+	width: 95%
+}
+
+div.meta_content div.flagHeader span
+{
+	color: white;
+	background-color: green;
+	padding: 0px 20px;
+}
+
+div.meta_content th a
+{
+	color: #000;
+}
+
+div.meta_content td a
+{
+	color: #000;
+}
+
+div.meta_content table.spacetable td
+{
+	border:2px solid white;
+}
+
+.bottom {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #ccc;
+}
+
+.bottomLeft {
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-bottom-color: #ccc;
+	border-left-color: #ccc;
+}
+.bottomRight {
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #ccc;
+	border-bottom-color: #ccc;
+}
+
+.bottomLeftRight {
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-bottom-color: #ccc;
+	border-right-color: #ccc;
+	border-left-color: #ccc;
+}
+.box {
+	border: 1px solid #ccc;
+}
+
+table.dispgroupbox {
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+}
+
+table.dispgroupbox td {
+	background: #fff;
+	border: 1px black solid;
+}
+
+table.dispgroupbox td:hover {
+	background: #DFE1F7;
+}

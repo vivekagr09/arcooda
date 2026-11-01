@@ -1,0 +1,18 @@
+{#
+// inputs:
+#}
+{% set pref = pref() %}
+<div class="site-footer__widget footer-newsletter">
+    <div>
+    {% if pref!='y' %}
+    <h5 class="footer-links__title" style="margin-top: 22px;">Newsletter</h5>
+    <div class="footer-newsletter__text">Enter your email address below to subscribe to our newsletter and keep up to date with discounts and special offers.</div>
+    <form action="/account/news-letter" class="footer-newsletter__form" method="post">
+        <label class="sr-only" for="footer-newsletter-address">Email Address</label>
+        <input type="hidden"  name="action" value="newsletter">
+        <input type="email" required="required" class="footer-newsletter__form-input" id="footer-newsletter-address" placeholder="Email Address..." name="newsletter-address"/>
+        <button class="footer-newsletter__form-button">Subscribe</button>
+    </form>
+    {% endif %}
+    
+</div>

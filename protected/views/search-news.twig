@@ -1,0 +1,45 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - action:
+// - categories:
+// - page:
+// - page_url:
+// - pages:
+// - posts:
+// - s:
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set action     = inputs.action %}
+{% set categories = inputs.categories %}
+{% set page       = inputs.page %}
+{% set page_url   = inputs.page_url %}
+{% set pages      = inputs.pages %}
+{% set posts      = inputs.posts %}
+{% set s          = inputs.s %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/components/blog-page-news.twig' with {inputs: {
+        layout:     'grid',
+        sidebar:    'left',
+        action:     action,
+        categories: categories,
+        page:       page,
+        page_url:   page_url,
+        pages:      pages,
+        posts:      posts,
+        s:          s,
+    }} %}
+{% endblock %}

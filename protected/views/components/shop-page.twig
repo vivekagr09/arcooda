@@ -1,0 +1,138 @@
+{#
+// inputs:
+// - filters:  mixed[]
+// - grid:     string - one of [grid-3-sidebar, grid-4-sidebar, grid-4-full, grid-5-full, grid-6-full]
+// - latest_products: TwigProduct[]
+// - layout:   string - one of [grid, grid-with-features, list, table]
+// - page_url: string
+// - page:     int
+// - pages:    int
+// - products: TwigProduct[]
+// - sidebar:  string - one of [left, right]
+#}
+
+{% set filters         = inputs.filters %}
+{% set grid            = inputs.grid %}
+{% set latest_products = inputs.latest_products %}
+{% set layout          = inputs.layout %}
+{% set page            = inputs.page %}
+{% set page_url        = inputs.page_url %}
+{% set pages           = inputs.pages %}
+{% set products        = inputs.products %}
+{% set show            = inputs.show %}
+{% set sidebar         = inputs.sidebar %}
+{% set title           = inputs.title %}
+{% set slug            = inputs.slug %}
+{% set featured_product = inputs.featured_product %}
+{% set product_series = inputs.product_series %}
+{#% set products = data('shop-products.json') %#}
+{% set offcanvas = grid in ['grid-4-full', 'grid-5-full', 'grid-6-full'] ? 'always' : 'mobile' %}
+
+{% set root_classes = classnames('block-split', {
+    'block-split--has-sidebar': sidebar in ['left', 'right'] and offcanvas != 'always',
+}) %}
+
+{% set list_classes = classnames('products-view__list products-list', {
+    'products-list--grid--6': grid == 'grid-6-full',
+    'products-list--grid--5': grid == 'grid-5-full',
+    'products-list--grid--4': grid in ['grid-4-full', 'grid-4-sidebar'],
+    'products-list--grid--3': grid == 'grid-3-sidebar',
+}) %}
+
+{% include '/blocks/block-header.twig' with {inputs: {
+    title: title,
+    breadcrumb: global_page_breadcrumbs,
+}} %}
+<div class="{{ root_classes }}">
+    {% if offcanvas == 'always' %}
+        {% include '/components/shop-sidebar.twig' with {inputs: {
+            offcanvas: offcanvas,
+        }} %}
+    {% endif %}
+    <div class="container">
+        <div class="block-split__row row no-gutters">
+            {% if sidebar == 'left' and offcanvas != 'always' %}<div class="block-split__item block-split__item-sidebar col-auto">{% include '/components/shop-sidebar.twig' with {inputs: {
+                offcanvas: offcanvas,
+                filters: filters,
+                latest_products: featured_product,
+                product_series: product_series,
+                slug: slug,
+            }} %}</div>{% endif %}
+            <div class="block-split__item block-split__item-content col-auto {{ (filters ==  'none' ? 'w-100':'')}}"><div class="block"><div class="products-view">
+                <div class="{{ classnames('products-view__options view-options', 'view-options--offcanvas--'~offcanvas) }}">
+                    <div class="view-options__body">
+                        <button type="button" class="view-options__filters-button filters-button">
+                            <span class="filters-button__icon">{{ svg('filters-16.svg') }}</span>
+                            <span class="filters-button__title">Filters</span>
+                            <span class="filters-button__counter">3</span>
+                        </button>
+                        <div class="view-options__layout layout-switcher"><div class="layout-switcher__list">
+                            <button type="button" class="{{ classnames('layout-switcher__button', {'layout-switcher__button--active': layout == 'grid'}) }}" data-layout="grid" data-with-features="false">{{ svg_inline('layout-grid-16x16.svg') }}</button>
+                            <button type="button" class="{{ classnames('layout-switcher__button', {'layout-switcher__button--active': layout == 'grid-with-features'}) }}" data-layout="grid" data-with-features="true">{{ svg_inline('layout-grid-with-details-16x16.svg') }}</button>
+                            <button type="button" class="{{ classnames('layout-switcher__button', {'layout-switcher__button--active': layout == 'list'}) }}" data-layout="list" data-with-features="false">{{ svg_inline('layout-list-16x16.svg') }}</button>
+                            <button type="button" class="{{ classnames('layout-switcher__button', {'layout-switcher__button--active': layout == 'table'}) }}" data-layout="table" data-with-features="false">{{ svg_inline('layout-table-16x16.svg') }}</button>
+                        </div></div>
+                        <div class="view-options__legend">Showing {{ products|length }} of {{ total }} products</div>
+                        <div class="view-options__spring"></div>
+                        <div class="view-options__select">
+                            <label for="view-option-sort">Sort:</label>
+                            <select id="view-option-sort" class="form-control form-control-sm" name="sort" onchange="window.location.href='?show={{ show }}&sort='+ this.value;">
+                                <option value="Product Name" {{ sort == 'Product Name' ? 'selected' : '' }}>Product Name</option>
+                                <option value="Latest Items" {{ sort == 'Latest Items' ? 'selected' : '' }}>Latest Items</option>
+                                <option value="Lowest Price" {{ sort == 'Lowest Price' ? 'selected' : '' }}>Lowest Price</option>
+                                <option value="Highest Price" {{ sort == 'Highest Price' ? 'selected' : '' }}>Highest Price</option>
+                            </select>
+                        </div>
+                        <div class="view-options__select">
+                            <label for="view-option-limit">Show:</label>
+                            <select id="view-option-limit" class="form-control form-control-sm" name="show" onchange="window.location.href='?show=' + this.value;">
+                                <option value="16" {{ show == 16 ? 'selected' : '' }}>16</option>
+                                <option value="32" {{ show == 32 ? 'selected' : '' }}>32</option>
+                                <option value="48" {{ show == 48 ? 'selected' : '' }}>48</option>
+                                <option value="64" {{ show == 64 ? 'selected' : '' }}>64</option>
+                                <option value="80" {{ show == 80 ? 'selected' : '' }}>80</option>
+                                <option value="96" {{ show == 96 ? 'selected' : '' }}>96</option>
+                                <option value="112" {{ show == 112 ? 'selected' : '' }}>112</option>
+                            </select>
+                        </div>
+                    </div>
+                    {#<div class="view-options__body view-options__body--filters">
+                        <div class="view-options__label">Active Filters</div>
+                        <div class="applied-filters"><ul class="applied-filters__list">
+                            <li class="applied-filters__item"><a href="" class="applied-filters__button applied-filters__button--filter">Sales: Top Sellers {{ svg_inline('cross-9-light.svg') }}</a></li>
+                            <li class="applied-filters__item"><a href="" class="applied-filters__button applied-filters__button--filter">Color: True Red {{ svg_inline('cross-9-light.svg') }}</a></li>
+                            <li class="applied-filters__item"><button type="button" class="applied-filters__button applied-filters__button--clear">Clear All</button></li>
+                        </ul></div>
+                    </div>#}
+                </div>
+                <div class="{{ list_classes }}" data-layout="{{ layout }}" data-with-features="false">
+                    <div class="products-list__head">
+                        <div class="products-list__column products-list__column--image">Image</div>
+                        {#<div class="products-list__column products-list__column--meta">SKU</div>#}
+                        <div class="products-list__column products-list__column--product">Product</div>
+                        {#<div class="products-list__column products-list__column--rating">Rating</div>#}
+                        <div class="products-list__column products-list__column--price">Price</div>
+                    </div>
+                    <div class="products-list__content">{% for product in products %}<div class="products-list__item">{% include '/components/product-card.twig' with {inputs: {
+                        product: product,
+                        exclude: ['meta']
+                    }} %}</div>{% endfor %}</div>
+                </div>
+                <div class="products-view__pagination">
+                    <nav aria-label="Page navigation example">{% include '/components/pagination.twig' with {inputs: {
+                        page: page,
+                        page_url: page_url,
+                        pages: pages,
+                    }} %}</nav>
+                    <div class="products-view__pagination-legend">Showing {{ products|length }} of {{ total }} products</div>
+                </div>
+            </div></div></div>
+            {% if sidebar == 'right' and offcanvas != 'always' %}<div class="block-split__item block-split__item-sidebar col-auto">{% include '/components/shop-sidebar.twig' with {inputs: {
+                offcanvas: offcanvas,
+            }} %}</div>{% endif %}
+        </div>
+        {% include '/blocks/block-space.twig' with {inputs: {
+            layout: 'before-footer',
+        }} %}
+    </div>
+</div>

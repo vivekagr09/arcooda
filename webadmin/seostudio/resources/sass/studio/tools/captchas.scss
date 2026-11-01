@@ -1,0 +1,38 @@
+// main: ../index.scss
+
+.rate-limited {
+	h2 {
+		font-size: 19px;
+		margin-bottom: 4px;
+	}
+}
+
+.captcha {
+    background-color: #fff;
+
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+
+	padding: 25px;
+
+	.captcha-button {
+		background-color: #3f91ca;
+		cursor: pointer;
+		border: 1px solid #3f91ca;
+
+		color: #fff;
+		font-size: 14px;
+		padding: 5px 15px;
+		margin-top: 5px;
+
+		border-radius: 3px;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+	}
+
+	.captcha-error {
+		margin: 0 0 10px;
+		color: #bb0000;
+	}
+}

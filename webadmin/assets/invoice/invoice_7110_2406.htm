@@ -1,0 +1,538 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0016)http://localhost --><HTML><HEAD><TITLE>Print Purchase Order - HTML</TITLE>
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR>
+<META http-equiv=Content-Type content="text/html; charset=windows-1255">
+<STYLE>A {
+	COLOR: #305774; TEXT-DECORATION: underline
+}
+A:hover {
+	COLOR: #000000
+}
+.datafont {
+	FONT-SIZE: 9pt; FONT-FAMILY: Verdana, Sans Serif, Helvetica
+}
+.totalfont {
+	FONT-SIZE: 9pt; FONT-FAMILY: Verdana, Sans Serif, Helvetica
+}
+.titlefont {
+	FONT-WEIGHT: bold; FONT-SIZE: 9pt; FONT-FAMILY: Verdana, Sans Serif, Helvetica
+}
+.groupfont {
+	FONT-SIZE: 9pt; FONT-FAMILY: Verdana, Sans Serif, Helvetica
+}
+#a {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+#a:hover {
+	COLOR: #0000ff; TEXT-DECORATION: underline
+}
+.DOCNO A {
+	COLOR: #000000; TEXT-DECORATION: underline
+}
+P {
+	FONT-SIZE: 10pt; MARGIN: 0cm; FONT-FAMILY: 'Arial'
+}
+THEAD {
+	DISPLAY: table-header-group
+}
+TFOOT {
+	DISPLAY: table-footer-group
+}
+TABLE {
+	BORDER-COLLAPSE: collapse
+}
+.Editcbtn {
+	BORDER-RIGHT: buttonface 1px solid; BORDER-TOP: buttonface 1px solid; BORDER-LEFT: buttonface 1px solid; WIDTH: 22px; BORDER-BOTTOM: buttonface 1px solid; HEIGHT: 18px
+}
+.titletbl {
+	HEIGHT: 19px
+}
+.tabstbl {
+	HEIGHT: 19px
+}
+.dbframe {
+	BORDER-RIGHT: #808080 1px solid; BORDER-TOP: #808080 1px solid; DISPLAY: none; MARGIN: 3px 0px 0px 3px; BORDER-LEFT: #808080 1px solid; BORDER-BOTTOM: #808080 1px solid
+}
+.titlebar {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND-IMAGE: url(/priimages/titlebar.jpg); valign: top
+}
+.lefton A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+.lefton {
+	PADDING-LEFT: 13px; BACKGROUND-IMAGE: url(/priimages/left-on.gif); BACKGROUND-REPEAT: no-repeat; valign: top
+}
+.leftonmiddleoff A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+.leftonmiddleoff {
+	PADDING-LEFT: 23px; BACKGROUND-IMAGE: url(/priimages/left-on-middle-off.gif); BACKGROUND-REPEAT: no-repeat; valign: top
+}
+.middleoff A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+.middleoff {
+	PADDING-LEFT: 23px; BACKGROUND-IMAGE: url(/priimages/middle-off.gif); BACKGROUND-REPEAT: no-repeat; valign: top
+}
+.rightoff A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+.rightoff {
+	PADDING-LEFT: 13px; BACKGROUND-IMAGE: url(/priimages/right-off.gif); BACKGROUND-REPEAT: no-repeat; valign: top
+}
+.leftoff A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+.leftoff {
+	PADDING-LEFT: 13px; BACKGROUND-IMAGE: url(/priimages/left-off.gif); BACKGROUND-REPEAT: no-repeat; valign: top
+}
+.middleon A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+.middleon {
+	PADDING-LEFT: 23px; BACKGROUND-IMAGE: url(/priimages/middle-on.gif); BACKGROUND-REPEAT: no-repeat; valign: top
+}
+.righton A {
+	COLOR: #000080; TEXT-DECORATION: none
+}
+.righton {
+	PADDING-LEFT: 13px; BACKGROUND-IMAGE: url(/priimages/right-on.gif); BACKGROUND-REPEAT: no-repeat; valign: top
+}
+.indent {
+	PADDING-RIGHT: 25px; PADDING-LEFT: 25px
+}
+.bttn1 {
+	BACKGROUND-IMAGE: url(/priimages/bttnm.bmp); VERTICAL-ALIGN: top; WIDTH: 70px; CURSOR: hand
+}
+.bttn2 {
+	BACKGROUND-IMAGE: url(/priimages/bttnm.bmp); VERTICAL-ALIGN: top; WIDTH: 70px; CURSOR: hand
+}
+.bttn3 {
+	BACKGROUND-IMAGE: url(/priimages/bttnm.bmp); VERTICAL-ALIGN: top; WIDTH: 70px; CURSOR: hand
+}
+.bttn4 {
+	BACKGROUND-IMAGE: url(/priimages/bttnm.bmp); VERTICAL-ALIGN: top; WIDTH: 70px; CURSOR: hand
+}
+.bttn5 {
+	BACKGROUND-IMAGE: url(/priimages/bttnm.bmp); VERTICAL-ALIGN: top; WIDTH: 70px; CURSOR: hand
+}
+.bttn6 {
+	BACKGROUND-IMAGE: url(/priimages/bttnm.bmp); VERTICAL-ALIGN: top; WIDTH: 70px; CURSOR: hand
+}
+.bttn7 {
+	BACKGROUND-IMAGE: url(/priimages/bttnm.bmp); VERTICAL-ALIGN: top; WIDTH: 70px; CURSOR: hand
+}
+.bttn8 {
+	BACKGROUND-IMAGE: url(/priimages/bttnm.bmp); VERTICAL-ALIGN: top; WIDTH: 70px; CURSOR: hand
+}
+.disabled_bttn {
+	BACKGROUND-IMAGE: url(/priimages/bttnm-gray.bmp); WIDTH: 70px; CURSOR: default
+}
+.disabled_bttn FONT {
+	COLOR: #404040
+}
+.rightbtn {
+	BACKGROUND-IMAGE: url(/priimages/bttnr.gif); WIDTH: 15px; CURSOR: default
+}
+.disabled_rightbtn {
+	BACKGROUND-IMAGE: url(/priimages/bttnr-gray.gif); WIDTH: 15px; CURSOR: default
+}
+.leftbtn {
+	BACKGROUND-IMAGE: url(/priimages/bttnl.gif); WIDTH: 15px; CURSOR: default
+}
+.disabled_leftbtn {
+	BACKGROUND-IMAGE: url(/priimages/bttnl-gray.gif); WIDTH: 15px; CURSOR: default
+}
+.ol2 {
+	BORDER-TOP: black 3px double
+}
+.ol {
+	BORDER-TOP: black 1px solid
+}
+.ul2 {
+	BORDER-BOTTOM: black 3px double
+}
+.ul {
+	BORDER-BOTTOM: black 1px solid
+}
+.olul2 {
+	BORDER-TOP: black 1px solid; BORDER-BOTTOM: black 3px double
+}
+.ol2ul2 {
+	BORDER-TOP: black 3px double; BORDER-BOTTOM: black 3px double
+}
+.olul {
+	BORDER-TOP: black 1px solid; BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-BOTTOM: black 1px solid
+}
+.tableContainer {
+	MARGIN: 0px auto; WIDTH: auto; PADDING-TOP: 22px; POSITION: relative
+}
+.innerFrame {
+	PADDING-RIGHT: 18px; OVERFLOW-Y: scroll; OVERFLOW: hidden; HEIGHT: 500px
+}
+.tableContainer THEAD TR {
+	BORDER-RIGHT: #d0d0d0 1pt solid; LEFT: 0px; POSITION: absolute; TOP: 0px
+}
+.tableContainer TABLE {
+	BORDER-RIGHT: #d0d0d0 1px solid; BORDER-TOP: black 0px solid; BORDER-LEFT: black 0px solid; WIDTH: 100%; BORDER-BOTTOM: #d0d0d0 1px solid; BORDER-COLLAPSE: separate
+}
+.tableContainer THEAD TD {
+	
+}
+.tableContainer TD {
+	BORDER-RIGHT: black 0px solid; BORDER-TOP: #d0d0d0 1px solid; BORDER-LEFT: #d0d0d0 1px solid; BORDER-BOTTOM: black 0pt solid
+}
+.titletable {
+	BORDER-RIGHT: #909090 1px solid; BORDER-TOP: #f8f8f8 1px solid; FONT-WEIGHT: bold; FONT-SIZE: 9pt; BORDER-LEFT: #f8f8f8 1px solid; BORDER-BOTTOM: #909090 1px solid; FONT-FAMILY: Verdana, Sans Serif, Helvetica; HEIGHT: 22px; BACKGROUND-COLOR: #b4cfe0
+}
+TEXTAREA {
+	FONT-SIZE: 9pt; FONT-FAMILY: Courier New, "monospace"
+}
+INPUT {
+	FONT-SIZE: 9pt
+}
+SELECT {
+	FONT-SIZE: 9pt
+}
+</STYLE>
+
+<STYLE type=text/css media=print>A {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+.innerFrame {
+	OVERFLOW: visible
+}
+.tableContainer THEAD TR {
+	POSITION: static
+}
+</STYLE>
+</HEAD>
+<BODY bgColor=#ffffff leftMargin=1 topMargin=2 rightMargin=1>
+<DIV 
+style="FONT-SIZE: 1px; VISIBILITY: hidden; FONT-FAMILY: Free 3 of 9; POSITION: absolute" 
+name="barcode">*0*</DIV>
+<FORM name=priform method=post>
+<TABLE cellSpacing=10 cellPadding=0 rules=none width="100%" bgColor=#fff7de 
+border=0>
+  <THEAD>
+  <TR>
+    <TD>
+      <TABLE width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=0 rules=groups width="100%" 
+            border=0>
+              <THEAD id=_title></THEAD>
+              <TBODY>
+              <TR>
+                <TD vAlign=top align=left bgColor=#fff7de><FONT face=Arial 
+                  color=#000000 size=4><B>ELBE - Leading Technological Solutions 
+                  Ltd.</B></FONT><BR><FONT face=Arial color=#000000 
+                  size=2><B>E-mail: <A title=E-mail tabIndex=2 
+                  href="mailto:sales@elbe.co.il">sales@elbe.co.il</A></B></FONT>, 
+                  <FONT face=Arial color=#000000 size=2><B>Web Site: <A 
+                  title=URL tabIndex=3 
+                  href='javascript:w = open("http://www.elbe.co.il", "PriorityLink"); w.focus(0); void(0)'>http://www.elbe.co.il</A></B></FONT><BR><FONT 
+                  face=Arial color=#000000 size=2><B>Tel.: 
+                  +972-9-9720200</B></FONT>, <FONT face=Arial color=#000000 
+                  size=2><B>Fax: +972-9-9720201</B></FONT><BR><FONT face=Arial 
+                  color=#000000 size=2><B>P.O.B 5520</B></FONT>, <FONT 
+                  face=Arial color=#000000 size=2><B>ISRAEL, 
+                  Herzlia</B></FONT>&nbsp;<FONT face=Arial color=#000000 
+                  size=2><B>46154</B></FONT><BR><FONT face=Arial color=#000000 
+                  size=2><B>Consol. Busn Number: 557638269</B></FONT> </TD>
+                <TD align=middle><A 
+                  href="C:\Documents and Settings\Issabella\My Documents\Elbe Order 08-02264- HTML_files\mht17(1).tmp"><IMG 
+                  height=70 alt="מערכת ניהול איכות" 
+                  src="C:\Documents and Settings\Issabella\My Documents\Elbe Order 08-02264- HTML_files\mht17(1).tmp" 
+                  width=70 border=0></A></TD>
+                <TD align=right bgColor=#fff7de><FONT face=Arial color=#000000 
+                  size=2><B><A title=URL tabIndex=12 
+                  href='javascript:w = open("http://www.elbe.co.il", "PriorityLink"); w.focus(0); void(0)'><IMG 
+                  height=100 
+                  src="C:\Documents and Settings\Issabella\My Documents\Elbe Order 08-02264- HTML_files\mht1A(1).tmp" 
+                  width=200 border=0></A></B></FONT> 
+        </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></THEAD>
+  <TBODY>
+  <TR>
+    <TD>
+      <TABLE cellSpacing=1 cellPadding=0 rules=none width="100%" bgColor=#adc9dc 
+      border=0>
+        <TBODY>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=6 rules=none width="100%" 
+            bgColor=#ffebbd border=0>
+              <TBODY>
+              <TR>
+                <TD>
+                  <TABLE cellSpacing=0 cellPadding=0 rules=none width="100%" 
+                  bgColor=#ffebbd border=0>
+                    <THEAD>
+                    <TR>
+                      <TD vAlign=top width="100%" colSpan=3>
+                        <TABLE width="100%" border=0>
+                          <TBODY>
+                          <TR>
+                            <TD>
+                              <TABLE cellSpacing=0 cellPadding=0 width="100%" 
+                              border=0>
+                                <THEAD id=_title></THEAD>
+                                <TBODY>
+                                <TR>
+                                <TD vAlign=top align=left bgColor=#ffebbd><FONT 
+                                face=Arial color=#000000 
+                                size=2><B>To:</B></FONT><BR><FONT face=Arial 
+                                color=#000000 size=5><B>Converters.TV PTY 
+                                LTD</B></FONT> </TD>
+                                <TD></TD>
+                                <TD vAlign=top align=right width="30%" 
+                                bgColor=#ffebbd><FONT face=Arial color=#000000 
+                                size=2><B>Order Date: 23 Oct, 
+                                2008</B></FONT><BR><FONT face=Arial 
+                                color=#000000 size=2><B>Print Date: 23 Oct, 
+                                2008</B></FONT><BR><BR></TD></TR>
+                                <TR>
+                                <TD vAlign=top align=left bgColor=#ffebbd><FONT 
+                                face=Arial color=#000000 size=2><B>Maitland Road 
+                                44-48</B></FONT><BR><FONT face=Arial 
+                                color=#000000 size=2><B>Mayfield East 
+                                2304</B></FONT>&nbsp;<FONT face=Arial 
+                                color=#000000 
+                                size=2><B>Australia</B></FONT><BR><FONT 
+                                face=Arial color=#000000 
+                                size=2><B>Attn:</B></FONT>&nbsp;<FONT face=Arial 
+                                color=#000000 size=3><B><U>OLIVIA 
+                                GRAHOM</B></U></FONT> </TD>
+                                <TD></TD>
+                                <TD align=right bgColor=#ffebbd><FONT face=Arial 
+                                color=#000000 size=2><B>Email: <A title=Email 
+                                tabIndex=35 
+                                href="mailto:ograham@highwaygroup.net">ograham@highwaygroup.net</A></B></FONT> 
+                                </TD></TR>
+                                <TR>
+                                <TD vAlign=center align=middle bgColor=#ffebbd 
+                                colSpan=3><FONT face=Arial color=#000000 
+                                size=5><B>Stock</B></FONT> 
+                              </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+                        <TABLE width="100%" border=0>
+                          <TBODY>
+                          <TR>
+                            <TD>
+                              <TABLE cellSpacing=0 cellPadding=0 width="100%" 
+                              border=0>
+                                <THEAD id=_title></THEAD>
+                                <TBODY>
+                                <TR>
+                                <TD width="8%" bgColor=#ffebbd><FONT 
+                                color=#000000></FONT></TD>
+                                <TD align=middle width="84%" 
+                                bgColor=#ffebbd><FONT face=Arial color=#000000 
+                                size=4><B><U>Purchase Order 
+                                08-02264</B></U></FONT> </TD>
+                                <TD width="8%" bgColor=#ffebbd><FONT 
+                                color=#000000></FONT></TD></TR>
+                                <TR>
+                                <TD width="100%" bgColor=#ffebbd colSpan=3><FONT 
+                                color=#000000></FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></THEAD>
+                    <TBODY>
+                    <TR>
+                      <TD vAlign=top width="100%" colSpan=3><BR>
+                        <TABLE width="100%" border=0>
+                          <TBODY>
+                          <TR>
+                            <TD>
+                              <TABLE borderColor=#505050 cellSpacing=0 
+                              cellPadding=4 rules=groups width="100%" 
+                                border=1><COLGROUP>
+                                <COLGROUP>
+                                <COLGROUP>
+                                <COLGROUP>
+                                <COLGROUP>
+                                <COLGROUP>
+                                <COLGROUP>
+                                <THEAD id=_title>
+                                <TR>
+                                <TD align=middle bgColor=#adc9dc><FONT 
+                                face=Arial color=#000000 size=2><B><SPAN 
+                                dir=ltr>Line</SPAN></B></FONT></TD>
+                                <TD align=middle bgColor=#adc9dc><FONT 
+                                face=Arial color=#000000 size=2><B><SPAN 
+                                dir=ltr>Part No.</SPAN></B></FONT></TD>
+                                <TD align=middle bgColor=#adc9dc><FONT 
+                                face=Arial color=#000000 size=2><B><SPAN 
+                                dir=ltr>Part Description</SPAN></B></FONT></TD>
+                                <TD align=middle bgColor=#adc9dc><FONT 
+                                face=Arial color=#000000 size=2><B><SPAN 
+                                dir=ltr>Due Date</SPAN></B></FONT></TD>
+                                <TD align=middle bgColor=#adc9dc><FONT 
+                                face=Arial color=#000000 size=2><B><SPAN 
+                                dir=ltr>Quantity</SPAN></B></FONT></TD>
+                                <TD align=middle bgColor=#adc9dc><FONT 
+                                face=Arial color=#000000 size=2><B><SPAN 
+                                dir=ltr>Unit Price</SPAN></B></FONT></TD>
+                                <TD align=middle bgColor=#adc9dc><FONT 
+                                face=Arial color=#000000 size=2><B><SPAN 
+                                dir=ltr>Extended 
+                                Price</SPAN></B></FONT></TD></TR></THEAD>
+                                <TBODY>
+                                <TR>
+                                <TD noWrap align=right bgColor=#f8f8f8><FONT 
+                                face=Arial color=#000000 size=2><SPAN 
+                                dir=ltr>1</SPAN></FONT></TD>
+                                <TD bgColor=#f8f8f8><FONT face=Arial 
+                                color=#000000 size=2><SPAN 
+                                dir=ltr>EGATFT104INCHAU</SPAN></FONT></TD>
+                                <TD bgColor=#f8f8f8><FONT face=Arial 
+                                color=#000000 size=2><SPAN dir=ltr>10.4 Inch CGA 
+                                EGA VGA to SVGA LCD Panel</SPAN></FONT></TD>
+                                <TD noWrap align=middle bgColor=#f8f8f8><FONT 
+                                face=Arial color=#000000 size=2><SPAN 
+                                dir=ltr>23-Oct-2008</SPAN></FONT></TD>
+                                <TD bgColor=#f8f8f8><FONT face=Arial 
+                                color=#000000 size=2><SPAN dir=ltr>3.00 
+                                ea</SPAN></FONT></TD>
+                                <TD bgColor=#f8f8f8><FONT face=Arial 
+                                color=#000000 size=2><SPAN dir=ltr>USD 
+                                395.00</SPAN></FONT></TD>
+                                <TD align=right width="20%" 
+                                bgColor=#f8f8f8><FONT face=Arial color=#000000 
+                                size=2><SPAN 
+                                dir=ltr>1,185.00</SPAN></FONT></TD></TR>
+                                <TR>
+                                <TD noWrap align=right bgColor=#fff7de><FONT 
+                                face=Arial color=#000000 size=2><SPAN 
+                                dir=ltr>2</SPAN></FONT></TD>
+                                <TD bgColor=#fff7de><FONT face=Arial 
+                                color=#000000 size=2><SPAN 
+                                dir=ltr>0000</SPAN></FONT></TD>
+                                <TD bgColor=#fff7de><FONT face=Arial 
+                                color=#000000 size=2><SPAN dir=ltr>BANK 
+                                TRANSFER</SPAN></FONT></TD>
+                                <TD noWrap align=middle bgColor=#fff7de><FONT 
+                                face=Arial color=#000000 size=2><SPAN 
+                                dir=ltr>23-Oct-2008</SPAN></FONT></TD>
+                                <TD bgColor=#fff7de><FONT face=Arial 
+                                color=#000000 size=2><SPAN dir=ltr>1.00 
+                                ea</SPAN></FONT></TD>
+                                <TD bgColor=#fff7de><FONT face=Arial 
+                                color=#000000 size=2><SPAN dir=ltr>USD 
+                                22.00</SPAN></FONT></TD>
+                                <TD align=right width="20%" 
+                                bgColor=#fff7de><FONT face=Arial color=#000000 
+                                size=2><SPAN 
+                                dir=ltr>22.00</SPAN></FONT></TD></TR>
+                                <TBODY></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+                    <TR>
+                      <TD vAlign=top width="45%"><BR>
+                        <TABLE width="100%" border=0>
+                          <TBODY>
+                          <TR>
+                            <TD>
+                              <TABLE cellSpacing=0 cellPadding=0 rules=none 
+                              width="100%" border=0>
+                                <THEAD id=_title></THEAD>
+                                <TBODY>
+                                <TR>
+                                <TD bgColor=#ffebbd><FONT face=Arial 
+                                color=#000000 size=2>Ship by: 
+                                Stock</FONT><BR><FONT face=Arial color=#000000 
+                                size=2>Vendor Number: 420276</FONT><BR><FONT 
+                                face=Arial color=#000000 size=2>PR Document 
+                                Number: 08-01027</FONT> 
+                            </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD>
+                      <TD></TD>
+                      <TD vAlign=top width="50%">
+                        <TABLE width="100%" border=0>
+                          <TBODY>
+                          <TR>
+                            <TD>
+                              <TABLE borderColor=#505050 cellSpacing=0 
+                              cellPadding=4 rules=groups width="100%" 
+                                border=1><THEAD id=_title></THEAD>
+                                <TBODY>
+                                <TR>
+                                <TD noWrap align=left width="50%" 
+                                bgColor=#fff7de><FONT face=Arial color=#000000 
+                                size=2><B>Total Price</B></FONT> </TD>
+                                <TD align=right width="50%" 
+                                bgColor=#fff7de><FONT face=Arial color=#000000 
+                                size=2><B>1,207.00</B></FONT> </TD></TR>
+                                <TR>
+                                <TD align=left bgColor=#fff7de><FONT face=Arial 
+                                color=#000000 size=2><B>Tax</B></FONT> </TD>
+                                <TD align=right bgColor=#fff7de><FONT face=Arial 
+                                color=#000000 size=2><B>0.00</B></FONT> 
+                                </TD></TR>
+                                <TR>
+                                <TD align=left width="50%" bgColor=#fff7de><FONT 
+                                face=Arial color=#000000 
+                                size=2><B>TOTAL</B></FONT> </TD>
+                                <TD noWrap align=right width="50%" 
+                                bgColor=#fff7de><FONT face=Arial color=#000000 
+                                size=2><B>USD 1,207.00</B></FONT> 
+                                </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+                    <TR>
+                      <TD vAlign=top width="100%" colSpan=3><BR>
+                        <TABLE width="100%" border=0>
+                          <TBODY>
+                          <TR>
+                            <TD>
+                              <TABLE cellSpacing=0 cellPadding=0 rules=none 
+                              width="100%" border=0>
+                                <THEAD id=_title></THEAD>
+                                <TBODY>
+                                <TR>
+                                <TD bgColor=#ffebbd>
+                                <STYLE>P {
+	FONT-SIZE: 10pt; MARGIN: 0cm; FONT-FAMILY: 'Arial'
+}
+DIV {
+	FONT-SIZE: 10pt; MARGIN: 0cm; FONT-FAMILY: 'Arial'
+}
+LI {
+	FONT-SIZE: 10pt; MARGIN: 0cm; FONT-FAMILY: 'Arial'
+}
+</STYLE>
+
+                                <P dir=ltr align=left>Please send an order 
+                                confirmation to : <A 
+                                href="mailto:mali@elbe.co.il">mali@elbe.co.il</A> 
+                                ,or to&nbsp;fax : +972-9-9720249<BR>PLEASE 
+                                INDICATE OUR ORDER NO. IN ALL YOUR 
+                                DOCUMENTS<BR>PLEASE ATTACH ORIGINAL INVOICE TO 
+                                THE PARCEL<BR>IN CASE OF GOODS EUROPEAN MADE - 
+                                EUR 1 FORM MUST BE ATTACHED<BR><FONT 
+                                color=#0004ff size=4>DELIVERY METHOD : with dhl 
+                                using our account number 961248211</FONT></P>
+                                <P dir=ltr 
+                                align=left><BR>&nbsp;</P></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR><BR>
+                        <TABLE width="100%" border=0>
+                          <TBODY>
+                          <TR>
+                            <TD>
+                              <TABLE cellSpacing=0 cellPadding=0 width="100%" 
+                              border=0>
+                                <THEAD id=_title></THEAD>
+                                <TBODY>
+                                <TR>
+                                <TD width="55%"></TD>
+                                <TD vAlign=top align=left width="45%" 
+                                bgColor=#ffebbd><FONT face=Arial color=#000000 
+                                size=2><B>Sincerely,</B></FONT><BR><FONT 
+                                face=Arial color=#000000 size=2><B>Mali 
+                                Uliel</B></FONT><BR><FONT face=Arial 
+                                color=#000000 size=2><B>Import &amp; Export - 
+                                Service Dept.</B></FONT><BR><FONT face=Arial 
+                                color=#000000 size=2><B>ELBE - Leading 
+                                Technological Solutions Ltd.</B></FONT> 
+                                </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+                        <TABLE width="100%" border=0>
+                          <TBODY>
+                          <TR>
+                            <TD></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+      <TABLE width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></FORM></BODY></HTML>

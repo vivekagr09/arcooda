@@ -1,0 +1,162 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - orders:
+// - page:
+#}
+{% set global_page_title           = inputs.title|default('Payment Success')        %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/payment_success'                            %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : 'payment',      url : '/payment_success' },
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+{% set invoice = inputs.invoice                                               %}
+
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+{% set title_front           = inputs.title_front  %}
+{% include '/blocks/block-header.twig' with {inputs: {
+  title: '',
+  breadcrumb: global_page_breadcrumbs,
+}} %}
+<link rel="stylesheet" href="/css/checkout.min.css" /> {# @todo remove this css file #}
+<div class="site__body">
+   <div class="block order-success">
+      <div class="container">
+         <div class="order-success__body">
+            <div class="order-success__header" style="padding: 0px 0 52px;">
+               <div class="order-success__icon" style="text-align: center;display: table;">
+                  <div class="row">
+                  <svg width="100" height="100">
+                     <path d="M50,100C22.4,100,0,77.6,0,50S22.4,0,50,0s50,22.4,50,50S77.6,100,50,100z M50,2C23.5,2,2,23.5,2,50
+                        s21.5,48,48,48s48-21.5,48-48S76.5,2,50,2z M44.2,71L22.3,49.1l1.4-1.4l21.2,21.2l34.4-34.4l1.4,1.4L45.6,71
+                        C45.2,71.4,44.6,71.4,44.2,71z"></path>
+                  </svg>
+                  <div style="text-align: left; margin-left: 20px; margin-top: -17px;">
+                     <h1 class="order-success__title">Thank You</h1>
+                     <div class="order-success__subtitle">Your {{(invoice[0].invoicetype=='quote')?'inquiry':'order'}} has been received</div>
+                  </div>
+               </div>
+               </div>
+               <div class="order-success__icon row" style="text-align: center;display: table;margin-top: 10px;">
+                  <p><span style="font-size: 22px;"><b>Reference </b>: </span><span style="color: #5ac144; font-weight: 600; font-size: 22px;">{{invoice[0].number}}</span></p>
+               </div>
+               <div class="order-success__icon row" style="text-align: center;display: table;margin-top: 10px;">
+                  <p>Thank you for your {{(invoice[0].invoicetype=='quote')?'inquiry/message':'order'}}. We will reply as soon as possible, However for any urgent matters, Please call our office and quote the above refrence number.</p>
+               </div>
+               <div class="order-success__actions"><a href="/" class="btn btn-sm btn-secondary">Go To Homepage</a> <a href="/account/orders" class="btn btn-primary">My Account</a></div>
+            </div>
+            {#
+            <div class="card order-success__meta">
+               <ul class="order-success__meta-list">
+                  <li class="order-success__meta-item"><span class="order-success__meta-title">Order number:</span> <span class="order-success__meta-value">{{invoice[0].number}}</span></li>
+                  <li class="order-success__meta-item"><span class="order-success__meta-title">Created At:</span> <span class="order-success__meta-value">{{invoice[0].date}}</span></li>
+                  <li class="order-success__meta-item"><span class="order-success__meta-title">Total:</span> <span class="order-success__meta-value">{{invoice[0].total}}</span></li>
+                  <li class="order-success__meta-item"><span class="order-success__meta-title">Payment Method:</span> <span class="order-success__meta-value">{{invoice[0].payment_method}}</span></li>
+               </ul>
+            </div>
+            <div class="card">
+               <div class="order-list">
+                  <table>
+                     <thead class="order-list__header">
+                        <tr>
+                           <th class="order-list__column-label" colspan="2">Product</th>
+                           <th class="order-list__column-quantity">Quantity</th>
+                           <th class="order-list__column-total">Total</th>
+                        </tr>
+                     </thead>
+                     <tbody class="order-list__products">
+                        {% set invoicepro = invoice[0].invoiceProduct(invoice[0].id) %}
+                        {% for pro in invoicepro %}
+                        {% set product = product_det(pro.product_id) %}
+                        {% set image = product.images(pro.colour_id)[0] %}
+                        <tr>
+                           <td class="order-list__column-image">
+                              <div class="image image--type--product"><a href="{{ product.url|e }}" class="image__body">{{ image.html({"class":"image__tag"}) }}</a></div>
+                           </td>
+                           <td class="order-list__column-product">
+                              <a href="{{ product.url|e }}">{{ product.name|e }}</a>
+                              <div class="order-list__options">
+                                 <ul class="order-list__options-list">
+                                    {% if pro.colour_id %}
+
+                                    <li class="order-list__options-item"><span class="order-list__options-label">Color: </span><span class="order-list__options-value">{{product.Singlecolor_name(pro.colour_id)}}</span></li>
+                                    {% endif %}
+                                   <!--  <li class="order-list__options-item"><span class="order-list__options-label">Material: </span><span class="order-list__options-value">Aluminium</span></li> -->
+                                 </ul>
+                              </div>
+                           </td>
+                           <td class="order-list__column-quantity" data-title="Quantity:">{{pro.product_qty}}</td>
+                           <td class="order-list__column-total">${{product.priceTotal(pro.product_offerus,pro.product_qty)}}</td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                     <tbody class="order-list__subtotals">
+                        <tr>
+                           <th class="order-list__column-label" colspan="3">Subtotal</th>
+                           <td class="order-list__column-total">{{invoice[0].subtotal}}</td>
+                        </tr>
+                        <tr>
+                           <th class="order-list__column-label" colspan="3">Shipping</th>
+                           <td class="order-list__column-total">{{invoice[0].shipping_cost}}</td>
+                        </tr>
+                        <!-- <tr>
+                           <th class="order-list__column-label" colspan="3">Tax</th>
+                           <td class="order-list__column-total">$262.00</td>
+                        </tr> -->
+                     </tbody>
+                     <tfoot class="order-list__footer">
+                        <tr>
+                           <th class="order-list__column-label" colspan="3">Total</th>
+                           <td class="order-list__column-total">{{invoice[0].total}}</td>
+                        </tr>
+                     </tfoot>
+                  </table>
+               </div>
+            </div>
+            <div class="order-success__addresses">
+               <div class="order-success__address card address-card">
+                  <div class="address-card__badge tag-badge tag-badge--theme">Shipping Address</div>
+                  <div class="address-card__body">
+                     <div class="address-card__name">{{invoice[0].shipping_address.ship_company}}</div>
+                     <div class="address-card__row">{{invoice[0].shipping_address.ship_name}}<br>{{invoice[0].shipping_address.ship_address}}<br>{{invoice[0].shipping_address.ship_city}},{{invoice[0].shipping_address.ship_state}} {{invoice[0].shipping_address.ship_country}}, {{invoice[0].shipping_address.ship_postcode}}</div>
+                     <div class="address-card__row">
+                        <div class="address-card__row-title">Phone Number</div>
+                        <div class="address-card__row-content">{{invoice[0].shipping_address.ship_phone}}</div>
+                     </div>
+                     <div class="address-card__row">
+                        <div class="address-card__row-title">Email Address</div>
+                        <div class="address-card__row-content">{{invoice[0].shipping_address.ship_email}}</div>
+                     </div>
+                  </div>
+               </div>
+               <div class="order-success__address card address-card">
+                  <div class="address-card__badge tag-badge tag-badge--theme">Billing Address</div>
+                  <div class="address-card__body">
+                     <div class="address-card__name">{{invoice[0].billing_address.bill_company}}</div>
+                     <div class="address-card__row">{{invoice[0].billing_address.bill_name}}<br>{{invoice[0].billing_address.bill_address}}<br>{{invoice[0].billing_address.bill_city}},{{invoice[0].billing_address.bill_state}} {{invoice[0].billing_address.bill_country}}, {{invoice[0].billing_address.bill_postcode}}</div>
+                     <div class="address-card__row">
+                        <div class="address-card__row-title">Phone Number</div>
+                        <div class="address-card__row-content">{{invoice[0].billing_address.bill_phone}}</div>
+                     </div>
+                     <div class="address-card__row">
+                        <div class="address-card__row-title">Email Address</div>
+                        <div class="address-card__row-content">{{invoice[0].billing_address.bill_email}}</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            #}
+         </div>
+      </div>
+   </div>
+</div>
+{% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'before-footer',
+    }} %}
+{% endblock %}

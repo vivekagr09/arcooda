@@ -1,0 +1,27 @@
+// main: ../index.scss
+
+.sparklines {
+	line-height: 1;
+}
+
+.jqstooltip {
+	height: auto !important;
+	width: auto !important;
+	padding: 8px 10px !important;
+	border-radius: 3px;
+
+	span {
+		display: block;
+
+		&.date {
+			font-weight: 500;
+			font-size: 12px;
+			margin-bottom: 2px;
+		}
+
+		&.value {
+			font-size: 12px;
+			font-weight: 400;
+		}
+	}
+}

@@ -1,0 +1,40 @@
+{#
+// inputs:
+// - classes: string - CSS classes (default: '')
+// - layout:  string - one of ['product-sidebar', 'product-full', 'quickview']
+// - product: TwigProduct
+#}
+
+{% set classes = inputs.classes|default('') %}
+{% set layout = inputs.layout %}
+{% set size = 500 %}
+
+{% set product = inputs.product %}
+
+{% set root_classes = classnames('product-gallery', 'product-gallery--layout--'~layout, classes) %}
+
+<div class="{{ root_classes }}" data-layout="{{ layout }}" style="margin-bottom:{{ product.get_product_coupon|length > 0 ? '50px' : '' }};">
+    <div class="product-gallery__featured">
+        <button type="button" class="product-gallery__zoom">
+            {{ svg_inline('zoom-in-24.svg') }}
+        </button>
+        <div class="owl-carousel">
+            {% for image in product.images %}
+                <a href="{{ image(image, {size: 700})|e }}" target="_blank">
+                    <img src="{{ image(image, {size: size})|e }}" alt="{{ image.alt|e }}" title="{{ image.alt|e }}" />
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% if product.images|length > 1 %}
+        <div class="product-gallery__thumbnails">
+            <div class="owl-carousel">
+                {% for image in product.images %}
+                    <a href="{{ image(image, {size: 700})|e }}" class="product-gallery__thumbnails-item" target="_blank">
+                        <img src="{{ image(image, {size: 70})|e }}" alt="{{ image.alt|e }}" title="{{ image.alt|e }}" height="50" />
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>

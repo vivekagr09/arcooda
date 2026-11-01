@@ -1,0 +1,151 @@
+<!-- <?=pathinfo(__FILE__, PATHINFO_FILENAME)?> (<?=microtime()?>) -->
+
+<script type="text/javascript">
+//<![CDATA[
+function searchPacking(theFrm,with_crating)
+{
+	setValue('packing_string','');
+	var oldact=theFrm.action;
+	var oldtrg=theFrm.target;
+	theFrm.action="/webadmin/new_packing/packing_calculate.php?packing_action=invoice_nocrating&return_message=calculate";
+	if(with_crating===true)
+		theFrm.action="/webadmin/new_packing/packing_calculate.php?packing_action=invoice_crating&return_message=calculate";
+	theFrm.target="packing_frame";
+	theFrm.submit();
+	theFrm.action=oldact;
+	theFrm.target=oldtrg;
+	var theFrame=getElement('packing_frame');
+}
+
+function testPacking(theFrm,with_crating,type)
+{
+	setValue('packing_string','');
+	var oldact=theFrm.action;
+	var oldtrg=theFrm.target;
+	if(type==2)
+	{
+		theFrm.action="/webadmin/coe_packing/packingsearch.php?packing_action=invoice_nocrating&return_message=calculate&with_crating=0";
+		if(with_crating===true) theFrm.action="/webadmin/coe_packing/packingsearch.php?packing_action=invoice_crating&return_message=calculate&with_crating=1";
+		theFrm.target="packing_frame";
+	}
+	else
+	{
+		theFrm.action="/webadmin/packing/packing_public_view.php?packing_action=invoice_nocrating&return_message=calculate";
+		if(with_crating===true) theFrm.action="/webadmin/packing/packing_public_view.php?packing_action=invoice_crating&return_message=calculate";
+		theFrm.target="_blank";
+	}
+	theFrm.submit();
+	theFrm.action=oldact;
+	theFrm.target=oldtrg;
+}
+
+function exportPacking(theFrm,with_crating,style)
+{
+	var oldact=theFrm.action;
+	var oldtrg=theFrm.target;
+	if(style==1)
+	{
+		theFrm.action="/webadmin/packing/packing_summary.php?packing_action=invoice_nocrating&return_message=export";
+		if(with_crating===true)
+			theFrm.action="/webadmin/packing/packing_calculate.php?packing_action=invoice_crating&return_message=export";
+	}
+	else
+	{
+		theFrm.action="/webadmin/new_packing/packing_export.php?packing_action=invoice_nocrating&return_message=export";
+		if(with_crating===true)
+			theFrm.action="/webadmin/new_packing/packing_calculate.php?packing_action=invoice_crating&return_message=export";
+	}
+	theFrm.target="packing_frame";
+	theFrm.submit();
+	theFrm.action=oldact;
+	theFrm.target=oldtrg;
+}
+
+function displayPacking(theFrm)
+{
+	var oldact=theFrm.action;
+	var oldtrg=theFrm.target;
+	theFrm.action="/webadmin/new_packing/packing_view.php?return_message=view";
+	theFrm.target="packing_frame";
+	theFrm.submit();
+	theFrm.action=oldact;
+	theFrm.target=oldtrg;
+}
+
+function setPackingData(data)
+{
+	if(data==null) return;
+
+	switch(data['return_message'])
+	{
+	case 'calculate':
+		if(data['packing_string']!=null && getElement('packing_string')!=null)
+		{
+			setValue('packing_string',data['packing_string']);
+			displayPacking(getElement('packing_string').form);
+		}
+		break;
+	}
+}
+
+function calcHeight(elem)
+{
+	//Disabled because of internet explorer, getElement isn't defined yet
+	try
+	{
+		getElement;
+	}
+	catch(err)
+	{
+		return;
+	}
+	var theFrame=elem;
+	if(elem==null) theFrame=getElement('packing_frame');
+	theFrame.style.height="50px";
+	var newHeight=theFrame.contentWindow.document.body.scrollHeight;
+	if(newHeight>50)
+		theFrame.style.height=Math.max(Number(newHeight)+32,50)+"px";
+	else
+		theFrame.style.height='0px';
+}
+//]]>
+</script>
+
+<?=formatHTMLTitle('<a href="javascript:toggleSection(\'sectionPackingInfo\');">Packing Information</a>')?>
+
+<div id="sectionPackingInfo">
+
+<textarea name="packing_string" style="display:none;"><?=htmlspecialchars($invoice['packing_string'])?></textarea>
+
+<table class="wide">
+	<tr>
+		<td class="left_title">Without Crating:</td>
+		<td class="left_title" style="text-align:left;">
+			<input type="button" value="Create"  onclick="javascript:searchPacking(this.form,false);" />
+			<input type="button" value="Packing List" onclick="javascript:exportPacking(this.form,false,0);" />
+			<input type="button" value="Packing Summary" onclick="javascript:exportPacking(this.form,false,1);" /></td></tr>
+	<tr><td class="left_title">With Crating:</td>
+	<td class="left_title" style="text-align:left;">
+		<input type="button" value="Create" onclick="javascript:searchPacking(this.form,true);" />
+		<input type="button" value="Packing List" onclick="javascript:exportPacking(this.form,true,0);" />
+		<input type="button" value="Packing Summary" onclick="javascript:exportPacking(this.form,true,1);" /></td>
+	</tr>
+	<tr>
+		<td class="left_title">Testing:</td>
+		<td class="left_title" style="text-align:left;">
+			<input type="button" value="Public Uncrated" onclick="javascript:testPacking(this.form,false,1);" class="unfinished" />
+			<input type="button" value="Public Crated" onclick="javascript:testPacking(this.form,true,1);" class="unfinished" />
+			<input type="button" value="COE Uncrated" onclick="javascript:testPacking(this.form,false,2);" class="unfinished" />
+			<input type="button" value="COE Crated" onclick="javascript:testPacking(this.form,true,2);" class="unfinished" />
+		</td>
+	</tr>
+	<tr><td colspan="2"><iframe onload="javascript:calcHeight();" id="packing_frame" name="packing_frame" style="width:100%;height:0px;padding:0px;border-style:none;" src="<?=('' != $invoice['packing_string']) ? ('/webadmin/packing/packing_view.php?return_message=view&invoice_id=' . $invoice_id) : 'about:blank'?>"></iframe></td></tr>
+</table>
+<br /><br />
+</div>
+<div style="background-color:white;text-align:center;padding:8px 8px 8px 8px;display:none;" id="sectionPackingInfo_hideNote">
+Packing Information can be viewed by Clicking "Packing Information" above
+<br />
+</div>
+
+<!-- /<?=pathinfo(__FILE__, PATHINFO_FILENAME)?> (<?=microtime()?>) -->

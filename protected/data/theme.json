@@ -1,0 +1,14 @@
+{
+  "name": "Arcooda",
+  "url": "http://arcooda.flexsin.org/",
+  "author": {
+    "name": "Arcooda",
+    "profile_url": "http://arcooda.flexsin.org/"
+  },
+  "contacts": {
+    "address": ["38-48, Maitland Road\nMayfield NSW , 2304 \nAustralia"],
+    "email": ["sales@arcooda.com"],
+    "phone": ["+61 (2) 4968 9313"],
+    "hours": ["Mon-Fri 9:00am - 6:00pm"]
+  }
+}

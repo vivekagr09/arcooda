@@ -1,0 +1,146 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - member:
+#}
+
+{% set global_page_title           = inputs.title|default('Account Registration') %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/currency-calculator'                          %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'},
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set currency_list    = currencies() %}
+{% set user = user() %}
+{% set country_list = countries() %}
+{% set func_countries_from_sea     = inputs.func_countries_from_sea %}
+{% set func_countries_from_air     = inputs.func_countries_from_air %}
+{% set func_countries_to_air     = inputs.func_countries_to_air %}
+{% set func_countries_to_sea     = inputs.func_countries_to_sea %}
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+	{% include '/blocks/block-header.twig' with {inputs: {
+        title: 'Freight Calculator',
+        breadcrumb: global_page_breadcrumbs,
+    }} %}
+    <div class="block"><div class="container">
+    	<div class="row justify-content-center">
+
+    	<div class="col-sm-10 col-md-8 col-lg-6 bg-white border p-sm-5">
+    		  <form action="/freight" method="POST" id="freight-form">
+            <div class="form-group">
+                <h5>Courier Freight Calculator</h5>
+            </div>
+
+            <hr />
+            <div class="form-group">
+                <label for="destination-input">Warehouse Location</label>
+                <input class="input-number__input form-control form-control-lg" id="product-qty-input" name="product_qty" type="hidden" value="1" />
+                <select class="custom-select" name="starting" id="starting-input">
+                   <option value="CN" selected="">China </option>
+                    <option value="HK">Hong Kong </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="destination-input">Destination</label>
+
+                <select class="custom-select" name="destination" id="destination-input">
+                    {% for country in country_list %}
+                        <option value="{{ country.code }}" {{ (user.country == country.code or 'US' == country.code) ? 'selected' : '' }}>{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="width" id="width-input" value="" />
+                <input type="hidden" class="form-control" name="depth" id="depth-input" value="" />
+                <input type="hidden" class="form-control" name="height" id="height-input" value="" />
+                <div class="row">
+                <div class="col-lg-11">
+                <input type="text" class="form-control" name="mass" id="mass-input" value="{{ product.mass }}" placeholder="Weight"/>
+                </div>
+                <div class="col-lg-1">
+                 Kgs
+             	</div>
+             </div>
+             </div>
+              <div class="form-group">
+              	<div class="row">
+              	<div class="col-lg-11">
+                <input type="text" class="form-control" name="value" id="value-input" value="" placeholder="Value of Goods"/> 
+                </div>
+                <div class="col-lg-1">
+                USD
+               </div>
+               </div>
+            </div>
+
+            <div class="form-group">
+            	<button type="button" class="btn btn-primary" onclick="freightCalculator();">Calculate</button>
+            </div>
+        </form>
+
+    	<div class="my-3 d-none border-top py-3" id="freight-calculator-content"></div>
+	</div>
+		<div class="col-sm-10 col-md-8 col-lg-6 bg-white border p-sm-5">
+
+        <div class="form-group">
+            <h5>Bulk Freight Estimator <i class="far fa-question-circle fa-question-circle-checkout" data-toggle="tooltip" data-placement="top" title="Below are shipments we have sent recently. Please use the prices as a guide only."></i></h5>
+        </div>
+
+        <hr />
+        <form action="/freight" method="POST" id="quote-form">
+            <div class="form-group">
+                <label for="destination-input">Warehouse Location</label>
+                <select class="custom-select" name="starting" id="starting-input-freight">
+                    {% for country in func_countries_from_sea %}
+                        <option value="{{ country.code }}" {{ ("CN" == country.code) ? 'selected' : '' }}  class="sea_option">{{ country.name }}</option>
+                    {% endfor %}
+                     {% for country in func_countries_from_air %}
+                        <option value="{{ country.code }}" {{ ("CN" == country.code) ? 'selected' : '' }} class="air_option" style="display:none">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="destination-input">Destination</label>
+
+                <select class="custom-select" name="destination" id="destination-quote-input">
+                    {% for country in func_countries_to_sea %}
+                        <option value="{{ country.code }}" {{ (user.country == country.code or 'US' == country.code) ? 'selected' : '' }} class="sea_option_dest">{{ country.name }}</option>
+                    {% endfor %}
+                    {% for country in func_countries_to_air %}
+                        <option value="{{ country.code }}" {{ (user.country == country.code or 'US' == country.code) ? 'selected' : '' }} class="air_option_dest" style="display:none">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="destination-input">Shipping Method</label>
+
+                <select class="custom-select" name="shipping" id="destination-method-input">
+                  <option value="Sea">Sea Freight</option>
+                  <option value="Air">Air Freight</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="quoteCalculator();">Calculate</button>
+            </div>
+        </form>
+        <div class="my-3 d-none border-top py-3" id="freight-quote-content"></div>
+		</div>
+</div></div></div>
+
+	{% include '/blocks/block-space.twig' with {inputs: {layout: 'before-footer'}} %}
+{% endblock %}

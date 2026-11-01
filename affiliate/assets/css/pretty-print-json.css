@@ -1,0 +1,18 @@
+/*! pretty-print-json v1.0.0 ~ github.com/center-key/pretty-print-json ~ MIT License */
+.json-key           { color: white; }
+.json-string        { color: yellow; }
+.json-number        { color: orange; }
+.json-boolean       { color: orange; }
+.json-null          { color: dimgray; }
+.json-mark          { color: white; }
+a.json-link         { color: lightgreen;}
+.dark-mode .json-key           { color: indianred; }
+.dark-mode .json-string        { color: darkkhaki; }
+.dark-mode .json-number        { color: deepskyblue; }
+.dark-mode .json-boolean       { color: mediumseagreen; }
+.dark-mode .json-null          { color: darkorange; }
+.dark-mode .json-mark          { color: silver; }
+.dark-mode a.json-link         { color: mediumorchid; }
+.dark-mode a.json-link:visited { color: slategray; }
+.dark-mode a.json-link:hover   { color: violet; }
+.dark-mode a.json-link:active  { color: silver; }

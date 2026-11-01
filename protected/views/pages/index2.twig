@@ -1,0 +1,50 @@
+{#
+// inputs:
+#}
+
+{% set brands = inputs.brands %}
+{% set sale_products = inputs.sale_products %}
+{% set column_products = inputs.column_products %}
+{% set banners = inputs.banners %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-xs'}} %}
+    {% include '/blocks/block-slideshow.twig' with {inputs: {
+        slides: inputs.banner_list1,
+    }} %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+    {% include '/blocks/block-brands.twig' with {inputs: {brands: brands}} %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+    {% include '/blocks/block-categories.twig' %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+    {% include '/blocks/block-products-carousel.twig' with {inputs: {
+        title: 'Featured Products',
+        layout: 'grid-5',
+        rows: 1,
+        groups: [
+            {title: 'All', active: true},
+            {title: 'Power Tools', active: false},
+            {title: 'Hand Tools', active: false},
+            {title: 'Plumbing', active: false},
+        ],
+    }} %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+    {% include '/blocks/block-banners.twig' with {inputs: {banners: banners}} %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+    {% include '/blocks/block-sale.twig' with {inputs: {products: sale_products}} %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+    {% include '/blocks/block-posts-carousel.twig' with {inputs: {
+        title: 'Latest News',
+        layout: 'list',
+        links: [
+            {title: 'Special Offers', url: ''},
+            {title: 'New Arrivals', url: ''},
+        ],
+    }} %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl', classes: 'd-xl-block d-none'}} %}
+    {% include '/blocks/block-products-columns.twig' with {inputs: {products: column_products}} %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+    {% include '/blocks/block-features.twig' with {inputs: {layout: 'bottom-strip'}} %}
+{% endblock %}

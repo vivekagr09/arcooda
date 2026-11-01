@@ -1,0 +1,173 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+@media print {
+	.print_hide {
+		display: none;
+	}
+}
+
+div.gift_content .unfinished {
+	background-color: yellow;
+}
+
+div.gift_content a {
+	color: black;
+}
+
+div.gift_content {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div.gift_content table {
+	text-align: left;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div.gift_content tr {
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-weight: normal;
+}
+
+div.gift_content pre {
+	margin: 0 0 0 0;
+}
+
+div.gift_content pre.alt {
+	background-color: #EEEEEE;
+}
+
+div.gift_content td {
+	/*	padding:3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.gift_content th,
+div.gift_content thead,
+div.gift_content .th {
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	font-size: 75%;
+}
+
+div.gift_content table.vbox td,
+div.gift_content table.vbox th,
+div.gift_content table.vbox thead {
+	border: 1px solid white;
+}
+
+div.gift_content table.buttons {
+	text-align: center;
+}
+
+div.gift_content table.wide {
+	width: 95%;
+}
+
+div.gift_content tr.alt {
+	background-color: #EEEEE0;
+}
+
+div.gift_content tr.highlight {
+	background-color: #90EEA0;
+}
+
+div.gift_content tr.mylock {
+	background-color: #90A0EE;
+}
+
+div.gift_content tr.locked {
+	background-color: #EE90A0;
+}
+
+div.gift_content td.collapse {
+	width: 1px;
+}
+
+div.gift_content th.collapse {
+	width: 1px;
+}
+
+div.gift_content td.left_title {
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+}
+
+div.gift_content input.intext,
+div.gift_content input.infile,
+div.gift_content textarea,
+div.gift_content select {
+	width: 98%;
+}
+
+div.gift_content th a {
+	color: #000000;
+}
+
+div.gift_content td a {
+	color: #000000;
+}
+
+div.gift_content table.spacetable td {
+	border: 2px solid white;
+}
+
+div.gift_content div.flagHeader {
+	border-bottom: 1px solid green;
+	text-align: left;
+	width: 95%
+}
+
+div.gift_content div.flagHeader span {
+	color: white;
+	background-color: green;
+	padding: 0px 20px;
+}
+
+div.gift_content div.flagHeader span a {
+	color: white;
+}
+
+div.gift_content div.tabHeader span a,
+div.gift_content div.tabHeader span.tabHeaderInactive a {
+	color: black;
+}
+
+div.gift_content div.tabTable {
+	background-color: #FFFFBF;
+}
+
+div.gift_content div.tabHeader {
+	border-bottom: 1px solid #FFFFBF;
+	text-align: left;
+	width: 95%;
+}
+
+div.gift_content div.tabHeader span {
+	color: white;
+	background-color: #FFFFBF;
+	padding: 0px 10px;
+}
+
+div.gift_content div.tabHeader span.tabHeaderInactive {
+	color: black;
+	background-color: #C2C2FF;
+	padding: 0px 10px;
+}

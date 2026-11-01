@@ -1,0 +1,236 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+#}
+
+{% set global_page_title       = inputs.page_title|default('Express Checkout') %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set model = inputs.model %}
+
+{% set member                 = model.member %}
+{% set member_shippingaddress = model.shippingAddress %}
+{% set invoice                = model.invoice %}
+{% set invoice_products       = model.products %}
+{% set invoice_charges        = model.charges %}
+
+{% from '/macros/controls.twig' import input_check, input_radio %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+	{% include '/blocks/block-header.twig' with {inputs : {
+		title : 'Express Checkout',
+	}} %}
+	<form action="" method="post"{{ model.errors ? ' class="was-validated"' : '' }}><div class="checkout block"><div class="container container-xl"><div class="row">
+		{% if not member.id %}<div class="col-12 mb-3"><div class="alert alert-lg alert-primary">
+			Returning customer? <a href="/account/login">Click here to login</a>
+		</div></div>{% endif %}
+		{% set ac_prefix = 'section-express-checkout ' %}
+		<div class="col-12 col-lg-6 col-xl-7"><div class="card mb-lg-0">
+			<div class="card-body card-body--padding--2">
+				<h3 class="card-title">Billing details</h3>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="checkout-first-name">First Name</label>
+						<input type="text" class="form-control" id="checkout-first-name" placeholder="First Name" name="givenName" value="{{ model.givenName|e }}" autocomplete="{{ ac_prefix }}given-name" required="required" />
+						{% if model.hasErrors('givenName') %}<div>Requires Attention</div>{% endif %}
+					</div>
+					<div class="form-group col-md-6">
+						<label for="checkout-last-name">Last Name</label>
+						<input type="text" class="form-control" id="checkout-last-name" placeholder="Last Name" name="familyName" value="{{ model.familyName|e }}" autocomplete="{{ ac_prefix }}family-name" required="required" />
+						{% if model.hasErrors('familyName') %}<div>Requires Attention</div>{% endif %}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="checkout-company-name">Company Name <span class="text-muted">(Optional)</span></label>
+					<input type="text" class="form-control" id="checkout-company-name" placeholder="Company Name" name="organization" value="{{ model.organization|e }}" autocomplete="{{ ac_prefix }}organization" />
+					{% if model.hasErrors('organization') %}<div>Requires Attention</div>{% endif %}
+				</div>
+				<div class="form-group">
+					<label for="checkout-country">Country</label>
+					<select id="checkout-country" class="form-control form-control-select2" name="country" autocomplete="{{ ac_prefix }}country" required="required">
+						<option value="">Select a country...</option>
+						{% for k, v in model.getCountries() %}<option value="{{ k|e }}"{{ k == model.country ? ' selected="selected"' : ''}}>{{ v|e }}</option>{% endfor %}
+					</select>
+					{% if model.hasErrors('country') %}<div>Requires Attention</div>{% endif %}
+				</div>
+				<div class="form-group">
+					<label for="checkout-street-address">Street Address</label>
+					<input type="text" class="form-control" id="checkout-street-address" placeholder="Street Address" name="addressLine1" value="{{ model.addressLine1|e }}" autocomplete="{{ ac_prefix }}address-line1" required="required" />
+					{% if model.hasErrors('addressLine1') %}<div>Requires Attention</div>{% endif %}
+				</div>
+				<div class="form-group">
+					<label for="checkout-address">Apartment, suite, unit etc. <span class="text-muted">(Optional)</span></label>
+					<input type="text" class="form-control" id="checkout-address" name="addressLine2" value="{{ model.addressLine2|e }}" autocomplete="{{ ac_prefix }}address-line2" />
+					{% if model.hasErrors('addressLine2') %}<div>Requires Attention</div>{% endif %}
+				</div>
+				<div class="form-group">
+					<label for="checkout-city">Town / City</label>
+					<input type="text" class="form-control" id="checkout-city" name="addressLevel2" value="{{ model.addressLevel2|e }}" autocomplete="{{ ac_prefix }}address-level2" required="required" />
+					{% if model.hasErrors('addressLevel2') %}<div>Requires Attention</div>{% endif %}
+				</div>
+				<div class="form-group">
+					<label for="checkout-state">State / County</label>
+					<input type="text" class="form-control" id="checkout-state" name="addressLevel1" value="{{ model.addressLevel1|e }}" autocomplete="{{ ac_prefix }}address-level1" required="required" />
+					{% if model.hasErrors('addressLevel1') %}<div>Requires Attention</div>{% endif %}
+				</div>
+				<div class="form-group">
+					<label for="checkout-postcode">Postcode / ZIP</label>
+					<input type="text" class="form-control" id="checkout-postcode" name="postalCode" value="{{ model.postalCode|e }}" autocomplete="{{ ac_prefix }}postal-code" required="required" />
+					{% if model.hasErrors('postalCode') %}<div>Requires Attention</div>{% endif %}
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="checkout-email">Email address</label>
+						<input type="email" class="form-control" id="checkout-email" placeholder="Email address" name="email" value="{{ model.email|e }}" autocomplete="{{ ac_prefix }}email" required="required" />
+						{% if model.hasErrors('email') %}<div>Requires Attention</div>{% endif %}
+					</div>
+					<div class="form-group col-md-6">
+						<label for="checkout-phone">Phone</label>
+						<input type="text" class="form-control" id="checkout-phone" placeholder="Phone" name="tel" value="{{ model.tel|e }}" autocomplete="{{ ac_prefix }}tel" required="required" />
+						{% if model.hasErrors('tel') %}<div>Requires Attention</div>{% endif %}
+					</div>
+				</div>
+				{% if not member.id %}<div class="form-group"><div class="form-check">
+					{{ input_check({
+						classes : 'form-check-input',
+						id      : 'checkout-create-account',
+						name    : 'register',
+						checked : 'off' != model.register,
+					}) }}
+					<label class="form-check-label" for="checkout-create-account">Create an account?</label>
+					{% if model.hasErrors('register') %}<div>Requires Attention</div>{% endif %}
+				</div></div>{% endif %}
+			</div>
+			<div class="card-divider"></div>
+			<div class="card-body card-body--padding--2">
+				<h3 class="card-title">Shipping Details</h3>
+				{#
+				<div class="form-group"><div class="form-check">
+					{{ input_check({
+						classes : 'form-check-input',
+						id      : 'checkout-different-address',
+						name    : 'alternateShippingAddress',
+					}) }}
+					<label class="form-check-label" for="checkout-different-address">Ship to a different address?</label>
+					{% if model.hasErrors('alternateShippingAddress') %}<div>Requires Attention</div>{% endif %}
+				</div></div>
+				#}
+				<div class="form-group">
+					<label for="checkout-comment">Order notes <span class="text-muted">(Optional)</span></label>
+					<textarea id="checkout-comment" class="form-control" rows="4" name="comment">{{ model.comment|e }}</textarea>
+					{% if model.hasErrors('comment') %}<div>Requires Attention</div>{% endif %}
+				</div>
+			</div>
+		</div></div>
+		<div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0"><div class="card mb-0"><div class="card-body card-body--padding--2">
+			<h3 class="card-title">Your Order</h3>
+			<table class="checkout__totals">
+				<thead class="checkout__totals-header"><tr>
+					<th>Product</th>
+					<th>Total</th>
+				</tr></thead>
+				<tbody class="checkout__totals-products">{% for product in invoice_products %}<tr>
+					<td>{{ product.product_name }} × {{ product.product_qty }}</td>
+					{% if product.product_offer_total %}
+						<td>{{ product.product_offer_total }} {{ invoice.invoice_currency }}</td>
+					{% else %}
+						<td>Please Ask</td>
+					{% endif %}
+				</tr>{% endfor %}</tbody>
+				<tbody class="checkout__totals-subtotals">
+					{% if invoice.products_offer >= 0.01 %}<tr>
+						<th>Sub-Total</th>
+						<td>{{ invoice.products_offer }} {{ invoice.invoice_currency }}</td>
+					</tr>{% endif %}
+					{% if invoice.ship_offer >= 0.01 %}<tr>
+						<th>Shipping</th>
+						<td>{{ invoice.ship_offer }} {{ invoice.invoice_currency }}</td>
+					</tr>{% endif %}
+					{% if invoice.charges_offer >= 0.01 %}<tr>
+						<th>Charges</th>
+						<td>{{ invoice.charges_offer }} {{ invoice.invoice_currency }}</td>
+					</tr>{% endif %}
+				</tbody>
+				<tfoot class="checkout__totals-footer"><tr>
+					<th>Total</th>
+					{% if invoice.invoice_offer %}
+						<td>{{ invoice.invoice_offer }} {{ invoice.invoice_currency }}</td>
+					{% else %}
+						<td>Please Ask</td>
+					{% endif %}
+				</tr></tfoot>
+			</table>
+			{#
+			<div class="checkout__payment-methods payment-methods"><ul class="payment-methods__list">
+				<li class="payment-methods__item payment-methods__item--active">
+					<label class="payment-methods__item-header">
+						{{ input_radio({
+							classes: 'payment-methods__item-radio',
+							name: 'checkout_payment_method',
+							checked: true,
+						}) }}
+						<span class="payment-methods__item-title">Direct bank transfer</span>
+					</label>
+					<div class="payment-methods__item-container"><div class="payment-methods__item-details text-muted">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</div></div>
+				</li>
+				<li class="payment-methods__item">
+					<label class="payment-methods__item-header">
+						{{ input_radio({
+							classes: 'payment-methods__item-radio',
+							name: 'checkout_payment_method',
+							checked: false,
+						}) }}
+						<span class="payment-methods__item-title">Check payments</span>
+					</label>
+					<div class="payment-methods__item-container"><div class="payment-methods__item-details text-muted">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</div></div>
+				</li>
+				<li class="payment-methods__item">
+					<label class="payment-methods__item-header">
+						{{ input_radio({
+							classes: 'payment-methods__item-radio',
+							name: 'checkout_payment_method',
+							checked: false,
+						}) }}
+						<span class="payment-methods__item-title">Cash on delivery</span>
+					</label>
+					<div class="payment-methods__item-container"><div class="payment-methods__item-details text-muted">Pay with cash upon delivery.</div></div>
+				</li>
+				<li class="payment-methods__item">
+					<label class="payment-methods__item-header">
+						{{ input_radio({
+							classes: 'payment-methods__item-radio',
+							name: 'checkout_payment_method',
+							checked: false,
+						}) }}
+						<span class="payment-methods__item-title">PayPal</span>
+					</label>
+					<div class="payment-methods__item-container"><div class="payment-methods__item-details text-muted">Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</div></div>
+				</li>
+			</ul></div>
+			#}
+			<div class="checkout__agree form-group"><div class="form-check">
+				{{ input_check({
+					classes  : 'form-check-input',
+					id       : 'checkout-terms',
+					required : 'required',
+					name     : 'termsAndConditions',
+				}) }}
+				<label class="form-check-label" for="checkout-terms">I have read and agree to the website <a target="_blank" href="/contact/terms.php">terms and conditions</a></label>
+				{% if model.hasErrors('termsAndConditions') %}<div>Requires Attention</div>{% endif %}
+			</div></div>
+			<button type="submit" class="btn btn-primary btn-xl btn-block" name="action" value="do_add"{{ invoice_products ? '' : ' disabled="disabled"' }}>Place Order</button>
+		</div></div></div>
+	</div></div></div></form>
+	{% include '/blocks/block-space.twig' with {inputs : {
+		layout : 'before-footer',
+	}} %}
+{% endblock %}

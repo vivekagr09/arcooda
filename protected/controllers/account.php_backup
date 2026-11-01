@@ -1,0 +1,1386 @@
+<?php
+/**
+ * @var string $action
+ * @var app\models\MyTwig $twig
+ */
+
+namespace app\controllers;
+
+use app\models\PHPMailerEmail;
+use app\models\TwigCurrency;
+use app\models\TwigInvoice;
+use app\models\TwigUser;
+use ParsedownExtra;
+
+global $_GLOBALS;
+global $DB;
+
+//Actions:
+// /account/dashboard
+// /account/logout
+// /account/profile
+// /account/shipping
+// /account/inquiries
+// /account/invoice
+// /account/orders
+// /account/password
+// /account/resetpassword
+// /account/autologin
+// /account/login
+// /account/passwordFind
+// /account/register
+
+//Actions that require logged-in user
+if (in_array($action, ['dashboard', 'profile', 'shipping', 'inquiries', 'invoice', 'orders', 'password', 'resetpassword'])) {
+    if (!($_GLOBALS['member']['member_id'] ?? false)) {
+        redirect('/account/login?redirect=' . urlencode($_SERVER['REQUEST_URI']));
+        die();
+    }
+}
+
+//Actions that require not-logged-in user
+if (in_array($action, ['autologin', 'login', 'passwordFind', 'register','checkUsername'])) {
+    if ($_GLOBALS['member']['member_id'] ?? false) {
+        redirect($_REQUEST['redirect'] ?? '/account/dashboard');
+        die();
+    }
+}
+
+if (!function_exists("GlobalCurrencyList")) {
+    /**
+     * @deprecated Use getCurrencyList or getExchangeRateList
+     *
+     * @return mixed[][]
+     */
+    function GlobalCurrencyList() {
+        global $DB;
+
+        if ($query = $DB->query(sprintf(
+            "SELECT * FROM `highwaygroup`.`currency`"
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $result[] = $row;
+            }
+            $DB->free_result($query);
+        }
+
+        return $result;
+    }
+}
+
+/**
+ * @param string $username
+ * @param string $password
+ *
+ * @return mixed[]|false
+ */
+function login($username, $password)
+{
+    global $DB;
+
+    moduleLoad('member'); //memberLogin
+
+    if (($valid = $DB->query_first(sprintf(
+        "SELECT `m`.`member_id`, `m`.`rand_num` FROM `highwaygroup`.`new_members_logins` AS `ml` INNER JOIN `highwaygroup`.`new_members` AS `m` ON `m`.`member_id` = `ml`.`member_id` WHERE `ml`.`active` = 'y' AND `ml`.`password` = %s AND `m`.`email_address` = %s LIMIT 1",
+        $DB->escape(md5($password)),
+        $DB->escape($username)
+    ), MYSQLI_ASSOC)) && $valid['member_id'] > 0) {
+
+        /**
+         * Update invalid rand_num
+         */
+        if (0 == $valid['rand_num']) {
+            $DB->query(sprintf(
+                "UPDATE `highwaygroup`.`new_members` SET `rand_num` = DEFAULT(`rand_num`) WHERE `member_id` = %d LIMIT 1",
+                $valid["member_id"]
+            ));
+            if ($row = $DB->query_first(sprintf(
+                "SELECT `rand_num` FROM `highwaygroup`.`new_members` WHERE `member_id` = %d LIMIT 1",
+                $valid['member_id']
+            ), MYSQLI_ASSOC)) {
+                $valid['rand_num'] = $row['rand_num'];
+            }
+        }
+        memberLogin($valid['member_id'],$valid['rand_num']);
+        //custom_setcookie('member_id', sprintf("%08x%08x", $valid['member_id'], $valid['rand_num']), strtotime('+1 year'), '/');
+
+        //TODO: Merge visitor shopping cart
+
+        return $valid;
+    }
+    return false;
+}
+
+switch ($action) {
+
+    // Logged-in actions
+    case 'dashboard':
+        $msg = ($_GET['msg']) ? $_GET['msg'] : '';
+
+        die($twig->load('account-dashboard.twig')->render(['inputs' => [
+            'addresses' => $_GLOBALS['member']['ship_addr'],
+            'member'    => $_GLOBALS['member'],
+
+            'orders'    => TwigInvoice::search([
+                'member_id'      => $_GLOBALS['member']['member_id'],
+            ]),
+            'result'    => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'     => ['y' => $msg, 'n' => $msg][$_GET['result'] ?? ''] ?? '',
+        ]]));
+
+    case 'logout':
+        setcookie('member_id', '', strtotime('-1 hour'), '/');
+        redirect('/');
+        die();
+
+    case 'preferences':
+        moduleLoad('member'); //memberToDatabase
+
+        if (isset($_POST['action']) && 'update' == $_POST['action']) {
+            //@fixme This code is incorrect, newsletter subscriptions are handled via the newsletter module
+            /*
+            $member_preferences = memberFromDatabase($_GLOBALS['member']['member_id']);
+
+            $prefs             = [];
+            $prefs['customer'] = (isset($_POST['newslater'])) ? 'y' : 'n';
+            $prefs['weekly']   = $member_preferences['weekly'];
+            $prefs['closeout'] = $member_preferences['closeout'];
+            memberPreferencesToDatabase($_GLOBALS['member']['member_id'], $prefs);
+            */
+
+            $member = [
+                'member_id'             => $_GLOBALS['member']['member_id'],
+                'special_freight_needs' => (isset($_POST['special_freight']) || '' != $_POST['instruction']) ? 'y' : 'n',
+                'special_request'       => $_POST['instruction'],
+                'mailing_list'          => (isset($_POST['newslater'])) ? 'y' : 'n',
+                'currency'              => $_POST['b_transactionCurrency'],
+            ];
+            memberToDatabase($member);
+
+            redirect('?result=y&action=update');
+            die();
+        }
+
+        die($twig->load('account-preferences.twig')->render(['inputs' => [
+            'member_preferences' => $member_preferences,
+            'member'             => $_GLOBALS['member'],
+            'result'             => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'              => [
+                'update' => ['y' => _('Site Preferences has been updated'), 'n' => _('Failed to update Site Preferences')],
+            ][$_GET['action'] ?? ''][$_GET['result'] ?? ''] ?? '',
+            'currency_list'      => GlobalCurrencyList(),
+            'membercurrency'     => $_GLOBALS['member']['currency'],
+        ]]));
+    case 'notify_party':
+        moduleLoad('member'); //memberNotifyPartiesFromDatabase, memberNotifyPartyToDatabase, memberNotifyPartyDelete
+
+        $member_notifyparties = memberNotifyPartiesFromDatabase($_GLOBALS['member']['id']);
+        $issues               = [];
+        if ('add-by-shipping' === ($_POST['action'] ?? '') && !count($issues) && count($_POST['shipping_address'])) {
+            foreach ($_POST['shipping_address'] as $address) {
+                foreach ($_GLOBALS['member']['ship_addr'] as $shipping_address) {
+                    if ($shipping_address['id'] == $address) {
+                        $insert_address            = array();
+
+                        $insert_address['default'] = (count($member_notifyparties) > 0) ? 'n' : 'y';
+                        foreach ([
+                            'company_name' => 'company_name',
+                            'address'      => 'address',
+                            'city'         => 'city',
+                            'state'        => 'state',
+                            'country'      => 'country',
+                            'contact'      => 'contact',
+
+                            'phone_no'     => 'phone_no',
+                            'phone_no2'    => 'phone_no2',
+                            'fax_no'       => 'fax_no',
+                            'mobile_no'    => 'mobile_no',
+                            'post_code'    => 'post_code',
+                            'vat_number'   => 'vat_number',
+                            'email'        => 'email',
+                            'eori_number'    => 'eori_number',
+                            'abn_number'     => 'abn_number',
+                            'company_number' => 'company_number',
+                            'address_type'    => 'address_type',
+                            'contact_last'      => 'contact_last',
+                        ] as $k => $v) {
+                            if (array_key_exists($k, $shipping_address)) {
+                                $insert_address[$v] = trim($shipping_address[$k]);
+                            }
+                        }
+                        $member_notifyparty_id = memberNotifyPartyToDatabase($_GLOBALS['member']['id'], $insert_address);
+                        if ('y' == ($insert_address['default'] ?? '')) {
+                            memberNotifyPartySetDefault($_GLOBALS['member']['id'], $member_notifyparty_id);
+                        }
+                    }
+                }
+            }
+            redirect('?result=y&action=add');
+            die();
+        }
+        if ('add' === ($_POST['action'] ?? '') && !count($issues)) {
+            foreach ([
+                'organization',
+                'phone_no',
+                'city',
+                'address',
+                'state',
+                'home-email',
+                'country',
+                'addresstype'
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = '' . $k . ' field is required';
+                }
+            }
+            foreach ([
+                'organization' => 'company_name',
+                'address'      => 'address',
+                'city'         => 'city',
+                'state'        => 'state',
+                'country'      => 'country',
+                'name-first'      => 'contact',
+                'phone_no'     => 'phone_no',
+                'phone_no2'    => 'phone_no2',
+                'fax_no'       => 'fax_no',
+                'mobile_no'    => 'mobile_no',
+                'post_code'    => 'post_code',
+                'vat_number'   => 'vat_number',
+                'home-email'        => 'email',
+                'default'      => 'default',
+                'eori_number'    => 'eori_number',
+                'abn_number'     => 'abn_number',
+                'company_number' => 'company_number',
+                'addresstype'    => 'address_type',
+                'name-last'      => 'contact_last',
+            ] as $k => $v) {
+                if (array_key_exists($k, $_POST)) {
+                    $address[$v] = trim($_POST[$k]);
+                }
+            }
+            if (!count($issues)) {
+                $address['default'] = (count($member_notifyparties) > 0) ? $address['default'] : 'y';
+
+                $member_notifyparty_id = memberNotifyPartyToDatabase($_GLOBALS['member']['id'], $address);
+                if ('y' == ($address['default'] ?? '')) {
+                    memberNotifyPartySetDefault($_GLOBALS['member']['id'], $member_notifyparty_id);
+                }
+
+                redirect('?result=y&action=add');
+                die();
+            }
+            redirect('?result=n&action=add');
+            die();
+        }
+        if ('update' === ($_POST['action'] ?? '') && !count($issues)) {
+            $id            = intval($_POST['id'] ?? 0);
+            $address['id'] = $id;
+            foreach ([
+                'organization',
+                'phone_no',
+                'city',
+                'state',
+                'home-email',
+                'country',
+                'addresstype'
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            foreach ([
+                'organization' => 'company_name',
+                'address'      => 'address',
+                'city'         => 'city',
+                'state'        => 'state',
+                'country'      => 'country',
+                'name-first'      => 'contact',
+                'phone_no'     => 'phone_no',
+                'phone_no2'    => 'phone_no2',
+                'fax_no'       => 'fax_no',
+                'mobile_no'    => 'mobile_no',
+                'post_code'    => 'post_code',
+                'vat_number'   => 'vat_number',
+                'home-email'        => 'email',
+                'default'      => 'default',
+                'eori_number'    => 'eori_number',
+                'abn_number'     => 'abn_number',
+                'company_number' => 'company_number',
+                'addresstype'    => 'address_type',
+                'name-last'      => 'contact_last',
+            ] as $k => $v) {
+                if (array_key_exists($k, $_POST)) {
+                    $address[$v] = $_POST[$k];
+                }
+            }
+            if (!count($issues)) {
+                $address['default'] = (count($member_notifyparties) > 0) ? $address['default'] : 'y';
+
+                $member_notifyparty_id = memberNotifyPartyToDatabase($_GLOBALS['member']['id'], $address);
+                if ('y' == ($address['default'] ?? '')) {
+                    memberNotifyPartySetDefault($_GLOBALS['member']['id'], $member_notifyparty_id);
+                }
+
+                redirect('?result=y&action=update');
+                die();
+            }
+            redirect('?result=n&action=update');
+            die();
+        }
+        if ('delete' === ($_POST['action'] ?? '') && !count($issues)) {
+            $id = intval($_POST['id'] ?? 0);
+            foreach ($member_notifyparties as $member_notifyparty) {
+                if ($member_notifyparty['id'] == $id) {
+                    memberNotifyPartyDelete($id);
+                    redirect('?result=y&action=delete');
+                    die();
+                }
+            }
+            redirect('?result=n&action=delete');
+            die();
+        }
+        die($twig->load('account-notify-party.twig')->render(['inputs' => [
+            'addresses' => $member_notifyparties,
+            'ship_addr' => $_GLOBALS['member']['ship_addr'],
+            'result'    => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'     => [
+                'add'    => ['y' => _('New Notify party has been added'), 'n' => _('Failed to add Notify party')],
+                'update' => ['y' => _('Notify party has been updated'), 'n' => _('Failed to update Notify party')],
+                'delete' => ['y' => _('Notify party was removed'), 'n' => _('Failed to remove Notify party')],
+            ][$_GET['action'] ?? ''][$_GET['result'] ?? ''] ?? '',
+            'issues'    => $issues,
+        ]]));
+    case 'contacts':
+        moduleLoad('member'); //memberContactsFromDatabase, memberContactDelete, memberContactToDatabase, memberContactSetMain
+
+        $member_contacts = memberContactsFromDatabase($_GLOBALS['member']['id']);
+        $issues          = [];
+        if ('add' === ($_POST['action'] ?? '') && !count($issues)) {
+            foreach ([
+                'name',
+                'title',
+                'email',
+                'send_email_cc',
+                'main',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = '' . $k . ' field is required';
+                }
+            }
+            foreach ([
+                'name'          => 'name',
+                'last_name'     =>'last_name',
+                'title'         => 'title',
+                'email'         => 'email',
+                'phone'         => 'phone',
+                'send_email_cc' => 'send_email_cc',
+                'main'          => 'main',
+            ] as $k => $v) {
+                if (array_key_exists($k, $_POST)) {
+                    $contact[$v] = $_POST[$k];
+                }
+            }
+            if (!count($issues)) {
+                $contact_id = memberContactToDatabase($_GLOBALS['member']['id'], $contact);
+                if ('y' == ($contact['main'] ?? '')) {
+    				memberContactSetMain($_GLOBALS['member']['id'], $contact_id);
+                }
+
+                redirect('?result=y&action=add');
+                die();
+            }
+            redirect('?result=n&action=add');
+            die();
+        }
+        if ('update' === ($_POST['action'] ?? '') && !count($issues)) {
+            $id            = intval($_POST['id'] ?? 0);
+            $contact['id'] = $id;
+            foreach ([
+                'name',
+                'title',
+                'email',
+                'send_email_cc',
+                'main',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            foreach ([
+                'name'          => 'name',
+                'last_name'     =>'last_name',
+                'title'         => 'title',
+                'email'         => 'email',
+                'phone'         => 'phone',
+                'send_email_cc' => 'send_email_cc',
+                'main'          => 'main',
+            ] as $k => $v) {
+                if (array_key_exists($k, $_POST)) {
+                    $contact[$v] = $_POST[$k];
+                }
+            }
+
+            if (!count($issues)) {
+                $contact_id = memberContactToDatabase($_GLOBALS['member']['id'], $contact);
+                if ('y' == ($contact['main'] ?? '')) {
+    				memberContactSetMain($_GLOBALS['member']['id'], $contact_id);
+                }
+
+                redirect('?result=y&action=update');
+                die();
+            }
+            redirect('?result=n&action=update');
+            die();
+        }
+        if ('delete' === ($_POST['action'] ?? '') && !count($issues)) {
+            $id = intval($_POST['id'] ?? 0);
+            foreach ($member_contacts as $contact) {
+                if ($contact['id'] == $id) {
+                    memberContactDelete($id);
+                    redirect('?result=y&action=delete');
+                    die();
+                }
+            }
+            redirect('?result=n&action=delete');
+            die();
+        }
+        die($twig->load('account-contact.twig')->render(['inputs' => [
+            'contacts' => $member_contacts,
+            'result'   => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'    => [
+                'add'    => ['y' => _('New Contact has been added'), 'n' => _('Failed to add Contact')],
+                'update' => ['y' => _('Contact has been updated'), 'n' => _('Failed to update Contact')],
+                'delete' => ['y' => _('Contact was removed'), 'n' => _('Failed to remove Contact')],
+            ][$_GET['action'] ?? ''][$_GET['result'] ?? ''] ?? '',
+            'issues'   => $issues,
+        ]]));
+    case 'freight':
+        moduleLoad('member'); //memberCouriersFromDatabase, memberCourierToDatabase, memberCourierDelete, memberGetOptionList, memberToDatabase
+
+        $member_couriers = memberCouriersFromDatabase($_GLOBALS['member']['member_id']);
+
+        $issues = [];
+        if ('add' === ($_POST['action'] ?? '') && !count($issues)) {
+            foreach ([
+                'courier_id',
+                'account_number',
+                'insurance',
+                'notes',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = '' . $k . ' field is required';
+                }
+            }
+            foreach ([
+                'courier_id'     => 'courier_id',
+                'account_number' => 'account_num',
+                'courier_name' => 'courier_name',
+                'insurance'     => 'insurance',
+                'notes'          => 'notes',
+                'main'          => 'main',
+            ] as $k => $v) {
+                if (array_key_exists($k, $_POST)) {
+                    $freight[$v] = $_POST[$k];
+                }
+            }
+            if (!count($issues)) {
+                $courier_id = memberCourierToDatabase($_GLOBALS['member']['id'], $freight);
+                if ('y' == ($freight['main'] ?? '')) {
+                    memberCourierSetMain($_GLOBALS['member']['id'], $courier_id);
+                }
+
+                redirect('?result=y&action=add');
+                die();
+            }
+            redirect('?result=n&action=add');
+            die();
+        }
+        if ('update' === ($_POST['action'] ?? '') && !count($issues)) {
+            $id = intval($_POST['courier_acc_id'] ?? 0);
+            foreach ([
+                'courier_id',
+                'account_number',
+                'notes',
+                'insurance'
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            foreach ([
+                'courier_id'     => 'courier_id',
+                'account_number' => 'account_number',
+                'notes'          => 'notes',
+                'insurance'      =>'insurance',
+                'courier_name' => 'courier_name',
+                'main'           =>'main'
+            ] as $k => $v) {
+                if (array_key_exists($k, $_POST)) {
+                    $freight[$v] = $_POST[$k];
+                }
+            }
+
+            if (!count($issues)) {
+                $freight['id'] = $id;
+
+                $courier_id = memberCourierToDatabase($_GLOBALS['member']['id'], $freight);
+                if ('y' == ($freight['main'] ?? '')) {
+                    memberCourierSetMain($_GLOBALS['member']['id'], $courier_id);
+                }
+
+                redirect('?result=y&action=update');
+                die();
+            }
+            redirect('?result=n&action=update');
+            die();
+        }
+        if ('delete' === ($_POST['action'] ?? '') && !count($issues)) {
+            $id = intval($_POST['courier_acc_id'] ?? 0);
+            foreach ($member_couriers as $courier) {
+                if ($courier['courier_acc_id'] == $id) {
+                    memberCourierDelete($id);
+                    redirect('?result=y&action=delete');
+                    die();
+                }
+            }
+            redirect('?result=n&action=delete');
+            die();
+        }
+        $courier_list = memberGetOptionList('courier_id');
+        die($twig->load('account-freight.twig')->render(['inputs' => [
+            'member_couriers' => $member_couriers,
+            'courier_list'    => $courier_list,
+            'result'          => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'           => [
+                'add'    => ['y' => _('New Freight has been added'), 'n' => _('Failed to add Freight')],
+                'update' => ['y' => _('Freight has been updated'), 'n' => _('Failed to update Freight')],
+                'delete' => ['y' => _('Freight was removed'), 'n' => _('Failed to remove Freight')],
+            ][$_GET['action'] ?? ''][$_GET['result'] ?? ''] ?? '',
+            'issues'          => $issues,
+        ]]));
+    case 'profile':
+        moduleLoad('member');
+
+        $member = [
+            'member_id'  => $_GLOBALS['member']['member_id'],
+            'updated_by' => 0,
+        ];
+        $issues = [];
+        if ('update' === ($_POST['action'] ?? '') && !count($issues)) {
+            $validate_array=[
+                'given-name',
+                'family-name',
+                'street-address',
+                'address-level2',
+                'address-level1',
+                'country',
+                'home-tel',
+                'account-type',
+                'addresstype',
+                'postal-code'
+            ];
+            if($_POST['account-type']=='company'){
+                $validate_array=array_merge($validate_array,['organization']);
+            }
+            foreach ($validate_array as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            foreach ([
+                'given-name'     => 'first_name',
+                'family-name'    => 'last_name',
+                'street-address' => 'address_1',
+                'address-level3' => 'address_2',
+                'address-level2' => 'city',
+                'address-level1' => 'state',
+                'postal-code'    => 'post_code',
+                'country'        => 'country',
+                'account-type'   => 'account_type',
+                'organization'   => 'company_name',
+                'home-tel'       => 'phone_no',
+                'fax-tel'        => 'fax_no',
+                'vat_number'     => 'vat_number',
+                'abn_number'     => 'abn_number',
+                'company_number' => 'company_number',
+                'eori_number'     => 'eori_number',
+                'mobile-tel'     => 'mobile_no',
+                'url'            => 'website',
+                'organization_title' => 'organization_title',
+                'addresstype'   =>'address_type'
+            ] as $k => $v) {
+                if (array_key_exists($k, $_POST)) {
+                    $member[$v] = trim($_POST[$k]);
+                }
+            }
+            if (!count($issues)) {
+                /*
+                $member_contact = [
+                    'id'        => ???,
+                    'member_id' => $_GLOBALS['member']['id'],
+                    'name'      => $member['first_name'],
+                    'last_name' => $member['last_name'],
+                    'phone'     => $member['phone_no'],
+                    'title'     => $member['organization_title'],
+                ];
+                memberContactToDatabase($_GLOBALS['member']['id'], $member_contact);
+                */
+                // @fixme Major security issues
+                $DB->query(sprintf(
+                    "UPDATE `highwaygroup`.`new_members_contacts` SET `name` = '%s', `last_name` = '%s',`phone` = '%s',`title` = '%s' WHERE `member_id` = %d AND `is_profile` = 1",
+                    trim($member['first_name']),
+                    trim($member['last_name']),
+                    $member['phone_no'],
+                    $member['organization_title'],
+                    $_GLOBALS['member']['member_id']
+                ));
+                memberToDatabase($member);
+                redirect('?result=y&action=update');
+                die();
+            }
+        }
+        die($twig->load('account-profile.twig')->render(['inputs' => [
+            'member' => $member + $_GLOBALS['member'],
+            'result' => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'  => ['y' => _('Member details have been updated'), 'n' => _('Failed to update member record')][$_GET['result'] ?? ''] ?? '',
+            'issues' => $issues,
+        ]]));
+
+    case 'shipping':
+        moduleLoad('member'); //memberShippingAddressToDatabase, memberShippingAddressSetDefault, memberShippingAddressDelete
+
+        $address = [
+            'member_id'  => $_GLOBALS['member']['member_id'],
+            'updated_by' => 0,
+        ];
+        $issues = [];
+        if ('add' === ($_POST['action'] ?? '') && !count($issues)) {
+            $address['default'] = 'y';
+            foreach ([
+                'street-address',
+                //'country',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            foreach ([
+                'organization'   => 'company_name',
+                'street-address' => 'address',
+                'address-level3' => 'address_2',
+                'address-level2' => 'city',
+                'address-level1' => 'state',
+                'postal-code'    => 'post_code',
+                'country'        => 'country',
+                'home-tel'       => 'phone_no',
+                'fax-tel'        => 'fax_no',
+                'mobile-tel'     => 'mobile_no',
+                'home-email'     => 'email',
+                'phone_no2'      => 'phone_no2',
+                'vat_number'     => 'vat_number',
+                'default'        => 'default',
+                'eori_number'    => 'eori_number',
+                'abn_number'     => 'abn_number',
+                'company_number' => 'company_number',
+                'addresstype'    => 'address_type',
+                'name-first'     => 'contact',
+                'name-last'      => 'contact_last',
+            ] as $k => $v) {
+                if (array_key_exists($k, $_POST)) {
+                    $address[$v] = trim($_POST[$k]);
+                }
+            }
+            if (!count($issues)) {
+                $shipaddr_id = memberShippingAddressToDatabase($_GLOBALS['member']['id'], $address);
+                if ('y' == ($address['default'] ?? '')) {
+                    memberShippingAddressSetDefault($_GLOBALS['member']['id'], $shipaddr_id);
+                }
+
+                redirect('?result=y&action=add');
+                die();
+            }
+            redirect('?result=n&action=add');
+            die();
+        }
+        if ('update' === ($_POST['action'] ?? '') && !count($issues)) {
+            $id = intval($_POST['id'] ?? 0);
+            foreach ($_GLOBALS['member']['ship_addr'] as $shipping_address) {
+                if ($shipping_address['id'] == $id) {
+                    $address['id'] = $id;
+                    $address['default']     = 'y';
+                    foreach ([
+                        'street-address',
+                        //'country',
+                    ] as $k) {
+                        if ('' === trim($_POST[$k] ?? '')) {
+                            $issues[$k] = 'This field is required';
+                        }
+                    }
+                    foreach ([
+                        'organization'   => 'company_name',
+                        'street-address' => 'address',
+                        'address-level3' => 'address_2',
+                        'address-level2' => 'city',
+                        'address-level1' => 'state',
+                        'postal-code'    => 'post_code',
+                        'country'        => 'country',
+                        'home-tel'       => 'phone_no',
+                        'fax-tel'        => 'fax_no',
+                        'mobile-tel'     => 'mobile_no',
+                        'home-email'     => 'email',
+                        'phone_no2'      => 'phone_no2',
+                        'vat_number'     => 'vat_number',
+                        'default'        => 'default',
+                        'eori_number'    => 'eori_number',
+                        'abn_number'     => 'abn_number',
+                        'company_number' => 'company_number',
+                        'addresstype'    => 'address_type',
+                        'name-first' => 'contact',
+                        'name-last'    => 'contact_last',
+                    ] as $k => $v) {
+                        if (array_key_exists($k, $_POST)) {
+                            $address[$v] = $_POST[$k];
+                        }
+                    }
+                    if (!count($issues)) {
+                        $shipaddr_id = memberShippingAddressToDatabase($_GLOBALS['member']['id'], $address);
+                        if ('y' == ($address['default'] ?? '')) {
+                            memberShippingAddressSetDefault($_GLOBALS['member']['id'], $shipaddr_id);
+                        }
+
+                        redirect('?result=y&action=update');
+                        die();
+                    }
+                }
+            }
+            redirect('?result=n&action=update');
+            die();
+        }
+        if ('delete' === ($_POST['action'] ?? '') && !count($issues)) {
+            $id = intval($_POST['id'] ?? 0);
+            foreach ($_GLOBALS['member']['ship_addr'] as $shipping_address) {
+                if ($shipping_address['id'] == $id) {
+                    memberShippingAddressDelete($id);
+                    redirect('?result=y&action=delete');
+                    die();
+                }
+            }
+            redirect('?result=n&action=delete');
+            die();
+        }
+        die($twig->load('account-shipping.twig')->render(['inputs' => [
+            'addresses' => $_GLOBALS['member']['ship_addr'],
+            'member' => $_GLOBALS['member'],
+            'result'    => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'     => [
+                'add'    => ['y' => _('New shipping address has been added'), 'n' => _('Failed to add shipping address')],
+                'update' => ['y' => _('Shipping address has been updated'), 'n' => _('Failed to update shipping address')],
+                'delete' => ['y' => _('Shipping address was removed'), 'n' => _('Failed to remove shipping address')],
+            ][$_GET['action'] ?? ''][$_GET['result'] ?? ''] ?? '',
+            'issues'    => $issues,
+        ]]));
+
+    case 'inquiries':
+        die($twig->load('account-inquiries.twig')->render(['inputs' => [
+            'orders' => TwigInvoice::search([
+                'member_id'      => $_GLOBALS['member']['member_id'],
+                'invoice_status' => ['inquiry', 'closed', 'cancelled', 'return'],
+            ]),
+            'page'   => intval($_GET['p'] ?? 0),
+        ]]));
+    case 'invoice':
+        global $_GLOBALS;
+
+        moduleLoad('invoice'); //invoiceChargesFromDatabase, invoiceProductsFromDatabase, invoiceFromDatabase
+
+        $invoices = TwigInvoice::search([
+            'invoice_id'     => intval($_GET['invoice_id']),
+            'member_id'      => $_GLOBALS['member']['member_id'],
+            'invoice_status' => ['inquiry', 'proforma', 'sales', 'processed', 'completed'],
+        ]);
+        if (count($invoices)) {
+            //No browser-side caching
+            header("Cache-Control: no-cache, no-store, must-revalidate", true); // HTTP 1.1.
+            header("Pragma: no-cache", true); // HTTP 1.0.
+            header("Expires: 0", true); // Proxies.
+            header('Content-Type: application/pdf');
+
+            $invoice_id       = reset($invoices)->id;
+            $invoice          = invoiceFromDatabase($invoice_id);
+            $invoice_products = invoiceProductsFromDatabase($invoice_id);
+            $invoice_charges  = invoiceChargesFromDatabase($invoice_id);
+
+            if ($invoice['site_id'] <= 0) {
+                $invoice['site_id'] = $_GLOBALS['site_settings']['site_id'];
+            }
+
+            $invoice_buffer = '';
+            include $_SERVER['DOCUMENT_ROOT'] . '/webadmin/invoice/templates/pdf_invoice.tpl.php';
+            echo $invoice_buffer;
+            die();
+        }
+        break;
+    case 'orders':
+        moduleLoad('invoice'); //invoiceHistoryToDatabase
+        moduleLoad('product'); //productFromDatabase
+
+        $issues = [];
+        if ('reorder' === ($_POST['action'] ?? '') && !count($issues)) {
+            if (!empty($_POST)) {
+                $product_array = [];
+                foreach ($_POST['product'] as $key => $productdata) {
+                    if ('on' == $productdata['product_checked']) {
+                        array_push($product_array, $productdata);
+                    }
+                }
+                if (count($product_array)) {
+                    include_once __DIR__ . '/../webadmin/products_new/query.inc.php';
+                    foreach ($product_array as $key => $pro) {
+                        $product_qty = 0;
+                        $product_id  = $pro['product_id'];
+                        if (isset($pro['product_qty']) && empty($pro['product_qty']) === false) {
+                            $product_qty = intval($pro['product_qty']);
+                        }
+                        if (productExists($product_id)) {
+                            $product               = productFromDatabase($product_id);
+                            $product['product_id'] = $product['id'];
+                            // Hack:
+                            // sub_id, back_qty, power_id, adapter_id not exist in product
+                            // But, used in cart. Throwing errors.
+                            $product['sub_id']     = 0;
+                            $product['back_qty']   = 0;
+                            $product['colour_id']  = (isset($pro['color_cart']) && $pro['color_cart'] > 0) ? $pro['color_cart'] : 0;
+                            $product['power_id']   = 0;
+                            $product['adapter_id'] = 0;
+                            $curentprice           = $product['sales_price'];
+                            if (array_key_exists('member', $_GLOBALS)) {
+                                $user = new TwigUser($_GLOBALS['member']['member_id']);
+                                if ($user->wholesale() == 'y') {
+                                    $bulkprice = productBulkPricingFromDatabase($product['id']);
+
+                                    if (count($bulkprice)) {
+                                        foreach ($bulkprice as $bulkdata) {
+                                            if ($product_qty >= $bulkdata['qty'] && $curentprice > $bulkdata['unit_sale_price']) {
+                                                $curentprice = number_format((float) $bulkdata['unit_sale_price'], 2, '.', '');
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            $product['sales_price'] = $curentprice;
+                            if ('n' != $product['active']) {
+                                $cart = $_GLOBALS['shopping_cart'];
+                                if ($product_qty < 0) {
+                                    $cart = cartAddToContents($cart, $product, 0 - $product_qty);
+                                }
+                                if ($product_qty > 0) {
+                                    $cart = cartAddToContents($cart, $product, $product_qty);
+                                }
+                                if (0 == $product_qty) {
+                                    $cart = cartAddToContents($cart, $product, 1);
+                                }
+                                foreach ($cart as $cart_key => $cart_item) {
+                                    $min_order = productGetValue($cart_item['product_id'], 'min_order');
+                                    if ($cart_item['product_qty'] < $min_order) {
+                                        $cart_item['product_qty']       = $min_order;
+                                        $cart[$cart_key]['product_qty'] = $min_order;
+                                    }
+                                    $cart[$cart_key]['product_offer']    = (string) (new TwigCurrency($product['sales_price'], $product['sales_currency'], $product['precision']));
+                                    $cart[$cart_key]['product_offer_us'] = $cart[$cart_key]['product_offer'];
+                                    $cart[$cart_key]['offer_currency']   = 'USD';
+                                }
+                                $_GLOBALS['shopping_cart'] = $cart;
+                                cartSaveContents($_GLOBALS['member']['id'] ?? 0, $cart);
+                            }
+                        }
+                    }
+                    redirect('/cart');
+                } else {
+                    redirect($_SERVER['HTTP_REFERER'].'?result=n&msg=No any product selected');
+                    die();
+                }
+            }
+        }
+        if ('contact' === ($_POST['action'] ?? '') && !count($issues)) {
+            foreach ([
+                'message',
+                'subject',
+                'id',
+                'order_id',
+                //'country',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            if (!count($issues)) {
+                $history                    = [];
+                $history['message_sender']  = '';
+                $history['message_sentto']  = 'System Admin';
+                $history['message_title']   = $_POST['order_id'] . ' ' . $_POST['subject'];
+                $history['message_type_id'] = 3;
+                $history['message_notes']   = $_POST['message'];
+                $history['message_raw']     = $_POST['message'];
+                invoiceHistoryToDatabase($_POST['id'], $history);
+
+                $message = sprintf(
+                    implode("\r\n", [
+                        'Subject: %s',
+                        'Date: %s',
+                        'From: "%s"<%s>',
+                        'To: "%s"<%s>',
+                        '',
+                        '%s',
+                    ]),
+                    $history['message_title'],
+                    date(DATE_RFC1123),
+                    $_GLOBALS['member']['full_name'],
+                    $_GLOBALS['member']['email_address'],
+                    $_GLOBALS['site_settings']['site_name'],
+                    $_GLOBALS['site_settings']['sales_email'],
+                    '%s'
+                );
+
+                $email           = new PHPMailerEmail();
+                $email->Subject  = $history['message_title'];
+                $email->From     = $_GLOBALS['member']['email_address'];
+                $email->FromName = $_GLOBALS['member']['full_name'];
+                $email->Body     = sprintf(ParsedownExtra::instance()->setBreaksEnabled(true)->text($message), htmlspecialchars($history['message_raw']));
+                $email->AltBody  = sprintf($message, $history['message_raw']);
+                $email->AddAddress($_GLOBALS['site_settings']['sales_email'], $_GLOBALS['site_settings']['site_name']);
+                $email->Send();
+                redirect($_SERVER['HTTP_REFERER'].'?result=y&msg=Your message was sent successfully');
+            } else {
+                redirect($_SERVER['HTTP_REFERER'].'?result=n&msg=Failed to send contact request');
+            }
+            die();
+        }
+        $msg = $_GET['msg'] ?? '';
+        die($twig->load('account-orders.twig')->render(['inputs' => [
+            'orders'  => TwigInvoice::search([
+                'member_id'      => $_GLOBALS['member']['member_id'],
+                'invoice_status' => ['proforma', 'sales', 'processed', 'completed'],
+            ]),
+            'inquiry' => TwigInvoice::search([
+                'member_id'      => $_GLOBALS['member']['member_id'],
+                'invoice_status' => ['inquiry', 'closed', 'cancelled', 'return'],
+            ]),
+            'result'  => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'   => ['y' => $msg, 'n' => $msg][$_GET['result'] ?? ''] ?? '',
+            'issues'  => $issues,
+            'page'    => intval($_GET['p'] ?? 0),
+        ]]));
+
+    case 'password':
+        $issues = [];
+
+        if ('update' === ($_POST['action'] ?? '') && !count($issues)) {
+            foreach ([
+                'new-password',
+                'confirm-password',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+
+            if (!count($issues)) {
+                if (strlen($_POST['new-password'] ?? '') < 8) {
+                    $issues['new-password'] = 'Password must be 8 characters or more';
+                } elseif (($_POST['confirm-password'] ?? '') !== $_POST['new-password']) {
+                    $issues['new-password'] = 'Passwords do not match';
+                }
+            }
+
+            /*
+            if (!count($issues)) {
+                // prevent UTF-8 characters being stripped by escapeshellarg
+                setlocale(LC_ALL, 'en_US.utf-8');
+                $out = [];
+                $ret = null;
+                exec(sprintf(
+                    "echo %s | /usr/sbin/cracklib-check",
+                    escapeshellarg($_POST['new-password'])
+                ), $out, $ret);
+                if ((0 == $ret) && preg_match("/: ([^:]+)$/", $out[0], $m) && 'OK' !== $m[1]) {
+                    $issues['new-password'] = preg_replace('/^it /i', 'Password ', $m[1]);
+                }
+            }
+            */
+
+            if (!count($issues)) {
+                //@todo something like memberLoginSetActivePassword($member_id, $_POST['new-password']);
+                $DB->query(sprintf(
+                    "UPDATE `highwaygroup`.`new_members_logins` SET `password` = %s, `active` = 'y', `updated_by` = NULL, `deleted_at` = NULL WHERE `member_id` = %d LIMIT 1",
+                    $DB->escape(md5($_POST['new-password'])),
+                    $_GLOBALS['member']['id']
+                ));
+
+                redirect('?result=y&action=update');
+                die();
+            }
+        }
+
+        die($twig->load('account-password.twig')->render(['inputs' => [
+            'result' => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'  => ['y' => _('Password has been updated'), 'n' => _('Failed to update password')][$_GET['result'] ?? ''] ?? '',
+            'issues' => $issues,
+        ]]));
+
+    case 'resetpassword':
+        $login = [
+            'member_id'  => $_GLOBALS['member']['member_id'],
+            'updated_by' => 0,
+        ];
+        $issues = [];
+        if ('update' === ($_POST['action'] ?? '') && !count($issues)) {
+            if (strlen($_POST['new-password'] ?? '') < 8) {
+                $issues['new-password'] = 'Password must be 8 characters or more';
+            } elseif (($_POST['confirm-password'] ?? '') !== $_POST['new-password']) {
+                $issues['new-password'] = 'Passwords do not match';
+            } else {
+                $login['password'] = md5($_POST['new-password'] ?? '');
+                $login['active']   = 'y';
+                foreach ([
+                    'new-password',
+                    'confirm-password',
+                ] as $k) {
+                    if ('' === trim($_POST[$k] ?? '')) {
+                        $issues[$k] = 'This field is required';
+                    }
+                }
+            }
+            if (!count($issues)) {
+                // prevent UTF-8 characters being stripped by escapeshellarg
+                setlocale(LC_ALL, 'en_US.utf-8');
+                $out = [];
+                $ret = null;
+                exec(sprintf(
+                    "echo %s | /usr/sbin/cracklib-check",
+                    escapeshellarg($_POST['new-password'])
+                ), $out, $ret);
+                if ((0 == $ret) && preg_match("/: ([^:]+)$/", $out[0], $m) && 'OK' !== $m[1]) {
+                    $issues['new-password'] = preg_replace('/^it /i', 'Password ', $m[1]);
+                }
+            }
+            if (!count($issues)) {
+                $DB->query(sprintf(
+                    "UPDATE `highwaygroup`.`new_members_logins` SET `password` = %s, `deleted_at` = NULL WHERE `member_id` = %d LIMIT 1",
+                    $DB->escape($login['password']),
+                    $_GLOBALS['member']['member_id']
+                ));
+                redirect($_REQUEST['redirect'] ?? '/account/dashboard');
+                die();
+            }
+        }
+        die($twig->load('account-resetpassword.twig')->render(['inputs' => [
+            'result' => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'  => ['y' => _('Password has been updated'), 'n' => _('Failed to update password')][$_GET['result'] ?? ''] ?? '',
+            'issues' => $issues,
+        ]]));
+
+    //
+
+    // Not logged-in actions
+    case 'autologin':
+        moduleLoad('member'); //memberHasValue, memberFromDatabase, memberLogin
+
+        if (($_GET['rand_num'] ?? 0) && ($_GET['rand_num'] ?? 0)) {
+            $member_id = $_GET['member_id'];
+            $rand_num  = $_GET['rand_num'];
+            if (memberHasValue($member_id, 'rand_num', $rand_num)) {
+                memberLogin($member_id, $rand_num);
+                redirect('/account/password');
+                die();
+            }
+        }
+
+        $rdirect['value']   = 'n';
+        $rdirect['message'] = 'Your reset password link has expired. Please reset your password again.';
+        $data               = json_encode($rdirect);
+        setcookie('redirect', $data, strtotime('+1 year'), '/');
+        redirect('/');
+        die();
+
+    case 'login':
+        $issues = [];
+        if ('login' === ($_POST['action'] ?? '') && !count($issues)) {
+            foreach ([
+                'username',
+                'current-password',
+            ] as $k) {
+                if ('' === trim($_POST[$k] ?? '')) {
+                    $issues[$k] = 'This field is required';
+                }
+            }
+            if (!count($issues) && !login($_POST['username'] ?? '', $_POST['current-password'] ?? '')) {
+                $issues['username'] = 'Wrong username or password';
+            }
+            if (!count($issues)) {
+                redirect($_REQUEST['redirect'] ?? $_SERVER['HTTP_REFERER'] ?? '/');
+                die();
+            }
+        }
+        die($twig->load('account-login.twig')->render(['inputs' => [
+            'result' => ['y' => 'success', 'n' => 'danger'][$_GET['result'] ?? ''] ?? '',
+            'alert'  => ['y' => _('Successfully logged in'), 'n' => _('Unable to login')][$_GET['result'] ?? ''] ?? '',
+            'issues' => $issues,
+        ]]));
+
+    case 'passwordFind':
+        moduleLoad('member'); //memberIdFromEmail, memberSetValue, memberUpdatePassword, memberFromDatabase
+
+        $issues = [];
+        if ('recover' === ($_POST['action'] ?? '') && !count($issues)) {
+            foreach ([
+                'username',
+            ] as $k) {
+                 if (!preg_match('/^.+@.+\\..+$/', $_POST[$k])) {
+                    $issues['username'] = 'Please enter a valid Email Address';
+                }
+            }
+            $member_id = memberIdFromEmail($_POST['username'])[0] ?? 0;
+            if (!$member_id) {
+                $issues['username'] = 'The email address you entered is not in our database.<br /> please reconfirm. If you feel this is in error, please <a href="/contact-us/">contact us</a>';
+            }
+            if (!count($issues)) {
+                //Build a new password
+                $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@*?!(&.$+-#_';
+                $password = '';
+                $max      = strlen($keyspace) - 1;
+                for ($i = 0; $i < 16; $i++) {
+                    $password .= $keyspace[random_int(0, $max)];
+                }
+                $expire_time = strtotime('+2 hours');
+                memberSetValue($member_id, 'rand_num', mt_rand(0, 2147483647));
+                memberSetValue($member_id, 'link_expire_time',$expire_time);
+                memberUpdatePassword($password, $member_id);
+
+                $member  = memberFromDatabase($member_id);
+                $message = strtr($_GLOBALS['site_options']['RESET_PASS_EMAIL'], [
+                    '[cust_name]' => $member['name'],
+                    '[password]'  => $password,
+                    '[link]'      => relative_url(sprintf(
+                        '/account/autologin?member_id=%d&rand_num=%d',
+                        $member_id,
+                        $member['rand_num']
+                    )),
+                ] + $member);
+                $email          = new PHPMailerEmail();
+                $email->Subject = "Password Reset Request";
+                $email->Body    = ParsedownExtra::instance()->setBreaksEnabled(true)->text($message);
+                $email->AltBody = $message;
+                $email->AddAddress($member['email_address'], $member['full_name']);
+                $email->Send();
+
+                redirect("?result=y&action=forgotpassword");
+                die();
+            }
+            //redirect("?result=n&action=forgotpassword");
+            //die();
+        }
+        //echo $issues['username']; die;
+        die($twig->load('account-passwordFind.twig')->render(['inputs' => [
+            'result' => [
+                'y' => 'success',
+            ][$_GET['result'] ?? ''] ?? '',
+            'alert'  => [
+                'y' => _("Your reset password request has been sent. Please check your email and follow the link to reset new password.")
+            ][$_GET['result'] ?? ''] ?? '',
+            'issues' => $issues,
+        ]]));
+
+    case 'register':
+        moduleLoad('member'); //memberContactsToDatabase, memberNotifyPartiesToDatabase, memberShippingAddressesToDatabase, memberGetOptionList, memberToDatabase, memberLoginsToDatabase, memberCouriersToDatabase, memberTemplateVars
+
+        $issues        = [];
+
+        /**
+         * @var mixed[]   $member
+         * @var mixed[][] $member_contacts
+         * @var mixed[][] $member_logins
+         * @var mixed[][] $member_notify
+         * @var mixed[]   $issues
+         */
+        include __DIR__ . '/../build_member.inc.php';
+
+        if ('register' === ($_POST['action'] ?? '')) {
+            if (!count($issues)) {
+                if (memberIdFromEmail($_POST['username'])) {
+                    $issues['username'] = 'Email address already exists. <a href="/account/passwordFind">Recover Account</a>';
+                }
+            }
+
+            if (!count($issues)) {
+                $member_id = memberToDatabase($member);
+                if (!$member_id) {
+                    $issues['action'] = 'There was an unknown error while processing your registration';
+                }
+            }
+
+            if (!count($issues)) {
+                $member = memberFromDatabase($member_id);
+                memberContactsToDatabase($member_id, $member_contacts);
+                memberLoginsToDatabase($member_id, $member_logins);
+                memberNotifyPartiesToDatabase($member_id, $member_notifyparties);
+                memberShippingAddressesToDatabase($member_id, $member_shippingaddresses);
+                memberCouriersToDatabase($member_id, $member_couriers ?? []);
+
+                login($_REQUEST['username'], $_REQUEST['newPassword']);
+                $message = strtr(
+                    $_GLOBALS['site_options']['SIGNUP_SUCCESS_EMAIL'],
+                    [
+                        '[cust_name]' => $member['full_name'],
+                        '[username]'  => $member['email_address'],
+                        '[password]'  => $_REQUEST['new-password'],
+                    ] + memberTemplateVars($member)
+                );
+
+                $email          = new PHPMailerEmail();
+                $email->Subject = "Registration Successful";
+                $email->Body    = ParsedownExtra::instance()->setBreaksEnabled(true)->text($message);
+                $email->AltBody = $message;
+                $email->AddAddress($member['email_address'], $member['full_name']);
+                $email->Send();
+
+                redirect('/account/dashboard');
+                die();
+            }
+        }
+        if(count($posted)==0){
+            $posted['billing_as_shipping']='y';
+            $posted['own_freight']='n';
+        }
+
+        die($twig->load('account-register.twig')->render(['inputs' => [
+            'issues'        => $issues,
+            'model'         => $posted,
+            'courier_list'  => memberGetOptionList('courier_id'),
+            'currency_list' => GlobalCurrencyList(),
+        ]]));
+
+    case 'news-letter':
+        moduleLoad('member'); //memberToDatabase
+
+        if (($_POST['action'] ?? '') === 'newsletter' && !empty($_POST['newsletter-address'])) {
+            if ($_GLOBALS['member']['member_id']) {
+                $member = [
+                    'member_id'         => $_GLOBALS['member']['member_id'],
+                    'updated_by'        => 0,
+                    'news_letter_email' => $_POST['newsletter-address'],
+                ];
+                memberToDatabase($member);
+
+                //@fixme This code is incorrect, newsletter subscriptions are handled via the newsletter module
+                /*
+                $prefs             = [];
+                $prefs['customer'] = 'y';
+                memberPreferencesToDatabase($_GLOBALS['member']['member_id'], $prefs);
+                */
+
+                $rdirect['value']   = 'y';
+                $rdirect['message'] = 'Thanks for subscribing';
+                $data               = json_encode($rdirect);
+                setcookie('redirect', $data, strtotime('+1 year'), '/');
+            } else {
+                $issues = [];
+                if ($row = $DB->query_first(sprintf(
+                    "SELECT `member_id` FROM `highwaygroup`.`new_members` WHERE `email_address` = %s LIMIT 1",
+                    $DB->escape($_POST['newsletter-address'])
+                ), MYSQLI_ASSOC)) {
+                    $issues['error'] = 'Email address already exists,Please login for news letter';
+                }
+                if (!count($issues)) {
+                    die($twig->load('account-newsletter.twig')->render(['inputs' => [
+                        'email' => $_POST['newsletter-address'],
+                    ]]));
+                } else {
+                    $rdirect['value']   = 'n';
+                    $rdirect['message'] = $issues['error'];
+                    $data               = json_encode($rdirect);
+                    setcookie('redirect', $data, strtotime('+1 year'), '/');
+                }
+            }
+        } else {
+            $rdirect['value']   = 'n';
+            $rdirect['message'] = 'Not aurthorised url';
+            $data               = json_encode($rdirect);
+            setcookie('redirect', $data, strtotime('+1 year'), '/');
+        }
+        redirect('/');
+        die();
+
+    case 'newsletter-reg':
+        moduleLoad('member'); //memberContactsToDatabase, memberNotifyPartiesToDatabase, memberShippingAddressesToDatabase, memberToDatabase, memberFromDatabase, memberLoginsToDatabase
+
+        $issues = [];
+
+        /**
+         * @var mixed[] $member
+         * @var mixed[][] $member_contacts
+         * @var mixed[][] $member_logins
+         * @var mixed[][] $member_notify
+         * @var mixed[] $issues
+         */
+        include __DIR__ . '/../build_member.inc.php';
+
+        if ('newsletter' === ($_POST['action'] ?? '') && !count($issues)) {
+            if ($row = $DB->query_first(sprintf(
+                "SELECT `member_id` FROM `highwaygroup`.`new_members` WHERE `email_address` = %s LIMIT 1",
+                $DB->escape($member['email_address'])
+            ), MYSQLI_ASSOC)) {
+                $issues['username'] = 'Email address already exists,Please login for news letter';
+            }
+        }
+        if ('newsletter' === ($_POST['action'] ?? '') && !count($issues)) {
+            $member_id = memberToDatabase($member);
+            if ($member_id) {
+                $member = memberFromDatabase($member_id);
+                memberContactsToDatabase($member_id, $member_contacts);
+                memberLoginsToDatabase($member_id, $member_logins);
+                memberNotifyPartiesToDatabase($member_id, $member_notifyparties);
+
+                //@fixme This code is incorrect, newsletter subscriptions are handled via the newsletter module
+                /*
+                $prefs             = [];
+                $prefs['customer'] = 'y';
+                memberPreferencesToDatabase($member_id, $prefs);
+                */
+
+                //memberShippingAddressesToDatabase($member_id, $member_shippingaddresses);
+                //login($_REQUEST['username'], $_REQUEST['new-password']);
+                $rdirect['value']   = 'y';
+                $rdirect['message'] = 'Thanks for subscribing';
+                $data               = json_encode($rdirect);
+                setcookie('redirect', $data, strtotime('+1 year'), '/');
+                redirect('/');
+                die();
+            } else {
+                $issues['action'] = 'There was an unknown error while processing your newsletter request';
+            }
+        }
+        die($twig->load('account-newsletter.twig')->render(['inputs' => [
+            'member' => $member,
+            'issues' => $issues,
+        ]]));
+    case 'checkUsername' :
+
+        global $DB;
+
+        $username = $_POST['username'] ?? '';
+
+        header('Content-Type: application/json');
+
+        if (!preg_match('/^.+@.+\..+$/', $username)) {
+            die(json_encode(false));
+        }
+
+        if ($DB->query_first(sprintf(
+            "SELECT * FROM `highwaygroup`.`new_members` WHERE `email_address` = %s LIMIT 1",
+            $DB->escape($username)
+        ), MYSQLI_ASSOC)) {
+            die(json_encode(false));
+        }
+
+        die(json_encode(true));
+}

@@ -1,0 +1,30 @@
+{#
+// inputs:
+// - classes: string - CSS classes
+// - products: TwigProduct[]
+#}
+
+{% set classes  = inputs.classes %}
+{% set products = inputs.products %}
+{% set product_msg = inputs.product_msg %}
+{% set root_classes = classnames('card widget widget-products', classes) %}
+
+<div class="{{ root_classes }}">
+    <div class="widget__header" ><h4>{{(product_msg)?product_msg:'Latest Products'}}</h4></div>
+    <div class="widget-products__list">{% for product in products[:5] %}<div class="widget-products__item">
+        {% if product.thumb %}
+        <div class="widget-products__image"><a href="{{ product.url|e }}"><img src="{{ image(product.thumb, {size: 64})|e }}" alt="{{ product.thumb.alt|e }}" width="64"/></a></div>
+        {% endif %}
+        <div class="widget-products__info">
+            <div class="widget-products__name"><a href="{{ product.url|e }}">{{ product.name }}</a></div>
+            <div class="widget-products__prices">
+                {% if product.compareAtPrice %}
+                    <div class="widget-products__price widget-products__price--new">{{ product.price }} </div>
+                    <div class="widget-products__price widget-products__price--old">{{ product.compareAtPrice }} </div>
+                {% else %}
+                    <div class="widget-products__price widget-products__price--current">{{ product.price }} </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>{% endfor %}</div>
+</div>

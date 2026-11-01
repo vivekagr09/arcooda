@@ -1,0 +1,227 @@
+<!-- direct_email.tpl -->
+
+<?php
+if (!function_exists('memberTemplateVars')) {
+    function memberTemplateVars($member = array())
+    {
+        global $DB, $_GLOBALS;
+
+        $fields = array(
+            'address_2',
+            'address',
+            'city',
+            'company_code',
+            'company_invoiceheader',
+            'company_name',
+            'company_signature',
+            'company',
+            'country',
+            'email_address',
+            'fax_no',
+            'first_name',
+            'full_name',
+            'id',
+            'last_initial',
+            'last_name',
+            'mobile_no',
+            'phone_no',
+            'post_code',
+            'short_name',
+            'staff_name',
+            'state',
+            'url',
+            'vat_number',
+            'website',
+        );
+
+        $company_info = $DB->query_first(sprintf(
+            "SELECT * FROM `highwaygroup`.`company_info` WHERE `company_id` = %d LIMIT 1",
+            $_GLOBALS['site_settings']['site_id']
+        ), MYSQLI_ASSOC);
+
+        $website = $DB->query_first(sprintf(
+            "SELECT * FROM `highwaygroup`.`websites` AS `w` WHERE `w`.`id` = %d LIMIT 1",
+            $_GLOBALS['site_settings']['site_id']
+        ), MYSQLI_ASSOC);
+
+        foreach ($fields as $k) {
+            $temp[$k] = '';
+            if (is_array($company_info) && array_key_exists($k, $company_info)) {
+                $temp[$k] = $company_info[$k];
+            } elseif (is_array($website) && array_key_exists($k, $website)) {
+                $temp[$k] = $website[$k];
+            } elseif (is_array($member) && array_key_exists($k, $member)) {
+                $v           = $member[$k];
+                $option_list = memberGetOptionList($k);
+                $temp[$k]    = (is_array($option_list) && array_key_exists($v, $option_list)) ? $option_list[$v] : $v;
+            } else {
+                $temp[$k] = '';
+            }
+        }
+
+        $temp['request_date'] = date(_('jS F, Y'), time());
+
+        $result = array();
+        foreach ($temp as $k => $v) {
+            $result['[' . strtoupper($k) . ']']      = $v;
+            $result['[' . strtoupper($k) . '_TXT]']  = $v;
+            $result['[' . strtoupper($k) . '_HTML]'] = formatHTMLDescription($v);
+        }
+        return $result;
+    }
+}
+moduleLoad('member'); //memberTemplateVars
+$direct_email_addresses = array();
+foreach (array($member, $member_contacts, $member_notify, $member_shipping) as $v) {
+    if (is_array($v)) {
+        foreach (array('email_address') as $k) {
+            if (array_key_exists($k, $v) && '' != $v[$k] && !in_array($v[$k], $direct_email_addresses)) {
+                $direct_email_addresses[] = $v[$k];
+            }
+        }
+    }
+}
+
+$vars = memberTemplateVars($member);
+foreach ($vars as $k => $v) {
+    if (trim($v) == '') {
+        unset($vars[$k]);
+    }
+}
+$vars['[STAFF_NAME]'] = "Jody Luo"; // Always Jody
+
+$direct_email_templates = array();
+$direct_email_templates_list = array();
+foreach (supplierEmailTemplatesList() as $k => $v) {
+    $direct_email_templates_list[$k] = $v['template_name'];
+    $direct_email_templates[$k] = array(
+        'subject' => strtr($v['template_subject'], $vars),
+        'message' => strtr($v['template_text'], $vars)
+    );
+}
+
+$direct_email_template_id = -1;
+$direct_email_subject = '';
+$direct_email_message = '';
+foreach ($direct_email_templates as $k => $v) {
+    $direct_email_template_id = $k;
+    $direct_email_subject = $v['subject'];
+    $direct_email_message = $v['message'];
+    break;
+}
+
+function email_row($ecount = '[EMAIL_COUNT]', $contact = array())
+{
+    ob_start();
+?>
+	<tr>
+		<th>eMail To :</th>
+		<td>
+            <input type="checkbox" name="direct_email[<?= $ecount ?>][enabled]" />
+            <select name="direct_email[<?= $ecount ?>][method]" style="width:auto;">
+                <option value="Cc:">CC</option>
+                <option value="Bcc:">BCC</option>
+            </select>
+<?php
+    if (array_key_exists('email', $contact)) {
+?>
+            <input type="hidden" name="direct_email[<?= $ecount ?>][email_address]" value="<?php hecho($contact['email'])?>" />
+            <?php hecho($contact['name'])?> &lt;<?php hecho($contact['email'])?>&gt;
+<?php
+    } else {
+?>
+            <input type="text" name="direct_email[<?= $ecount ?>][email_address]" value="" style="width:80%;" />
+            <a class="direct_email_add" href="#" style="display:none;">Add</a>
+<?php
+    }
+?>
+        </td>
+	</tr>
+<?php
+    return ob_get_clean();
+}
+?>
+
+<script type="text/javascript">
+//<![CDATA[
+$(function() {
+    var direct_email_max = <?= count($direct_email_addresses) ?>;
+    var direct_email_templates = <?php jecho($direct_email_templates) ?>;
+
+    $(".direct_email_add").click(function() {
+        direct_email_max++;
+        $(this).closest('tr').after(<?= strtr(jecho(email_row(), 1), array(
+            '[EMAIL_COUNT]' => '" + direct_email_max + "',
+        )) ?>);
+        return false;
+    }).toggle(true);
+    $(".direct_email_template_id").change(function() {
+        $("[name='direct_email[subject]']").val(direct_email_templates[$(this).val()].subject);
+        $("[name='direct_email[message]']").val(direct_email_templates[$(this).val()].message);
+    });
+})
+//]]>
+</script>
+
+<?= formatHTMLTitle('<a href="#" onclick="toggleSection(\'sectionDirectEmail\');return false">Direct Email</a>') ?>
+
+<div id="sectionDirectEmail">
+    <table class="table_fields">
+        <tr>
+            <th>Email Templates :</th>
+            <td>
+                <select class="direct_email_template_id" style="width:80%;">
+                    <option value="-1"></option>
+                    <?= formatHTMLOptions($direct_email_templates_list, $direct_email_template_id) ?>
+                </select>
+                <a href=".?action=options&section=email_template" target="_blank">Add / Edit</a>
+            </td>
+        </tr>
+<?php
+if ('mass_email' !== $action) {
+    foreach ($direct_email_addresses as $k => $v) {
+        echo email_row($k, array('email' => $v));
+    }
+    echo email_row(-1);
+?>
+	<tr>
+		<th>Make Inquiry :</th>
+		<td><div class="unfinished"><input type="checkbox" name="direct_email[make_inquiry]" /></div></td>
+	</tr>
+<?php
+}
+?>
+	<tr>
+		<th>Subject :</th>
+		<td><input type="text" name="direct_email[subject]" class="wide" value="<?php hecho($direct_email_subject) ?>" /></td>
+	</tr>
+	<tr>
+		<th>Message :</th>
+		<td><textarea name="direct_email[message]" rows="<?= max(10, substr_count(wordwrap($direct_email_message), "\n") + 3) ?>" onkeyup="textareaAutoSize(this, 1, 10);"><?php hecho($direct_email_message) ?></textarea></td>
+	</tr>
+</table>
+<br /><br />
+
+<?php
+if ('mass_email' === $action) {
+?>
+<input type="button" value="Send Email" onclick="if (validateMassMail()) this.form.submit()" />
+<br />
+<br />
+<?php
+} elseif ('add' === $action || 'edit' === $action) {
+?>
+<input type="button" value="Send Email"<?=($supplier_lock['staff_id'] == $staff_id || 'add' == $action) ? ' onclick="if(validateMember()) this.form.submit()"' : ' disabled="disabled"'?> />
+<br />
+<br />
+<?php
+}
+?>
+
+</div>
+
+<div style="background-color:white;text-align:center;padding:8px 8px 8px 8px;display:none;" id="sectionDirectEmail_hideNote">
+	Direct Email can be viewed by Clicking "Direct Email" above<br />
+</div>
+
+<!-- /direct_email.tpl -->

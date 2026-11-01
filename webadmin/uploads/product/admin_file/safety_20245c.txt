@@ -1,0 +1,27 @@
+Monitor Stand for Amazon Echo Show 15 -Model  LDT79-T01
+
+width = 180mm
+height = 270mm
+depth = 180mm
+weight = 1.6kg
+box weight = 1.7kg
+box dimeensions = 230x205x48mm
+
+
+vesa support 75, 100
+vesa hole size = 6.2mm x 7.2mm
+rated for 2.5kg/5.5lbs
+recommended screen sizes = 15"
+
+Includes :-
+- Stand bracket (115x115x35mm)
+- stand base (180x180x5mm)
+- stand pole (140x60x30mm)
+- allen key* 4mm
+- 2* M6x16mm
+- 1* M6x30mm 
+
+- 4* M4x12mm bolts  (vesa Mounting)
+- 4* M5x12mm bolts  (vesa Mounting)
+
+- 4* D5 Washer  (vesa Mounting)

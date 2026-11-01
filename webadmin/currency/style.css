@@ -1,0 +1,27 @@
+body{font-family:Verdana,Arial,Helvetica,sans-serif;background-color:#f0f4f9;margin:0;padding:0}
+@media print{
+.print_hide{display:none}
+}
+div.currency_content .unfinished{background-color:#ff0}
+div.currency_content a{color:#000}
+div.currency_content{width:100%;margin-left:auto;margin-right:auto;font-family:Verdana,Arial,Helvetica,Sans-serif}
+div.currency_content table{text-align:left;width:95%;margin-left:auto;margin-right:auto;border-collapse:collapse;border:1px #ccc solid}
+div.currency_content tr{background-color:#fff;color:#000;font-family:Verdana;font-weight:400}
+div.currency_content pre{margin:0}
+div.currency_content pre.alt{background-color:#eee}
+div.currency_content td{padding:2px 1px 2px 1px}
+div.currency_content th,div.currency_content thead{background-color:#fec;color:#000;font-weight:700;text-align:center;font-size:75%}
+div.currency_content table.vbox td,div.currency_content table.vbox th,div.currency_content table.vbox thead{border:1px solid #fff}
+div.currency_content table.buttons{text-align:center}
+div.currency_content table.wide{width:95%}
+div.currency_content tr.alt{background-color:#eeeee0}
+div.currency_content tr.highlight{background-color:#90eea0}
+div.currency_content tr.mylock{background-color:#90a0ee}
+div.currency_content tr.locked{background-color:#ee90a0}
+div.currency_content td.collapse{width:1px}
+div.currency_content th.collapse{width:1px}
+div.currency_content td.left_title{text-align:right;background-color:#eeeee0;color:#000;font-weight:700}
+div.currency_content input.infile,div.currency_content input.intext,div.currency_content select,div.currency_content textarea{width:98%}
+div.currency_content th a{color:#000}
+div.currency_content td a{color:#000}
+div.currency_content table.spacetable td{border:2px solid #fff}

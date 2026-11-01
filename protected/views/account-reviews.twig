@@ -1,0 +1,519 @@
+{#
+// inputs:
+// - reviews:
+#}
+
+{% set global_page_title           = inputs.title|default('Reviews')                     %}
+{% set global_page_description     = inputs.description|default('')  %}
+{% set global_page_keywords        = input.keywords|default('')  %}
+{% set global_page_canonical       = '/account/reviews' %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical  %}
+
+{% set products    = inputs.product  %}
+{% set page      = inputs.page  %}
+{% set pages   = inputs.pages  %}
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set user = user() %}
+{% extends '/layouts/account.twig' %}
+
+{% block account_body %}
+ <style type="text/css">
+        .display-review-data .markdown h1 {
+            font-size: 15px !important;
+        }
+        .display-review-data .markdown{
+             font-size: 15px !important;
+        }
+        .product-review-action a:hover{
+            background-color: #dbe1e7;
+        }
+  </style>
+  <!-- Include Dropzone.js from a CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+
+    <div class="card display-review-data">
+    {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+        <div class="card-header" style="margin: 10px;
+    padding: 10px;"><h5 class="content_heading_color"><i class="fas fa-star" style="font-size: 26px;margin-right: 10px;"></i>My Reviews</h5></div>
+        <div class="card-divider"></div>
+        <div class="card-table">
+            <div class="wishlist " bis_skin_checked="1" >
+                <table class="wishlist__table">
+                    <tr class="wishlist__row wishlist__row--head">
+                        <th class="wishlist__column wishlist__column--head wishlist__column--product" colspan="2" width="75%">Product</th>
+                        <th class="wishlist__column wishlist__column--head wishlist__column--stock" style="text-align:center;">Review</th>
+                        <th class="wishlist__column wishlist__column--head wishlist__column--button" style="width: 15%;">&nbsp;</th>
+                    </tr>
+                    {% if products|length > 0 %}
+                    {% for product in products %}
+                        <input type="hidden" id="product-image-{{product.product_id}}" value='{{product.attachments|json_encode()}}'>
+                        <tbody class="wishlist__body">
+                            <tr class="wishlist__row wishlist__row--body">
+                                <td class="wishlist__column wishlist__column--body wishlist__column--image">
+                                    <div class="image image--type--product" bis_skin_checked="1">
+    
+                                            <img src="{{ image(product.productObject.imagescategory[0], {size: 50}) }}" alt="{{ product.imagescategory[0].alt|e }}" title="{{ product.productObject.name|e }}" />
+                                    </div>
+                                </td>
+                                <td class="wishlist__column wishlist__column--body wishlist__column--product">
+                                    <div class="wishlist__product-name" bis_skin_checked="1"><a href="{{ product.productObject.url|e }}" target="_blank">{{ product.productObject.name|e }}</a>
+                                    </div>
+                                </td>
+                                <td class="wishlist__column wishlist__column--body wishlist__column--stock" style="text-align:center;">
+                                     {% if product.reviews > 0 %}
+                                    <div class="wishlist__product-rating">
+                                         <div class="wishlist__product-rating-stars">
+                                            <div class="rating">
+                                                {% include '/components/rating.twig' with {inputs: {
+                                                    classes: 'rating__body',
+                                                    rating: product.reviews
+                                                }} %}
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="wishlist__product-rating-title">{{ product.reviews|number_format(1) }}</div>
+                                    </div>
+                                    {% else %}
+                                        <a href="#" class="btn btn-sm btn-success reviewPopup" data-toggle="modal" data-target="#review-add-modal" data-id="{{ product.productObject.id|e }}" data-name="{{ product.productObject.name }}">Review Product</a>
+                                        {# <button type="button" class="btn btn-sm btn-success">Review Product</button> #}
+                                    {% endif %}
+                                </td>
+                                <td class="product-review-action">
+                                    {% if product.productObject.isReviewExist %}
+                                    <a href="#" class="editReview" data-id="{{ product.productObject.id|e }}" data-action="edit" data-name="{{ product.productObject.name }}" data-toggle="modal" data-target="#review-edit-modal-{{ product.id}}" style="margin-left:10px;color:#c6c6c6;" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                    <a href="#" class="viewReview" data-id="{{ product.productObject.id|e }}" data-action="view" data-name="{{ product.productObject.name }}" data-reviewid="{{product.id}}" style="margin-left:10px;color:#c6c6c6;" title="View"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    <a href="#" class="deleteReview" data-id="review-delete-{{ product.productObject.id|e }}" data-action="delete" data-name="{{ product.productObject.name }}" data-toggle="modal" data-target="#review-delete-{{ product.id}}"style="margin-left:10px;color:#c6c6c6;" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% if product.productObject.isReviewExist %}
+                            <tr style="display:none;" id="viewReview_{{product.id}}">
+                                <td colspan="4" style="background:#fafdee;">
+                                    <div class="row p-3">
+                                         <div style="margin-top:10px;width: 100%;">
+                                            <p>{{markdown(product.comment)}}</p>
+                                       </div>
+                                        <div class="row" style="width:100%">
+                                            {% for attachment in product.attachments %}
+
+                                            <div class="col-md-3">
+                                                <a href="{{attachment.url}}?width=700&height=700" target="_blank" >
+                                                    <img src="{{attachment.url}}" width="200px"  alt="{{product.productObject.name}} review {{product.user_country | getCountryName}}" title="{{product.productObject.name}} review {{product.user_country | getCountryName}}">
+                                                </a>
+                                            </div>
+                                            {% endfor %}      
+                                        </div>
+                                         {% if product.our_reply %}
+                                            <div class="row" style="padding-top: 20px;"><div class="col-md-1" style="padding-left: 40px;"><img src="/img/favicon.ico" width="30"></div> <div class="col-md-11" style="padding-left: 5px;"> <i>{{product.our_reply}}</i></div></div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row"></div>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    {% endfor %}
+                    {% else %}
+                    <tr><td colspan="4">No Reviews Found.</td></tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+        <div class="card-divider"></div>
+    {% if pages > 1 %}
+          <div class="card-footer">
+            {% include '/components/pagination.twig' with {inputs: {
+                page_url: '/account/reviews/',
+                page:     page,
+                pages:  pages
+            }} %}
+          </div>
+    {% endif %}
+    </div>
+    {% set prefix = 'review-add' %}
+{% set reviews_list = {
+    "5": "5 Stars Rating",
+    "4": "4 Stars Rating",
+    "3": "3 Stars Rating",
+    "2": "2 Stars Rating",
+    "1": "1 Stars Rating",
+} %}
+    <div class="modal fade" id="review-success-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width:450px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div style="width: 450px; height: 150px; display: flex; justify-content: center; align-items: center;"> <p style="font-size: 30px;">Thanks for your Review</p></div>
+                </div>
+                <div class="modal-footer">
+                        <input type="button" value="close" class="btn btn-lg- btn-primary" class="close" data-dismiss="modal" aria-label="Close">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="review-list-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="width:450px;">
+                <div class="modal-header">
+                    Reviews
+                </div>
+                <div class="modal-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Comment</th>
+                                <th>Review</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="review-listings">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" value="close" class="btn btn-lg- btn-primary" class="close" data-dismiss="modal" aria-label="Close">
+                </div>
+            </div>
+        </div>
+    </div> 
+{% if products|length > 0 %}   
+    {% for product in products %}
+    {% if product.productObject.isReviewExist %}
+        <div class="modal fade" id="review-edit-modal-{{ product.id }}" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="width: 100%;">
+                        <table>
+                            <tr>
+                                <td width="23%">
+                                    Add Review for - 
+                                </td>
+                                <td>
+                                  <span style="background-color: yellow;">  {{ product.productObject.name }} </span>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="dashboardReview{{ product.product_id }}">
+                        <div class="row">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="product_id" name="product_id" value="{{ product.productObject.id }}" />
+                                    <input type="hidden" id="id" name="id" value="{{product.id}}" />
+                                    <input type="hidden" name="user_id" value="{{ product.user_id }}" />
+                                    <input type="hidden" name="user_name" value="{{ product.user_name }}" />
+                                    <input type="hidden" name="user_country" value="{{ product.user_country }}" />
+                                    <div class="form-group">
+                                        <label for="reviews"><b>Review Stars</b></label></br>
+                                        <select class="form-control form-control-lg" id="reviews" name="reviews" style="max-width:50%;" required>
+                                            {# <option value="" disabled selected>Select your rating</option> #}
+                                            {% for key, value in reviews_list %}
+                                                <option value="{{ key }}" {% if product.reviews == key %} selected {% endif %}>{{ value }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="comment" class="col-form-label"><b>Your Review</b> <span style="font-size:14px;font-style:italic;">(for online display)</span></label></br>
+                                        <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="Please leave your comments." required>{{ product.comment }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="feedback" class="col-form-label"><b>Private Feedback</b> <span style="font-size:14px;font-style:italic;">(Confidential, for Office Use Only)</span></label></br>
+                                        <textarea class="form-control" id="feedback" name="feedback" rows="3" placeholder="Please leave your feedback.">{{ product.feedback }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="feedback" class="col-form-label"><b>Attachments</b></label></br>
+                                         <div id="dropzone-container">
+                                            <label for="image-upload">Upload Images:</label>
+                                            <div class="dropzone" id="my-dropzone-{{ product.productObject.id }}"></div>
+                                        </div>
+                                    </div>
+                                    <div id="attached-file-{{ product.productObject.id }}"></div>
+                                    <div id="removed-file-{{ product.productObject.id }}"></div>
+                                </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <input type="hidden" value="do_edit" name="action" />
+                            <input type="submit" value="Post Your review" class="btn btn-lg- btn-primary"/>
+                        </div>
+                    </form>
+                </div>
+        </div></div></div>
+        {% set prefix = 'review-delete-' ~ product.id %}
+            <div class="modal fade" id="{{ prefix }}" tabindex="-1" role="dialog">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title">Delete Review</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                     </div>
+                     <div class="modal-body display-review-data">
+                        <form action="" method="post">
+                           <p>
+                              Deleting the following Review: <br />
+                              <br />
+                               <div style="margin-top:10px;width: 100%;">
+                                    <p>{{markdown(product.comment)}}</p>
+                               </div>
+                           </p>
+                           <hr />
+                           <div class="form-group">
+                              <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                              <input type="hidden" value="{{ product.id }}" name="id" />
+                              <input type="hidden" value="delete" name="action" />
+                              <input type="submit" value="Delete" class="btn btn-lg btn-danger" />
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+    {% endif %}
+    {% endfor %}
+{% endif %}
+<div class="modal fade" id="review-add-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" style="width: 100%;">
+                <table>
+                    <tr>
+                        <td width="23%">
+                            Add Review for - 
+                        </td>
+                        <td id="product_name">
+                            
+                        </td>
+                    </tr>
+                </table>
+
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" id="dashboardReview">
+                <div class="row">
+                        <div class="col-md-12">
+                            <input type="hidden" id="review_product_id" name="product_id" value="" />
+                            <input type="hidden" name="user_id" value="{{ user.id }}" />
+                            <input type="hidden" name="user_name" value="{{ user.initials }}" />
+                            <input type="hidden" name="user_country" value="{{ user.country }}" />
+                            <div class="form-group">
+                                <label for="reviews"><b>Review Stars</b></label></br>
+                                <select class="form-control form-control-lg" id="reviews" name="reviews" style="max-width:50%;" required>
+                                    {# <option value="" disabled selected>Select your rating</option> #}
+                                    {% for key, value in reviews_list %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="comment" class="col-form-label"><b>Your Review</b> <span style="font-size:14px;font-style:italic;">(for online display)</span></label></br>
+                                <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Please leave your comments." required ></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="feedback" class="col-form-label"><b>Private Feedback</b> <span style="font-size:14px;font-style:italic;">(Confidential, for Office Use Only)</span></label></br>
+                                <textarea class="form-control" id="feedback" name="feedback" rows="3" placeholder="Please leave your feedback."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback" class="col-form-label"><b>Attachments</b></label></br>
+                                <div id="dropzone-container">
+                                    <label for="image-upload">Upload Images:</label>
+                                    <div class="dropzone" id="my-dropzone"></div>
+                                </div>
+                            </div>
+                            <div id="attached-filedata"></div>
+                        </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <input type="hidden" value="add" name="action" />
+                    <input type="submit" value="Post Your review" class="btn btn-lg- btn-primary"/>
+                </div>
+            </form>
+        </div>
+</div></div></div>
+<script type="text/javascript">
+     var productNumber = 0
+     Dropzone.autoDiscover = false;
+        $(function() {
+
+        $('.reviewPopup').on('click', function (){
+                $('#product_name').html('');
+                var productNumber = parseInt($(this).data('id'));
+                var productName = $(this).data('name');
+                $('#review_product_id').val(productNumber);
+                $('#attached-filedata').html('<div id="attached-file-'+productNumber+'"></div>')
+                $('#product_name').append('<span style="background-color: yellow;">'+productName+'</span>');
+               var myDropzone = new Dropzone("#my-dropzone", {
+                url: '/contact/review_attachment.php?id=' + productNumber,
+                maxFilesize: 2, // Maximum file size in MB
+                acceptedFiles: 'image/*', // Accept only images
+                addRemoveLinks: true, // Allow file removal
+                dictRemoveFile: "Remove", // Customize the remove link text
+                autoProcessQueue: false, // Disable automatic upload on file selection
+                parallelUploads: 5, // Allow multiple files to be uploaded at once
+                uploadMultiple: true,
+                init: function() {
+                    var dropzoneInstance = this;
+
+                    // Handling form submission
+                    $('#dashboardReview').on('submit', function(e) {  
+                        e.preventDefault();
+                        dropzoneInstance.off("success");
+                        console.log(dropzoneInstance.getQueuedFiles().length);
+                         // Check if there are files in the Dropzone queue
+                        if (dropzoneInstance.getQueuedFiles().length === 0) {
+                            // If no files are queued, directly submit the form
+                             $('#dashboardReview').off('submit').submit(); // Use 'this' to reference the form
+                            return; // Exit the function
+                        }
+                        dropzoneInstance.on("success", function(file, responseArray) {
+                            JSON.parse(responseArray).forEach(function(response) {
+                                $('#attached-file-'+productNumber).append('<input type="hidden" name="attachments[]" value="'+response+'">');
+                            });
+                        });
+                        dropzoneInstance.on('queuecomplete', function() {
+                             $('#dashboardReview').off('submit').submit();
+                        });
+                        dropzoneInstance.processQueue();
+                    });
+                }
+            });
+        })
+
+       $('.editReview').on('click', function(){
+            //$('#dashboardReview').find('input, textarea').val('');
+                var product_id = $(this).data('id'); 
+                var elementId =  document.getElementById('my-dropzone-'+product_id);
+                if(elementId && elementId.dropzone){
+                     //elementId.dropzone.destroy();
+                }
+                var myDropzone = new Dropzone("#my-dropzone-"+product_id, {
+                url: '/contact/review_attachment.php?id=' + product_id,
+                maxFilesize: 2, // Maximum file size in MB
+                acceptedFiles: 'image/*', // Accept only images
+                addRemoveLinks: true, // Allow file removal
+                dictRemoveFile: "Remove", // Customize the remove link text
+                autoProcessQueue: false, // Disable automatic upload on file selection
+                parallelUploads: 5, // Allow multiple files to be uploaded at once
+                uploadMultiple: true,
+                init: function() {
+
+                    var dropzoneInstance = this;
+
+                    // Preload already uploaded images
+                    var uploadedImages = Object.values(JSON.parse($('#product-image-'+product_id).val()));
+                    uploadedImages.forEach(function(image) {
+                        // Create the mock file
+                        var mockFile = {id:image.id ,name: image.name, size: image.size };
+
+                        // Add the mock file to the Dropzone
+                        dropzoneInstance.emit("addedfile", mockFile);
+
+                        // Set the file thumbnail (the second argument is the URL of the thumbnail)
+                        dropzoneInstance.emit("thumbnail", mockFile, image.url);
+
+                        // Mark the file as complete
+                        dropzoneInstance.emit("complete", mockFile);
+
+                        // Optionally add a remove link for each file
+                        dropzoneInstance.files.push(mockFile); // Add to Dropzone's files array
+                    });
+                    /** $('#dashboardReview'+product_id).on('submit', function(e) {
+                        console.log('asd');
+                        e.preventDefault();
+                        
+                        // Clear any existing listeners to prevent duplicates
+                        dropzoneInstance.off("success");
+                        
+                        dropzoneInstance.on("success", function(file, responseArray) {
+                            console.log(responseArray); 
+                            JSON.parse(responseArray).forEach(function(response) {
+                               $('#attached-file-'+product_id).append('<input type="hidden" name="attachments[]" value="'+response+'">');
+                            });
+                        });
+
+                        dropzoneInstance.on('queuecomplete', function() {
+                               $('#dashboardReview' + product_id).off('submit').submit();
+                        });
+
+                         // Start processing the Dropzone queue
+                         dropzoneInstance.processQueue();
+                    }); **/
+                    $('#dashboardReview' + product_id).on('submit', function(e) {
+                        e.preventDefault();
+
+                        // Clear any existing listeners to prevent duplicates
+                        dropzoneInstance.off("success");
+                        if (dropzoneInstance.getQueuedFiles().length === 0) {
+                            // If no files are queued, directly submit the form
+                             $('#dashboardReview' + product_id).off('submit').submit(); // Use 'this' to reference the form
+                            return; // Exit the function
+                        } 
+                        // Check if there are files in the Dropzone queue
+                        if (dropzoneInstance.getQueuedFiles().length > 0) {
+                            console.log('Files are in the queue, processing dropzone...');
+                            
+                            // Listen for success event after file upload
+                            dropzoneInstance.on("success", function(file, responseArray) {
+                                console.log(responseArray);
+                                JSON.parse(responseArray).forEach(function(response) {
+                                    $('#attached-file-' + product_id).append('<input type="hidden" name="attachments[]" value="' + response + '">');
+                                });
+                            });
+
+                            // Once the queue is complete, submit the form
+                            dropzoneInstance.on('queuecomplete', function() {
+                                $('#dashboardReview' + product_id).off('submit').submit();  // Remove the event handler and submit the form
+                            });
+
+                            // Start processing the Dropzone queue
+                            dropzoneInstance.processQueue();
+                        } else {
+                            // If no files, submit the form directly
+                            $('#dashboardReview' + product_id).off('submit').submit();
+                        }
+                    });
+
+                    // Event triggered when a file is removed
+                    this.on("removedfile", function(file) {
+                        if(file.id){
+                             $('#removed-file-'+product_id).append('<input type="hidden" name="attachmentsremoved[]" value="'+file.id+'">');
+                        }
+                        // Optionally handle the file removal on the server-side
+                    });
+                }
+            });
+        });
+
+        // Listen for click event on the 'viewReview' class
+        $('.viewReview').on('click', function(e) {
+            e.preventDefault(); // Prevent default anchor behavior
+
+            // Get the review ID from the clicked element
+            var reviewId = $(this).data('reviewid');
+
+            // Toggle the corresponding review row's visibility
+            $('#viewReview_' + reviewId).toggle();
+        });
+
+
+    });
+</script>
+{% endblock %}

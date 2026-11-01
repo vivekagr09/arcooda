@@ -1,0 +1,11 @@
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-lg'}} %}
+
+    <div class="container text-center py-5 my-5 text-muted">
+        Header classic variant two
+    </div>
+
+    {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-lg'}} %}
+{% endblock %}

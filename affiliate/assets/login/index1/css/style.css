@@ -1,0 +1,52 @@
+html, body {
+    height: 100%;
+}
+body {
+    background-color: hsla(48, 100%, 95%, 1);
+    background-image: url('../img/bg-01.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #212529;
+}
+.card {
+    border-radius: 10px;
+}
+.toggle-password {
+    border: none;
+    background-color: transparent;
+}
+.toggle-password:focus, .toggle-password:hover {
+    border: none;
+    background-color: transparent;
+}
+.language-changer {
+    position: relative;
+    color: #2d394f;
+}
+.language-changer>a {
+    background-color: #fff;
+    color: #2d394f;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+}
+.language-changer>a:hover, .language-changer>a:focus {
+    background-color: #2d394f;
+    color: #fff;
+}
+.selected-language {
+    width: 24px;
+    margin-right: 8px;
+}
+.country-wrap .dropdown-item img {
+    width: 20px;
+    margin-right: 8px;
+}
+.custom-vertical-center {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}

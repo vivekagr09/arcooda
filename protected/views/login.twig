@@ -1,0 +1,58 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - issues:
+#}
+
+{% set global_page_title       = inputs.page_title       %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords    %}
+{% set global_page_canonical   = inputs.page_canonical   %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set result    = inputs.result    %}
+{% set alert     = inputs.alert     %}
+{% set issues    = inputs.issues    %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/blocks/block-header.twig' with {inputs: {
+        title: 'Login',
+        breadcrumb: global_page_breadcrumbs,
+    }} %}
+    <div class="block"><div class="container"><div class="row justify-content-center"><div class="col-sm-10 col-md-8 col-lg-6 bg-white border p-sm-5"><form action="" method="post">
+		<div class="form-group"><div class="form-row">
+			<div class="col-sm-4"><label for="login-username">Email</label></div>
+			<div class="col-sm-8">
+				<input type="email" name="username" id="login-username" data-tip="account name" placeholder="name@mail.com" autocomplete="username" class="form-control {{ (issues.username != '') ? 'is-invalid' : '' }}" />
+				{% if (issues.username != '') %}<span class="invalid-feedback"><strong>{{ issues.username }}</strong></span>{% endif %}
+			</div>
+		</div></div>
+		<div class="form-group"><div class="form-row">
+			<div class="col-sm-4"><label for="login-current-password">Password</label></div>
+			<div class="col-sm-8">
+				<input type="password" name="current-password" id="login-current-password" data-tip="password" placeholder="Enter password" autocomplete="current-password" class="form-control {{ (issues['current-password'] != '') ? 'is-invalid' : '' }}" />
+				{% if (issues['current-password'] != '') %}<span class="invalid-feedback"><strong>{{ issues['current-password'] }}</strong></span>{% endif %}
+			</div>
+		</div></div>
+		<div class="form-group"><div class="form-row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-8">
+				<input type="hidden" name="action" value="login" />
+				<input type="submit" value="Login" class="btn btn-primary" />
+			</div>
+		</div></div>
+		<div class="form-group">
+			<a href="/account/passwordFind">Forgot password?</a> <br/>
+			<a href="/account/register">Create an account</a>
+		</div>
+	</form></div></div></div></div>
+    {% include '/blocks/block-space.twig' with {inputs: {
+		layout: 'before-footer',
+	}} %}
+{% endblock %}

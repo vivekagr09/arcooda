@@ -1,0 +1,597 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0016)http://127.0.0.1 -->
+<HTML>
+<HEAD>
+<meta http-equiv='X-UA-Compatible' content='IE=8'/>
+<TITLE>Print Purchase Order - HTML</TITLE>
+<meta name="GENERATOR" content="Priority 10 - Enterprise Management System - Copyright © Eshbel Technologies Ltd. 1986-2003">
+<meta http-equiv="Content-Type" content="text/html;  charset=utf-8">
+<style>
+<!--
+body	{
+	font-family:'Arial';
+	font-size: 12pt; 
+}
+a	{ color: #305774; text-decoration: underline }
+a:hover { color: #000000; }
+.datafont {
+	font-size: 9pt; 
+	font-family: Verdana, Sans Serif, Helvetica; 
+}
+.totalfont {
+	font-size: 9pt; 
+	font-family: Verdana, Sans Serif, Helvetica; 
+}
+.titlefont {
+	font-size: 9pt; 
+	font-family: Verdana, Sans Serif, Helvetica; 
+	font-weight: bold; 
+}
+.groupfont {
+	font-size: 9pt; 
+	font-family: Verdana, Sans Serif, Helvetica; 
+}
+.SmallDataFont {
+	font-size: 8pt; 
+	font-family:Arial;
+}
+#a { text-decoration:none; color:"#000080"; }
+#a:hover {text-decoration:underline; color:"#0000ff"}
+.DOCNO a{
+	text-decoration:underline; color:"#000000";
+}
+p {margin:0cm;font-size:10.0pt;font-family:'Arial';}
+thead {display: table-header-group}
+tfoot {display: table-footer-group}
+table {border-collapse:collapse}
+/*
+td {mso-number-format:\@} 
+*/
+.Editcbtn { height:18; width:22;
+            BORDER-LEFT: threedface 1px solid;
+            BORDER-RIGHT: threedface 1px solid;
+            BORDER-TOP: threedface 1px solid;
+            BORDER-BOTTOM: threedface 1px solid; }
+.titletbl { 
+	height:40px;
+	box-sizing:border-box;
+	 -moz-box-sizing:border-box; /* Firefox */
+	 -webkit-box-sizing:border-box; /* Safari */
+}
+.tabstbl {
+	height:30px;
+}
+.buttonstbl {
+	height:19px;
+}
+.buttonstbl a { text-decoration:none; color:"#000080"; }
+.dbframe {
+	border-style:solid;
+	border-width:1;
+	border-color:#808080;
+	margin-left:3px;
+	margin-right:0px;
+	margin-top:3px;
+	margin-bottom:0px;
+	display:none;
+}
+.titlebar{
+	background-image:url(/priimages/titlebar40.jpg);
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:4px;
+	padding-bottom:4px;
+	valign:center;
+}
+.titlebar img{
+	margin-left:2px;
+	margin-right:2px;
+}
+.lefton a { text-decoration:none; color:"#000080"; }
+.lefton {
+	background-image:url(/priimages/left-on30.png);
+	background-repeat:no-repeat;
+	padding-left:10px;
+	padding-right:0px;
+	valign:top
+	cursor:hand;
+}
+.leftoff a{ text-decoration:none; color:"#000080"; }
+.leftoff {
+	background-image:url(/priimages/left-off30.png);
+	background-repeat:no-repeat;
+	padding-left:10px;
+	padding-right:0px;
+	valign:top
+	cursor:hand;
+}
+.leftonmiddleoff a{ text-decoration:none; color:"#000080"; }
+.leftonmiddleoff {
+	background-image:url(/priimages/left-on-middle-off30.png);
+	background-repeat:no-repeat;
+	padding-left:20px;
+	padding-right:0px;
+	valign:top
+	cursor:hand;
+}
+.middleon a{ text-decoration:none; color:"#000080"; }
+.middleon {
+	background-image:url(/priimages/middle-on30.png);
+	background-repeat:no-repeat;
+	padding-left:20px;
+	padding-right:0px;
+	valign:top
+	cursor:hand;
+}
+.middleoff a{ text-decoration:none; color:"#000080"; }
+.middleoff {
+	background-image:url(/priimages/middle-off30.png);
+	background-repeat:no-repeat;
+	padding-left:20px;
+	padding-right:0px;
+	valign:top
+	cursor:hand;
+}
+.righton a{ text-decoration:none; color:"#000080"; }
+.righton {
+	background-image:url(/priimages/right-on30.png);
+	background-repeat:no-repeat;
+	width:10px;
+	valign:top
+}
+.rightoff a{ text-decoration:none; color:"#000080"; }
+.rightoff {
+	background-image:url(/priimages/right-off30.png);
+	background-repeat:no-repeat;
+	width:10px;
+	valign:top
+}
+.indent {
+	padding-left:25px;
+	padding-right:25px;
+}
+.newpage {
+	page-break-before:always;
+}
+.fs {
+	background-color:white;
+	border-collapse:separate;
+}
+.bttn1,.bttn2,.bttn3,.bttn4,.bttn5,.bttn6,.bttn7,.bttn8 {
+	background-image:url(/priimages/bttnm.bmp);
+	width:70px;
+	cursor:hand;
+	vertical-align:top
+}
+.disabled_bttn {
+	background-image:url(/priimages/bttnm-gray.bmp);
+	width:70px;
+	cursor:default;
+}
+.disabled_bttn font {
+	color:#404040;
+}
+.rightbtn{
+	background-image:url(/priimages/bttnr.gif);
+	background-repeat:no-repeat;
+	width:15px;
+	cursor:default;
+}
+.disabled_rightbtn{
+	background-image:url(/priimages/bttnr-gray.gif);
+	width:15px;
+	cursor:default;
+}
+.leftbtn{
+	background-image:url(/priimages/bttnl.gif);
+	background-repeat:no-repeat;
+	width:15px;
+	cursor:default;
+}
+.disabled_leftbtn{
+	background-image:url(/priimages/bttnl-gray.gif);
+	width:15px;
+	cursor:default;
+}
+.ol2{
+	border-top-style:double;
+	border-top-width:3;
+	border-top-color:black;
+}
+.ol{
+	border-top-style:solid;
+	border-top-width:1;
+	border-top-color:black;
+}
+.ul2{
+	border-bottom-style:double;
+	border-bottom-width:3;
+	border-bottom-color:black;
+}
+.ul{
+	border-bottom-style:solid;
+	border-bottom-width:1;
+	border-bottom-color:black;
+}
+.olul2{
+	border-top-style:solid;
+	border-top-width:1;
+	border-top-color:black;
+	border-bottom-style:double;
+	border-bottom-width:3;
+	border-bottom-color:black;
+}
+.ol2ul2{
+	border-top-style:double;
+	border-top-width:3;
+	border-top-color:black;
+	border-bottom-style:double;
+	border-bottom-width:3;
+	border-bottom-color:black;
+}
+.olul{
+	border-top-style:solid;
+	border-top-width:1;
+	border-top-color:black;
+	border-bottom-style:solid;
+	border-bottom-width:1;
+	border-bottom-color:black;
+	background: none;
+}
+/* Styles for scrollable tables */
+.tableContainer {
+	position: relative;	/* to capture the absolutely positioned table header */
+	padding-top: 22px;	/* space for the column heads */
+	margin: 0 auto;
+	width: auto;
+	}
+
+/* this enables the table to scroll without scrolling the page */
+.innerFrame {
+	padding-right: 18px;	/* space for the scrollbar */
+	overflow-y: scroll;	
+	overflow: hidden;	
+	height: 500px;		/* height is required */
+	}
+
+/* position the row of column heads above the table */
+.tableContainer thead tr {
+	/* position: absolute;	throws the header out of the table */
+	top: 0px;
+	left: 0px;			
+	border-right: solid 1pt #d0d0d0;
+	}
+.tableContainer table{
+	border-right: solid 1px #d0d0d0;
+	border-bottom: solid 1px #d0d0d0;
+	border-left: solid 0px black;
+	border-top: solid 0px black;
+	width: 100%;
+	border-collapse:separate;
+	}
+	
+.tableContainer thead td	{
+	/*border-bottom: solid 1pt #d0d0d0;*/
+	}
+	
+.tableContainer td	{
+	border-top: solid 1px #d0d0d0;
+	border-left: solid 1px #d0d0d0;
+	border-bottom: solid 0pt black;
+	border-right: solid 0px black;
+	}
+.titletable	{ 
+	font-size: 9pt; 
+	font-family: Verdana, Sans Serif, Helvetica; 
+	font-weight: bold; 
+	border-left: 1px solid #F8F8F8; 
+	border-top: 1px solid #F8F8F8; 
+	border-right: 1px solid #909090; 
+	border-bottom: 1px solid #909090; 
+	background-color:#B4CFE0; 
+	height:22 
+}
+.matrix_cell {
+	width:50px;
+}
+.typeborder {
+	display: inline-block;
+	font-family:'Arial';
+	font-size: 16pt; 
+	font-weight: bold;
+	border-style:solid;
+	border-width:2;
+	border-color:black;
+	padding: 2px;
+}
+.hidethead {
+	font-size: 9pt; 
+	font-family: Verdana, Sans Serif, Helvetica; 
+}
+.hidethead thead{
+	display:none
+}
+textarea	{ font-size: 9pt; font-family:Courier New, "monospace"; }
+input		{ font-size: 9pt;}
+select		{ font-size: 9pt;}
+-->
+</style>
+
+<style type="text/css" media="print">
+<!--
+.rulesgroups  td {
+	border-left: 1px solid  black;
+	border-right: 1px solid  black;
+}
+.rulesgroups .ColTitlesLine td {
+	border: 1px solid  black;
+}
+.rulesall td {
+	border: 1px solid  black;
+}
+a { color: #000000; text-decoration: none }
+.innerFrame {overflow: visible;}
+.tableContainer {padding-top: 0px;}
+.tableContainer thead tr {position: static;}
+.tableContainer td	{
+	border-top: solid 1px black;
+	border-left: solid 1px black;
+	border-bottom: solid 1pt black;
+	border-right: solid 1px black;
+}
+.tableContainer table{
+	border-right: solid 1px black;
+	border-bottom: solid 1px black;
+	border-left: solid 1px black;
+	border-top: solid 1px black;
+	border-collapse:collapse;
+}
+#_reporticons {
+	display:none;
+}
+-->
+</style>
+<!--
+<div name='barcode' style="visibility:hidden;position:absolute;font-family:Free 3 of 9; font-size:1">*0*</div>
+-->
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" topmargin="2" leftmargin="1" rightmargin="1">
+<form method="POST" name="priform">
+
+
+<table width="100%" border=0 rules="none" bgcolor="#fff7de" cellspacing=0  cellpadding=10 >
+<thead>
+<tr><td>
+<table border=0 width="100%"><tr><td>
+    <TABLE border=0 cellspacing=0 cellpadding=0 rules="rows" width="100%"         >
+<caption></caption><tr>
+	<td  align="left" valign="top" bgcolor="#fff7de">
+<font face="Arial" size="4" color="#000000"><b>ELBE - Leading Technological Solutions Ltd.</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>E-mail: <a href="mailto:sales@elbe.co.il" title="E-mail" tabindex="2">sales@elbe.co.il</a></b></font>, <font face="Verdana" size="2" color="#000000"><b>Web Site: <a href='javascript:void(0)' onclick='javascript:w = window.open("http://www.elbe.co.il", "PriorityLink"); if (w != null) w.focus(0); return false' title="URL" tabindex="3">http://www.elbe.co.il</a></b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>Tel.: +972-9-9720200</b></font>, <font face="Verdana" size="2" color="#000000"><b>Fax: +972-9-9720201</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>5B Atir Yeda St.</b></font>, <font face="Verdana" size="2" color="#000000"><b>Kfar Saba</b></font>&nbsp;<font face="Verdana" size="2" color="#000000"><b>4464305</b></font>, <font face="Verdana" size="2" color="#000000"><b>Israel</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>Company No.: 510487366</b></font>, <font face="Verdana" size="2" color="#000000"><b>Consol.Busn.No.: 557638269</b></font>
+</td>
+	<td  align="center">
+<a href="https://mg.elbe.co.il/priimages\ISO-IQNet.gif"><img border="0" src="https://mg.elbe.co.il/priimages\ISO-IQNet.gif" 				width="70" height="70" alt="מערכת ניהול איכות"></a></td>
+	<td  align="right" bgcolor="#fff7de">
+<font face="Verdana" size="2" color="#000000"><b><a href='javascript:void(0)' onclick='javascript:w = window.open("http://www.elbe.co.il", "PriorityLink"); if (w != null) w.focus(0); return false' title="URL" tabindex="14"><img border="0" src="https://mg.elbe.co.il/priimages\ELBE-200x100.jpg" 				width="200" height="100" ></a></b></font>
+</td>
+</tr>
+</TABLE>
+
+</td></tr></table>
+</td></tr>
+</thead>
+<tr><td>
+
+<table width="100%" border=0 rules="none" bgcolor="#adc9dc" cellspacing=0  cellpadding=1 >
+<tr><td>
+
+<table width="100%" border=0 rules="none" bgcolor="#ffebbd" cellspacing=0 cellpadding=6>
+<tr><td>
+
+<table width="100%" border=0 rules="none" bgcolor="#ffebbd" cellspacing=0 cellpadding=0>
+<thead>
+
+<tr>
+<td width="100%" colspan="3" valign="top">
+<table border=0 width="100%"><tr><td>
+    <TABLE border=0 cellspacing=0 cellpadding=0  width="100%"         >
+<caption></caption><tr>
+	<td  align="left" valign="top" bgcolor="#ffebbd">
+<font face="Verdana" size="2" color="#000000"><b>To:</b></font><br>
+<font face="Arial" size="5" color="#000000"><b>Converters.TV PTY LTD</b></font>
+</td>
+	<td ></td>
+	<td  align="right" valign="top" width="30%" bgcolor="#ffebbd">
+<font face="Verdana" size="2" color="#000000"><b>Order Date: 04 Dec, 2016</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>Print Date: 04 Dec, 2016</b></font><br>
+ <br>
+ </td>
+</tr>
+<tr>
+	<td  align="left" valign="top" bgcolor="#ffebbd">
+<font face="Verdana" size="2" color="#000000"><b>Maitland Road 44-48</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>Mayfield East 2304</b></font>&nbsp;<font face="Verdana" size="2" color="#000000"><b>Australia</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>Attn:</b></font>&nbsp;<font face="Arial" size="3" color="#000000"><b><u>Chris Bailey</b></u></font>
+</td>
+	<td ></td>
+	<td  align="right" bgcolor="#ffebbd">
+<font face="Verdana" size="2" color="#000000"><b>Email: <a href="mailto:chris@converters.tv" title="Email" tabindex="37">chris@converters.tv</a></b></font>
+</td>
+</tr>
+<tr>
+	<td  align="center" valign="middle" colspan="3" bgcolor="#ffebbd">
+<font face="Arial" size="5" color="#000000"><b>Stock</b></font>
+</td>
+</tr>
+</TABLE>
+
+</td></tr></table>
+<br><table border=0 width="100%"><tr><td>
+    <TABLE border=0 cellspacing=0 cellpadding=0  width="100%"         >
+<caption></caption><tr>
+	<td width="8%" bgcolor="#ffebbd">
+<font color="#000000"> </font>
+</td>
+	<td  align="center" width="84%" bgcolor="#ffebbd">
+<font face="Arial" size="4" color="#000000"><b><u>Purchase Order 16-01740</b></u></font>
+</td>
+	<td width="8%" bgcolor="#ffebbd">
+<font color="#000000"> </font>
+</td>
+</tr>
+<tr>
+	<td width="100%" colspan="3" bgcolor="#ffebbd">
+<font color="#000000"> </font>
+</td>
+</tr>
+</TABLE>
+
+</td></tr></table>
+</td>
+
+</tr>
+</thead>
+
+<tr>
+<td width="100%" colspan="3" valign="top">
+<br><table border=0 width="100%"><tr><td>
+    <TABLE border=1 cellspacing=0 cellpadding=4 rules="all" class="rulesall" width="100%"   bordercolor="#505050"       >
+<caption></caption><thead id='_title'>
+<tr class='ColTitlesLine'>
+	<td align="center"  bgcolor="#adc9dc"  ><font face="Verdana" size="2" color="#000000"><b><span dir="ltr">Line</span></b></font></td>
+	<td align="center"  bgcolor="#adc9dc"  ><font face="Verdana" size="2" color="#000000"><b><span dir="ltr">Part No.</span></b></font></td>
+	<td align="center"  bgcolor="#adc9dc"  ><font face="Verdana" size="2" color="#000000"><b><span dir="ltr">Part Description</span></b></font></td>
+	<td align="center"  bgcolor="#adc9dc"  ><font face="Verdana" size="2" color="#000000"><b><span dir="ltr">Due Date</span></b></font></td>
+	<td align="center"  bgcolor="#adc9dc"  ><font face="Verdana" size="2" color="#000000"><b><span dir="ltr">Quantity</span></b></font></td>
+	<td align="center"  bgcolor="#adc9dc"  ><font face="Verdana" size="2" color="#000000"><b><span dir="ltr">Unit Price</span></b></font></td>
+	<td align="center"  bgcolor="#adc9dc"  ><font face="Verdana" size="2" color="#000000"><b><span dir="ltr">Extended Price</span></b></font></td>
+</tr>
+</thead>
+<tr class='FirstDataLine'>
+	<td align="right"  bgcolor="#f8f8f8"   nowrap><font face="Verdana" size="2" color="#000000"><span dir="ltr">1</span></font></td>
+	<td align="left"  bgcolor="#f8f8f8" width="18%"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">464</span></font></td>
+	<td align="left"  bgcolor="#f8f8f8"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">10.4 Inch CGA EGA VGA to SVGA LCD Panel</span></font></td>
+	<td align="center"  bgcolor="#f8f8f8"   nowrap><font face="Verdana" size="2" color="#000000"><span dir="ltr">04-Dec-2016</span></font></td>
+	<td align="left"  bgcolor="#f8f8f8"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">10.00 ea</span></font></td>
+	<td align="left"  bgcolor="#f8f8f8"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">USD 375.00</span></font></td>
+	<td  align="right"  bgcolor="#f8f8f8" width="20%"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">3,750.00</span></font></td>
+</tr>
+<tr >
+	<td align="right"  bgcolor="#fff7de"   nowrap><font face="Verdana" size="2" color="#000000"><span dir="ltr">2</span></font></td>
+	<td align="left"  bgcolor="#fff7de" width="18%"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">838</span></font></td>
+	<td align="left"  bgcolor="#fff7de"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">12.1 Inch CGA EGA VGA to SVGA LCD Panel</span></font></td>
+	<td align="center"  bgcolor="#fff7de"   nowrap><font face="Verdana" size="2" color="#000000"><span dir="ltr">04-Dec-2016</span></font></td>
+	<td align="left"  bgcolor="#fff7de"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">4.00 ea</span></font></td>
+	<td align="left"  bgcolor="#fff7de"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">USD 375.00</span></font></td>
+	<td  align="right"  bgcolor="#fff7de" width="20%"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">1,500.00</span></font></td>
+</tr>
+<tr >
+	<td align="right"  bgcolor="#f8f8f8"   nowrap><font face="Verdana" size="2" color="#000000"><span dir="ltr">3</span></font></td>
+	<td align="left"  bgcolor="#f8f8f8" width="18%"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">0047</span></font></td>
+	<td align="left"  bgcolor="#f8f8f8"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">Handling fee</span></font></td>
+	<td align="center"  bgcolor="#f8f8f8"   nowrap><font face="Verdana" size="2" color="#000000"><span dir="ltr">04-Dec-2016</span></font></td>
+	<td align="left"  bgcolor="#f8f8f8"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">1.00 ea</span></font></td>
+	<td align="left"  bgcolor="#f8f8f8"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">USD 40.00</span></font></td>
+	<td  align="right"  bgcolor="#f8f8f8" width="20%"  ><font face="Verdana" size="2" color="#000000"><span dir="ltr">40.00</span></font></td>
+</tr>
+</TABLE>
+
+</td></tr></table>
+</td>
+
+</tr>
+
+<tr>
+<td width="45%"  valign="top">
+<br><table border=0 width="100%"><tr><td>
+    <TABLE border=0 cellspacing=0 cellpadding=0 rules="none" width="100%"         >
+<caption></caption><tr>
+	<td bgcolor="#ffebbd">
+<font face="Verdana" size="2" color="#000000">Ship by: Stock</font><br>
+<font face="Verdana" size="2" color="#000000">Vendor Number: 420276</font><br>
+<font face="Verdana" size="2" color="#000000">PR Document Number: 16-00747</font>
+</td>
+</tr>
+</TABLE>
+
+</td></tr></table>
+</td>
+<td></td>
+<td width="50%"  valign="top">
+<table border=0 width="100%"><tr><td>
+    <TABLE border=1 cellspacing=0 cellpadding=4 rules="all" class="rulesall" width="100%"   bordercolor="#505050"       style='page-break-inside:avoid'>
+<caption></caption><tr>
+	<td  align="left" nowrap width="50%" bgcolor="#fff7de">
+<font face="Verdana" size="2" color="#000000"><b>Total Price</b></font>
+</td>
+	<td  align="right" width="50%" bgcolor="#fff7de">
+<font face="Verdana" size="2" color="#000000"><b>5,290.00</b></font>
+</td>
+</tr>
+<tr>
+	<td  align="left" bgcolor="#fff7de">
+<font face="Verdana" size="2" color="#000000"><b>Tax</b></font>
+</td>
+	<td  align="right" bgcolor="#fff7de">
+<font face="Verdana" size="2" color="#000000"><b>0.00</b></font>
+</td>
+</tr>
+<tr>
+	<td  align="left" width="50%" bgcolor="#fff7de">
+<font face="Verdana" size="2" color="#000000"><b>TOTAL</b></font>
+</td>
+	<td  align="right" nowrap width="50%" bgcolor="#fff7de">
+<font face="Verdana" size="2" color="#000000"><b>USD 5,290.00</b></font>
+</td>
+</tr>
+</TABLE>
+
+</td></tr></table>
+</td>
+
+</tr>
+
+<tr>
+<td width="100%" colspan="3" valign="top">
+<br><table border=0 width="100%"><tr><td>
+    <TABLE border=0 cellspacing=0 cellpadding=0 rules="none" width="100%"         >
+<caption></caption><tr>
+	<td bgcolor="#ffebbd">
+
+<style> p,div,li{margin:0cm;font-size:10.0pt;font-family:'Verdana';}</style> <P dir=ltr align=left><STRONG>According to your invoice no. ICN#46925 from 02/12/16</STRONG></P> <P dir=ltr align=left>&nbsp;</P> <P dir=ltr align=left>Please send an order confirmation to : <A href="mailto:merav@elbe.co.il">merav@elbe.co.il</A> ,or to fax : +972-9-9720236</P> <P dir=ltr align=left>&nbsp;</P> <P dir=ltr align=left>PLEASE INDICATE OUR ORDER NO. IN ALL YOUR DOCUMENTS<BR>PLEASE ATTACH ORIGINAL INVOICE TO THE PARCEL<BR>IN CASE OF GOODS EUROPEAN MADE - EUR 1 FORM MUST BE ATTACHED<BR>DELIVERY METHOD : <STRONG><U>with UPS EXPEDITED service</U></STRONG></P> <P dir=ltr align=left><BR><STRONG>In case of having other&nbsp;pending orders by us, please send all by same delivery</STRONG></P> <P dir=ltr align=left><STRONG></STRONG>&nbsp;</P> <P dir=ltr align=left>-&nbsp;Partial shipment not allowed.</P> </td>
+</tr>
+</TABLE>
+
+</td></tr></table>
+<br><br><table border=0 width="100%"><tr><td>
+    <TABLE border=0 cellspacing=0 cellpadding=0  width="100%"         >
+<caption></caption><tr>
+	<td width="55%">
+ </td>
+	<td  align="left" valign="top" width="45%" bgcolor="#ffebbd">
+<font face="Verdana" size="2" color="#000000"><b>Sincerely,</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>Merav Halevy</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>Purchasing Dept.</b></font><br>
+<font face="Verdana" size="2" color="#000000"><b>ELBE - Leading Technological Solutions Ltd.</b></font>
+</td>
+</tr>
+</TABLE>
+
+</td></tr></table>
+<table border=0 width="100%"><tr><td>
+    
+</td></tr></table>
+</td></tr></table>
+</td></tr></table>
+</td></tr></table>
+<table border=0 width="100%"><tr><td >
+    
+</td></tr></table>
+</td></tr></table>
+    
+</form>
+</BODY>
+</HTML>

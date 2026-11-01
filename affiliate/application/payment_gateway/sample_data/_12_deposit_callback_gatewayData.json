@@ -1,0 +1,7 @@
+{
+  "method": "confirmation",
+  "id": "8",
+  "action": "customAction",
+  "return_url": "http://localhost/aff/6-0-0-0/usercontrol/my_deposits?vd=8",
+  "cancel_url": "http://localhost/aff/6-0-0-0/usercontrol/my_deposits?vdc=1&vd=8"
+}

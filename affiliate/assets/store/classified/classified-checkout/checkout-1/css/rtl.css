@@ -1,0 +1,49 @@
+main {
+    direction: rtl;
+}
+.dropdown.mx-3.currency-dropdown{       right: 68.8rem;}
+.list-group{ padding-right: 0px; }
+.form-check .form-check-input {
+    float: right;
+    margin-left: 0px;
+    margin-right: 0rem;
+}
+form.needs-validation img {
+ 
+    margin-left: 0px;
+    margin-right: 9px;
+}
+.iti__country-list{ left: 0px;
+    text-align: right; right:auto; }
+    .guarantee-container {
+    padding: 1rem 2rem 1rem 1rem;
+}
+input#chkAgree {
+    margin-right: 0px;
+    float: right;
+    margin-left: 27px;
+}
+.form-check.mt-4.agree-checkbox {
+    padding-left: 0px;
+    padding-right: 0px;
+    display: inline-flex;
+}
+p.text-right {
+    text-align: left;
+}
+.modal.show .modal-dialog {
+    transform: none;
+    direction: rtl;
+}
+.modal-header .btn-close {
+    padding: 0.5rem 0.5rem;
+    margin: -.5rem auto -.5rem .5rem;
+}
+
+
+
+@media only screen and (min-width: 320px) and (max-width: 480px) 
+{.legal-footer ul li:not(:last-child) {
+    margin-right: 0px;
+    margin-left: 0.5rem;
+}}

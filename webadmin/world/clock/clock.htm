@@ -1,0 +1,98 @@
+<script language="JavaScript1.1">
+<!--
+
+/*
+Live image clock III
+Written by Alon Gibli (http://www.angelfire.com/biz6/deathrowtech)
+Visit http://wsabstract.com for this script and more
+*/
+
+// Setting variables
+dig = new Image()
+dig[0] = '0.gif'
+dig[1] = '1.gif'
+dig[2] = '2.gif'
+dig[3] = '3.gif'
+dig[4] = '4.gif'
+dig[5] = '5.gif'
+dig[6] = '6.gif'
+dig[7] = '7.gif'
+dig[8] = '8.gif'
+dig[9] = '9.gif'
+
+//writing images
+document.write('<table border=1 cellspacing=0 bgcolor="silver">')
+document.write('<tr><td><img src="0.gif" name="hrs1"></img>')
+document.write('<img src="0.gif" name="hrs2"></img>')
+document.write('<td><img src="col.gif"></img>')
+document.write('<td><img src="0.gif" name="mins1"></img>')
+document.write('<img src="0.gif" name="mins2"></img>')
+document.write('<td><img src="col.gif"></img>')
+document.write('<td><img src="0.gif" name="secs1"></img>')
+document.write('<img src="0.gif" name="secs2"></img>')
+document.write('<td><img src="am.gif" name="ampm"></img></table>')
+
+//starting clock function
+function showTime() {
+now = new Date
+ampmtime = now.getHours() - 12
+thisHrs = '' + now.getHours() + ''
+thisMin = '' + now.getMinutes() + ''
+thisSec = '' + now.getSeconds() + ''
+
+if (thisHrs > 9) {
+	if (thisHrs >= 12) {
+		document.ampm.src = 'pm.gif'
+             if (thisHrs==12)
+                    newHrs=''+12+''
+		if (thisHrs > 12) {
+			newHrs = '' + ampmtime + ''
+		}
+		if (newHrs <= 9) {
+			document.hrs1.src = dig[0]
+			document.hrs2.src = dig[newHrs.charAt(0)]
+		}
+		if (newHrs > 9) {
+			document.hrs1.src = dig[newHrs.charAt(0)]
+			document.hrs2.src = dig[newHrs.charAt(1)]
+		}
+	}
+	else {
+		document.ampm.src = 'am.gif'
+		document.hrs1.src = dig[thisHrs.charAt(0)]
+		document.hrs2.src = dig[thisHrs.charAt(1)]
+	}
+}
+if (thisHrs <= 9) {
+	document.ampm.src = 'am.gif'
+	if (thisHrs == 0) {
+		document.hrs1.src = dig[1]
+		document.hrs2.src = dig[2]
+	}
+	else {
+		document.hrs1.src = dig[0]
+		document.hrs2.src = dig[thisHrs.charAt(0)]
+	}
+}
+if (thisMin > 9) {
+	document.mins1.src = dig[thisMin.charAt(0)]
+	document.mins2.src = dig[thisMin.charAt(1)]
+}
+if (thisMin <= 9) {
+	document.mins1.src = dig[0]
+	document.mins2.src = dig[thisMin.charAt(0)]
+}
+if (thisSec > 9) {
+	document.secs1.src = dig[thisSec.charAt(0)]
+	document.secs2.src = dig[thisSec.charAt(1)]
+}
+if (thisSec <= 9) {
+	document.secs1.src = dig[0]
+	document.secs2.src = dig[thisSec.charAt(0)]
+}
+setTimeout("showTime()",1000)
+}
+
+window.onload=showTime
+// -->
+</script>

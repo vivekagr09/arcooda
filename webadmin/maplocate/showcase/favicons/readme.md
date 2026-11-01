@@ -1,0 +1,2 @@
+For showcase put favicon.ico file in this directory.
+If you need a separate favicon for a particolar showcase, create a subdirectory with the code of the showcasese, for example /favicons/c4ca4238a0b923820dcc509a6f75849b/favicon.ico

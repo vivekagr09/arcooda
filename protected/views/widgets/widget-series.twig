@@ -1,0 +1,18 @@
+{#
+// inputs:
+// - classes: string - CSS classes
+// - products: TwigProduct[]
+#}
+
+{% set classes  = inputs.classes %}
+{% set product_series = inputs.product_series %}
+{% set product_msg = inputs.product_msg %}
+{% set root_classes = classnames('card widget widget-products', classes) %}
+
+<div class="{{ root_classes }}">
+    <div class="widget__header" ><h4>{{(product_msg)?product_msg:'Product Series'}}</h4></div>
+    <div class="widget-products__list">{% for series in product_series[:4] %}<div class="widget-products__item">
+        <div class="setup-instruction-image">
+            <a href="/series/{{ series.slug|e }}" target="_blank"><img src="/brochureimage/{{series.image_name}}?crop=true&width=200&height=50" width="200" height="50"></a></div>
+    </div>{% endfor %}</div>
+</div>

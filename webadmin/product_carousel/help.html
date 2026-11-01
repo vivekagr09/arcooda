@@ -1,0 +1,1802 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <link rel="dns-prefetch" href="//s3.envato.com" />
+<link rel="preload" href="https://public-assets.envato-static.com/assets/generated_sprites/logos-6f8a015ab6d9602102f6c4dde38bf1a128f2647f20b76023c4793c2d3d86e57c.png" as="image" />
+<link rel="preload" href="https://public-assets.envato-static.com/assets/generated_sprites/common-14f8bc60470b39265fe5c01e92035209bd04b91cd7da99d59ca3ccd9de5eac62.png" as="image" />
+
+
+    <link rel="stylesheet" media="all" href="https://public-assets.envato-static.com/assets/market/core/index-c1b9dd80e122c92c58b74628a0ca02a1d6e949a777501fdec5243b08ac169924.css" />
+    <link rel="stylesheet" media="all" href="https://public-assets.envato-static.com/assets/market/pages/preview/index-004d35cdd5d555cdd3e956d1b916825642de06529f0fe91fd9f390813761d2fc.css" />
+
+      <link rel="apple-touch-icon-precomposed" type="image/x-icon" href="https://public-assets.envato-static.com/icons/codecanyon.net/apple-touch-icon-72x72-precomposed.png" sizes="72x72" />
+  <link rel="apple-touch-icon-precomposed" type="image/x-icon" href="https://public-assets.envato-static.com/icons/codecanyon.net/apple-touch-icon-114x114-precomposed.png" sizes="114x114" />
+  <link rel="apple-touch-icon-precomposed" type="image/x-icon" href="https://public-assets.envato-static.com/icons/codecanyon.net/apple-touch-icon-144x144-precomposed.png" sizes="144x144" />
+<link rel="apple-touch-icon-precomposed" type="image/x-icon" href="https://public-assets.envato-static.com/icons/codecanyon.net/apple-touch-icon-precomposed.png" />
+
+    <script src="https://public-assets.envato-static.com/assets/market/pages/full_screen_preview/index-39fc94f50438714d8467e6c5e21895674c1ed3fb42ecf0bbda67669a448ef91e.js" nonce="biIXU3Nq5j8SohDzA935dw=="></script>
+
+    <script nonce="biIXU3Nq5j8SohDzA935dw==">
+//<![CDATA[
+      //function to fix height of iframe!
+      var calcHeight = function() {
+        var headerDimensions = $('.preview__header').height();
+        $('.full-screen-preview__frame').height($(window).height() - headerDimensions);
+      }
+
+      $(document).ready(function() {
+        calcHeight();
+      });
+
+      $(window).resize(function() {
+        calcHeight();
+      }).load(function() {
+        calcHeight();
+      });
+
+//]]>
+</script>
+    
+  </head>
+  <body class="full-screen-preview">
+
+<!DOCTYPE html>
+<html lang="en-US">
+  
+  <head>
+    <title>Ultimate 3D Carousel</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="HandheldFriendly" content="true">
+      <meta name="revisit-after" content="7 DAYS">
+    <meta name="robots" content="All">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=0">
+
+      <meta name="description" content="Ultimate 3D Carousel is a fully 3D multimedia carousel slider that allows to display multimedia content with an unique original layout from a 3D perspective. It’s perfect for any kind of presentation, for anyone that wants to deliver a great impact to thier visitors.">
+    <meta name="author" content="FWD">
+
+    <link rel='icon' href='https://webdesign-flash.ro/p/u3dcar/assets/favicon.png' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://webdesign-flash.ro/p/u3dcar/content/global.css' type='text/css'/>
+    <link rel='stylesheet' id="https://webdesign-flash.ro/p/u3dcar/main_css" href='https://webdesign-flash.ro/p/u3dcar/css/main.css' type='text/css'/>
+
+    <script type='text/javascript' src='https://webdesign-flash.ro/p/u3dcar/js/jQuery.js'></script>
+    <script type='text/javascript' src='https://webdesign-flash.ro/p/u3dcar/js/main.min.js'></script>
+    <script type="text/javascript" src="https://webdesign-flash.ro/p/u3dcar/js/FWDU3DCar.js"></script>
+
+    <script>
+      var page="main";
+    </script>
+  </head>
+
+  <body style="overflow: auto;">
+    
+
+
+    <!-- Main -->
+    <div class="main">
+
+      <!-- Header and menu -->
+      <div class="header fwd-hide">
+
+        <!-- Carousel. -->
+        <div class="carousel">
+
+          <div class="gradials">
+            <div class="grad-rect">
+              <div class="stars-holder">
+                <div id="stars"></div>
+                <div id="stars2"></div>
+                <div id="stars3"></div>
+              </div>
+            
+            </div>
+            <div class="grad1"></div>
+            <div class="grad2"></div>
+          </div>
+
+          <div class="header-info">
+            <h1>Try #1 <span>3D Carousel</span> </h1>
+          </div>
+
+          <div id="myDiv"></div>
+        </div>
+
+        <!-- Controls. -->
+        <div class="controls fwd-hide">
+          <div class="header">
+            <p class="label"><svg width="5" height="5" viewBox="0 0 5 5" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="2.5" cy="2.5" r="2.5" fill="#B394E0"/></svg> Live controls</p>
+            <p class="reset"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)"><path d="M10 1.68752V3.46875C10 3.81393 9.72018 4.09375 9.375 4.09375H7.59377C7.24859 4.09375 6.96877 3.81393 6.96877 3.46875C6.96877 3.12357 7.24859 2.84375 7.59377 2.84375H8.07131C7.38117 1.85459 6.25014 1.25 5 1.25C3.44455 1.25 2.07328 2.1858 1.50652 3.63404C1.3807 3.95549 1.01813 4.11406 0.696719 3.98828C0.375273 3.86248 0.21668 3.49992 0.34248 3.1785C0.704961 2.25227 1.32973 1.46158 2.14924 0.891914C2.98863 0.308418 3.97439 0 5 0C6.02561 0 7.01137 0.308418 7.85076 0.891895C8.18428 1.12373 8.48555 1.39221 8.75 1.6915V1.68754C8.75 1.34236 9.02982 1.06254 9.375 1.06254C9.72018 1.06254 10 1.34234 10 1.68752ZM9.30328 6.01174C8.98186 5.88592 8.6193 6.04455 8.49348 6.36598C7.92672 7.81422 6.55545 8.75 5 8.75C3.77643 8.75 2.66691 8.17082 1.97324 7.21875H2.40623C2.75141 7.21875 3.03123 6.93893 3.03123 6.59375C3.03123 6.24857 2.75141 5.96875 2.40623 5.96875H0.625C0.279824 5.96875 0 6.24857 0 6.59375V8.375C0 8.72018 0.279824 9 0.625 9C0.970176 9 1.25 8.72018 1.25 8.375V8.30852C1.51445 8.60781 1.81572 8.87627 2.14924 9.10811C2.98863 9.69158 3.97439 10 5 10C6.02561 10 7.01137 9.69158 7.85076 9.10811C8.67027 8.53844 9.29504 7.74775 9.65752 6.82152C9.78332 6.5001 9.62473 6.13754 9.30328 6.01174Z" fill="#B394E0"/></g><defs><clipPath id="clip0"><rect width="10" height="10" fill="white"/></clipPath></defs></svg> Reset all</p>
+          </div>
+
+          <div class="sliders">
+            <div class="slider topology">
+              <label class="slider-label topology">Topology</label>
+              <div id="topology"></div>
+            </div>
+
+            <div class="slider">
+              <div id="show_reflection"></div>
+              <label class="slider-label show-reflection">Show Reflection</label>
+            </div>
+
+            <div class="slider">
+              <div id="show_center_image"></div>
+              <label class="slider-label show-center-image">Show Center Image</label>
+            </div>
+
+            <div class="slider">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="23" stroke="#B394E0" stroke-width="2"/><path fill-rule="evenodd" clip-rule="evenodd" d="M21.7749 22.6884V24.6476H13.3355L15.3454 26.6642C15.7265 27.0467 15.7265 27.6662 15.3454 28.0486C14.9635 28.4318 14.3437 28.4318 13.9618 28.0486L10.2859 24.3602C9.90471 23.9777 9.90471 23.3583 10.2859 22.9758L13.9618 19.2874C14.3437 18.9042 14.9635 18.9042 15.3454 19.2874C15.7265 19.6698 15.7265 20.2893 15.3454 20.6718L13.3355 22.6884H21.7749ZM12.3722 24.2476H12.372L15.0619 26.9466C15.2875 27.173 15.2875 27.5399 15.0619 27.7663C14.9738 27.8547 14.8643 27.9085 14.7502 27.9279C14.8644 27.9086 14.9739 27.8547 15.062 27.7662C15.2876 27.5399 15.2876 27.1729 15.062 26.9466L12.3722 24.2476ZM21.3749 24.2476H21.3747V23.0884H12.372L15.0619 20.3894C15.2875 20.1631 15.2875 19.7961 15.0619 19.5698C14.9253 19.4328 14.7374 19.3787 14.5603 19.4076C14.7375 19.3786 14.9254 19.4327 15.062 19.5698C15.2876 19.7961 15.2876 20.1631 15.062 20.3894L12.3721 23.0884H21.3749V24.2476ZM25.852 22.6884V24.6476H34.2913L32.2815 26.6642C31.9004 27.0467 31.9004 27.6662 32.2815 28.0486C32.6634 28.4318 33.2831 28.4318 33.665 28.0486L37.341 24.3602C37.7222 23.9777 37.7222 23.3583 37.341 22.9758L33.665 19.2874C33.2831 18.9042 32.6634 18.9042 32.2815 19.2874C31.9004 19.6698 31.9004 20.2893 32.2815 20.6718L34.2913 22.6884H25.852ZM26.2522 24.2476H26.252V23.0884H35.2547L32.5648 20.3894C32.3392 20.1631 32.3392 19.7961 32.5648 19.5698C32.7014 19.4327 32.8894 19.3786 33.0666 19.4076C32.8895 19.3787 32.7015 19.4328 32.565 19.5698C32.3394 19.7961 32.3394 20.1631 32.565 20.3894L35.2549 23.0884H26.2522V24.2476ZM32.7882 27.9056C32.7066 27.878 32.6299 27.8315 32.5648 27.7662C32.3392 27.5399 32.3392 27.1729 32.5648 26.9466L35.2547 24.2476H35.2549L32.565 26.9466C32.3394 27.173 32.3394 27.5399 32.565 27.7663C32.63 27.8315 32.7066 27.878 32.7882 27.9056Z" fill="#B394E0"/></svg>
+              
+              <div class="slider-holder">
+                <label class="slider-label x-radius">Carousel X Radius</label>
+                <p id="x_radius_value" class="slider-value"></p>
+                <div id="x_radius"></div>
+              </div>
+            </div>
+
+            <div class="slider">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="23" transform="rotate(90 24 24)" stroke="#B394E0" stroke-width="2"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24.3116 25.8522L22.3524 25.8522L22.3524 34.2915L20.3358 32.2817C19.9533 31.9005 19.3338 31.9005 18.9514 32.2817C18.5682 32.6636 18.5682 33.2833 18.9514 33.6652L22.6398 37.3412C23.0222 37.7223 23.6417 37.7223 24.0242 37.3412L27.7126 33.6652C28.0958 33.2833 28.0958 32.6636 27.7126 32.2817C27.3302 31.9005 26.7107 31.9005 26.3282 32.2817L24.3116 34.2915L24.3116 25.8522ZM22.7524 35.2548L22.7525 35.2549L22.7525 26.2522L23.9116 26.2522L23.9116 26.2522L22.7524 26.2522L22.7524 35.2548ZM23.9117 35.2548L23.9117 35.2549L26.6107 32.565C26.7601 32.4161 26.9708 32.3655 27.1618 32.4132C26.9708 32.3655 26.76 32.4161 26.6106 32.565L23.9117 35.2548ZM19.785 32.4132C19.5939 32.3655 19.3833 32.4161 19.2339 32.565C19.0075 32.7906 19.0075 33.1563 19.2339 33.3819L22.9223 37.0579C22.9992 37.1345 23.0923 37.1851 23.1907 37.2097C23.0923 37.1851 22.9991 37.1345 22.9222 37.0578L19.2338 33.3819C19.0074 33.1563 19.0074 32.7906 19.2338 32.565C19.3832 32.4161 19.5939 32.3655 19.785 32.4132Z" fill="#B394E0"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24.3116 21.7749L22.3524 21.7749L22.3524 13.3355L20.3358 15.3454C19.9533 15.7265 19.3338 15.7265 18.9514 15.3454C18.5682 14.9635 18.5682 14.3437 18.9514 13.9618L22.6398 10.2859C23.0223 9.90471 23.6417 9.90471 24.0242 10.2859L27.7126 13.9618C28.0958 14.3437 28.0958 14.9635 27.7126 15.3454C27.3302 15.7265 26.7107 15.7265 26.3282 15.3454L24.3116 13.3355L24.3116 21.7749ZM19.785 15.2139C19.5939 15.2615 19.3833 15.2109 19.2339 15.062C19.0075 14.8364 19.0075 14.4707 19.2339 14.2451L22.9223 10.5692C22.9992 10.4925 23.0923 10.4419 23.1907 10.4173C23.0923 10.4419 22.9991 10.4925 22.9222 10.5692L19.2338 14.2452C19.0074 14.4707 19.0074 14.8365 19.2338 15.062C19.3832 15.211 19.5939 15.2616 19.785 15.2139ZM22.7524 21.3749L22.7524 12.3722L22.7525 12.3721L22.7525 21.3748L23.9116 21.3748L23.9116 21.3749L22.7524 21.3749ZM23.9117 12.3722L23.9117 12.3721L26.6107 15.062C26.7601 15.2109 26.9708 15.2615 27.1618 15.2139C26.9708 15.2616 26.76 15.211 26.6106 15.062L23.9117 12.3722Z" fill="#B394E0"/></svg>
+
+              <div class="slider-holder">
+                <label class="slider-label y-radius">Carousel Y Radius</label>
+                <p id="y_radius_value" class="slider-value"></p>
+                <div id="y_radius"></div>
+              </div>
+            </div>
+
+            <div class="slider">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="23" transform="rotate(90 24 24)" stroke="#B394E0" stroke-width="2"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M34.8788 24C34.8788 24.5936 34.3976 25.075 33.8038 25.075L14.1966 25.075C13.603 25.075 13.1216 24.5935 13.1216 24C13.1216 23.4061 13.6029 22.925 14.1966 22.925L33.8038 22.925C34.3978 22.925 34.8788 23.406 34.8788 24Z" fill="#B394E0"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24.3116 26.8522L22.3524 26.8522L22.3524 35.2915L20.3358 33.2817C19.9533 32.9005 19.3338 32.9005 18.9514 33.2817C18.5682 33.6636 18.5682 34.2833 18.9514 34.6652L22.6398 38.3412C23.0222 38.7223 23.6417 38.7223 24.0242 38.3412L27.7126 34.6652C28.0958 34.2833 28.0958 33.6636 27.7126 33.2817C27.3302 32.9005 26.7107 32.9005 26.3282 33.2817L24.3116 35.2915L24.3116 26.8522ZM22.7524 36.2548L22.7525 36.2549L22.7525 27.2522L23.9116 27.2522L23.9116 27.2522L22.7524 27.2522L22.7524 36.2548ZM23.9117 36.2548L23.9117 36.2549L26.6107 33.565C26.7601 33.4161 26.9708 33.3655 27.1618 33.4132C26.9708 33.3655 26.76 33.4161 26.6106 33.565L23.9117 36.2548ZM19.785 33.4132C19.5939 33.3655 19.3833 33.4161 19.2339 33.565C19.0075 33.7906 19.0075 34.1563 19.2339 34.3819L22.9223 38.0579C22.9992 38.1345 23.0923 38.1851 23.1907 38.2097C23.0923 38.1851 22.9991 38.1345 22.9222 38.0578L19.2338 34.3819C19.0074 34.1563 19.0074 33.7906 19.2338 33.565C19.3832 33.4161 19.5939 33.3655 19.785 33.4132Z" fill="#B394E0"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24.3116 20.7749L22.3524 20.7749L22.3524 12.3355L20.3358 14.3454C19.9533 14.7265 19.3338 14.7265 18.9514 14.3454C18.5682 13.9635 18.5682 13.3437 18.9514 12.9618L22.6398 9.28586C23.0223 8.90471 23.6417 8.90471 24.0242 9.28586L27.7126 12.9618C28.0958 13.3437 28.0958 13.9635 27.7126 14.3454C27.3302 14.7265 26.7107 14.7265 26.3282 14.3454L24.3116 12.3355L24.3116 20.7749ZM19.785 14.2139C19.5939 14.2615 19.3833 14.2109 19.2339 14.062C19.0075 13.8364 19.0075 13.4707 19.2339 13.2451L22.9223 9.56916C22.9992 9.49251 23.0923 9.44191 23.1907 9.41735C23.0923 9.4419 22.9991 9.49251 22.9222 9.56918L19.2338 13.2452C19.0074 13.4707 19.0074 13.8365 19.2338 14.062C19.3832 14.211 19.5939 14.2616 19.785 14.2139ZM22.7524 20.3749L22.7524 11.3722L22.7525 11.3721L22.7525 20.3748L23.9116 20.3748L23.9116 20.3749L22.7524 20.3749ZM23.9117 11.3722L23.9117 11.3721L26.6107 14.062C26.7601 14.2109 26.9708 14.2615 27.1618 14.2139C26.9708 14.2616 26.76 14.211 26.6106 14.062L23.9117 11.3722Z" fill="#B394E0"/></svg>
+
+              <div class="slider-holder">
+                <label class="slider-label y-offset">Thumbs Y Offset</label>
+                <p id="y_offset_value" class="slider-value"></p>
+                <div id="y_offset"></div>
+              </div>
+            </div>
+
+            <div class="slider">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="23" stroke="#B394E0" stroke-width="2"/><path d="M25.8838 16.7895C25.619 16.7895 25.396 16.9546 25.2885 17.2296C25.1806 17.5059 25.2208 17.8246 25.4369 18.0535L28.5584 21.3618C28.833 21.6528 29.2746 21.6271 29.5158 21.2854L31.8571 17.9768C32.0307 17.7311 32.0385 17.4283 31.9217 17.181C31.8053 16.9345 31.5917 16.7895 31.3465 16.7895H29.2382L29.1015 16.4875C27.439 12.8154 25.2554 11 22.9963 11C21.0106 11 19.2927 12.2685 17.8929 14.506C16.5771 16.6093 15.5997 19.4882 15 22.6875H17.1325C17.683 19.9994 18.5016 17.7411 19.4534 16.1193C19.9532 15.2677 20.5007 14.5727 21.0826 14.085C21.6639 13.5978 22.3118 13.292 22.9963 13.292C23.6604 13.292 24.2941 13.5895 24.8647 14.0591C25.4368 14.5301 25.9796 15.2009 26.4762 16.0222L26.9402 16.7895H25.8838Z" fill="#B394E0"/><path d="M21.1162 31.773C21.381 31.773 21.604 31.6079 21.7115 31.3329C21.8194 31.0566 21.7792 30.7379 21.5631 30.509L18.4416 27.2007C18.167 26.9097 17.7254 26.9354 17.4842 27.2771L15.1429 30.5857C14.9693 30.8314 14.9615 31.1342 15.0783 31.3815C15.1947 31.628 15.4083 31.773 15.6535 31.773L17.7618 31.773L17.8985 32.075C19.561 35.7471 21.7446 37.5625 24.0037 37.5625C25.9894 37.5625 27.7073 36.294 29.1071 34.0565C30.4229 31.9532 31.4003 29.0743 32 25.875L29.8675 25.875C29.317 28.5631 28.4984 30.8214 27.5466 32.4432C27.0468 33.2948 26.4993 33.9898 25.9174 34.4775C25.3361 34.9647 24.6882 35.2705 24.0037 35.2705C23.3396 35.2705 22.7059 34.973 22.1353 34.5034C21.5632 34.0324 21.0204 33.3616 20.5238 32.5403L20.0598 31.773L21.1162 31.773Z" fill="#B394E0"/></svg>
+
+              <div class="slider-holder">
+                <label class="slider-label x-rotation">Carousel X Rotation</label>
+                <p id="x_rotation_value" class="slider-value"></p>
+                <div id="x_rotation"></div>
+              </div>
+            </div>
+
+            <div class="slider">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="23" stroke="#B394E0" stroke-width="2"/><path d="M29.8234 18.1766C28.5804 14.585 25.1789 12 21.1875 12C16.1344 12 12 16.135 12 21.1875C12 25.1789 14.585 28.5804 18.1766 29.8234C19.4196 33.415 22.8211 36 26.8125 36C31.8656 36 36 31.865 36 26.8125C36 22.8211 33.415 19.4196 29.8234 18.1766ZM13.4062 21.1875C13.4062 16.8969 16.8969 13.4062 21.1875 13.4062C24.2329 13.4062 26.8725 15.1865 28.1331 17.7667C27.7017 17.7046 27.2609 17.6719 26.8125 17.6719C21.7596 17.6719 17.6719 21.7873 17.6719 26.8125C17.6719 27.2609 17.7046 27.7017 17.7667 28.1331C15.1865 26.8725 13.4062 24.2329 13.4062 21.1875ZM26.1341 27.1284L20.8716 21.8659C21.1724 21.5053 21.5053 21.1724 21.8659 20.8716L27.1284 26.1341C26.8276 26.4947 26.4947 26.8276 26.1341 27.1284ZM23.5731 28.5449L19.4551 24.427C19.6123 23.9434 19.8158 23.4806 20.0606 23.0438L24.9562 27.9394C24.5195 28.1842 24.0567 28.3877 23.5731 28.5449ZM19.1136 26.0742L21.9259 28.8864C21.0394 28.9708 20.1551 28.903 19.307 28.693C19.0972 27.8456 19.0291 26.9614 19.1136 26.0742ZM27.9394 24.9562L23.0438 20.0606C23.4806 19.8158 23.9433 19.6123 24.4269 19.4551L28.5449 23.573C28.3877 24.0566 28.1842 24.5194 27.9394 24.9562ZM28.8864 21.9258L26.0741 19.1136C26.9607 19.0292 27.8449 19.097 28.693 19.307C28.9028 20.1544 28.9709 21.0386 28.8864 21.9258ZM26.8125 34.5938C23.7671 34.5938 21.1275 32.8135 19.8669 30.2333C25.9335 31.106 31.1025 25.9088 30.2333 19.8668C32.8135 21.1275 34.5938 23.7671 34.5938 26.8125C34.5938 31.1031 31.1031 34.5938 26.8125 34.5938Z" fill="#B394E0"/></svg>
+
+              <div class="slider-holder">
+                <label class="slider-label thumbs_alpha">Thumbs Min Alpha</label>
+                <p id="thumbs_alpha_value" class="slider-value"></p>
+                <div id="thumbs_alpha"></div>
+              </div>
+            </div>
+
+            <div class="slider">
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="23" stroke="#B394E0" stroke-width="2"/><path fill-rule="evenodd" clip-rule="evenodd" d="M35.8788 24C35.8788 24.5936 35.3976 25.075 34.8038 25.075L15.1966 25.075C14.603 25.075 14.1216 24.5935 14.1216 24C14.1216 23.4061 14.6029 22.925 15.1966 22.925L34.8038 22.925C35.3978 22.925 35.8788 23.406 35.8788 24Z" fill="#B394E0"/><path fill-rule="evenodd" clip-rule="evenodd" d="M25.6518 28.9784L31.0107 33.0609C31.2877 33.2721 31.4341 33.5911 31.4341 33.9175C31.4341 34.1447 31.3629 34.3725 31.2143 34.5677C30.854 35.0399 30.1792 35.1305 29.7076 34.7711L24.9999 31.1845L20.2926 34.7715C19.8201 35.1315 19.1457 35.0399 18.7861 34.5678C18.426 34.0952 18.5171 33.4215 18.9898 33.0614L24.3486 28.9784C24.7334 28.6851 25.2669 28.6852 25.6518 28.9784Z" fill="#B394E0"/><path d="M18.9898 14.9388L24.349 19.0214C24.7333 19.3142 25.2668 19.3144 25.6518 19.0214L31.0105 14.9385C31.2877 14.7271 31.4342 14.4082 31.4342 14.0819C31.4342 13.8551 31.363 13.6271 31.2147 13.4321C30.8547 12.9599 30.1801 12.8687 29.7076 13.2285L25 16.8148L20.2923 13.2284C19.8203 12.8687 19.1455 12.9599 18.7859 13.4319C18.4259 13.9046 18.5174 14.5788 18.9898 14.9388Z" fill="#B394E0"/></svg>
+
+              <div class="slider-holder">
+                <label class="slider-label reflection-dist">Reflection Distance</label>
+                <p id="reflection_dist_value" class="slider-value"></p>
+                <div id="reflection_dist"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="intersetc1">
+          <svg width="1920" height="134" viewBox="0 0 1920 134" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 134H1920V113.707C1544.93 37.9865 1252.28 0.0375122 959.693 2.77966e-05C959.404 -9.2655e-06 959.115 -9.26554e-06 958.826 2.77966e-05C666.598 0.0374661 374.345 37.8933 0 113.707V134Z" fill="#200343"/></svg>
+        </div>
+        <div class="intersetc2">
+          <svg width="1920" height="134" viewBox="0 0 1920 134" fill="none" xmlns="http://www.w3.org/2000/svg"><path  fill-rule="evenodd" clip-rule="evenodd" d="M0 134H1920V113.707C1544.93 37.9865 1252.28 0.0375122 959.693 2.77966e-05C959.404 -9.2655e-06 959.115 -9.26554e-06 958.826 2.77966e-05C666.598 0.0374661 374.345 37.8933 0 113.707V134Z" fill="#270650"/></svg>
+        </div>
+      </div>
+
+      <!-- All demos. -->
+
+      <!-- All in one. -->
+      <div class="aio" style="display: none;">
+        <div class="info fwd-hide">
+          
+        </div>
+        <div class="all0" style="display: none;">
+          <img class="all1 fwd-hide-left" src="https://webdesign-flash.ro/p/u3dcar/assets/all1.png" alt="Carousel image one">
+          <img class="all2 fwd-hide-right" src="https://webdesign-flash.ro/p/u3dcar/assets/all2.png" alt="Carousel image two">
+          <img class="all3 fwd-hide-left" src="https://webdesign-flash.ro/p/u3dcar/assets/all3.png" alt="Carousel image three">
+          <img class="all4 fwd-hide-right" src="https://webdesign-flash.ro/p/u3dcar/assets/all4.png" alt="Carousel image four">
+        </div>
+
+        <div class="rating fwd-hide" style="display: none;">
+          <img class="rating-stars" src="https://webdesign-flash.ro/p/u3dcar/assets/stars.png" alt="5 stars rating on Codecanyon">
+          <div class="rate rate1">
+            <h1>“Beautiful carousel with tons of customization, but the best part is the excellent customer support. I had a conflict with my theme and they went above and beyond to help me figure it out. Thanks again!”</h1>
+            <p>- ecodzign -</p>
+          </div>
+          <div class="rate rate2">
+            <h1>“The author was amazing at providing support and helped me work through a code problem due to my theme. Awesome job!”</h1>
+            <p>- sbonet1 -</p>
+          </div>
+          <div class="rate rate3">
+            <h1>“Plugin is pretty flexible. Support is amazing! We had an issue with a bug in Safari and the author fixed it on the go. :)”</h1>
+            <p>- alldesign1993 -</p>
+          </div>
+          <div class="btn btn1"></div>
+          <div class="btn btn2"></div>
+          <div class="btn btn3"></div>
+        </div>
+      </div>
+
+      <!-- Pots. -->
+      <div class="pots fwd-hide" style="display: none;">
+        <div class="holder">
+          <h1>Be <span>Creative</span> In Your Own Way</h1>
+          <h4>Create any carousel you can think off!</h4>
+          <div id="pots"></div>
+          <p class="u3dcar">Made with Ultimate 3D Carousel</p>
+        </div>
+        <div class="bk"></div>
+      </div>
+
+      <!-- Main features. -->
+      <div id="main_features" style="display: none;"></div>
+      <div class="main-features fwd-hide" style="display: none;">
+        <h1>Main <span>Features</span></h1>
+        <p>Packed with unparalleled premium features.</p>
+
+        <div class="holder">
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/mf-1.jpg" alt="Powerful Options">
+            <h4>Powerful Options</h4>
+            <p>The most advanced and featured packed 3D carousel in the world!</p>
+          </div>
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/mf-2.jpg" alt="Responsive Layout">
+            <h4>Responsive Layout</h4>
+            <p>Fully responsive and adaptable regardless of which device is used.</p>
+          </div>
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/mf-3.jpg" alt="Vector & Graphics Skins">
+            <h4>Vector & Graphics Skins</h4>
+            <p>Choose between the vector skin or graphics/.png skin, <a href="https://www.youtube.com/watch?v=7mGj0Hpkq5I" target="_blank">video tutorial</a>.</p>
+          </div>
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/mf-4.jpg" alt="Global Audio & Video">
+            <h4>Global Audio & Video</h4>
+            <p>Multiple video & audio formats can be played in the carousel and lightbox.</p>
+          </div>
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/mf-5.jpg" alt="Multiple Categories">
+            <h4>Multiple Categories</h4>
+            <p>Support for one ore more categories with optional categories menu.</p>
+          </div>
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/mf-6.jpg" alt="Three Topologies">
+            <h4>Three Topologies</h4>
+            <p>Three built in topologies that can be used with ease, <a href="ring-out.html" target="_blank">ring</a>, <a href="normal-out.html" target="_blank">normal</a> and <a href="star-out.html" target="_blank">star</a>.</p>
+          </div>
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/mf-7.jpg" alt="Customizable Caption">
+            <h4>Customizable Caption</h4>
+            <p>The caption can be added at the bottom <a href="caption-in.html" target="_blank">inside</a> or <a href="caption-out.html" target="_blank">outside</a> the thumbnail.</p>
+          </div>
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/mf-8.jpg" alt="Cusomtizable Controls">
+            <h4>Cusomtizable Controls</h4>
+            <p>Various controls like, scrollbar, slideshow, bullets navigation, etc.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Learn more. -->
+      <div class="learn-more fwd-hide" style="display: none;">
+        <div class="overlay">
+          <div id="point"></div>
+          <div id="point2"></div>
+          <div id="point3"></div>
+        </div>
+        <div class="holder">
+          <h1>Want To Learn More?<br>Check Our All Demos</h1>
+          <p>Your secret weapon to creating responsive 3D carousels.</p>
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <!-- Features. -->
+      <div class="features fwd-hide" style="display: none;">
+        <div class="first">
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/ft-1.png" alt="Thumbnails Audio & Video">
+            <h1><span>Thumbnails</span> Audio & Video</h1>
+            <p>Multiple video & audio formats can be played directly in the carousel thumbnails.</p>
+          </div>
+          <div class="col">
+            <img src="https://webdesign-flash.ro/p/u3dcar/assets/ft-2.png" alt="Desktop & Mobile Optimized">
+            <h1>Desktop & Mobile <span>Optimized</span></h1>
+            <p>The carousel and lightbox are optimized for mouse and touch inputs.</p>
+          </div>
+        </div>
+
+        <div class="second fwd-hide">
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Lazy Loading</h4>
+            <p>Lazy loading for both carousel and lightbox.</p>
+          </div>
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Deep linking</h4>
+            <p>Unique and shareable link for the current opened lightbox gallery item.</p>
+          </div>
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Multiple Instances</h4>
+            <p>One or more carousel instance can be used and each instance can be configured individually, <a href="multiple-instances.html" target="_blan">example here</a>.</p>
+          </div>
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Easy Video Player</h4>
+            <p><a href="https://webdesign-flash.ro/p/evp" target="_blank">EVP</a> is used as the video/audio engine in both the carousel thumbnails and the lightbox.</p>
+          </div>
+          
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Thumbnails video/audio</h4>
+            <p>Support for various video or audio formats like <a href="mp3.html" target="_blank">.mp3</a>, <a href="mp4.html" target="_blank">.mp4</a>, Shoutcast, Icecast, <a href="youtube.html" target="_blank">Youtube</a>, <a href="vimeo.html" target="_blank">Vimeo</a> and Vimeo Pro, <a href="hls.html" target="_blank">HLS/.m3u8</a>, DASH MPEG/.mpd live streaming, <a href="gd.html" target="_blank">Google Drive</a>, Dropbox and other cloud platforms in the carousel.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Lightbox video/audio</h4>
+            <p>Support for various video or audio formats like <a href="mp3-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">.mp3</a>, <a href="mp4-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">.mp4</a>, Shoutcast, Icecast, <a href="youtube-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">Youtube</a>, <a href="vimeo-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">Vimeo</a> and Vimeo Pro, <a href="hls-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">HLS/.m3u8</a>, DASH MPEG/.mpd live streaming, <a href="gd-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">Google Drive</a>, Dropbox and other cloud platforms, <a href="iframe-rl.html#/?rlguid=fwdu3dcar3_&rlmid=3" target="_blank">Iframe</a>, <a href="pdf-rl.html#/?rlguid=fwdu3dcar3_&rlmid=3" target="_blank">PDF</a>, <a href="maps.html#/?rlguid=fwdu3dcar3_&rlmid=3" target="_blank">Google Maps</a>, <a href="html.html#/?rlguid=fwdu3dcar3_&rlmid=3" target="_blank">HTML Content</a> in the ligtbox.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Video Autoplay</h4>
+            <p>Support for video autoplay inside the <a href="mp4-autoplay.html" target="_blank">carousel</a> and the <a href="mp4-autoplay-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">lightbox</a>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Private Video & Audio</h4>
+            <p>Protected password video and audio inside the <a href="pass.html" target="_blank">carousel</a> and the <a href="pass-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">lightbox</a>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Chromecast Support</h4>
+            <p>Play mp4 video, mp3 audio or HLS/m3u8 files on your TV screen using Chromecast, the media can be controlled via the video player interface basically the browser and the video player becomes a remote tv, inside the <a href="chromecast.html" target="_blank">carousel</a> and <a href="chromecast-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">lightbox</a>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Video Thumbnails Live Preview</h4>
+            <p>Video thumbnails preview created from a .vtt file or live auto-generated video thumbnails inside the <a href="pass.html" target="_blank">carousel</a> and the <a href="pass-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">lightbox</a>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Video Subtitle Support</h4>
+            <p>Support for subtitle inside the <a href="mp4.html" target="_blank">carousel</a> and the <a href="mp4-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">lightbox</a>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Automatic Content Detection</h4>
+            <p>Ultimate 3D Carousel and <a href="https://webdesign-flash.ro/p/rl" target="_blank">Revolution Lightbox</a> will set the appropriate type (video, audio, image, etc) based on the media URL to the media items without any extra requirements.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Slideshow Support</h4>
+            <p>Slidshow with autoplay for both the <a href="slideshow-autoplay.html" target="_blank">carousel thumbanils</a> and the <a href="slideshow-autoplay-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">lightbox</a>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Drag & Swipe Support</h4>
+            <p>Drag support to navigate between the carousel thumbnails or lightbox.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Mouse wheel support</h4>
+            <p>Use the mouse wheel to navigate between the carousel thumbnails, <a href="mouse-wheel.html" target="_blank">example here</a>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Keyboard support</h4>
+            <p>Use the left and right arrow to navigate between thumbnails or scrub the video, space to play/pause the video, F to go video fullscreen, M to mute the video, Up and Down to change video volume.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Maximize & Minimize For Images</h4>
+            <p>Lightbox maximize/minimize button and maximize/minimize double click/tap feature for images. The maximize zoom factor can be set to a custom value to allow fine tune controll on the maximized image.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Share Button And Share Window</h4>
+            <p>Lightbox share button and share window with nine share social platforms, the share social platforms buttons can be ordered and also removed as needed.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Powerful API Included</h4>
+            <p>Full set of API methods and API events, <a href="API.html" target="_blank">example here</a>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Custom Support</h4>
+            <p>Support directlly from the plugin developer - <strong>Tibi</strong> @ <strong>FWD</strong>.</p>
+          </div>
+
+          <div class="col">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 1.125C6.00063 1.125 1.125 6.00063 1.125 12C1.125 17.9994 6.00063 22.875 12 22.875C17.9994 22.875 22.875 17.9994 22.875 12C22.875 6.00063 17.9994 1.125 12 1.125ZM12 20.4583C7.33581 20.4583 3.54169 16.6641 3.54169 12C3.54169 7.33587 7.33581 3.54169 12 3.54169C16.6642 3.54169 20.4583 7.33581 20.4583 12C20.4583 16.6642 16.6642 20.4583 12 20.4583Z" fill="#E20B66"/><path d="M13.2084 7.16699H10.7917V10.792H7.16675V13.2086H10.7917V16.8336H13.2084V13.2086H16.8334V10.792H13.2084V7.16699Z" fill="#E20B66"/></svg>
+            <h4>Detailed Documentation</h4>
+            <p>Detailed documentation as well as various <a href="https://www.youtube.com/watch?v=3d4CZ5dP75A" target="_blank">video tutorials</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vast. -->
+      <div class="vast fwd-hide" style="display: none;">
+        <svg width="1920" height="464" viewBox="0 0 1920 464" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="960" cy="-518" r="982" fill="#F7EDFF"/></svg>
+
+        <h1>Make <span>Money</span> With Advertisement</h1>
+        <p>Advanced advertising inside the carousel and lightbox!</p>
+
+        <div class="f-ads">
+          <div class="f-ads-1 col">
+            <div class="flex">
+              <div id="l_bk"></div>
+              <img src="https://webdesign-flash.ro/p/u3dcar/assets/vast-f.png"/>
+              <div class="overlay"></div>
+              <div class="col1">
+                <h4>VAST <span>&</span> VMAP</h4>
+                <p class="support">SUPPORT</p>
+              </div>
+              <div class="col2">
+                <p>“Video Ad Serving Template”. Monetize your videos using VAST / VMAP and a  sophisticated mix of video advertising, <a href="vast.html" target="_blank">carousel example</a> and <a href="vast-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">lightbox example</a>.</p>
+              </div>
+            </div>
+          </div>
+          <div class="f-ads-2 col">
+            <div class="flex">
+              <div id="r_bk"></div>
+              <div class="overlay"></div>
+              <img src="https://webdesign-flash.ro/p/u3dcar/assets/ima-f.png"/>
+              <div class="col1">
+                <h4>IMA <span></span> SDK</h4>
+                <p class="support">SUPPORT</p>
+              </div>
+              <div class="col2">
+                <p>IMA SDK for HTML5 and DFP / Google Adsense Doubleclick IMA tags. The ultimate ad revenue and monetization, <a href="adsense.html" target="_blank">carousel example</a> and <a href="adsense-rl.html#/?rlguid=fwdu3dcar2_&rlmid=4" target="_blank">lightbox example</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coins. -->
+      <div class="coins fwd-hide" style="display: none;">
+        <div class="holder">
+          <img src="https://webdesign-flash.ro/p/u3dcar/assetshttps://webdesign-flash.ro/p/u3dcar/assets/coin-left.png" alt="Left coins">
+          <img src="https://webdesign-flash.ro/p/u3dcar/assets/coin-right.png" alt="Right coins">
+        </div>
+      </div>
+
+      <!-- Ready -->
+      <div class="ready fwd-hide" style="display: none;">
+        <div class="text">
+          <h1>Ready To Get Started?</h1>
+          <p>Get your own 3D carousel today!</p>
+          <div class="a-holder">
+          <a href="https://1.envato.market/z9eqe" target="_blank">Buy WordPress Plugin</a>
+          <div class="separator"></div>
+          <a href="https://1.envato.market/3r9OX" target="_blank">Buy Javascript Version</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer-main fwd-hide" style="display: none;">
+        <div class="footer">
+          <div class="col">
+            <img class="logo" src="https://webdesign-flash.ro/p/u3dcar/assets/logo.png" alt="Ultimate 3D Carousel logo"/>
+            <p>Ultimate 3D Carousel is a fully 3D multimedia carousel slider that allows to display multimedia content with an unique original layout from a 3D perspective. It’s perfect for any kind of presentation, for anyone that wants to deliver a great impact to thier visitors.</p>
+          </div>
+          <div class="col">
+            <h4>Other FWD plugins</h4>
+            <a href="https://webdesign-flash.ro/p/uvp" target="_blank">Ultimate Video Player</a>
+            <br>
+            <a href="https://webdesign-flash.ro/p/sisc" target="_blank">Simple Slider Carousel</a>
+            <br>
+            <a href="https://webdesign-flash.ro/p/msp" target="_blank">MP3 Sticky Player</a>
+            <br>
+            <a href="https://webdesign-flash.ro/p/360viewer" target="_blank">Easy 360° Product Viewer</a>
+          </div>
+          <div class="col">
+            <h4>Support</h4>
+            <p>For support and customizations please contact me.</p>
+            <p>
+              <img src="https://webdesign-flash.ro/p/u3dcar/assets/email.png" alt="Email icon">
+              <a class="email" href="mailto:tibi_diablo@yahoo.com">tibi_diablo@yahoo.com</a>
+            </p>
+            <p class="phone"><img src="https://webdesign-flash.ro/p/u3dcar/assets/phone.png" alt="Phone icon">+004 0254 484 259</p>
+          </div>
+          <div class="col">
+            <h4>Save off 95%</h4>
+            <h3>Mega Bundle</h3>
+            <a class="buy" href="https://1.envato.market/AXykx" target="_blank">Buy now</a>
+            <div></div>
+            <a class="icon" href="https://www.facebook.com/Futurewebdesign/?eid=ARBVNX9uwTVqUN6-NFFu0-C3HJnbidLw2i5cQ9aSdpOJrDHpvp1Ow-lMBzg_zL-I-s_vTJZ0yMrYAGuH" target="_blank">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 5.5V3.5C9 2.948 9.448 2.5 10 2.5H11V0H9C7.343 0 6 1.343 6 3V5.5H4V8H6V16H9V8H11L12 5.5H9Z" fill="white"/>
+              </svg>
+            </a>
+            <a class="icon" href="https://www.youtube.com/user/fwdflashwebdesign" target="_blank">
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.32 1.56C14.886 0.788 14.415 0.646 13.456 0.592C12.498 0.527 10.089 0.5 8.002 0.5C5.911 0.5 3.501 0.527 2.544 0.591C1.587 0.646 1.115 0.787 0.677 1.56C0.23 2.331 0 3.659 0 5.997C0 5.999 0 6 0 6C0 6.002 0 6.003 0 6.003V6.005C0 8.333 0.23 9.671 0.677 10.434C1.115 11.206 1.586 11.346 2.543 11.411C3.501 11.467 5.911 11.5 8.002 11.5C10.089 11.5 12.498 11.467 13.457 11.412C14.416 11.347 14.887 11.207 15.321 10.435C15.772 9.672 16 8.334 16 6.006C16 6.006 16 6.003 16 6.001C16 6.001 16 5.999 16 5.998C16 3.659 15.772 2.331 15.32 1.56ZM6 9V3L11 6L6 9Z" fill="white"/>
+              </svg>
+            </a>
+          </div>
+          <div class="clear-fix"></div>
+        </div>
+
+        <div class="footer-bar">
+          <div class="holder">
+            <p>Copyright ©️ FWDesign</p>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- carousel data -->
+    <div id="carouselData" style="display: none;">
+
+      <!-- category  -->
+      <div data-cat="Thumbs video">
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-adsense.jpg" data-thumb-video-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-thumb-vast-src="//googleads.g.doubleclick.net/pagead/ads?ad_type=video&client=ca-video-pub-4968145218643279&videoad_start_delay=0&description_url=http%3A%2F%2Fwww.google.com&max_ad_duration=40000&adtest=on"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Google Adsense & IMA SDK/Interactive Media Ads</p>
+            <p class="fwdu3dcar-desc">Google Adsense & IMA SDK/Interactive Media Ads support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-GD.jpg" data-thumb-video-src="https://www.googleapis.com/drive/v3/files/0B4Au_agYmWFZNHNtZTlXUm1UUUE?alt=media&key=AIzaSyBsJ8HRNI4iHUqpszDtx3Ijq3ZKoXLUx-E&v=.mp4"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Google Drive And Other Cloud Storage</p>
+            <p class="fwdu3dcar-desc">Google Drive, Dropbox, and pretty much all cloud storage platforms, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+      
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-mp3.jpg" data-thumb-video-src="https://webdesign-flash.ro/p/u3dcar/media/audio/audio.mp3"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">MP3 Self Hosted Or External Hosted</p>
+            <p class="fwdu3dcar-desc">Ultimate 3D Carousel has included <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a> with amazing features.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-hls.jpg" data-thumb-video-src="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">HLS/HTTP Live Streaming & DASH MEPG</p>
+            <p class="fwdu3dcar-desc">Support for the HLS/HTTP Live Streaming and DASH MPEG formats, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-mp4.jpg" data-thumb-video-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-thumb-subtitle-src="https://webdesign-flash.ro/p/u3dcar/media/subtitles/english_subtitle.vtt"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">MP4 Self/External Hosted With Subtitle</p>
+            <p class="fwdu3dcar-desc">Ultimate 3D Carousel has included <a href="https://webdesign-flash.ro/p/evp" target="_blank">Easy Video Player</a> with amazing features.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-pass.jpg" data-thumb-video-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-thumb-password="dd1d878544e988bb644756ca5e0ba56b" data-thumb-preview-src="auto"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Private/Protected Video With Thumbnails Preview</p>
+            <p class="fwdu3dcar-desc">Private/password protected videos with auto-generated thumbnails preview, test password is <strong>Meli</strong>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-youtube.jpg" data-thumb-video-src="https://www.youtube.com/watch?v=IDZTCLNOfqU"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Youtube</p>
+            <p class="fwdu3dcar-desc">Youtube support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+        
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-vimeo.jpg" data-thumb-video-src="https://vimeo.com/307791576"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Vimeo & Vimeo Pro</p>
+            <p class="fwdu3dcar-desc">Vimeo & Vimeo Pro support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+        
+        <ul>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-vast.jpg" data-thumb-video-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-thumb-vast-src="https://webdesign-flash.ro/p/u3dcar/media/vast/VMAP - Pre-roll Single Ad, Mid-roll Standard Pod with 3 ads, Post-roll Single (non linear between breaks) Ad.xml"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">VAST & VMAP</p>
+            <p class="fwdu3dcar-desc">VAST/Video Ad Serving Template & VMAP/Video Multiple Ad Playlist support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+        
+      </div> -->
+      <!-- end  -->
+
+      <!-- category  -->
+      <div data-cat="Ligtbox gallery">
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/1.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/1.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">We Are Taking Friendship Seriously</p>
+            <p class="fwdu3dcar-desc">Friendship has always been morally <a href="https://webdesign-flash.ro" target="_blank">appreciated</a>, though it is particularistic and partial without compromise.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">We Are Taking Friendship Seriously</p>
+            <p class="fwdrl-desc">Friendship has always been morally <a href="https://webdesign-flash.ro" target="_blank">appreciated</a>, though it is particularistic and partial without compromise.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/2.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/2.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Jewelry Puzzle Is Fun</p>
+            <p class="fwdu3dcar-desc">Check out our puzzle <a href="https://webdesign-flash.ro" target="_blank">jewelry selection</a> for the very best in unique or custom.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Jewelry Puzzle Is Fun</p>
+            <p class="fwdrl-desc">Check out our puzzle <a href="https://webdesign-flash.ro" target="_blank">jewelry selection</a> for the very best in unique or custom.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/3.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/3.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">It's Candy Sparkle Time</p>
+            <p class="fwdu3dcar-desc">Candy do speak, but only to those who <a href="https://webdesign-flash.ro" target="_blank">know how</a> to listen.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">It's Candy Sparkle Time</p>
+            <p class="fwdrl-desc">Candy do speak, but only to those who <a href="https://webdesign-flash.ro" target="_blank">know how</a> to listen.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/4.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/4.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Amazing Pink Jellyfish</p>
+            <p class="fwdu3dcar-desc">For the Californian <a href="https://webdesign-flash.ro" target="_blank">species</a> occasionally known by that name but usually called the purple-striped jelly.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Amazing Pink Jellyfish</p>
+            <p class="fwdrl-desc">For the Californian <a href="https://webdesign-flash.ro" target="_blank">species</a> occasionally known by that name but usually called the purple-striped jelly.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/5.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/5.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Fluffy Pink Season</p>
+            <p class="fwdu3dcar-desc">Well, fluffy shirts are, <a href="https://webdesign-flash.ro" target="_blank">by definition</a>, very comfortable.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Fluffy Pink Season</p>
+            <p class="fwdrl-desc">Well, fluffy shirts are, <a href="https://webdesign-flash.ro" target="_blank">by definition</a>, very comfortable.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/images/6.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/6.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Asian Fanta Flavors</p>
+            <p class="fwdu3dcar-desc">Japanese Fanta is unlike all <a href="https://webdesign-flash.ro" target="_blank">others</a> around the worldknow how.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Asian Fanta Flavors</p>
+            <p class="fwdrl-desc">Japanese Fanta is unlike all <a href="https://webdesign-flash.ro" target="_blank">others</a> around the worldknow how.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/7.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/7.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Rusty Apple Toddy Recipe</p>
+            <p class="fwdu3dcar-desc">Impossible delicious <a href="https://webdesign-flash.ro" target="_blank">recipe</a> with natural flavors.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Rusty Apple Toddy Recipe</p>
+            <p class="fwdrl-desc">Impossible delicious <a href="https://webdesign-flash.ro" target="_blank">recipe</a> with natural flavors.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/8.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/8.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Peek A Boo Where Are You :)</p>
+            <p class="fwdu3dcar-desc">Fun storybook for adults about a <a href="https://webdesign-flash.ro" target="_blank">playful cat</a> that likes to hide.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Peek A Boo Where Are You :)</p>
+            <p class="fwdrl-desc">Fun storybook for adults about a <a href="https://webdesign-flash.ro" target="_blank">playful cat</a> that likes to hide.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/9.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/9.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Pink Easter Eggs Are Trendy</p>
+            <p class="fwdu3dcar-desc">The current pink quartz and amethyst <a href="https://webdesign-flash.ro" target="_blank">trends</a> have reached beyond the trends.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Pink Easter Eggs Are Trendy</p>
+            <p class="fwdrl-desc">The current pink quartz and amethyst <a href="https://webdesign-flash.ro" target="_blank">trends</a> have reached beyond the trends.</p>
+          </li>
+        </ul>
+      
+      </div>
+      <!-- end  -->
+
+      <!-- category  -->
+      <div data-cat="Lightbox video">
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/adsense.jpg" data-rl-vast-src="//googleads.g.doubleclick.net/pagead/ads?ad_type=video&client=ca-video-pub-4968145218643279&videoad_start_delay=0&description_url=http%3A%2F%2Fwww.google.com&max_ad_duration=40000&adtest=on"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-adsense.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Google Adsense & IMA SDK/Interactive Media Ads</p>
+            <p class="fwdu3dcar-desc">Google Adsense & IMA SDK/Interactive Media Ads support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Google Adsense & IMA SDK/Interactive Media Ads</p>
+            <p class="fwdrl-desc">Google Adsense & IMA SDK/Interactive Media Ads support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://www.googleapis.com/drive/v3/files/0B4Au_agYmWFZNHNtZTlXUm1UUUE?alt=media&key=AIzaSyBsJ8HRNI4iHUqpszDtx3Ijq3ZKoXLUx-E&v=.mp4" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/GD.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-GD.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Google Drive And Other Cloud Storage</p>
+            <p class="fwdu3dcar-desc">Google Drive, Dropbox, and pretty much all cloud storage platforms, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Google Drive And Other Cloud Storage</p>
+            <p class="fwdrl-desc">Google Drive, Dropbox, and pretty much all cloud storage platforms, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+      
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/audio/audio.mp3" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/mp3.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-mp3.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox MP3 Self Hosted Or External Hosted</p>
+            <p class="fwdu3dcar-desc">Ultimate 3D Carousel has included <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a> with amazing features.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">MP3 Self Hosted Or External Hosted</p>
+            <p class="fwdrl-desc">Ultimate 3D Carousel has included <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a> with amazing features.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/hls.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-hls.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox HLS/HTTP Live Streaming & DASH MEPG</p>
+            <p class="fwdu3dcar-desc">Support for the HLS/HTTP Live Streaming and DASH MPEG formats, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">HLS/HTTP Live Streaming & DASH MEPG</p>
+            <p class="fwdrl-desc">Support for the HLS/HTTP Live Streaming and DASH MPEG formats, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/mp4.jpg" data-rl-subtitle-src="https://webdesign-flash.ro/p/u3dcar/media/subtitles/english_subtitle.vtt"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-mp4.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox MP4 Self/External Hosted With Subtitle</p>
+            <p class="fwdu3dcar-desc">Ultimate 3D Carousel has included <a href="https://webdesign-flash.ro/p/evp" target="_blank">Easy Video Player</a> with amazing features.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">MP4 Self/External Hosted With Subtitle</p>
+            <p class="fwdrl-desc">Ultimate 3D Carousel has included <a href="https://webdesign-flash.ro/p/evp" target="_blank">Easy Video Player</a> with amazing features.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/pass.jpg" data-rl-password="dd1d878544e988bb644756ca5e0ba56b" data-rl-preview-src="auto"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-pass.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Private/Protected Video With Thumbnails Preview</p>
+            <p class="fwdu3dcar-desc">Private/password protected videos with auto-generated thumbnails preview, test password is <strong>Meli</strong>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Private/Protected Video With Thumbnails Preview</p>
+            <p class="fwdrl-desc">Private/password protected videos with auto-generated thumbnails preview, test password is <strong>Meli</strong>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://www.youtube.com/watch?v=IDZTCLNOfqU" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/youtube.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-youtube.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Youtube</p>
+            <p class="fwdu3dcar-desc">Youtube support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Youtube</p>
+            <p class="fwdrl-desc">Youtube support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+        
+        <ul>
+          <li data-rl-src="https://vimeo.com/307791576" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/vimeo.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-vimeo.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Vimeo & Vimeo Pro</p>
+            <p class="fwdu3dcar-desc">Vimeo & Vimeo Pro support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Vimeo & Vimeo Pro</p>
+            <p class="fwdrl-desc">Vimeo & Vimeo Pro support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+        
+        
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/vast.jpg" data-rl-vast-src="https://webdesign-flash.ro/p/u3dcar/media/vast/VMAP - Pre-roll Single Ad, Mid-roll Standard Pod with 3 ads, Post-roll Single (non linear between breaks) Ad.xml"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-vast.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox VAST & VMAP</p>
+            <p class="fwdu3dcar-desc">VAST/Video Ad Serving Template & VMAP/Video Multiple Ad Playlist support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">VAST & VMAP</p>
+            <p class="fwdrl-desc">VAST/Video Ad Serving Template & VMAP/Video Multiple Ad Playlist support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+      </div>
+      <!-- end  -->
+
+      <!-- category  -->
+      <div data-cat="Lightbox mixed">
+    
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/images/10.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-img.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Image Support</p>
+            <p class="fwdu3dcar-desc">Lightbox image (.jpg, .jpeg, .png) support with advanced features.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Lightbox Image Support</p>
+            <p class="fwdrl-desc">Lightbox image (.jpg, .jpeg, .png) support with advanced features.</p>
+          </li>
+        </ul>
+        
+        <ul>
+          <li data-rl-src="https://www.wikipedia.org/"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-iframe.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Iframe Support</p>
+            <p class="fwdu3dcar-desc">Embed any HTML page using and Iframe, <a href="https://webdesign-flash.ro/" target="_blank">unlimited possibilities</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Lightbox Iframe Support</p>
+            <p class="fwdrl-desc">Embed any HTML page using and Iframe, <a href="https://webdesign-flash.ro/" target="_blank">unlimited possibilities</a>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/sample.pdf"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-pdf.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox PDF Support</p>
+            <p class="fwdu3dcar-desc">Easily display <a href="https://webdesign-flash.ro/" target="_blank">.pdf format</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">PDF Support</p>
+            <p class="fwdrl-desc">Easily display <a href="https://webdesign-flash.ro/" target="_blank">.pdf format</a>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="html_content" data-rl-width="450" data-rl-height="596"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-html.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox HTML Content Support</p>
+            <p class="fwdu3dcar-desc">Easily display <a href="https://webdesign-flash.ro/" target="_blank">HTML content</a>.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-link.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Open Page With Custom Link</p>
+            <p class="fwdu3dcar-desc">Open a new page in a new/same window, when clicking the thumbnail.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">CUSTOM TEXT CAN BE ADDED HERE AND FORMATTED WITH CSS</p>
+            <p class="fwdrl-desc">Full css support, the text which appear over the thumbnail can be formatted  with CSS.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://www.google.com/maps/embed/v1/place?q=castelul%20hunedoara&key=AIzaSyDYlgLIneg_UOd8STBfJEgq2JgmT5nNJKU"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-maps.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Google Maps Support</p>
+            <p class="fwdu3dcar-desc">Google maps support using <a href="https://webdesign-flash.ro/" target="_blank">Iframe</a> embed.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Lightbox Google Maps Support</p>
+            <p class="fwdrl-desc">Google maps support using <a href="https://webdesign-flash.ro/" target="_blank">Iframe</a> embed.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://webdesign-flash.ro/p/u3dcar/media/videos/fwd-1080p.mp4" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/mp4.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-mp4.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox MP4 Self/External Hosted</p>
+            <p class="fwdu3dcar-desc">Ultimate 3D Carousel has included <a href="https://webdesign-flash.ro/p/evp" target="_blank">Easy Video Player</a> with amazing features.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">MP4 Self/External Hosted With Subtitle</p>
+            <p class="fwdrl-desc">Ultimate 3D Carousel has included <a href="https://webdesign-flash.ro/p/evp" target="_blank">Easy Video Player</a> with amazing features.</p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="https://vimeo.com/307791576" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/vimeo.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-vimeo.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Vimeo & Vimeo Pro</p>
+            <p class="fwdu3dcar-desc">Vimeo & Vimeo Pro support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Vimeo & Vimeo Pro</p>
+            <p class="fwdrl-desc">Vimeo & Vimeo Pro support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+        
+        <ul>
+          <li data-rl-src="https://www.youtube.com/watch?v=IDZTCLNOfqU" data-rl-poster-src="https://webdesign-flash.ro/p/u3dcar/media/images/youtube.jpg"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/car-youtube.jpg"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title">Lightbox Youtube</p>
+            <p class="fwdu3dcar-desc">Youtube support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+          <li data-rl-caption="">
+            <p class="fwdrl-title">Youtube</p>
+            <p class="fwdrl-desc">Youtube support, <a href='https://webdesign-flash.ro/p/evp' target='_blank'>Easy Video Player</a>.</p>
+          </li>
+        </ul>
+      </div>
+      <!-- end  -->
+
+    </div>
+
+    <!-- HTML content  -->
+    <div id="html_content" style="display:none">
+      <div class="fwdrl-html-content">
+        <div>
+          <img src="https://webdesign-flash.ro/p/u3dcar/media/images/post.png" width="197" height="162"/>
+          <h1>Sign Up For Our News Letter</h1>
+          <p>Subscribe to join the greatest mailing list.<br>Want to keep up to date with all our last news and information?<br>Enter your email bellow to be added to our mailing list.</p>
+          <input type="text" placeholder="Enter Your Email"></input>
+          <h4>SUBSCRIBE NOW</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- carousel data -->
+    <div id="potsData" style="display: none;">
+
+      <!-- category  -->
+      <div data-cat="pots">
+        
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-3.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Sleepy Face Painted Clay Pot</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-4.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">My Patch of Heaven</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-5.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Rainbow Painted Flower Pot</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-6.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Painted Aloe Pot Inspiration</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-1.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Cyan Creative Tree Pot</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-2.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Donut Themed Terra Cotta Pot</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-8.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Poured Paint Potted Plant Design</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-9.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Mini Ombre Herb Pots</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-10.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Indoor Painted Clay Pots</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-7.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+            <p class="fwdu3dcar-title pot">Flower Clay Pot Design</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+
+        <ul>
+          <li data-rl-src="link:https://webdesign-flash.ro" data-rl-target="_blank"></li>
+          <li data-thumb-src="https://webdesign-flash.ro/p/u3dcar/media/thumbnails/pot-11.png"></li>
+          <li data-thumb-caption="" data-thumb-caption-offset="70">
+          <p class="fwdu3dcar-title pot">Hand Painted Succulent Pot</p>
+            <p class="fwdu3dcar-desc pot">Be Creative!<br><a href="https://webdesign-flash.ro" target="_blank">Buy this pot</a></p>
+          </li>
+        </ul>
+      
+      </div>
+      <!-- end  -->
+
+  </body>
+</html>
+
+
+    <script nonce="biIXU3Nq5j8SohDzA935dw==">
+//<![CDATA[
+      $(function(){viewloader.execute(Views);});
+
+//]]>
+</script>
+    
+<div id="affiliate-tracker" class="is-hidden" data-view="affiliatesTracker" data-cookiebot-enabled="true"></div>
+
+      <script src="https://consent.cookiebot.com/uc.js" data-cbid="4a6af4ea-f614-41d8-b0a9-8bb6d7fe4799" async="async" id="Cookiebot" nonce="biIXU3Nq5j8SohDzA935dw=="></script>
+
+
+  <script nonce="biIXU3Nq5j8SohDzA935dw==">
+//<![CDATA[
+  var ACCOUNTS = ["m"];
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+    var consentCookie = getCookie('CookieConsent');
+
+    if (consentCookie) {
+      var hasConsent = Market.Helpers.CookieConsent.given('statistics');
+
+      if (hasConsent) {
+        setupGoogleAnalytics();
+        loadGoogleAnalytics();
+        loadClickTracker();
+        loadLinkingForAllAccounts();
+      }
+    } else {
+      setupGoogleAnalytics();
+      loadGoogleAnalytics();
+      loadClickTracker();
+      loadLinkingForAllAccounts();
+    }
+
+    window.addEventListener('CookiebotOnAccept', handleCookiebotAcceptDeclineEvent, false);
+    window.addEventListener('CookiebotOnDecline', handleCookiebotAcceptDeclineEvent, false);
+  removeOldExperimentCookies();
+  trimGacUaCookies();
+
+  function removeOldExperimentCookies() {
+    let cookies = document.cookie.split('; ');
+    for (let i in cookies) {
+      let [cookieName, cookieVal] = cookies[i].split('=', 2);
+      if (cookieName.startsWith('market_experiment_')) {
+        $.removeCookie(cookieName, { path: '/', domain: '.' + window.location.host });
+      }
+    }
+  }
+
+  function trimGacUaCookies() {
+    // Trim the list of gac cookies and only leave the most recent ones. This
+    // prevents rejecting the request later on when the cookie size grows larger
+    // than nginx buffers.
+    let maxCookies = 15;
+    var gacCookies = [];
+
+    let cookies = document.cookie.split('; ');
+    for (let i in cookies) {
+      let [cookieName, cookieVal] = cookies[i].split('=', 2);
+      if (cookieName.startsWith('_gac_UA')) {
+        gacCookies.push([cookieName, cookieVal]);
+      }
+    }
+
+    if (gacCookies.length <= maxCookies)
+      return;
+
+    gacCookies.sort((a, b) => { return (a[1] > b[1] ? -1 : 1); });
+
+    for (let i in gacCookies) {
+      if (i < maxCookies) continue;
+      $.removeCookie(gacCookies[i][0], { path: '/', domain: '.' + window.location.host });
+    }
+  }
+
+  function handleCookiebotAcceptDeclineEvent() {
+    if (Cookiebot.consent.statistics) {
+      if (!(window.ga && ga.create)) {
+        setupGoogleAnalytics();
+        loadGoogleAnalytics();
+        loadClickTracker();
+        loadLinkingForAllAccounts();
+      }
+    } else {
+      unloadGoogleAnalytics()
+    }
+
+    if (!consentToExperimentsEnrollmentGiven()) {
+      unenrollFromExperiments();
+    }
+  }
+
+  function getCookie(name) {
+    var name = name + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var cookieContent = decodedCookie.split(';');
+
+    for(var i = 0; i <cookieContent.length; i++) {
+      var c = cookieContent[i];
+
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+
+    return false;
+  }
+
+  function delete_cookie_by_name(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+
+  function unloadGoogleAnalytics() {
+    var payload = {"name":"m","allowLinker":true};
+    var accountId = "UA-11834194-12";
+
+    // Set the GA User Opt-out flag
+    window['ga-disable-'+accountId] = true;
+
+    // Do not explicitly make any further calls to ga()
+    ga(payload.name+".remove");
+
+    // Delete any existing GA cookies (_ga, _gat & _gaid) and GA Client ID from localStorage
+    delete_cookie_by_name('_ga');
+    delete_cookie_by_name('_gat');
+    delete_cookie_by_name('_gid');
+
+    // Delete LocalStorage Entries
+    if (Market.Helpers.GaLsUtils.localStorageAvailable()) {
+      var clientId = Market.Helpers.GaLsUtils.getClientId();
+
+      if (!clientId) {
+        return;
+      }
+
+      Market.Helpers.GaLsUtils.removeClientId();
+    }
+
+    // Do not transmit the Client ID to other sites upon navigation (i.e. autoLink)
+  }
+
+  function domLoaded() {
+    return new Promise(resolve => {
+      if (
+        document.readyState === 'interactive' ||
+        document.readyState === 'complete'
+      ) {
+        resolve()
+      } else {
+        document.addEventListener(
+          'DOMContentLoaded',
+          () => {
+            resolve()
+          },
+          {
+            capture: true,
+            once: true,
+            passive: true
+          }
+        )
+      }
+    })
+  }
+
+  function consentToExperimentsEnrollmentGiven () {
+    return Market.Helpers.CookieConsent.given('preferences') && Market.Helpers.CookieConsent.given('statistics');
+  }
+
+  function unenrollFromExperiments() {
+    var experimentCookieNames = [
+      'market_experiments',
+      'mk_ex',
+      'meqc',
+      'meqc2',
+      'meqc3'
+    ]
+
+    var deletedCookies = [];
+
+    _.each(experimentCookieNames, function(cookieName) {
+      if ($.cookie(cookieName)) {
+        $.removeCookie(cookieName, { path: '/', domain: '.' + window.location.host });
+        deletedCookies.push(cookieName);
+      }
+    });
+    for (var i = 0; i < ACCOUNTS.length; i++) {
+      var t = ACCOUNTS[i];
+      if(deletedCookies.length > 0) {
+        ga(t+'.set', "exp", null);
+        ga(t+'.set', "dimension21", null);
+        ga(t+'.set', "dimension22", null);
+      }
+    }
+  }
+
+  function setExperimentEnrollments(experimentEnrolmentsDataString) {
+    for (var i = 0; i < ACCOUNTS.length; i++) {
+      var t = ACCOUNTS[i];
+      var cookieValue = $.cookie('mk_ex');
+      if (cookieValue && cookieValue.replace(/\*/g, '!') === experimentEnrolmentsDataString) {
+        ga(t+'.set', "exp", experimentEnrolmentsDataString);
+        ga(t+'.set', "dimension21", experimentEnrolmentsDataString);
+        ga(t+'.set', "dimension22", experimentEnrolmentsDataString);
+      } else {
+        ga(t+'.set', "exp", null);
+        ga(t+'.set', "dimension21", null);
+        ga(t+'.set', "dimension22", null);
+      }
+    }
+  }
+
+  function loadLinkingForAllAccounts() {
+    domLoaded().then(() => {
+      window._envGaTrackerNames = ACCOUNTS;
+
+      for (var i = 0; i < ACCOUNTS.length; i++) {
+        var t = ACCOUNTS[i];
+
+        ga(t+'.require', 'linker');
+
+        ga(t+'.require', 'linkid', 'linkid.js');
+      };
+
+      document.body.addEventListener('click', function(event) {
+        decorateLink(event);
+      });
+      document.body.addEventListener('contextmenu', function(event) {
+        // Aside from a normal click, we need to handle the variety of ways users
+        // can open a link in a new tab
+        // Right click to open context menu
+        decorateLink(event);
+      });
+      document.body.addEventListener('mousedown', function(event) {
+        // Aside from a normal click, we need to handle the variety of ways users
+        // can open a link in a new tab
+        // Middle mouse button click
+        if (event.button === 1) {
+          decorateLink(event);
+        }
+      });
+    });
+  }
+
+  function decorateLink(event) {
+
+    window._envGaTrackerNames = ACCOUNTS;
+
+    var currentTarget = jQuery(event.target);
+    var link = currentTarget.closest('a')[0];
+    var ourDomains = ["activeden.net","audiojungle.net","themeforest.net","videohive.net","graphicriver.net","3docean.net","codecanyon.net","photodune.net","market.styleguide.envato.com","elements.envato.com","build.envatohostedservices.com","author.envato.com","tutsplus.com","sites.envato.com","account.envato.com","forums.envato.com"];
+    var filteredDomains = ourDomains.filter(function(domain) {
+      return domain !== document.location.hostname;
+    });
+
+    for (var i = 0; i < ACCOUNTS.length; i++) {
+      var t = ACCOUNTS[i];
+
+      if (link && link.href) {
+        if (filteredDomains.includes(link.hostname) || currentSiteLinkOpensInNewWindow(link)) {
+          ga(t+'.linker:decorate', link)
+        }
+      }
+    }
+  }
+
+  function currentSiteLinkOpensInNewWindow(link) {
+    return document.location.hostname === link.hostname && link.target === '_blank';
+  }
+
+  function setupGoogleAnalytics() {
+    (function () {
+      var accountId = "UA-11834194-12";
+      window['ga-disable-'+accountId] = false;
+
+      var options = {"name":"m","allowLinker":true};
+
+      if (Market.Helpers.GaLsUtils.localStorageAvailable()) {
+        if (Market.Helpers.GaLsUtils.clientIdNotPresent()) {
+          options.clientId = Market.Helpers.GaLsUtils.retrieveClientId();
+        }
+
+        ga("create", accountId, options);
+        ga(function() {
+          var tracker = ga.getByName(options.name);
+          Market.Helpers.GaLsUtils.storeClientId(tracker.get('clientId'));
+          for (var i = 0; i < ACCOUNTS.length; i++) {
+            var t = ACCOUNTS[i];
+            ga(t+'.set', 'dimension18', Market.Helpers.GaLsUtils.retrieveClientId())
+          }
+        })
+      } else {
+        ga("create", accountId, options);
+      }
+
+      window._envGaTrackerNames = ACCOUNTS;
+
+      for (var i = 0; i < ACCOUNTS.length; i++) {
+        var t = ACCOUNTS[i];
+
+        ga(t+'.require', "GTM-5VPWWP");
+
+        ga(t+'.require', 'ec');
+
+        ga(t+'.require', 'displayfeatures');
+
+        ga(t+'.set', 'dimension20', 'other')
+
+        var itemPageIdMatch = window.location.pathname.match(/^\/item\/[a-z-]+\/(?:reviews\/)?(\d+)(?:\/comments|\/support)?$/);
+        if (itemPageIdMatch) {
+          // Fetch item ID from path
+          var itemId = itemPageIdMatch[1];
+          ga(t+'.set', 'dimension23', itemId);
+        }
+
+
+
+        if (!getCookie('CookieConsent') || consentToExperimentsEnrollmentGiven()) {
+          var experimentEnrolmentsDataString = ""
+          setExperimentEnrollments(experimentEnrolmentsDataString);
+        }
+
+          if ('') {
+            ga(t+'.send', {
+              hitType: 'pageview',
+              page: ''
+            });
+          } else if ('') {
+            // append the analytics_suffix to the page path so the flash alert/error type can be tracked
+            var analyticsSuffix = $.trim('').replace(/([A-Z])/g, '$1').replace(/[-_\s]+/g, '-').toLowerCase();
+            var uri = URI(window.location.pathname + window.location.search);
+            uri.path(uri.path() + '/' + analyticsSuffix);
+            var tracking_path = uri.path() + uri.search();
+            ga(t+'.send', {
+              hitType: 'pageview',
+              page: tracking_path,
+            });
+          } else {
+            ga(t+'.send', 'pageview');
+          }
+      }
+
+      loadLinkingForAllAccounts()
+    }());
+  }
+
+  function loadGoogleAnalytics() {
+    (function () {
+
+      var s=document.createElement('script');
+      s.type='text/javascript';
+      s.async=true;
+        s.src='https://www.google-analytics.com/analytics.js';
+      var x=document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s,x);
+    }());
+  }
+
+  function loadClickTracker() {
+    (function () {
+      var pageId = $('*[data-analytics-page-id]').data('analyticsPageId');
+      if (!pageId) return;
+
+      $('body').click( function (e) {
+        var target = $(e.target).closest('[data-analytics-element-id]');
+        var elementId = target.data('analyticsElementId');
+        var elementLabel = target.data('analyticsElementLabel');
+        var sectionId = $(target.parents('[data-analytics-section-id]')).data('analyticsSectionId');
+        var tagName = target.prop('nodeName')?.toLowerCase();
+
+        if (sectionId && elementId && tagName) {
+          sendStandardEvent({
+            eventType: 'click',
+            pageId,
+            sectionId,
+            elementId,
+            elementLabel,
+            tagName
+          });
+        }
+      });
+    }());
+  }
+
+  
+    var accountId = "UA-70358231-6";
+
+    var options = {
+      name: "author_analytics",
+      allowLinker: true,
+      alwaysSendReferrer: true,
+      cookieDomain: "auto",
+    };
+
+    if (Market.Helpers.GaLsUtils.localStorageAvailable()) {
+      if (Market.Helpers.GaLsUtils.clientIdNotPresent()) {
+        options.clientId = Market.Helpers.GaLsUtils.retrieveClientId();
+      }
+
+      ga("create", accountId, options);
+    } else {
+      ga("create", accountId, options);
+    }
+
+
+      ga("author_analytics.send", "pageview");
+
+
+
+
+//]]>
+</script>
+
+
+
+  
+<script nonce="biIXU3Nq5j8SohDzA935dw==">
+//<![CDATA[
+
+    if (typeof Cookiebot !== 'undefined' && Cookiebot.consent && Cookiebot.consent.statistics ) {
+      enableGoogleAnalyticsLinkWrapper();
+    } else {
+      window.addEventListener('CookiebotOnAccept', function (e) {
+        if (Cookiebot.consent.statistics) {
+          enableGoogleAnalyticsLinkWrapper();
+        }
+      }, false);
+    }
+
+  function enableGoogleAnalyticsLinkWrapper() {
+    // GA: universal analytics link wrapper
+    (function(){
+        window._envTrkrs = [["m", "UA-11834194-12"]];
+
+        var debug = false;
+        var MAX_RETRIES = 10;
+
+        /*
+           The script needs to wait until the Analytics script
+           has been downloaded from Google before initializing
+        */
+        var waitForAnalytics = function(){
+            this.count = this.count || 0;
+
+            if (window.ga && ga.getByName) {
+                e.init();
+            } else {
+                if (count < MAX_RETRIES) { setTimeout(waitForAnalytics, 250); }
+                count++;
+            }
+        };
+
+        var e = {
+            _envArray: [],
+            _envTrkrs: (window._envTrkrsCust && window._envTrkrsCust.length) ? window._envTrkrs.concat(window._envTrkrsCust) : window._envTrkrs,
+            init: function() {
+                for (var i=0; i < _envTrkrs.length; i++) {
+                    var name = _envTrkrs[i][0];
+
+                    if (!ga.getByName(name)) {
+                        var accountId = _envTrkrs[i][1];
+
+                        var options = {
+                            name: name,
+                            allowLinker: true,
+                            cookieDomain: "auto",
+                        };
+
+                        if (Market.Helpers.GaLsUtils.localStorageAvailable()) {
+                            if (Market.Helpers.GaLsUtils.clientIdNotPresent()) {
+                                options.clientId = Market.Helpers.GaLsUtils.retrieveClientId();
+                            }
+
+                            ga("create", accountId, options);
+                        } else {
+                            ga("create", accountId, options);
+                        }
+                    }
+                }
+
+                document.addEventListener('DOMContentLoaded', function(){
+                    e.wrapperInit();
+                });
+
+                if (debug) {console.log('Initiated');}
+            },
+            wrapperInit: function() {
+                if (typeof window._envIsRunning != 'undefined' || window._envIsRunning == true) {
+                    return
+                }
+                window._envIsRunning = true;
+
+                if (document.addEventListener) {
+                    document.addEventListener('click', function(event){
+                        var target = event.target;
+                        if (target && target.tagName === 'A') {
+                            e._envLinksTracker(event);
+                        }
+                    });
+                }
+            },
+            isInArray: function(e, t) {
+                for (var n = 0; n < t.length; n++) {
+                    var r = new RegExp(t[n], 'i');
+                    if (r.test(e)) {
+                        return n
+                    }
+                }
+                return -1
+            },
+            _envTrackevent: function(e, t, n, r) {
+                for (var i = 0; i < this._envTrkrs.length; i++) {
+                    var s = this._envTrkrs[i][0].length == 0 ? '' : this._envTrkrs[i][0] + '.';
+                    r.length == 0 ? ga(s + 'send', 'event', e, t, n) : ga(s + 'send', 'event', e, t, n, r)
+                }
+            },
+            _envTrackpageview: function(e, t) {
+                t = t.charAt(0) == '/' ? t : '/' + t;
+                for (var n = 0; n < this._envTrkrs.length; n++) {
+                    var r = this._envTrkrs[n][0].length == 0 ? '' : this._envTrkrs[n][0] + '.';
+                    ga(r + 'send', 'pageview', e + t);
+                }
+            },
+            _envLinksTracker: function(t) {
+                var r = false;
+                var i = {
+                    outbound: {
+                        run: true,
+                        useEvent: true
+                    },
+                    download: {
+                        run: true,
+                        useEvent: true,
+                        reg: ''
+                    },
+                    self: {
+                        run: false,
+                        useEvent: true
+                    },
+                    mail: {
+                        run: true,
+                        useEvent: true
+                    },
+                    ext: /\.(doc.?|xls.?|ppt.?|exe|zip|rar|gz|tar|tgz|dmg|csv|pdf|xpi|txt|mp3)$/i
+                };
+                var s = t.srcElement ? t.srcElement : this;
+                if (t.srcElement) {
+                    r = true
+                }
+                while (s.tagName != 'A') {
+                    s = s.parentNode
+                }
+                if (s.href == undefined || s.href == null) {
+                    return true
+                }
+                var o = s.href;
+                if (o.length == 0) return;
+                var u = s.hostname.toLowerCase();
+                var a = s.pathname;
+                if (a.length == 0) {
+                    a = '/'
+                } else if (a.substr(0, 1) != '/') {
+                    a = '/' + a
+                }
+                var f = s.protocol;
+                var l = s.search;
+                var c = location.hostname;
+                c = c.replace(/^www\./i, '').toLowerCase();
+                u = u.replace(/^www\./i, '').toLowerCase();
+                if (o.match(/^#/)) {
+                    if (i.self.run) {
+                        i.self.useEvent ? e._envTrackevent('self', 'click - ' + c, o, '') : e._envTrackpageview('/virtual/self', '/' + o);
+                        return true
+                    }
+                } else if (f.match(/^mailto:/i)) {
+                    if (i.mail.run) {
+                        o = o.replace(/^mailto:/i, '');
+                        i.mail.useEvent ? e._envTrackevent('mailto', 'click - ' + c, o, '') : e._envTrackpageview('/virtual/mailto', o);
+                        return true
+                    }
+                } else if ((new RegExp(i.ext)).test(a)) {
+                    if (i.download.run) {
+                        o = o.replace(/^https?:\/\//i, '');
+                        i.download.useEvent ? e._envTrackevent('download', 'click - ' + c, o, '') : e._envTrackpageview('/virtual/download', o);
+                        return true
+                    }
+                } else if (u == undefined || u.length == 0 || f.match(/^javascript:/i)) {
+                    return
+                } else if ((new RegExp(c + '$', 'i')).test(u) || (new RegExp(u + '$', 'i')).test(c)) {
+                    if (i.download.run && i.download.reg.length != 0) {
+                        if ((new RegExp(i.download.reg, 'i')).test(a + l)) {
+                            o = o.replace(/^https?:\/\//i, '');
+                            i.download.useEvent ? e._envTrackevent('download', 'click - ' + c, o, '') : e._envTrackpageview('/virtual/download', o);
+                            return true
+                        }
+                    }
+                } else if (u != c) {
+                    if (e.isInArray(u, e._envArray) == -1) {
+                        if (i.outbound.run) {
+                            i.outbound.useEvent ? e._envTrackevent('outbound', 'click - ' + c, u + a + l, '') : e._envTrackpageview('/virtual/outbound', u + a);
+                            return true
+                        }
+                    } else if (e.isInArray(u, e._envArray) != -1) {
+                        var h = s.target;
+                        if (h != null && h == '_blank') {
+                            if ((new RegExp(/_utma=/)).test(l)) {
+                                return true
+                            }
+                            var p = e._envTrkrs[0][0].length == 0 ? '' : _envTrkrs[0][0] + '.';
+                            return true
+                        } else {
+                            return false
+                        }
+                    }
+                }
+            }
+        };
+
+        waitForAnalytics();
+    })()
+  }
+
+//]]>
+</script>
+
+
+
+<script nonce="biIXU3Nq5j8SohDzA935dw==">
+//<![CDATA[
+  // Set Datadog custom attributes
+  (function () {
+    if (typeof window.datadog_attributes != 'object')
+      window.datadog_attributes = {}
+    window.datadog_attributes['pageType'] = 'other'
+
+    // Log experiment enrolment
+    var experiment_data_string = "" + "!"
+    window.datadog_attributes['experiments'] = experiment_data_string
+  })()
+
+//]]>
+</script>
+
+  <script nonce="biIXU3Nq5j8SohDzA935dw==">
+//<![CDATA[
+    if (typeof Cookiebot !== 'undefined' && Cookiebot.consent && Cookiebot.consent.marketing) {
+      enableGoogleTagManager();
+    } else {
+      window.addEventListener('CookiebotOnAccept', function (e) {
+        if (Cookiebot.consent.marketing) {
+          enableGoogleTagManager();
+        }
+      }, false);
+    }
+
+  function enableGoogleTagManager() {
+
+  }
+
+//]]>
+</script>
+
+
+</body></html>
+

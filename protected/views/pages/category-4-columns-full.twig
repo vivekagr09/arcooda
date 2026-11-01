@@ -1,0 +1,18 @@
+{#
+// inputs:
+#}
+
+{% set brands = inputs.brands %}
+{% set categories = inputs.categories %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/components/category-page.twig' with {inputs: {
+        layout: 'columns-4-full',
+        brands: brands,
+        categories: categories,
+    }} %}
+{% endblock %}
+
+

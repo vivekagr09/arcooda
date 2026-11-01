@@ -1,0 +1,13 @@
+{#
+// inputs:
+#}
+
+{% set categories = inputs.categories %}
+{% set specification = inputs.specification %}
+
+{% include '/components/product-page.twig' with {inputs: {
+    layout: 'sidebar',
+    sidebar: 'start',
+    categories: categories,
+    specification: specification,
+}} %}

@@ -1,0 +1,14 @@
+parameters:
+ level: 9
+ phpVersion: 70325
+ paths:
+  - ..
+ excludePaths:
+  analyse:
+   - vendor/*
+   - ../webadmin/vendor/*
+  analyseAndScan:
+   - cache/*
+   - ../accounting/*
+   - ../ckfinder/*
+   - ../codezip/*

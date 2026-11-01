@@ -1,0 +1,27 @@
+.label{
+	font: bold 12px verdana,arial,helvetica;
+	color: #004891;
+	width: 150px;
+	float: left;
+	text-align: right;
+	/*padding-right: 10px;
+	margin-top: 5px;*/
+}
+.fright{
+	font: bold 14px verdana;
+	margin-top: 5px;
+	height: 20px;
+	width: 500px;
+}
+.description{
+	width: 96px;
+	height: 4px;
+	border: 1px solid #000000;
+}
+.border{
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #000000;
+	width: 80px;
+	height: 5px;
+}

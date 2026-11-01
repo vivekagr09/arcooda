@@ -1,0 +1,23 @@
+Touch Screen Monitor Stand - Model LDT121-T01
+
+https://www.lumi.cn/en/lumi-ergo/monitor-arms/monitor-arm/ldt121-t01
+
+width = 210mm
+height = 300mm
+depth = 210mm
+weight = 1kg
+box weight = 1kg
+box dimeensions = 225x225x60mm
+
+
+vesa support 75, 100
+vesa hole size = 4.3mm
+rated for 6.5kg/14.3lbs
+recommended screen sizes = 27" nax
+ 
+Includes :-
+
+- 4* M3x8mm bolts  (vesa Mounting)
+- 4* M4x10mm bolts  (vesa Mounting)
+
+

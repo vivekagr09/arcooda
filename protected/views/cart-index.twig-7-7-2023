@@ -1,0 +1,523 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - cart:
+#}
+{% set global_page_title           = inputs.title|default('Shopping Cart')        %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = inputs.keywords|default('')                   %}
+{% set global_page_canonical       = '/cart/index'                                %}
+{% set global_page_breadcrumbs     = [
+{title : 'Home', url : '/'},
+{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_cart_page    = global_page_canonical                        %}
+{% set cart = inputs.cart|default(cart()) %}
+{% set type =inputs.type %}
+{% set titletop =inputs.titletop %}
+{% set user         = user() %}
+{% set invoice_courier_quotes  = inputs.invoice_courier_quotes %}
+{% set invoice  = inputs.invoice %}
+{% set invoice_discounts  = inputs.invoice_discounts %}
+{% set coupon  = inputs.coupon %}
+{% set ship_address_array = inputs.ship_address_array %}
+{% set member_couriers    = inputs.member_couriers    %}
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+{% set invoice_charges         = inputs.invoice_charges        %}
+{% include '/blocks/block-header.twig' with {inputs: {
+title: titletop,
+breadcrumb: global_page_breadcrumbs,
+}} %}
+<div class="block">
+   <div class="container">
+      <div class="cart custom-cartWrappers">
+        <div>
+             <div class="cart__table cart-table">
+                
+                   <table class="cart-table__table">
+                      <thead class="cart-table__head">
+                         <tr class="cart-table__row">
+                            {#<th class="cart-table__column ">Id</th>#}
+                            <th class="cart-table__column cart-table__column--image">Image</th>
+                            <th class="cart-table__column cart-table__column--product" style="width:30%">Product</th>
+                            <th class="cart-table__column cart-table__column--availability">Availability</th>
+                            <th class="cart-table__column cart-table__column--price">Price</th>
+                            <th class="cart-table__column cart-table__column--quantity">Quantity</th>
+                            <th class="cart-table__column cart-table__column--total">Total</th>
+                            <th class="cart-table__column cart-table__column--remove"></th>
+                         </tr>
+                      </thead>
+                      <tbody class="cart-table__body">
+                        <form action="" method="post">
+                         {% for item in cart.items(type) %}
+
+                         <tr class="cart-table__row">
+                            {#<td class="cart-table__column">{{item.product_id}}{% if item.colour_id>0 %}{{item.colour_code}} {% endif %}</td>#}
+                            <td class="cart-table__column cart-table__column--image"><a href="{{ item.url|e }}"><img src="{{ image(item.image, {size: 160})|e }}" alt="{{ item.image.alt|e }}" /></a></td>
+                            <td class="cart-table__column cart-table__column--product">
+                               <a href="{{ item.url|e }}" style="width:30%">{{ item.name|e }} {% if item.colour_id > 0 %}-{{ item.colour_name|e }} {% endif %}</a><br />
+                               <span class="product-warranty">Product Id : {{ item.product_id|e }}{% if item.colour_id>0 %}{{item.colour_code}} {% endif %}</span><br />
+                               {% if item.location %}<span class="product-warranty">Location : {{ item.location|e }}</span><br />{% endif %}
+                               {% if item.warranty %}<span class="product-warranty">Warranty : {{ item.warranty|e }}</span><br />{% endif %}
+                               {% if item.options %}<ul class="cart-table__options">{% for option in item.options %}<li>{{ option.name|e }}: {{ option.value|e }}</li>{% endfor %}</ul><br />{% endif %}
+                               <span class="product-warranty" style="background-color: #c0e8c9;">{{ item.discount|e }}</span><br />
+                                {% if item.availability=='Pre Order' %}
+                                    <div class="row" style="margin-bottom: 37px;">
+                                        <div class="col-md-2">
+                                           <span class="badge badge-warning" style="height:17px;">{{ item.availability|e }}
+                                           </span>
+                                       </div>
+                                       <div class="col-md-10">
+                                            <div><i>*
+                                            {% if item.full_payment=='y' %}
+                                               <span class="product-warranty"> Full payment needed</span>
+                                            {% else %}
+                                            <span class="product-warranty">${{item.deposit_needed}} deposit needed, balance prior to shipping</span>
+                                            {% endif %}
+                                            </i></div>
+                                            <div><i><span class="product-warranty">* Estimated delivery date is {{item.arrival_date}} </span></i></div>
+                                        </div>
+
+                                    </div>
+                                  {% endif %}
+                            </td>
+                            <td class="cart-table__column cart-table__column--price" data-title="Availability" style="text-align: left;">
+                                {% if item.colour_id >0 %}
+                                    {% if item.colorstock %}
+                                    <span class="badge badge-success">In Stock</span>
+                                    {% else %}
+                                    <span class="badge badge-danger">Sold Out</span>
+                                    {% endif %}
+                                {% else %}
+                                  {% if item.availability=='Pre Order'%}
+                                    <span class="badge badge-warning">{{ item.availability|e }}
+                                                       </span>
+                                  {% elseif item.availability in ['In Stock', 'Stock'] %}
+                                      <span class="badge badge-success">{{ item.availability|e }}</span>
+                                  {% else %}
+                                      <span class="badge badge-danger">{{ item.availability|e }}</span>
+                                  {% endif %}
+                                {% endif %}
+                            </td>
+                            <td class="cart-table__column cart-table__column--price" data-title="Price">
+
+                               {% if item.compareAtPrice and item.compareAtPriceValue >0 %}
+                              <span class="product__price--old">{{ item.compareAtPrice }}</span><br />
+                               <span class="product__price--new">{{ item.priceValue }}</span>
+                               {% else %}
+                                   {% if item.priceValue=='$0.00' %}
+                                     Please Ask
+                                  {% else %}
+                                    {{item.priceValue}}
+                                  {% endif %}
+
+                               {% endif %}
+                            </td>
+                            <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
+                               <div class="cart-table__quantity input-number">
+                                  <input class="form-control input-number__input" type="number" min="1" name="product_qty[{{ item.id }}]" value="{{ item.quantity }}" />
+                                  <div class="input-number__add"></div>
+                                  <div class="input-number__sub"></div>
+                               </div>
+                               <div class="cart-table__update-button">
+                                     <input type="hidden" name="action" value="update" />
+                                     <button type="submit" class="btn btn-sm btn-primary" style="width: 100%; margin-top: 4px;">Update Cart</button>
+                                  </div>
+                            </td>
+                            <td class="cart-table__column cart-table__column--total" data-title="Total">{{ item.total(type)=='0.00' ? 'Please Ask' : item.total(type) }}</td>
+                            <td class="cart-table__column cart-table__column--remove"><button type="button" class="cart-table__remove btn btn-sm btn-icon btn-muted" onclick="document.getElementById('cart-index-remove-form-{{ item.id }}').submit();">{{ svg_inline('cross-12.svg') }}</button></td>
+                         </tr>
+
+                         {% endfor %}
+                              {% for courier_quote in invoice_courier_quotes %}
+                          {% if invoice.ship_number == courier_quote.ship_number %}
+                          <tr class="cart-table__row">
+
+                            <td class="cart-table__column cart-table__product-name" data-title="Total" style="text-align: center;">{{courier_quote.ship_number|e}}</td>
+                            <td class="cart-table__column cart-table__product-name--" data-title="Name">
+                              <div>Freight : {{ courier_quote.name|e }}</div>
+                              <div>Insurance : {{ (courier_quote.insurance=='y')?'Yes':'No'}}</div>
+                              <br/>
+                               <span class="product-warranty">
+                                 Freight automatically selected based on your main shipping address, your preferences and/or availability. To choose different freight please
+                                 <a style="cursor:pointer;color: #0064f0 !important;" class="change_freight_show" data-toggle="modal" data-target="#Show-all-freight">click here</a>
+                              </span>                              
+                            </td>
+                            <td class="cart-table__column cart-table__column--price" data-title="Total">
+                              
+
+                            </td>
+                            <td class="cart-table__column cart-table__column--total" data-title="Total">
+                              ${{ courier_quote.sell_price|e }} {{ invoice.invoice_currency|e }}
+                            </td>
+                            <td class="cart-table__column cart-table__column--total" data-title="Total">
+
+                              
+                            </td>
+                            <td class="cart-table__column cart-table__column--price" data-title="Total">
+                              ${{ courier_quote.sell_price|e }} {{ invoice.invoice_currency|e }}
+                            </td>
+                            <td class="cart-table__column cart-table__column--remove"><button type="button" class="cart-table__remove btn btn-sm btn-icon btn-muted change_freight_show" data-toggle="modal" data-target="#Show-all-freight"><i class="fas fa-edit"></i></button></td>
+                          </tr>
+                          {% endif %}
+                          {% endfor %}
+                          {% if member_couriers|length > 0 and invoice.shipping_method == 'customer_forwarder'  and cart.items|length > 0 %}
+                           <tr class="cart-table__row">
+
+                            <td class="cart-table__column cart-table__product-name" data-title="Total" style="text-align: center;">NA<!-- {{ (member_couriers.courier_id == 0) ? 'NA' : member_couriers.courier_id }} --></td>
+                            <td class="cart-table__column cart-table__product-name--" data-title="Name">
+                              <div>Freight : {{ member_couriers.courier_name|e }} ( Personal Account)  Account Number #{{ member_couriers.account_num|e }}</div>
+                              <div>Insurance : {{ (member_couriers.insurance=='y')?'Yes':'No'}}</div>
+                              <br/>
+                               <span class="product-warranty">
+                                 Freight automatically selected based on your main shipping address, your preferences and/or availability. To choose different freight please
+                                 <a style="cursor:pointer;color: #0064f0 !important;" class="change_freight_show" data-toggle="modal" data-target="#Show-all-freight">click here</a>
+                              </span>                              
+                            </td>
+                            <td class="cart-table__column cart-table__column--price" data-title="Total">
+                              
+
+                            </td>
+                            <td class="cart-table__column cart-table__column--total" data-title="Total">
+                                 0.00 {{ invoice.invoice_currency|e }}                              
+                            </td>
+                            <td class="cart-table__column cart-table__column--total" data-title="Total">
+
+                              
+                            </td>
+                            <td class="cart-table__column cart-table__column--price" data-title="Total">
+                                 0.00 {{ invoice.invoice_currency|e }}
+                            </td>
+                            <td class="cart-table__column cart-table__column--remove"><button type="button" class="cart-table__remove btn btn-sm btn-icon btn-muted change_freight_show" data-toggle="modal" data-target="#Show-all-freight"><i class="fas fa-edit"></i></button></td>
+                          </tr>
+                          {% endif %}
+                       
+                       </form>
+                      </tbody>
+                      {% if cart.items|length > 0 %}
+                      <tfoot class="cart-table__foot">
+                         <tr>
+                            <td colspan="12">
+                               <div class="cart-table__actions">
+
+                                {% if type!='quote' %}
+                                  <div class="cart-table__coupon-form form-row">
+                                     {% if coupon.name %}
+                                     <form method="post" style="display:flex;">
+                                      <input type="hidden" name="action" value="removecoupon" />
+                                        <span style="color: green ;margin-top: 30px;">Code Applied!<br>
+                                        {{ coupon.description }} <br> Code: {{ coupon.name }} <br><br><button name="removecoupon" type="submit" class="btn btn-sm btn-danger">Remove Coupon</button> </span>
+                                       
+                                     </form>
+                                     {% else%}
+
+                                    <form method="post" style="display:flex;">
+                                       <div class="form-group mb-0 col flex-grow-1">
+                                      <input type="hidden" name="action" value="applycoupon" />
+                                      <input type="text"  class="form-control form-control-sm"  name="couponcode"  placeholder="Coupon Code" />  </div>
+                                       
+                                       <div class="form-group mb-0 col-auto"><button name="applycoupon" type="submit" class="btn btn-sm btn-primary">Apply Coupon</button>                                      
+                                       {% if coupon.description == 'invalid' %}<br><span style='color:red'>Invalid or Expired Coupon!</span>{% endif %}
+                                      </div>
+
+                                    </form>
+
+
+                                      {% endif %}
+
+                                  </div>
+                                  {% else %}
+                                  {% if type=='quote' %}
+                                        <div class="custom-cart-leftTableWrap">
+                                          <div class="cart__table cart-table">
+                                          <textarea name="checkout[customer_requests]" id="quote_request_comment" rows="5" style="width: 100%;padding: 2px;" placeholder="Please add your comments and questions here"></textarea>
+                                        </div>
+                                      </div>
+                                  {% endif %}
+                                  {% endif %}
+
+                                   
+
+                                  <div  class="custom-cartTotal-wrapper">
+            <div class="card">
+               <div class="card-body card-body--padding--2">
+                  <h3 class="card-title">Cart Totals</h3>
+                  <table class="cart__totals-table">
+                     {# <thead>
+                        <tr>
+                           <th>Subtotal</th>
+                           <td style="padding-top:0px;">{{invoice.products_offer}} USD</td>
+                        </tr>
+                     </thead> #}
+                     {% if invoice_discounts | length > 0 %}
+                      <tbody>
+                        {% for discount in invoice_discounts %}
+                        <tr>
+                           <th>Subtotal</th>
+                           <td style="padding-top:0px;">{{(invoice.products_offer + discount.price_deducted) | round(2, 'floor') }} USD</td>
+                        </tr>
+                        <tr>
+                           <th>Coupon Applied</th>
+                           <td style="color: green ;">-{{ discount.price_deducted|round(2, 'floor') }} USD</td>
+                        </tr>{% endfor %}
+                      </tbody>
+                      {% else %}
+                        <thead>
+                           <tr>
+                              <th>Subtotal</th>
+                              <td style="padding-top:0px;">{{invoice.products_offer}} USD</td>
+                           </tr>
+                        </thead>
+                      {% endif %}
+                      {% if invoice.ship_number %}
+                      <tbody>
+                        <tr>
+                          <th>Shipping</th>
+                          <td>${{ invoice.ship_online }} USD</td>
+                        </tr>
+                      </tbody>
+                      {% endif %}
+                     <tbody class="checkout__totals-charges">{% for item in invoice_charges %}
+                      <tr>
+                          <th>C{{ item.charge_id }} {{ item.charge_name }}</th>
+                          <td>${{ item.charge_offer | number_format(2, '.', ',') }}</td>
+                      </tr>{% endfor %}</tbody>
+
+                      
+
+                     <tfoot>
+                        <tr>
+                           <th>Total</th>
+                           <td>
+                                 <!-- {% if invoice.invoice_offer == 0 %}
+                                       TBA
+                                 {% else %}
+                              {{ invoice.invoice_offer }} {{ invoice.invoice_currency|e }}
+
+                                 {% endif %}
+ -->  {{invoice.invoice_offer |round(2, 'floor')}} USD
+                           </td>
+                        </tr>
+                     </tfoot>
+                  </table>
+                  {% if cart.items|length > 0 %}
+                    {% if type=='quote' %}
+                    {#
+                    <button type="button" class="btn btn-warning btn-xl btn-block proceed-to-checkout" value="Proceed to checkout" name="checkput">Send Inquiry/Quote Request</button>
+                    #}
+                    {#
+                    <a class="btn btn-warning btn-lg btn-block" href="/cart/express-checkout?type=quote">Send Inquiry/Quote Request</a>
+                    #}
+                    {# <button type="button" class="btn btn-warning btn-lg btn-block" onclick="window.open('/cart/assisted-checkout?type=quote', 'assisted-checkout', 'width=576,height=600,resizable,scrollbars');">Send Inquiry/Quote Request</button> #}
+                    <button type="button" class="btn btn-warning btn-lg btn-block" onclick="quote_request();">Send Inquiry/Quote Request</button>
+                    {% else %}
+                      {#
+                      <button type="button" class="btn btn-primary btn-xl btn-block proceed-to-checkout" value="Proceed to checkout" name="checkput">Proceed to Checkout</button>
+                      #}
+                      {#
+                      <a class="btn btn-primary btn-lg btn-block" href="/cart/express-checkout?type=shopping">Send Inquiry/Quote Request</a>
+                      #}
+                      <button type="button" class="btn btn-primary btn-lg btn-block proceed-to-checkout">Proceed to Checkout</button>
+                    {% endif %}
+                  {% endif %}
+               </div>
+            </div>
+         </div>
+                               </div>
+                            </td>
+                         </tr>
+                      </tfoot>
+                      {% endif %}
+                   </table>
+                </form>
+                <div class="d-none">
+                   {% for item in cart.items(type) %}
+                   <form id="cart-index-remove-form-{{ item.id }}" action="" method="post">
+                      <input type="hidden" name="id" value="{{ item.id }}" />
+                      <input type="hidden" name="type" value="{{ type }}" />
+                      <input type="hidden" name="action" value="remove" />
+                   </form>
+                   {% endfor %}
+                </div>
+             </div>
+        </div>
+        <form id="removefright" action="" method="post">
+          <input type="hidden" name="action" value="remove_fright" />
+        </form>
+         
+         <div class="card-divider"></div>
+      </div>
+   </div>
+{# } #}
+</div>
+<div class="modal fade bd-example-modal-lg" id="Show-all-freight" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Freight Cost to</h5>
+        <form action='' method="post" id="change_freight_country" style="margin-left:10px; width: 40%;">
+             <select name="checkout[shipaddr_id]" class="form-control custom-select" id="change_shipper_id">
+                {% if ship_address_array | length >0 %}
+                {% for key,ship in ship_address_array %}
+                <option value="{{ key }}" {{ (key == invoice.shipaddr_id) ? ' selected="selected"' : '' }}>
+                   {{ ship|e }}
+                {% endfor %}
+                {% endif %}
+                </option>
+             </select>
+        </form> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <form action='' method="post" id="checkout_form">
+      <div class="modal-body">
+         {#% if 'quote' == type %}<div class="custom-cart-leftTableWrap"><div class="cart__table cart-table"><textarea name="checkout[customer_requests]" rows="5" style="width: 100%;padding: 2px;" placeholder="Please add your comments and questions here"></textarea></div></div>{% endif %#}
+         <div class="clearfix hide-address-class hide-address">
+            {% if cart.items|length > 0 %}
+                <div class="feightCost-countryTableWrap" style="padding: 20px;">
+                   <div class="card-body card-body--padding--2 accordion ">
+                      <table class="cart-table__table ">
+                         <thead class="cart-table__head">
+                            <tr class="cart-table__row">
+                               <th class="cart-table__column cart-table__column--image"></th>
+                               <th class="cart-table__column">SERVICE</th>
+                               <th class="cart-table__column">PRICE</th>
+                               <th class="cart-table__column">TRANSIT TIME</th>
+                               <th class="cart-table__column">TRACKING</th>
+                               <th class="cart-table__column">NOTES</th>
+                            </tr>
+                         </thead>
+                         <tr class="cart-table__row myfrightdata {{ invoice.shipping_method == 'pickup' ? 'active-row' : '' }}">
+                            <td class="cart-table__column cart-table__column--quantity" data-title="">
+                               <div class="form-group">
+                                  <input type="radio" name="checkout[ship_number]" class="" value="pickup" {{ invoice.shipping_method == 'pickup' ? ' checked="checked"' : '' }}/>
+                               </div>
+                            </td>
+                            <td class="cart-table__column" data-title="service">
+                               Pickup
+                            </td>
+                            <td class="cart-table__column" data-title="price">
+
+                            </td>
+                            <td class="cart-table__column" data-title="time">
+
+                            </td>
+                            <td class="cart-table__column" data-title="track">
+
+                            </td>
+                            <td class="cart-table__column" data-title="notes">
+
+                            </td>
+                         </tr>
+                         {% for courier_quote in invoice_courier_quotes|sort((a, b) => a.sell_priceus <=> b.sell_priceus) %}
+                         <tr class="cart-table__row myfrightdata {{ invoice.ship_number == courier_quote.ship_number ? 'active-row' : '' }}">
+                            <td class="cart-table__column cart-table__column--quantity" data-title="">
+                               <div class="form-group">
+                                  <input type="radio" name="checkout[ship_number]" value="{{ courier_quote.ship_number }}"{{ invoice.ship_number == courier_quote.ship_number ? ' checked="checked"' : '' }} />
+                               </div>
+                            </td>
+                            <td class="cart-table__column" data-title="service">
+                               {{ courier_quote.name|e }}
+                            </td>
+                            <td class="cart-table__column" data-title="price">
+                               <span class="float-left">${{ courier_quote.sell_price|e }} {{ invoice.invoice_currency|e }}</span>
+                            </td>
+                            <td class="cart-table__column" data-title="time">
+                               {{(courier_quote.del_time)?courier_quote.del_time|e:'N/A'}}
+                            </td>
+                            <td class="cart-table__column" data-title="track">
+                               {{(courier_quote.track == 'y')?'YES':'NO'}}
+                            </td>
+                            <td class="cart-table__column" data-title="notes">
+                               N/A
+                            </td>
+                         </tr>
+                         {% endfor %}
+                         {% if member_couriers|length > 0 %}
+                         <tr class="cart-table__row myfrightdata {{ invoice.ship_number == 'own_0' ? 'active-row' : '' }}">
+                            <td class="cart-table__column cart-table__column--quantity" data-title="">
+                               <div class="form-group">
+                                  <input type="radio" name="checkout[ship_number]" value="own_0"{{ invoice.shipping_method == "customer_forwarder" ? ' checked="checked"' : '' }} />
+                               </div>
+                            </td>
+                            <td class="cart-table__column" data-title="service">
+                                {{ member_couriers.courier_name|e }} ( Personal Account)  Account Number #{{ member_couriers.account_num|e }}
+                            </td>
+                            <td class="cart-table__column" data-title="price">
+                               <span class="float-left">$0.00 {{ invoice.invoice_currency|e }}</span>
+                            </td>
+                            <td class="cart-table__column" data-title="time">N/A
+                            </td>
+                            <td class="cart-table__column" data-title="track">
+                            N/A
+                            </td>
+                            <td class="cart-table__column" data-title="notes">
+                               N/A
+                            </td>
+                         </tr>
+                         {% endif %}
+                      </table>
+                   </div>
+                </div>
+            {% endif %}
+         </div>
+         <input type="hidden" name="type" value="{{type}}" id="cart_type" />
+              <input type="hidden" name="action" value="" id="action_order" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript">
+//<![CDATA[
+
+window.addEventListener('load', function() {
+        /*$("[name='checkout[freight_need]'],[name='checkout[paymenttype_id]'],[name='checkout[ship_number]']").change(function(e) {
+             e.preventDefault();
+             $('#checkout_form').attr('action', '');
+             $('#checkout_form').submit();
+            //$('.myfrightdata').removeClass('active-row');
+            //$(this).parent().parent().parent().addClass('active-row');
+            //this.form.submit();
+        });*/
+        $('#change_shipper_id').change(function(){
+            $('#change_freight_country').submit();
+        })
+        $('.proceed-to-checkout').click(function(){
+          if($('#cart_type').val()=='quote'){
+            $('#checkout_form').attr('action', '/quote-checkout');
+            $('#action_order').val('submit_order');
+          }else{
+            $('#checkout_form').attr('action', '/checkout');
+          }
+            $('#checkout_form').submit();
+        });
+        $('.change_freight_show').click(function(e){
+            e.preventDefault();
+            if($('.hide-address-class').hasClass('hide-address')){
+              $('.hide-address-class').removeClass('hide-address');
+            }
+        });
+    }, false);
+    //]]>
+
+    function quote_request()
+    {
+      var comment = $('#quote_request_comment').val();
+      var url = '/cart/assisted-checkout?type=quote&comment='+comment;
+      window.open(url, 'assisted-checkout', 'width=576,height=600,resizable,scrollbars');
+    }
+
+    </script>
+{% include '/blocks/block-space.twig' with {inputs: {
+layout: 'before-footer'
+}} %}
+{% endblock %}

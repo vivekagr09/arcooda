@@ -1,0 +1,43 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - orders:
+// - page:
+#}
+
+{% set global_page_title           = inputs.title|default('Inquiry')        %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/inquiry'                            %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : 'Inquiry',      url : '/inquiry' },
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+{% set title_front           = inputs.title_front  %}
+{% set member                = inputs.member  %}
+{% include '/blocks/block-header.twig' with {inputs: {
+  title: '',
+  breadcrumb: global_page_breadcrumbs,
+}} %}
+<style>
+    @media screen and (max-width: 767px){
+        #inquiry-form-contact{
+            display: block !important;
+        }
+    }
+</style>
+<div class="block"><div class="container container-lg"><div class="card contacts">
+        <div class="card-body card-body--padding--2"><div class="row">
+            <div class="col-12 col-lg-6"><div class="ml-1">
+                <h4 class="contact-us__header card-title">Your Inquiry</h4>
+                {% include 'mobile/inquiry-form.twig' %}
+            </div></div>
+        </div></div>
+    </div></div></div>
+
+{% endblock %}

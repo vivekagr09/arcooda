@@ -1,0 +1,36 @@
+{#
+// inputs:
+// - layout: string - one of [columns-8-full, columns-7-sidebar] (default: columns-8-full)
+// - brands: [image, name]
+#}
+
+{% set layout = inputs.layout|default('columns-8-full') %}
+{% set root_classes = classnames('block block-brands block-brands--layout--' ~ layout) %}
+
+{#% set brands = data('block-brands.json') %#}
+{% set brands = inputs.brands %}
+
+<div class="container">
+	<div class="section-header">
+		<div class="section-header__body">
+			<h2 class="section-header__title">Purchase From Our Distributor</h2>
+			<div class="section-header__divider"></div>
+		</div>
+	</div>
+</div>
+
+<div class="{{ root_classes }}">
+    <div class="container">
+		<ul class="block-brands__list">
+			{% for brand in brands %}
+				<li class="block-brands__item">
+					<a  class="block-brands__item-link">
+						<img src="/img/products/{{ brand.item_image }}">
+						<span class="block-brands__item-name">{{ brand.company|e }}</span>
+					</a>
+				</li>
+				<li class="block-brands__divider" role="presentation"></li>
+			{% endfor %}
+		</ul>
+    </div>
+</div>

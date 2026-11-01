@@ -1,0 +1,58 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - category:
+// - products:
+// - layout:
+// - sort:
+// - show:
+// - page:     int
+// - pages:    int
+// - total:
+// - page_url: string
+// - filters:
+// - latest_products:
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set filters = inputs.filters %}
+{% set latest_products = inputs.latest_products %}
+{% set category = inputs.category %}
+{% set products = inputs.products %}
+{% set layout = inputs.layout %}
+{% set sort = inputs.sort %}
+{% set show = inputs.show %}
+{% set total = inputs.total %}
+
+{% set page = inputs.page %}
+{% set pages = inputs.pages %}
+{% set page_url = inputs.page_url %}
+
+{% set title = inputs.title %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/components/shop-page.twig' with {inputs: {
+        layout: layout|default('grid'),
+        grid: 'grid-4-sidebar',
+        sidebar: 'left',
+        filters: filters,
+        latest_products: latest_products,
+        page: page,
+        pages: pages,
+        page_url: page_url,
+        products: products,
+		title: title,
+	show: show
+    }} %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{#
+// inputs:
+// - post:   object - post object
+// - layout: string - one of [list, grid, grid-sm]
+#}
+
+{% set post = inputs.post %}
+{% set layout = inputs.layout %}
+{% set width  = inputs.width ? inputs.width :730   %}
+{% set height   = inputs.width ? inputs.height :485   %}
+{% set root_classes = classnames('post-card') %}
+
+{% if layout %}
+    {% set root_classes = classnames(root_classes, 'post-card--layout--' ~ layout) %}
+{% endif %}
+
+<div class="{{ root_classes }}">
+    {% if post.image -%}
+        <div class="post-card__image">
+            <a href="{{ post.url|e }}" title="{{ post.title|e }}">
+                <img src="{{ image(post.image, {size: [width, height]})|e }}" alt="{{ post.image.alt|e }}" loading="lazy"/>
+            </a>
+        </div>
+    {% endif -%}
+    <div class="post-card__content">
+        <div class="" style="display:flex; flex-wrap:wrap;">
+            {#% for category in post.categories %}
+                <a href="/arcade-news?category={{ category|e }}">{{ category|e }}</a>
+            {% endfor %#}
+            {% set categoryList = post.categories[0]|split(',') %}
+            {% for cat in categoryList %}
+                <a href="/arcade-news?category={{ cat|trim }}" style="font-size:14px;">{{ cat|trim }}</a>{% if not loop.last %},&nbsp;{% endif %}
+            {% endfor %}
+			{# <a href="/arcade-news?category={{ post.categories[0]|e }}">{{ post.categories[0]|replace({',': ', '})|e }}</a> #}
+        </div>
+        <div class="post-card__title mt-2" style="flex:0 0 100%;">
+            <h2><a href="{{ post.url|e }}">{{ post.name|e }}</a></h2>
+        </div>
+        <br>
+{#
+        <div class="post-card__date">
+            By <a href="">Jessica Moore</a> on {{ post.date|e }}
+        </div>
+#}
+        <div class="post-card__excerpt">
+            <div class="typography">
+                {{ markdown(post.excerpt) }}
+            </div>
+        </div>
+        <div class="post-card__more">
+            <a href="{{ post.url|e }}" class="btn btn-secondary btn-sm">Read more</a>
+        </div>
+    </div>
+</div>

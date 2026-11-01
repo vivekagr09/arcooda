@@ -1,0 +1,54 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - orders:
+// - page:
+#}
+
+{% set global_page_title           = inputs.title|default('Inquiry History')      %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/enquiries'                         %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : 'My Account',      url : '/account/dashboard' },
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set chunks    = inputs.orders|batch(25)                                        %}
+{% set page      = max(0, min(chunks|length - 1, inputs.page))                    %}
+{% set orders    = chunks[page]                                                   %}
+
+{% extends '/layouts/account.twig' %}
+
+{% block account_body %}
+    <div class="card">
+        <div class="card-header"><h5>Inquiry History</h5></div>
+        <div class="card-divider"></div>
+        <div class="card-table"><div class="table-responsive-sm"><table>
+            <thead><tr>
+                <th>Order</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+            </tr></thead>
+            <tbody>{% for order in orders %}<tr>
+                <td><a href="{{ order.url }}#TODO">{{ order.number }}</a></td>
+                <td>{{ order.date }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.total|currency }}</td>
+            </tr>{% endfor %}</tbody>
+        </table></div></div>
+        <div class="card-divider"></div>
+        {% if chunks|length > 1 %}<div class="card-footer">
+            {% include '/components/pagination.twig' with {inputs: {
+                page_url: '?p=',
+                page:     page,
+                pages:    chunks|length
+            }} %}
+        </div>{% endif %}
+    </div>
+{% endblock %}

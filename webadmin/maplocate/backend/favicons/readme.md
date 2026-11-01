@@ -1,0 +1,1 @@
+For backend put favicon.ico file in this directory.

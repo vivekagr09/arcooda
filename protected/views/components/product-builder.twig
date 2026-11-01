@@ -1,0 +1,78 @@
+{% set layout   = inputs.layout|default('sidebar') %}
+{% set classes  = inputs.classes|default('') %}
+{% set productBuilder     = inputs.productBuilder     %}
+<link rel="stylesheet" type="text/css"  href="/css/builder-style.css"/>
+<link rel="stylesheet" type="text/css" href="/builder/js/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="/builder/js/slick/slick-theme.css"/>
+<div class="block block-products-carousel" id="product_builder_div">
+	<div class="container">
+     	<div class="spec__section" style="width:100%">
+            <div class="section-header">
+			    <div class="section-header__body">
+			                    <h2 class="section-header__title">Build your own {{product.name }}</h2>
+			        <div class="section-header__spring"></div>
+						<div class="section-header__arrows">
+						          <a href="{{productBuilder.websites.link}}" target="_blank">{{productBuilder.name}}</a>      
+						</div>
+						        
+						<div class="section-header__divider"></div>
+					</div>
+			</div>
+			<div class="product-slider">
+	            <div id="main-content">
+		            <div id="machine-step">
+		            	<div style="padding: 25px 0; width: 75%; margin: auto;" id="machine-slider">
+							<div class='grid-inline-top align-middle machines' style=' width: 270px; margin: 10px; outline: none;'>
+								<div class='machine-selector button-selector option-container-border'>
+									<div class='option-container'>
+										<div class='option-name-wrapper'>
+											<h4>{{product.name}}</h4>
+										</div>
+
+										<div class='option-image-wrapper'>
+											<img src='{{product.image}}' width='250' height='250' class='option-image' />
+										</div>	
+										<div class='align-middle'>
+											<span class='option-price font-14'>${{productBuilder.machines.price}}</span><span class='option-price' style='font-size: 10PX;'>{{productBuilder.machines.currency}}</span>
+										</div>
+										<div class='desc-wrapper' style='display: none;'>
+											<p class='clr option-desc'>{{productBuilder.machines.description}}</p>
+										</div>
+										<div class='option-btn-wrapper'>
+											<div class='option-btn-radio' data-machine-name="{{productBuilder.machines.name}}" data-machine-key="{{productBuilder.machine_id}}" data-machine-price="{{productBuilder.machines.price}}"data-machine-currency="{{productBuilder.machines.currency}}" data-machine-thumb={{product.image}} data-machine-pickup="{{productBuilder.machines.delivery_pickup_price}}" data-machine-sea="{{productBuilder.machines.delivery_sea_price}}" data-machine-air="{{productBuilder.machines.delivery_air_price}}">
+											</div>
+										</div>
+									</div>
+								</div>
+			        		</div>
+		        		</div>
+		        	</div>
+		        	<ul class="clr" id="options-list" style="display: none;width:80%;" data-url="{{productBuilder.websites.link}}"></ul>
+		        	<div id="options-step" style="max-height: 550px;overflow-y: auto;overflow-x: hidden;display:flex;"></div>
+		        </div>
+		        <div id="footer-container">
+					<!-- Preview Image -->
+					<div class="align-middle grid-inline-mid" id="preview-img-container"><div id="preview-img-wrapper" class="grid-pdx10"><img src="http://via.placeholder.com/80x80" width="80" height="80" alt="Product Preview" id="preview-img" /></div></div>
+					<!-- #Preview Image -->
+
+					<div class="grid-inline-mid" id="total-price-container"><div id="total-price-wrapper" class="grid-pdx10 grid-inline-mid">
+						<span style="color: #5D7C89; font-size: 18px;">Total</span><br />
+						$<span id="total-price" data-price='0'>0</span><span id="currency" class="font-12">AUD</span>
+					</div></div>
+
+					<div class="grid-inline-mid" id="summary-footer" style="padding: 25px 10px; display: none;">
+						<h3 class="clr" style="color: #5D7C89;">YOUR BUILD</h3>
+						<h2 class="clr">SUMMARY</h2>
+					</div>
+
+					<!-- Buttons -->
+					<div class="align-middle grid-inline-mid" style="padding: 25px; float: right;" id="button-wrapper">
+						<div class="grid-inline-mid"><button type="button" class="blue-btn" id="previous-step-btn" data-builder-id="{{productBuilder.id}}" data-website="{{productBuilder.websites.link}}" data-url="{{product.getBuilderurl}}">PREVIOUS</button></div>
+						<div class="grid-inline-mid"><button type="button" class="blue-btn" id="next-step-btn" data-builder-id="{{productBuilder.id}}" data-website="{{productBuilder.websites.link}}" data-url="{{product.getBuilderurl}}">NEXT</button></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

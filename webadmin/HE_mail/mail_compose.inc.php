@@ -1,0 +1,106 @@
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="2">
+  <TR>
+    <TD> <FONT COLOR="#000066" SIZE="6"><B><FONT SIZE="5">Email</FONT></B></FONT></TD>
+  </TR>
+  <TR>
+    <TD>
+      <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+        <TR>
+          <TD BGCOLOR="#000066"><IMG SRC="/_.gif" WIDTH="1" HEIGHT="2"></TD>
+        </TR>
+        <TR>
+          <TD><IMG SRC="/_.gif" WIDTH="1" HEIGHT="1"></TD>
+        </TR>
+        <TR>
+          <TD BGCOLOR="#000066"><IMG SRC="/_.gif" WIDTH="1" HEIGHT="2"></TD>
+        </TR>
+      </TABLE>
+    </TD>
+  </TR>
+</TABLE>
+<!-- END HEADER -->
+<!-- MAIN BODY -->
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</SCRIPT>
+<BR>
+<FORM ACTION="HE_mail.php?action=preview&time=<?= time() ?>" name="fHtmlEditor"  METHOD="post">
+  <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="4" ALIGN="CENTER" WIDTH="95%">
+    <TR>
+      <TD COLSPAN="2" BGCOLOR="#EEEEEE"><FONT SIZE="2"><B><FONT COLOR="#000066">Step
+        1</FONT></B><FONT COLOR="#000066"> - Enter the email subject.</FONT></FONT></TD>
+    </TR>
+    <TR>
+      <TD WIDTH="11%">
+        <DIV ALIGN="RIGHT"><B>Subject:</B></DIV>
+      </TD>
+      <TD WIDTH="89%">
+        <INPUT TYPE="text" NAME="vars[subject]" SIZE="50" CLASS="textbox" value="<?= stripslashes($send_mail['subject']) ?>">
+      </TD>
+    </TR>
+    <TR>
+      <TD VALIGN="TOP" COLSPAN="2">&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD VALIGN="TOP" COLSPAN="2" BGCOLOR="#EEEEEE"><FONT SIZE="2"><B><FONT COLOR="#000066">Step
+        2</FONT></B><FONT COLOR="#000066"> - Write the HTML message below, please
+        check that the image tags and links are working.</FONT></FONT></TD>
+    </TR>
+    <TR>
+      <TD VALIGN="TOP" COLSPAN="2"><B>Message: HTML Style</B></TD>
+    </TR>
+    <TR>
+      <TD VALIGN="TOP" COLSPAN="2">
+        <DIV ALIGN="CENTER">
+<!-- editor -->
+<?php
+include 'editor.html'; ?>
+<!-- //editor -->
+<!--          <TEXTAREA NAME="vars[html_message]" COLS="40" ROWS="15" CLASS="textbox" WRAP="PHYSICAL" style="width:100%"><?= stripslashes($send_mail['contents']) ?></TEXTAREA>
+-->
+        </DIV>
+      </TD>
+    </TR>
+    <TR BGCOLOR="#EEEEEE">
+      <TD COLSPAN="2"><FONT SIZE="2" COLOR="#000066"><B>Step 3</B> - To add attachement,
+        click &quot;Attachments&quot;. Click &quot;Preview&quot; to continue</FONT></TD>
+    </TR>
+    <TR>
+      <TD COLSPAN="2" ALIGN="CENTER">&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD COLSPAN="2" ALIGN="CENTER">
+        <INPUT TYPE="button" NAME="Submit2" VALUE="Attachments" onClick="MM_openBrWindow('HE_mail/attachment.php','addatt','scrollbars=yes,resizable=yes,width=400,height=300')" CLASS="button">
+        <INPUT TYPE="submit" NAME="Submit" VALUE="Preview >>" CLASS="button" onClick="OnFormSubmit()">
+        <BR>
+      </TD>
+    </TR>
+  </TABLE>
+</FORM>
+<BR>
+<!-- END MAIN BODY -->
+<BR>
+<!-- FOOTER -->
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+  <TR>
+    <TD BGCOLOR="#000066"><IMG SRC="/_.gif" WIDTH="1" HEIGHT="2"></TD>
+  </TR>
+  <TR>
+    <TD><IMG SRC="/_.gif" WIDTH="1" HEIGHT="1"></TD>
+  </TR>
+  <TR>
+    <TD BGCOLOR="#000066"><IMG SRC="/_.gif" WIDTH="1" HEIGHT="2"></TD>
+  </TR>
+</TABLE>
+<!-- END FOOTER -->
+<BR>
+<!-- COPYRIGHTS -->
+<DIV ALIGN="CENTER"> <FONT SIZE="1" COLOR="#666666"> Highwaygames Email System,
+  created by Wei Zhuo<BR>
+  &copy; Copyrights, 2000. All rights reservered. </FONT> </DIV>
+<BR>
+<!-- THE END -->

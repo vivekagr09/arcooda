@@ -1,0 +1,124 @@
+# ==========================================
+# Environment files and secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+!.env.testing.example
+
+# ==========================================
+# Dependencies
+# ==========================================
+/vendor/
+/node_modules/
+
+# ==========================================
+# Images
+# ==========================================
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.bmp
+*.tif
+*.tiff
+*.ico
+*.svg
+*.heic
+*.avif
+
+# ==========================================
+# Documents and PDFs
+# ==========================================
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.xlsm
+*.ppt
+*.pptx
+
+# ==========================================
+# Archives and backups
+# ==========================================
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.sql
+*.sql.gz
+*.bak
+*.backup
+*.old
+*.orig
+*.tmp
+*.swp
+*~
+
+# ==========================================
+# Logs
+# ==========================================
+*.log
+/logs/
+/storage/logs/
+
+# ==========================================
+# Cache and temporary files
+# ==========================================
+/cache/
+/tmp/
+/temp/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/views/
+
+# ==========================================
+# Uploaded files and user data
+# ==========================================
+/uploads/
+/upload/
+/public/uploads/
+/public/upload/
+/storage/app/public/
+
+# ==========================================
+# Build output
+# ==========================================
+/dist/
+/build/
+/coverage/
+
+# ==========================================
+# IDE and editor files
+# ==========================================
+/.idea/
+/.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# ==========================================
+# Operating system files
+# ==========================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==========================================
+# Local configuration
+# ==========================================
+phpunit.xml
+.phpunit.result.cache
+.php-cs-fixer.cache
+.htaccess
+*.my.cnf
+
+# ==========================================
+# Git and miscellaneous
+# ==========================================
+*.pid
+*.seed
+npm-debug.log*
+yarn-debug.log*

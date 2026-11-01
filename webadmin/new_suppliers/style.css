@@ -1,0 +1,232 @@
+/*body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+}*/
+
+body {
+	border:0;
+	background-color: #F0F4F9;
+}
+
+div#sposcontent
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div#sposcontent p
+{
+	text-align: left;
+	margin-left: 1em;
+}
+
+div#sposcontent div.buttons
+{
+	text-align: center;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px #CCCCCC solid;
+	background-color: #DFE1F7;
+}
+
+div#sposcontent table
+{
+	text-align: left;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div#sposcontent tr
+{
+	/*background-color: #DFE1F7;*/
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+div#sposcontent td
+{
+	padding: 3px;
+}
+
+div#sposcontent th, div#sposcontent thead
+{
+	padding: 3px;
+	background-color: #FFEECC;
+	/*background-color: #000066;*/
+	/*color: #FFFFFF;*/
+	font-weight: bold;
+	text-align: center;
+}
+
+div#sposcontent table.vbox td, div#sposcontent table.vbox th, div#sposcontent table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div#sposcontent .calcvalue {	color: gray; }
+div#sposcontent table.buttons {	text-align: center; }
+div#sposcontent table.wide {	width: 100%; }
+div#sposcontent tr.alt {	background-color: #EEEEEE; }
+div#sposcontent td.collapse {	width: 1px; }
+div#sposcontent th.collapse {	width: 1px; }
+div#sposcontent td.debug {		border: 1px dotted blue; }
+div#sposcontent table.debug td {	border: 1px dotted blue; }
+div#sposcontent td.left_title {	width: 20%;
+				text-align: right;
+				/*background-color: #CCD0F2;*/
+				background-color: #EEEEE0;
+				color: #000000;
+				font-weight: bold; }
+div#sposcontent input.intext, div#sposcontent input.infile, div#sposcontent textarea, div#sposcontent select {	width: 100%; }
+
+div#sposcontent span.titled {	border-bottom: 1px dotted red; }
+
+/* Phone Number Styling thingo */
+div#sposcontent table.phonenums {	border: 0px; width: 100%; }
+div#sposcontent table.phonenums td {	padding-top: 0px;
+										padding-bottom: 0px; }
+div#sposcontent table.phonenums td.areacode {	width: 10%; }
+div#sposcontent table.phonenums td.ctrycode {	width: 10%; }
+
+/* IFrame for Supplier Details */
+div#sposcontent iframe#details_buffer
+{
+	display: none;
+	position: absolute;
+	left: -50000000000px;
+}
+
+.none{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+
+
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+@media print
+{
+	.print_hide
+	{
+		display:none;
+	}
+}
+
+div.supplier_content .unfinished
+{
+	background-color:yellow;
+}
+
+div.supplier_content a
+{
+	color: black;
+}
+
+div.supplier_content
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div.supplier_content table
+{
+	text-align: left;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div.supplier_content tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-weight: normal;
+}
+
+div.supplier_content pre {margin: 0 0 0 0;}
+div.supplier_content pre.alt {background-color: #EEEEEE;}
+
+div.supplier_content td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.supplier_content th, div.supplier_content thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	font-size:75%;
+}
+
+div.supplier_content table.vbox td, div.supplier_content table.vbox th, div.supplier_content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div.supplier_content table.buttons {	text-align: center; }
+div.supplier_content table.wide {	width: 95%; }
+div.supplier_content tr.alt		{ background-color: #EEEEE0; }
+div.supplier_content tr.highlight { background-color: #90EEA0; }
+div.supplier_content td.highlight { background-color: #90EEA0; }
+div.supplier_content tr.mylock	{ background-color: #90A0EE; }
+div.supplier_content tr.locked	{ background-color: #EE90A0; }
+div.supplier_content td.collapse {	width: 1px; }
+div.supplier_content th.collapse {	width: 1px; }
+div.supplier_content td.left_title
+{
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+}
+div.supplier_content input.intext,
+div.supplier_content input.infile,
+div.supplier_content textarea,
+div.supplier_content select
+{
+	width: 98%;
+}
+
+div.supplier_content th a
+{
+	color: #000000;
+}
+
+div.supplier_content td a
+{
+	color: #000000;
+}
+
+div.supplier_content table.spacetable td
+{
+	border:2px solid white;
+}
+

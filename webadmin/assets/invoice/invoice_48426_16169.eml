@@ -1,0 +1,611 @@
+X-Account-Key: account1
+X-UIDL: 0000f4684fd7bcb0
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <prvs=02575a776b=pkginfo@ups.com>
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on john.ourhunter.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.8 required=8.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HTML_MESSAGE,LOTS_OF_MONEY,RCVD_IN_DNSWL_MED,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD autolearn=ham version=3.3.1
+X-Original-To: sales@converters.tv
+Delivered-To: converters-converters.tv@john.ourhunter.com
+Received: from tessa20.ups.com (tessa20.ups.com [153.2.235.198])
+	by john.ourhunter.com (Postfix) with ESMTPS id 34C82DC003C
+	for <sales@converters.tv>; Tue, 28 Mar 2017 22:04:01 +1100 (AEDT)
+X-NAI-Header: Modified by McAfee Email Gateway (5500)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ups.com; s=selector_ups; t=1490699035; h=From:
+	 To:Subject:MIME-Version:Content-Type:Date:
+	 Message-ID; bh=ef1NHBt/czenmSQJJEmzXLHlHt
+	7tM/NUlBLDdFzdnI0=; b=fgSmFYLFnPwAI12CAyS3JSjIIiKp
+	23j/tYJASRe9qwfnz131BmeNVGa6d+ekPj5rtKemp4VPDwZnMr
+	Ha6hd9Ni8gHVBqtuvdhWYbE5JB/7NtnGtq0IfAZEkFtsUgHjCY
+	TwYhwNnmf1T6dAIRr7p3Iq+VvvLedNUSC7a7uAO3T68=
+Received: from gaalplpapp0070 (unknown [153.2.244.7]) by tessa20.ups.com with smtp
+	 id 1932_536f_e6d68ad9_6247_44a7_8327_e41766888caa;
+	Tue, 28 Mar 2017 07:03:54 -0400
+From: "UPS Quantum View" <auto-notify@ups.com>
+To: sales@converters.tv
+Subject: UPS Exception Notification, Tracking Number 1ZE051X36795236923
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary=----NextPart_1490699035204.0000750032
+Date: Tue, 28 Mar 2017 07:03:55 -0400 (EDT)
+Message-ID: <1677606276.1505977.1490699035211.JavaMail.beawl@drevil-vip.ups.com>
+
+
+------NextPart_1490699035204.0000750032
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+The status of your package has changed.
+
+
+Exception Reason:=C2=A0A mechanical failure has delayed delivery. We're adj=
+usting plans to deliver your package as quickly as possible.=20
+
+To change the delivery details of your package, visit http://www.ups.com/We=
+bTracking/mcRequest?loc=3Den_US&Requester=3DNES&tracknum=3D1ZE051X367952369=
+23&type=3DMCHDL&WT.z_eCTAid=3Dct1_eml_ChgDel__ct1_eml_qvn_eml_6exc&WT.z_eda=
+tesent=3D03282017
+
+To change your UPS My Choice Preferences, visit https://www.ups.com/one-to-=
+one/login?appid=3DTRK_MC_CTA&returntotext=3DManage%20Preferences&WT.z_eCTAi=
+d=3Dct1_eml_MgePref__ct1_eml_qvn_eml_6exc&WT.z_edatesent=3D03282017&returnt=
+o=3Dhttps%3A%2F%2Fwww.ups.com%2Fpea%2Fpreferences%3Floc%3Den_US%26specMessT=
+ype%3DqvnResidentialEmail
+
+To view your Delivery Planner, visit https://wwwapps.ups.com/mcdp?loc=3Den_=
+US&caller=3DNESAlerts&reasonType=3DcheckForloginAndRegisternull&specMessTyp=
+e=3DqvnResidentialEmail&WT.z_eCTAid=3Dct1_eml_ViewPlan__ct1_eml_qvn_eml_6ex=
+c&WT.z_edatesent=3D03282017
+
+At the request of HIGHWAY GROUP P-L, this notice alerts you that the status=
+ of the shipment listed below has changed.
+
+Shipment Detail
+
+Tracking Number:http://www.ups.com/WebTracking/processInputRequest?loc=3Den=
+_US&Requester=3DNES&tracknum=3D1ZE051X36795236923&AgreeToTermsAndConditions=
+=3Dyes&WT.z_eCTAid=3Dct1_eml_Tracking__ct1_eml_qvn_eml_6exc&WT.z_edatesent=
+=3D03282017
+
+Ship To:=C2=A0
+Bryce Corporation
+450 South Benton Street,
+SEARCY, AR 721436913
+US
+UPS Service:=C2=A0UPS WORLDWIDE EXPEDITED
+
+
+Amount of Duties and/or Taxes:=C2=A0108.47 USD
+
+Reference Number 1: ICN#48426
+
+
+
+
+
+UPS Privacy Notice
+https://www.ups.com/content/us/en/resources/ship/terms/privacy.html
+ =20
+Contact UPS
+https://www.ups.com/content/us/en/contact/index.html
+
+------NextPart_1490699035204.0000750032
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns=3D"http://www.w3.org/1999/xht=
+ml"><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3DUTF-8"><meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-=
+scale=3D1.0"><title>UPS My Choice Email</title><style type=3D"text/css">/*/=
+///// RESET STYLES //////*/body,#bodyTable,#bodyCell { height:100% !importa=
+nt; margin:0; padding:0; width:100% !important; }table { border-collapse:co=
+llapse; }img,a img { border:0; outline:none; text-decoration:none; }h1,h2,h=
+3,h4,h5,h6 { margin:0; padding:0; }p { margin: 1em 0; }/*////// CLIENT-SPEC=
+IFIC STYLES //////*/.ReadMsgBody { width:100%; }.ExternalClass { width:100%=
+; } /* Force Hotmail/Outlook.com to display emails at full width. */.Extern=
+alClass,.ExternalClass p,.ExternalClass span,.ExternalClass font,.ExternalC=
+lass td,.ExternalClass div { line-height:100%; } /* Force Hotmail/Outlook.c=
+om to display line heights normally. */table,td { mso-table-lspace:0pt; mso=
+-table-rspace:0pt; } /* Remove spacing between tables in Outlook 2007 and u=
+p. */#outlook a { padding:0; } /* Force Outlook 2007 and up to provide a "v=
+iew in browser" message. */img { -ms-interpolation-mode: bicubic; } /* Forc=
+e IE to smoothly render resized images. */body,table,td,p,a,li,blockquote {=
+ -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; } /* Prevent Win=
+dows- and Webkit-based mobile platforms from changing declared text sizes. =
+*/sup {font-size: .5em; line-height: .6em; vertical-align: 12px}/*////// MO=
+BILE STYLES //////*//*CSS selectors are written in attributeselector format=
+ to prevent Yahoo Mailfrom rendering media query styles ondesktop.*/.header=
+Logo img {width:45px!important; height:51px!important;}.headerLogo {height:=
+41px!important; padding-top:0px!important; padding-bottom:0px!important;}.h=
+eaderHeading {height:41px!important; padding-top:0px!important;padding-bott=
+om:0px!important;}a:visited,a:hover,a:active { color:#363636}.callToActionB=
+utton a:visited,.callToActionButton a:hover,.callToActionButton a:active {t=
+ext-decoration: none; }a.revTxt:visited,a.revTxt:hover,a.revTxt:active { co=
+lor:#ffffff;}h1 { font-size:26px !important; }h2 { font-size:22px !importan=
+t; }h3 { font-size:18px !important; }h4 { font-size:16px !important; }.head=
+erLogo img {border: 0;outline: none;text-decoration: none;-ms-interpolation=
+-mode: bicubic;}/*@media only screen and (max-width: 480px){table[id=3D"hea=
+derBlock"],table[id=3D"callToActionBlock"],table[id=3D"alertMsgBlock"],tabl=
+e[id=3D"customerHeaderBlock"],table[id=3D"heroImageBlock"],table[id=3D"prim=
+aryMsgBlock"],table[id=3D"MessageBlock_68"],table[id=3D"promotionBlock"],ta=
+ble[id=3D"socialBlock"],table[id=3D"eventBlock"],table[id=3D"merchandiseBlo=
+ck"],table[id=3D"footerBlock"]{ max-width:480px !important; width:100% !imp=
+ortant; }img[id=3D"heroImage"]  { max-width:480px !important; width:100% !i=
+mportant; height:auto !important }table[id=3D"primaryContentBlock"] {width:=
+65%!important;}td [class=3D"fontLink"] {width:140px !important}}*/@media on=
+ly screen and (max-width: 360px){/*////// RESET STYLES //////*/td[id=3D"int=
+roductionContainer"],td[id=3D"headerContainer"],td[id=3D"alertMsgContainer"=
+],td[id=3D"customerHeaderContainer"],td[id=3D"primaryMsgContainer"],td[id=
+=3D"callToActionContainer"],td[id=3D"heroImageContainer"],td[id=3D"MessageC=
+ontainer_68"],td[id=3D"promotionContainer"],td[id=3D"socialContainer"],td[i=
+d=3D"eventContainer"],td[id=3D"merchandiseContainer"],td[id=3D"languageCont=
+ainer"],td[id=3D"footerContainer"] { padding-right:10px !important; padding=
+-left:10px !important; }table[id=3D"introductionBlock"],table[id=3D"headerB=
+lock"],table[id=3D"callToActionBlock"],table[id=3D"alertMsgBlock"],table[id=
+=3D"customerHeaderBlock"],table[id=3D"heroImageBlock"],table[id=3D"primaryM=
+sgBlock"],table[id=3D"MessageBlock_68"],table[id=3D"promotionBlock"],table[=
+id=3D"socialBlock"],table[id=3D"eventBlock"],table[id=3D"merchandiseBlock"]=
+,table[id=3D"languageSection"],table[id=3D"languageBlock"],table[id=3D"foot=
+erBlock"]{ max-width:320px !important; width:100% !important; }/*////// CLI=
+ENT-SPECIFIC STYLES //////*/body { width:100% !important; min-width:100% !i=
+mportant; } /* Force iOS Mail to render the email at full width. *//*//////=
+ GENERAL STYLES //////*/h1 { font-size:20px !important; }h2 { font-size:18p=
+x !important; }h3 { font-size:16px !important; }h4 { font-size:12px !import=
+ant; }.headerTitle { text-align: left !important; padding-left:10px; }.head=
+erTitle2 { text-align: left !important; padding-left:10px; }.subheaderTitle=
+ { font-size: 12px !important; text-align: left !important; width:100% !imp=
+ortant; padding-left:10px; }.subheaderContainer { text-align: center; width=
+:100% !important; }/*td[class=3D"fontLink"]{border-top: 2px solid #2f4c70 !=
+important; font-size: 15px !important; font-weight: bold !important;}*/.fon=
+tLink { font-size: 15px !important; font-weight: bold !important; /*width:1=
+00% !important;*/}td [class=3D"fontLink"] {width:310px !important}.noPaddin=
+g { padding-right: 0px !important; padding-left: 0px !important; }.social_m=
+edia { width: 25px !important; height: 25px !important; }.promo_logo { widt=
+h: 120px !important; height: 43px !important; }.graphic_area a img, .graphi=
+c_area img { height:auto !important; max-width:320px !important; width:100%=
+ !important; }.hide { display:none !important; }.block { display:block !imp=
+ortant; }img[id=3D"heroImage"] { height:auto !important; max-width:320px !i=
+mportant; width:100% !important; }td[id=3D"heroImageContainer"] { display: =
+none; }/*td[class=3D"headerLogo"], td[class=3D""]{display:block !important;=
+}*/td[class=3D"headerHeading"] { width:100% !important; text-align:left !im=
+portant; }td[class=3D"headerContent"] { padding-top:20px !important; }td[cl=
+ass=3D"alertLogo"],table[id=3D"primaryContentBlock"] {width:100% !important=
+;/*margin-bottom:10px !important*/}td[class=3D"trackingInfo"],td[class=3D"p=
+romoInfo"] { display:block !important; }.promoInfo p, .promoInfo div {displ=
+ay:table-row !important;text-align:left;}table[id=3D"fbApp"] { display: non=
+e !important; }td[class=3D"introductionLogo"],td[class=3D"introductionHeadi=
+ng"] { display:block !important; }td[class=3D"introductionHeading"] { paddi=
+ng:40px 0 0 0 !important; }td[class=3D"introductionContent"] { padding-top:=
+20px !important; }td[class=3D"callToActionContent"] { display:block !import=
+ant; }td.callToActionContent [class=3D"callToActionContent"] { display:inli=
+ne-block !important; }td[class=3D"callToActionButtonContent"] { display:blo=
+ck !important; padding: 0 !important;width:100% !important; }td[class=3D"3c=
+allToActionButtonContent"] { display:block !important; padding: 0 !importan=
+t;width:100% !important; }table[class=3D"callToActionButton"] { width:100% =
+!important; padding: 0 !important; margin-top:3px !important ; display:bloc=
+k!important; }.callToActionContent table[class=3D"callToActionButton"] { ma=
+rgin-top:10px !important }td[id=3D"eventBlockCell"] { padding-right:20px !i=
+mportant; padding-left:20px !important; }table[class=3D"eventBlockCalendar"=
+] { width:100px !important; }td[id=3D"merchandiseBlockCell"] { padding-righ=
+t:20px !important; padding-left:20px !important; }td[class=3D"merchandiseBl=
+ockHeading"] h2 { text-align:center !important; }td[class=3D"merchandiseBlo=
+ckLeftColumn"],td[class=3D"merchandiseBlockRightColumn"] { display:block !i=
+mportant; padding:0 0 20px 0 !important; width:100% !important; }td[class=
+=3D"footerContent"] { font-size:15px !important;}td[class=3D"footerContent"=
+] a { display:block !important; }.headerLogo img {width:27px!important; hei=
+ght:32px!important;}.headerLogo {height:27px!important;}.headerHeading {hei=
+ght:27px!important; min-width:0px!important}.msgInfo {font-size:12px!import=
+ant;}}</style></head><body style=3D"margin: 0;padding: 0;-ms-text-size-adju=
+st: 100%;-webkit-text-size-adjust: 100%;background-color: #ffffff;height: 1=
+00%;width: 100%; letter-spacing:normal;"><center><table border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0" height=3D"100%" width=3D"100%" id=3D"bodyTabl=
+e" style=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspac=
+e: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;margin: 0;=
+padding: 0;background-color: ; letter-spacing:normal; height: 100%;width: 1=
+00%;"><tr><td align=3D"center" valign=3D"top" id=3D"bodyCell" style=3D"mso-=
+table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-=
+text-size-adjust: 100%;margin: 0;padding: 0;height: 100%;width: 100%;backgr=
+ound-color:#; padding-right:5px; padding-left:5px;padding-top:10px;padding-=
+bottom:20px;"><!-- // BEGIN EMAIL --><table border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" width=3D"100%" id=3D"emailContainer" style=3D"border-coll=
+apse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-ad=
+just: 100%;-webkit-text-size-adjust: 100%;width: 100%;"><tr><td><!-- //////=
+////////// HEADER TABLE \\\\\\\ --><table  border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" height=3D"100%" width=3D"100%" style=3D"border-collapse: c=
+ollapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 1=
+00%;-webkit-text-size-adjust: 100%;margin: 0;padding: 0;background-color: ;=
+ letter-spacing:normal;height: 100%;width: 100%;"><tr><td align=3D"center" =
+valign=3D"top" id=3D"headerContainer" style=3D"mso-table-lspace: 0pt;mso-ta=
+ble-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"=
+><!-- // BEGIN INTRO HEADER BLOCK --><table border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" width=3D"600" id=3D"headerBlock" style=3D"border-collapse=
+: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust=
+: 100%;-webkit-text-size-adjust: 100%;background-color: #351d14;">
+=09<tr>
+=09=09<td style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-siz=
+e-adjust: 100%;-webkit-text-size-adjust: 100%;text-align:center;height:3px;=
+font-size: 1px;background-color:#ffb500;line-height:1;">
+=09=09<img src=3D"https://www.ups.com/img/1.gif" alt=3D"" height=3D"3" widt=
+h=3D"3" style=3D"border: 0;outline: none;text-decoration: none;-ms-interpol=
+ation-mode: bicubic;">
+=09=09</td>
+=09</tr>
+=09<tr>
+=09=09<td style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-siz=
+e-adjust: 100%;-webkit-text-size-adjust: 100%;padding-top:10px;padding-bott=
+om:5px;">
+=09=09=09<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"1=
+00%" style=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rsp=
+ace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+=09=09=09=09<tr>
+=09=09=09=09=09<td align=3D"left" valign=3D"middle" class=3D"headerLogo" st=
+yle=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 10=
+0%;-webkit-text-size-adjust: 100%;text-align:left;padding-left:10px; paddin=
+g-top: 0px; padding-bottom: 0px; height:65px;">
+                       =20
+                       =20
+                           =20
+<img src=3D"https://www.ups.com/img/UPS_logo_sm.png" width=3D"54" height=3D=
+"64" alt=3D"UPS" border=3D"0" >
+                       =20
+=09=09=09=09=09</td>
+=09=09=09=09=09=09<td valign=3D"middle" class=3D"headerHeading" style=3D"ms=
+o-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webki=
+t-text-size-adjust: 100%;font-family: 'Merriweather', Georgia, 'Times New R=
+oman', sans; padding-left:10px; padding-right:10px; padding-top: 0px; paddi=
+ng-bottom: 0px; height:65px; min-width:468px;">
+=09=09=09=09=09=09=09<h1 class=3D"headerTitle2" style=3D"margin: 0;font-fam=
+ily: 'Merriweather', Georgia, 'Times New Roman', sans;color: #ffffff;font-s=
+ize: 30px;font-weight: 100;line-height: 100%;text-align: right;">
+=09=09=09=09=09=09=09</h1>
+=09                    </td>
+=09=09=09=09</tr>
+=09=09=09</table>
+=09     </td>
+=09</tr>
+</table><!-- END INTRO HEADER BLOCK // --></td></tr></table><table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" height=3D"100%" width=3D"100%" s=
+tyle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0=
+pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;margin: 0;padd=
+ing: 0;background-color: ; letter-spacing:normal;height: 100%;width: 100%;"=
+ xmlns:ns3=3D"http://www.ups.com/request" xmlns:ns2=3D"http://www.ups.com/r=
+equest/definition" xmlns:java=3D"http://xml.apache.org/xalan/java">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" height=3D"100%" wid=
+th=3D"100%" style=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-ta=
+ble-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;m=
+argin: 0;padding: 0;background-color: ; letter-spacing:1px; height: 100%;wi=
+dth: 100%;">
+<tr>
+<td align=3D"center" valign=3D"top" id=3D"languageContainer" style=3D"mso-t=
+able-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-t=
+ext-size-adjust: 100%;"><a name=3D""></a></td>
+</tr>
+<tr>
+<td align=3D"center" valign=3D"top" id=3D"languageContainer" style=3D"mso-t=
+able-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-t=
+ext-size-adjust: 100%;">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"600" id=3D=
+"languageBlock" style=3D"border-collapse: collapse;mso-table-lspace: 0pt;ms=
+o-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 10=
+0%;background-color:#e8e8e6;">
+<tr>
+<td style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adju=
+st: 100%;-webkit-text-size-adjust: 100%;padding:15px;">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" id=
+=3D"languageSection" style=3D"border-collapse: collapse;mso-table-lspace: 0=
+pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjus=
+t: 100%;margin: 0;padding: 0;background-color: ; letter-spacing:normal;heig=
+ht: 100%;width: 100%;">
+<tr>
+<td style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adju=
+st: 100%;-webkit-text-size-adjust: 100%;background-color: #e8e8e6;">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" styl=
+e=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;=
+-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+<tr>
+<td align=3D"right" valign=3D"middle" style=3D"mso-table-lspace: 0pt;mso-ta=
+ble-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"=
+>  </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<tr>
+<td id=3D"customerHeaderContainer" valign=3D"top" align=3D"center" style=3D=
+"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-we=
+bkit-text-size-adjust: 100%;">
+<table id=3D"customerHeaderBlock" width=3D"600" cellspacing=3D"0" cellpaddi=
+ng=3D"0" border=3D"0" style=3D"border-collapse: collapse;mso-table-lspace: =
+0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adju=
+st: 100%;">
+<tr>
+<td style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adju=
+st: 100%;-webkit-text-size-adjust: 100%;background-color: #e8e8e6;">
+<table width=3D"100%" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" styl=
+e=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;=
+-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+<tr>
+<td valign=3D"middle" align=3D"left" style=3D"mso-table-lspace: 0pt;mso-tab=
+le-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;pa=
+dding-top:15px;padding-bottom:15px;padding-right:15px;padding-left:15px;">
+<p style=3D"margin: 0;font-family: 'Merriweather Sans', Tahoma, Arial, sans=
+-serif;color: #363636;font-size: 14px;text-align: left;">
+<strong>The status of your package has changed.</strong>
+</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td id=3D"primaryMsgContainer" valign=3D"top" align=3D"center" style=3D"mso=
+-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit=
+-text-size-adjust: 100%;">
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" wi=
+dth=3D"600" id=3D"primaryMsgBlock" style=3D"border-collapse: collapse;mso-t=
+able-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-t=
+ext-size-adjust: 100%;background-color:#e8e8e6;">
+<tr>
+<td class=3D"callToActionContent" style=3D"mso-table-lspace: 0pt;mso-table-=
+rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;paddi=
+ng-top:5px;">
+<table id=3D"primaryContentBlock" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0" width=3D"375" style=3D"display:inline-block;width:375px; margin-lef=
+t:1px; margin-right:1px; border-collapse: collapse;mso-table-lspace: 0pt;ms=
+o-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 10=
+0%;vertical-align:middle">
+<tr>
+<td style=3D"mso-table-lspace: 0pt;mso-tablerspace: 0pt; -ms-text-size-adju=
+st: 100%; -webkit-text-size-adjust: 100%; background-color: #e8e8e6;">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"border-col=
+lapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;-ms-text-size=
+-adjust: 100%; -webkit-text-size-adjust: 100%; font-family: 'Merriweather S=
+ans', Tahoma, Arial, sans-serif; color: #363636; font-size: 12px; margin-bo=
+ttom:5px;">
+<tr>
+<td class=3D"callToActionContent" align=3D"left" style=3D"mso-table-lspace:=
+ 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adj=
+ust: 100%;font-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;color=
+: #363636;font-size: 12px; padding-left:15px; padding-right:0px"><strong>Ex=
+ception Reason:</strong></td><td class=3D"callToActionContent" align=3D"lef=
+t" style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjus=
+t: 100%;-webkit-text-size-adjust: 100%;font-family: 'Merriweather Sans', Ta=
+homa, Arial, sans-serif;color: #363636;font-size: 12px; padding-left:15px; =
+padding-right:15px;">A mechanical failure has delayed delivery. We're adjus=
+ting plans to deliver your package as quickly as possible. </td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td align=3D"center" valign=3D"top" id=3D"MessageContainer" style=3D"mso-ta=
+ble-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-te=
+xt-size-adjust: 100%;">
+<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" id=
+=3D"emailContainer" style=3D"border-collapse: collapse;mso-table-lspace: 0p=
+t;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust=
+: 100%;width: 100%;">
+<tr>
+<td align=3D"center" valign=3D"top" id=3D"MessageContainer_68" style=3D"mso=
+-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit=
+-text-size-adjust: 100%;">
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" wi=
+dth=3D"600" id=3D"MessageBlock_68" style=3D"border-collapse: collapse;mso-t=
+able-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-t=
+ext-size-adjust: 100%;background-color:#e8e8e6;">
+<tr>
+<td class=3D"" align=3D"center" style=3D"mso-table-lspace: 0pt;mso-table-rs=
+pace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;padding=
+-top:10px; padding-bottom:10px;padding-right:15px; padding-left:15px;">
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0p=
+t;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;width:100%">
+<tr>
+<td align=3D"center" style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-=
+ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%; text-align:left; =
+width:100%">
+<p style=3D"text-align:left; font-family: 'Merriweather Sans', Tahoma, Aria=
+l, sans-serif;color: #363636;font-size: 12px;">At the request of HIGHWAY GR=
+OUP P-L, this notice alerts you that the status of the shipment listed belo=
+w has changed.</p>
+</td>
+</tr>
+</table>
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0p=
+t;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;width:100%">
+<tr>
+<td align=3D"center" style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-=
+ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;font-family: 'Merr=
+iweather Sans', Tahoma, Arial, sans-serif;color: #363636;font-size: 12px;te=
+xt-align:left;padding-top:10px; padding-bottom:10px;">
+<h2>Shipment Details</h2>
+</td>
+</tr>
+</table>
+<hr>
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0p=
+t;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;width:100%">
+<tr>
+<td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace: 0pt;mso-tab=
+le-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;fo=
+nt-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;color: #363636;fo=
+nt-size: 12px;text-align:left;width:40%;"><strong>Tracking Number:</strong>=
+</td><td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace: 0pt;ms=
+o-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 10=
+0%;font-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;color: #3636=
+36;font-size: 12px;text-align:left;"><a alt=3D"Tracking Number" style=3D"-m=
+s-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;display:block;font-=
+weight:bold; color: #22a28e;" href=3D"http://www.ups.com/WebTracking/proces=
+sInputRequest?loc=3Den_US&amp;Requester=3DNES&amp;tracknum=3D1ZE051X3679523=
+6923&amp;AgreeToTermsAndConditions=3Dyes&amp;WT.z_eCTAid=3Dct1_eml_Tracking=
+__ct1_eml_qvn_eml_6exc&amp;WT.z_edatesent=3D03282017">1ZE051X36795236923</a=
+></td>
+</tr>
+</table>
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0p=
+t;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;width:100%">
+<tr>
+<td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace: 0pt;mso-tab=
+le-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;fo=
+nt-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;color: #363636;fo=
+nt-size: 12px;text-align:left;width:40%;padding:5px;"><strong>Ship To:</str=
+ong></td><td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace: 0p=
+t;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust=
+: 100%;font-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;color: #=
+363636;font-size: 12px;text-align:left;padding:5px;">Bryce Corporation<br>4=
+50 South Benton Street,<br>SEARCY, AR 721436913<br>US</td>
+</tr>
+</table>
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0p=
+t;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;width:100%">
+<tr>
+<td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace: 0pt;mso-tab=
+le-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;fo=
+nt-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;color: #363636;fo=
+nt-size: 12px;text-align:left;width:40%;padding:5px;"><strong>UPS Service:<=
+/strong></td><td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace=
+: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-ad=
+just: 100%;font-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;colo=
+r: #363636;font-size: 12px;text-align:left;padding:5px;">UPS WORLDWIDE EXPE=
+DITED</td>
+</tr>
+</table>
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0p=
+t;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;width:100%">
+<tr>
+<td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace: 0pt;mso-tab=
+le-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;fo=
+nt-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;color: #363636;fo=
+nt-size: 12px;text-align:left;width:40%;padding:5px;"><strong>Package Weigh=
+t:</strong></td><td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lsp=
+ace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size=
+-adjust: 100%;font-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;c=
+olor: #363636;font-size: 12px;text-align:left;padding:5px;">1.3 KGS</td>
+</tr>
+</table>
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0p=
+t;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;width:100%">
+<tr>
+<td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace: 0pt;mso-tab=
+le-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;fo=
+nt-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;color: #363636;fo=
+nt-size: 12px;text-align:left;width:40%;padding:5px;"><strong>Duty and Tax =
+amount: </strong></td><td class=3D"msgInfo" align=3D"left" style=3D"mso-tab=
+le-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-tex=
+t-size-adjust: 100%;font-family: 'Merriweather Sans', Tahoma, Arial, sans-s=
+erif;color: #363636;font-size: 12px;text-align:left;padding:5px;">108.47 US=
+D</td>
+</tr>
+</table>
+<table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" st=
+yle=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0p=
+t;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;width:100%">
+<tr>
+<td class=3D"msgInfo" align=3D"left" style=3D"mso-table-lspace: 0pt;mso-tab=
+le-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;fo=
+nt-family: 'Merriweather Sans', Tahoma, Georgia, Helvetica, Arial, sans-ser=
+if;color: #363636;font-size: 12px;text-align:left;width:40%;padding:5px;"><=
+strong>Reference Number 1:</strong></td><td class=3D"msgInfo" align=3D"left=
+" style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust=
+: 100%;-webkit-text-size-adjust: 100%;font-family: 'Merriweather Sans', Tah=
+oma, Georgia, Helvetica, Arial, sans-serif;color: #363636;font-size: 12px;t=
+ext-align:left;padding:5px;">ICN#48426<br>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table  border=3D"0" cellpadding=3D"0" cellspacing=3D"0" height=3D"100%" wi=
+dth=3D"100%" style=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-t=
+able-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;=
+margin: 0;padding: 0;background-color: ; letter-spacing:normal;height: 100%=
+;width: 100%;"><tr><td align=3D"center" valign=3D"top" id=3D"footerContaine=
+r" style=3D"mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjus=
+t: 100%;-webkit-text-size-adjust: 100%;"><!-- // BEGIN FOOTER BLOCK --><tab=
+le border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"600" id=3D"foo=
+terBlock" style=3D"border-collapse: collapse;mso-table-lspace: 0pt;mso-tabl=
+e-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;bac=
+kground-color:#e8e8e6;border-top:2px solid #22a28e;">
+=09<tr>
+=09=09<td align=3D"left" valign=3D"top" class=3D"" style=3D"mso-table-lspac=
+e: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-a=
+djust: 100%;font-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;col=
+or: #363636;font-size: 12px;padding-top:20px;padding-bottom:20px;padding-le=
+ft:15px; padding-right:15px;">
+=09=09=09<p>&copy; 2017 United Parcel Service of America, Inc. UPS, the UPS=
+ brandmark, and the color brown are trademarks of United Parcel Service of =
+America, Inc. All rights reserved.<BR><BR>All trademarks, trade names, or s=
+ervice marks that appear in connection with UPS's services are the property=
+ of their respective owners.<BR>&nbsp;<BR>Please do not reply directly to t=
+his e-mail. UPS will not receive any reply message.<BR>For more information=
+ on UPS's privacy practices, refer to the UPS Privacy Notice.<BR>For questi=
+ons or comments, visit Contact UPS.<br><br>
+This communication contains proprietary information and may be confidential=
+. If you are not the intended recipient, the reading, copying, disclosure o=
+r other use of the contents of this e-mail is strictly prohibited and you a=
+re instructed to please delete this e-mail immediately.</p>
+=09=09</td>
+=09</tr>
+=09<tr>
+=09=09<td align=3D"left" valign=3D"top" class=3D"" style=3D"mso-table-lspac=
+e: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-a=
+djust: 100%;font-family: 'Merriweather Sans', Tahoma, Arial, sans-serif;fon=
+t-size: 12px;line-height: 200%;font-weight:bold; color: #22a28e;padding-bot=
+tom: 20px;padding-left:15px;padding-right:15px;">=09=09<a href=3D"https://w=
+ww.ups.com/content/us/en/resources/ship/terms/privacy.html?WT.svl=3DeFooter=
+" style=3D" -ms-text-size-adjust: 100%;-webkit-text-size-adjust:100%;line-h=
+eight: 200%;font-weight:bold; color: #22a28e" class=3D"block">UPS Privacy N=
+otice</a>=09=09=09=09=09=09=09
+=09=09=09=09=09=09<br /><a href=3D"https://www.ups.com/content/us/en/contac=
+t/index.html?WT.svl=3DeFooter" style=3D" -ms-text-size-adjust: 100%;-webkit=
+-text-size-adjust:100%;line-height: 200%;font-weight:bold; color: #22a28e" =
+class=3D"block">Contact UPS</a>=09=09=09=09=09=09=09
+=09=09</td>
+=09</tr>
+</table><img src=3D"https://statse.webtrendslive.com/dcs2227ulli4xxp3oi2yv4=
+qus_5g8l/dcs.gif?dcsdat=3D1490699035204&dcsuri=3D%2F&dcssip=3Demail_rpt.ups=
+.com&pgf_Site=3DCountry&WT.z_country_cd=3DUS&WT.z_lang=3Den&WT.z_edatesent=
+=3D03282017&WT.z_st_area=3DE-mail+Template&WT.z_st_sbarea=3DQuantum+View+No=
+tify&WT.z_ti_id=3Dct1_eml_qvn_eml_6exc&WT.z_emailid=3Dct1_eml_qvn_eml_6exc&=
+e_Site=3DCountry&WT.z_uemail_id=3D1490699035204"><!-- END FOOTER BLOCK // -=
+-></td></tr></table></td></tr></table><!-- //END EMAIL --></td></tr></table=
+></center></body></html>
+------NextPart_1490699035204.0000750032--
+
+

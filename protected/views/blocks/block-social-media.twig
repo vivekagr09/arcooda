@@ -1,0 +1,52 @@
+{% set title = inputs.title %}
+
+{% set getsocialIcon                 = getsocialIcon() %}
+<div class="container">
+	<div class="section-header">
+		<div class="section-header__body">
+			<h2 class="section-header__title">{{title}}</h2>
+			<div class="section-header__divider"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 col-xl-4">
+			<div>
+				<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0&appId=270908050614170&autoLogAppEvents=1" nonce="5sGf5V96"></script>
+				<div class="fb-page" data-href="https://www.facebook.com/arcooda/" data-tabs="timeline" data-width="400" data-height="700" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/arcooda/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/arcooda/">Arcooda</a></blockquote></div>
+			</div>
+		</div>
+		<div class="col-12 col-xl-4">
+
+		
+			<div class="social-media-display">
+				<a class="twitter-timeline" href="https://twitter.com/arcooda?ref_src=twsrc%5Etfw">Tweets by arcooda</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+			</div>
+		</div>
+		<div class="col-12 col-xl-4">
+			<div class="social-media-display">
+				<div class="footer-newsletter__social-links social-links">
+
+
+	
+                {% for value in getsocialIcon %} 
+
+                <div class="social-links__item social-links__item--{{value.classname}} row" >
+		        	<div class="col-12 col-xl-1 mr-2">
+		        	<a href="{{value.link}}" target="_blank">{{value.fafaicon}}</a>
+		        	</div>
+		        	<div class="col-12 col-xl-5">
+			        	<p style="padding:5px;">{{value.title}}</p>
+			        </div>
+			        <div class="col-12 col-xl-4">
+		        	<p style="padding:5px;float: left;">@Arcooda</p>
+		        	</div>
+		        </div>
+
+			{% endfor %}	
+
+				
+		    	</div>
+			</div>
+		</div>
+	</div>
+</div>

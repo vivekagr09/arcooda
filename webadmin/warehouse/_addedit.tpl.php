@@ -1,0 +1,32 @@
+<!-- <?=pathinfo(__FILE__, PATHINFO_FILENAME)?> (<?=microtime()?>) -->
+
+<?php
+$form_url           = $_GET;
+$form_url['action'] = 'edit';
+$form_url           = '.?' . http_build_query($action_url);
+?>
+
+<form action="<?=htmlspecialchars($form_url)?>" method="post" autocomplete="off" enctype="multipart/form-data">
+    <input type="hidden" name="item[id]" value="<?=$id?>" />
+<?php
+
+include __DIR__ . '/_details.tpl.php';
+include __DIR__ . '/_contacts.tpl.php';
+include __DIR__ . '/_warehouse_text.tpl.php';
+
+if(isset($item['id'])){
+    include __DIR__ . '/_warehouse_attachments.tpl.php';
+    include __DIR__ . '/_warehouse_stock.tpl.php';
+    include __DIR__ . '/_warehouse_inventory.tpl.php';
+}
+
+include __DIR__ . '/_warehouse_comments.tpl.php';
+include __DIR__ . '/__status.tpl.php';
+?>
+    <br />
+    <div style="text-align: center;">
+        <button type="submit" name="action" value="do_<?=$action?>">Submit Changes</button>
+    </div>
+</form>
+
+<!-- /<?=pathinfo(__FILE__, PATHINFO_FILENAME)?> (<?=microtime()?>) -->

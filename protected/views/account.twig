@@ -1,0 +1,493 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - tab:
+// - result:
+// - alert:
+// - issues:
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set member  = inputs.member %}
+{% set tab     = inputs.tab    %}
+{% set result  = inputs.result %}
+{% set alert   = inputs.alert  %}
+{% set issues  = inputs.issues %}
+
+{% set user          = user() %}
+{% set country_list  = countries() %}
+{% set currency_list = currencies() %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/blocks/block-header.twig' with {inputs: {
+        title: 'My Account',
+        breadcrumb: global_page_breadcrumbs,
+    }} %}
+    <div class="block"><div class="container"><div class="row">
+        <div class="col-12 col-sm-4 col-md-3 col-xl-2 pb-3"><div class="nav flex-column nav-pills" id="account-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link {{ (tab == 'member') ? 'active' : '' }}" id="account-tab-member-tab" data-toggle="pill" href="#account-tab-member" role="tab" aria-controls="account-tab-member" aria-selected="true">Member Details</a>
+            <a class="nav-link {{ (tab == 'shipping') ? 'active' : '' }}" id="account-tab-shipping-tab" data-toggle="pill" href="#account-tab-shipping" role="tab" aria-controls="account-tab-shipping" aria-selected="false">Shipping Details</a>
+            <a class="nav-link {{ (tab == 'preferences') ? 'active' : '' }}" id="account-tab-preferences-tab" data-toggle="pill" href="#account-tab-preferences" role="tab" aria-controls="account-tab-preferences" aria-selected="false">Site Preferences</a>
+            <a class="nav-link {{ (tab == 'inquiries') ? 'active' : '' }}" id="account-tab-inquiries-tab" data-toggle="pill" href="#account-tab-inquiries" role="tab" aria-controls="account-tab-inquiries" aria-selected="false">My Inquiries</a>
+            <a class="nav-link {{ (tab == 'orders') ? 'active' : '' }}" id="account-tab-orders-tab" data-toggle="pill" href="#account-tab-orders" role="tab" aria-controls="account-tab-orders" aria-selected="false">My Orders</a>
+            <a class="nav-link {{ (tab == 'settings') ? 'active' : '' }}" id="account-tab-settings-tab" data-toggle="pill" href="#account-tab-settings" role="tab" aria-controls="account-tab-settings" aria-selected="false">Settings</a>
+        </div></div>
+        <div class="col-12 col-sm-8 col-md-9 col-xl-10">
+            {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+            <div class="tab-content" id="account-tab-content">
+                <div class="tab-pane fade {{ (tab == 'member') ? 'show active' : '' }}" id="account-tab-member" role="tabpanel" aria-labelledby="account-tab-member-tab"><div class="p-1 p-sm-3 bg-white border">
+                    <h5>Member Details</h5>
+                    <hr />
+
+{% set prefix = 'account-profile-edit' %}
+<form action="/account/profile" method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-given-name">First Name*</label>
+                <input type="text" name="given-name" required="required" class="form-control {{ (issues['given-name'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-given-name" autocomplete="section-{{ prefix }} billing given-name" value="{{ member.name|e }}" />
+				{% if (issues['given-name'] != '') %}<span class="invalid-feedback"><strong>{{ issues['given-name'] }}</strong></span>{% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-family-name">Last Name*</label>
+                <input type="text" name="family-name" required="required" class="form-control {{ (issues['family-name'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-family-name" autocomplete="section-{{ prefix }} billing family-name" value="{{ member.surname|e }}" />
+				{% if (issues['family-name'] != '') %}<span class="invalid-feedback"><strong>{{ issues['family-name'] }}</strong></span>{% endif %}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-street-address">Address*</label>
+                <textarea name="street-address" required="required" class="form-control {{ (issues['street-address'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} billing street-address" rows="5">{{ member.address_1|e }}</textarea>
+				{% if (issues['street-address'] != '') %}<span class="invalid-feedback"><strong>{{ issues['street-address'] }}</strong></span>{% endif %}
+            </div>
+            <input type="hidden" name="address-level3" id="{{ prefix }}-address-level3" value="" autocomplete="off" />
+            {#<div class="form-group">
+                <label for="{{ prefix }}-address-level3">Address Line 2*</label>
+                <input type="text" name="address-level3" class="form-control {{ (issues['address-level3'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-address-level3" value="{{ member.address_2|e }}" autocomplete="section-{{ prefix }} billing address-level3" />
+				{% if (issues['address-level3'] != '') %}<span class="invalid-feedback"><strong>{{ issues['address-level3'] }}</strong></span>{% endif %}
+            </div>#}
+            <div class="form-group">
+                <label for="{{ prefix }}-address-level2">City*</label>
+                <input type="text" name="address-level2" required="required" class="form-control {{ (issues['address-level2'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-address-level2" value="{{ member.city|e }}" autocomplete="section-{{ prefix }} billing address-level2" />
+				{% if (issues['address-level2'] != '') %}<span class="invalid-feedback"><strong>{{ issues['address-level2'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-address-level1">State / Province / Region*</label>
+                <input type="text" name="address-level1" required="required" class="form-control {{ (issues['address-level1'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-address-level1" value="{{ member.state|e }}" autocomplete="section-{{ prefix }} billing address-level1" />
+				{% if (issues['address-level1'] != '') %}<span class="invalid-feedback"><strong>{{ issues['address-level1'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-postal-code">Zip / Postal Code</label>
+                <input type="text" name="postal-code" class="form-control {{ (issues['postal-code'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-postal-code" value="{{ member.zip|e }}" autocomplete="section-{{ prefix }} billing postal-code" />
+				{% if (issues['postal-code'] != '') %}<span class="invalid-feedback"><strong>{{ issues['postal-code'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-country">Country</label>
+                <select name="country" class="form-control custom-select" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} billing country">
+                    <option disabled="disabled" value="">Please choose country...</option>
+                    {% for country in country_list %}<option value="{{ country.code }}"{{ (country.code == member.country) ? ' selected="selected"' : '' }}>{{ country.name|e }}</option>{% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-account-type">I am a</label>
+                <select name="account-type" required="required" class="form-control custom-select" id="{{ prefix }}-account-type">
+                    <option value=""></option>
+                    <option value="company"{{ member.account_type == 'company' ? ' selected="selected"' : '' }}>Commercial Customer</option>
+                    <option value="private"{{ member.account_type == 'private' ? ' selected="selected"' : '' }}>Residential Customer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-organization">Company</label>
+                <input type="text" name="organization" class="form-control {{ (issues['organization'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-organization" value="{{ member.company|e }}" autocomplete="section-{{ prefix }} billing organization" />
+				{% if (issues['organization'] != '') %}<span class="invalid-feedback"><strong>{{ issues['organization'] }}</strong></span>{% endif %}
+            </div>
+            {#<div class="form-group">
+                <label for="{{ prefix }}-organization-title">Title / Position</label>
+                <input type="text" name="organization-title" class="form-control {{ (issues['organization-title'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-organization-title" value="{{ member.|e }}" autocomplete="section-{{ prefix }} billing organization-title" />
+				{% if (issues['organization-title'] != '') %}<span class="invalid-feedback"><strong>{{ issues['organization-title'] }}</strong></span>{% endif %}
+            </div>#}
+            <div class="form-group">
+                <label for="{{ prefix }}-home-tel">Phone Number*</label>
+                <input type="tel" name="home-tel" required="required" class="form-control {{ (issues['home-tel'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-home-tel" value="{{ member.phone_number|e }}" autocomplete="section-{{ prefix }} billing home tel" />
+				{% if (issues['home-tel'] != '') %}<span class="invalid-feedback"><strong>{{ issues['home-tel'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-fax-tel">Fax Number</label>
+                <input type="tel" name="fax-tel" class="form-control {{ (issues['fax-tel'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-fax-tel" value="{{ member.fax_number|e }}" autocomplete="section-{{ prefix }} billing fax tel" />
+				{% if (issues['fax-tel'] != '') %}<span class="invalid-feedback"><strong>{{ issues['fax-tel'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-mobile-tel">Mobile Number</label>
+                <input type="tel" name="mobile-tel" class="form-control {{ (issues['mobile-tel'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-mobile-tel" value="{{ member.mobile_number|e }}" autocomplete="section-{{ prefix }} billing mobile tel" />
+				{% if (issues['mobile-tel'] != '') %}<span class="invalid-feedback"><strong>{{ issues['mobile-tel'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-url">Website</label>
+                <input type="text" name="url" class="form-control {{ (issues['url'] != '') ? 'is-invalid' : '' }}" id="{{ prefix }}-url" value="{{ member.web_page_url|e }}" autocomplete="section-{{ prefix }} billing url" />
+				{% if (issues['url'] != '') %}<span class="invalid-feedback"><strong>{{ issues['url'] }}</strong></span>{% endif %}
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <input type="hidden" value="update" name="action" />
+        <input type="submit" value="Save" class="btn btn-lg btn-primary" />
+    </div>
+</form>
+
+                </div></div>
+                <div class="tab-pane fade {{ (tab == 'shipping') ? 'show active' : '' }}" id="account-tab-shipping" role="tabpanel" aria-labelledby="account-tab-shipping-tab"><div class="p-1 p-sm-3 border bg-white">
+                    <nav class="navbar p-0 pb-3">
+                        <h5 class="navbar-brand m-0">Shipping Details</h5>
+                        <button class="btn btn-success" data-toggle="modal" data-target="#shipping-address-modal"><i class="fas fa-plus-circle"></i> Add Shipping Address</button>
+                        <div class="modal fade" id="shipping-address-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add Shipping Address</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+
+{% set prefix = 'account-shipping-add' %}
+<form action="/account/shipping" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-organization">Company</label>
+                <input type="text" name="organization" class="form-control" id="{{ prefix }}-organization" autocomplete="section-{{ prefix }} shipping organization" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-street-address">Address*</label>
+                <textarea name="street-address" required="required" class="form-control" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} shipping street-address" rows="5"></textarea>
+            </div>
+            <input type="hidden" name="address-level3" class="form-control" id="{{ prefix }}-address-level3" autocomplete="off" />
+            {#<div class="form-group">
+                <label for="{{ prefix }}-address-level3">Address Line 2</label>
+                <input type="text" name="address-level3" class="form-control" id="{{ prefix }}-address-level3" autocomplete="section-{{ prefix }} shipping address-level3" />
+            </div>#}
+            <div class="form-group">
+                <label for="{{ prefix }}-address-level2">City*</label>
+                <input type="text" name="address-level2" required="required" class="form-control" id="{{ prefix }}-address-level2" autocomplete="section-{{ prefix }} shipping address-level2" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-address-level1">State / Province / Region*</label>
+                <input type="text" name="address-level1" required="required" class="form-control" id="{{ prefix }}-address-level1" autocomplete="section-{{ prefix }} shipping address-level1" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-postal-code">Zip / Post Code</label>
+                <input type="text" name="postal-code" class="form-control" id="{{ prefix }}-postal-code" autocomplete="section-{{ prefix }} shipping postal-code" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-country">Country</label>
+                <select class="form-control custom-select" name="country" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} shipping country">
+                    <option disabled="disabled" selected="selected">Please choose country...</option>
+                    {% for country in country_list %}<option value="{{ country.code }}">{{ country.name|e }}</option>{% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-home-tel">Phone Number</label>
+                <input type="tel" name="home-tel" class="form-control" id="{{ prefix }}-home-tel" autocomplete="section-{{ prefix }} shipping home tel" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-fax-tel">Fax Number</label>
+                <input type="tel" name="fax-tel" class="form-control" id="{{ prefix }}-fax-tel" autocomplete="section-{{ prefix }} shipping fax tel" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-mobile-tel">Mobile Number</label>
+                <input type="tel" name="mobile-tel" class="form-control" id="{{ prefix }}-mobile-tel" autocomplete="section-{{ prefix }} shipping mobile tel" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-name">Contact Person</label>
+                <input type="text" name="name" class="form-control" id="{{ prefix }}-name" autocomplete="section-{{ prefix }} shipping name" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-home-email">Contact Email</label>
+                <input type="email" name="home-email" class="form-control" id="{{ prefix }}-home-email" autocomplete="section-{{ prefix }} shipping home email" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <input type="hidden" value="add" name="action" />
+        <input type="submit" value="Add" class="btn btn-lg- btn-primary" />
+    </div>
+</form>
+
+                            </div>
+                        </div></div></div>
+                    </nav>
+                    <table class="table table-striped">
+                        <thead><tr class="bg-dark text-white">
+                            <th scope="col">#</th>
+                            <th scope="col">Address</th>
+                            <th scope="col"></th>
+                        </tr></thead>
+                        <tbody>
+                            {% set ship_num = 0 %}
+                            {% for ship in user.ship_addr %}
+                                {% set ship_num = ship_num + 1 %}
+                                <tr>
+                                    <td scope="row">{{ ship_num }}</td>
+                                    <td>
+                                        {% if ship.name %}Contact: {{ ship.name|e }}<br />{% endif %}
+                                        {{ markdown(ship.address_full) }}
+                                        {% if ship.email %}<br />Email: {{ ship.email|e }}{% endif %}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shipping-address-modal-{{ ship.id }}"><i class="fas fa-edit"></i></button>
+                                        <div class="modal fade" id="shipping-address-modal-{{ ship.id }}" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit Shipping Address</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+
+{% set prefix = 'account-shipping-edit' ~ ship.id %}
+<form action="/account/shipping" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-organization">Company</label>
+                <input type="text" name="organization" class="form-control" id="{{ prefix }}-organization" autocomplete="section-{{ prefix }} shipping organization" value="{{ ship.company|e }}" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-street-address">Address*</label>
+                <textarea name="street-address" required="required" class="form-control" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} shipping street-address" rows="5">{{ ship.address|e }}</textarea>
+            </div>
+            <input type="hidden" name="address-level3" class="form-control" id="{{ prefix }}-address-level3" autocomplete="off" />
+            {#<div class="form-group">
+                <label for="{{ prefix }}-address-level3">Address Line 2</label>
+                <input type="text" name="address-level3" class="form-control" id="{{ prefix }}-address-level3" autocomplete="section-{{ prefix }} shipping address-level3" value="{{ ship.address_2 }}" />
+            </div>#}
+            <div class="form-group">
+                <label for="{{ prefix }}-address-level2">City*</label>
+                <input type="text" name="address-level2" required="required" class="form-control" id="{{ prefix }}-address-level2" autocomplete="section-{{ prefix }} shipping address-level2" value="{{ ship.city|e }}" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-address-level1">State / Province / Region*</label>
+                <input type="text" name="address-level1" required="required" class="form-control" id="{{ prefix }}-address-level1" autocomplete="section-{{ prefix }} shipping address-level1" value="{{ ship.state|e }}" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-postal-code">Zip / Post Code</label>
+                <input type="text" name="postal-code" class="form-control" id="{{ prefix }}-postal-code" autocomplete="section-{{ prefix }} shipping postal-code" value="{{ ship.zip|e }}" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-country">Country</label>
+                <select class="form-control custom-select" name="country" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} shipping country">
+                    <option disabled="disabled" selected="selected">Please choose country...</option>
+                    {% for country in country_list %}<option value="{{ country.code }}"{{ (ship.country == country.code) ? ' selected="selected"' : '' }}>{{ country.name|e }}</option>{% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-home-tel">Phone Number</label>
+                <input type="tel" name="home-tel" class="form-control" id="{{ prefix }}-home-tel" autocomplete="section-{{ prefix }} shipping home tel" value="{{ ship.phone|e }}" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-fax-tel">Fax Number</label>
+                <input type="tel" name="fax-tel" class="form-control" id="{{ prefix }}-fax-tel" autocomplete="section-{{ prefix }} shipping fax tel" value="{{ ship.fax|e }}" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-mobile-tel">Mobile Number</label>
+                <input type="tel" name="mobile-tel" class="form-control" id="{{ prefix }}-mobile-tel" autocomplete="section-{{ prefix }} shipping mobile tel" value="{{ ship.mobile|e }}" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-name">Contact Person</label>
+                <input type="text" name="name" class="form-control" id="{{ prefix }}-name" autocomplete="section-{{ prefix }} shipping name" value="{{ ship.name }}" />
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-home-email">Contact Email</label>
+                <input type="email" name="home-email" class="form-control" id="{{ prefix }}-home-email" autocomplete="section-{{ prefix }} shipping home email" value="{{ ship.email }}" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <input type="hidden" value="{{ ship.id }}" name="id" />
+        <input type="hidden" value="update" name="action" />
+        <input type="submit" class="btn btn-lg- btn-primary" value="Save" />
+    </div>
+</form>
+
+                                            </div>
+                                        </div></div></div>
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#shipping-address-delete-modal-{{ ship.id }}"><i class="fas fa-trash-alt"></i></button>
+                                        <div class="modal fade" id="shipping-address-delete-modal-{{ ship.id }}" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Delete Shipping Address</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+
+{% set prefix = 'account-shipping-delete' ~ ship.id %}
+<form action="/account/shipping" method="post">
+    <p>
+        Deleting the following address: <br />
+        {% if ship.name %}Contact: {{ ship.name|e }}<br />{% endif %}
+        {{ markdown(ship.address_full) }}
+        {% if ship.email %}<br />Email: {{ ship.email|e }}{% endif %}
+    </p>
+    <hr />
+    <div class="form-group">
+        <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal" aria-label="Close">Cancel</button>
+        <input type="hidden" value="{{ ship.id }}" name="id" />
+        <input type="hidden" value="delete" name="action" />
+        <input type="submit" value="Delete" class="btn btn-lg btn-danger" />
+    </div>
+</form>
+
+                                            </div>
+                                        </div></div></div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div></div>
+                <div class="tab-pane fade {{ (tab == 'preferences') ? 'show active' : '' }}" id="account-tab-preferences" role="tabpanel" aria-labelledby="account-tab-preferences-tab"><div class="p-1 p-sm-3 border bg-white">
+                    <h5>Website Preferences</h5>
+                    <hr />
+
+{% set prefix = 'account-preferences-edit' %}
+<form action="/account" method="post">
+    {#<div class="form-group"><div class="form-row align-items-center">
+        <div class="col-4"><label for="currency-input">Default Currency :</label></div>
+        <div class="col-8">
+            <select class="form-control custom-select" id="currency-input" name="prefs[currency]">
+                <option disabled selected>Please choose currency...</option>
+                {% for currency in currency_list %}<option value="{{ currency.code }}" {{ (currency.code == user.prefs.currency) ? 'selected' : '' }}>{{ currency.name }} - {{ currency.code }}</option>{% endfor %}
+            </select>
+        </div>
+    </div></div>#}
+    <div class="form-group"><div class="form-row align-items-center">
+        <div class="col-sm-4"><label for="newsletter-input">Receive Newsletter*</label></div>
+        <div class="col-sm-8"><select class="form-control custom-select" id="newsletter-input" name="prefs[mailing_list]">
+            <option value="n" {{ (user.prefs.mailing_list == 'n') ? 'selected' : '' }}>No</option>
+            <option value="y" {{ (user.prefs.mailing_list == 'y') ? 'selected' : '' }}>Yes</option>
+        </select></div>
+    </div></div>
+    <div class="form-group"><div class="form-row align-items-center">
+        <div class="col-sm-4"><label for="ppg-input">Products Per Page*</label></div>
+        <div class="col-sm-8"><select class="form-control custom-select" id="ppg-input" name="prefs[products_per_page]">
+            <option value="n" {{ (user.prefs.products_per_page == '10') ? 'selected' : '' }}>10</option>
+            <option value="y" {{ (user.prefs.products_per_page == '25') ? 'selected' : '' }}>25</option>
+            <option value="y" {{ (user.prefs.products_per_page == '30') ? 'selected' : '' }}>30</option>
+            <option value="y" {{ (user.prefs.products_per_page == '50') ? 'selected' : '' }}>50</option>
+        </select></div>
+    </div></div>
+    <hr />
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-lg btn-primary" />
+    </div>
+</form>
+
+                </div></div>
+                <div class="tab-pane fade {{ (tab == 'inquiries') ? 'show active' : '' }}" id="account-tab-inquiries" role="tabpanel" aria-labelledby="account-tab-inquiries-tab"><div class="p-1 p-sm-3 border bg-white">
+                    <h5>My Inquiries</h5>
+                    <hr />
+                    <table class="table table-striped">
+                        <thead><tr class="bg-dark text-white">
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Invoice #</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">View</th>
+                        </tr></thead>
+                        <tbody>
+                            {% set inquiry_index = 0 %}
+                            {% for inquiry in user.inquiries %}
+                                {% set inquiry_index = inquiry_index + 1 %}
+                                <tr>
+                                    <td scope="row">{{ inquiry|e }}</td>
+                                    <td>{{ inquiry.date | date('d M Y') }}</td>
+                                    <td>{{ inquiry|e }} </td>
+                                    <td>{{ inquiry.total|currency }}</td>
+                                    <td>{{ inquiry.status }}</td>
+                                    <td><a target="_blank" href="/members/invoice_{{ inquiry.id }}.pdf" class="btn btn-primary btn-sm"><i class="far fa-eye"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div></div>
+                <div class="tab-pane fade {{ (tab == 'orders') ? 'show active' : '' }}" id="account-tab-orders" role="tabpanel" aria-labelledby="account-tab-orders-tab"><div class="p-1 p-sm-3 border bg-white">
+                    <h5>My Orders</h5>
+                    <hr />
+                    <table class="table table-striped">
+                        <thead><tr class="bg-dark text-white">
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Invoice #</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">View</th>
+                        </tr></thead>
+                        <tbody>
+                            {% set order_index = 0 %}
+                            {% for order in user.orders %}
+                                {% set order_index = order_index + 1 %}
+                                <tr>
+                                    <td scope="row">{{ order_index }}</td>
+                                    <td>{{ order.date | date('d M Y') }}</td>
+                                    <td>{{ order|e }} </td>
+                                    <td>{{ order.total|currency }}</td>
+                                    <td>{{ order.status }}</td>
+                                    <td><a target="_blank" href="/members/invoice_{{ order.id }}.pdf" class="btn btn-primary btn-sm"><i class="far fa-eye"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div></div>
+                <div class="tab-pane fade {{ (tab == 'settings') ? 'show active' : '' }}" id="account-tab-settings" role="tabpanel" aria-labelledby="account-tab-settings-tab"><div class="p-1 p-sm-3 border bg-white">
+                    <h5>Settings</h5>
+                    <hr />
+
+<form action="/account/password" method="post">
+    <div class="form-group"><div class="form-row">
+        <div class="col-4"><label for="account-username">Login Email*</label></div>
+        <div class='col-8'><input type="email" class="form-control" name="username" autocomplete="username" id="account-username" value="{{ user.email|e }}" /></div>
+    </div></div>
+    <div class="form-group"><div class="form-row">
+        <div class="col-4"><label for="account-current-password">Old Password*</label></div>
+        <div class='col-8'><input type="password" class="form-control" name="current-password" autocomplete="current-password" id="account-current-password" /></div>
+    </div></div>
+    <div class="form-group"><div class="form-row">
+        <div class="col-4"><label for="account-new-password">New Password*</label></div>
+        <div class='col-8'><input type="password" class="form-control" name="new-password" autocomplete="new-password" id="account-new-password" /></div>
+    </div></div>
+    <div class="form-group"><div class="form-row">
+        <div class="col-4"><label for="account-confirm-password">Confirm New Password*</label></div>
+        <div class='col-8'><input type="password" class="form-control" name="confirm-password" autocomplete="new-password" id="account-confirm-password" /></div>
+    </div></div>
+    <hr />
+    <div class="form-group">
+        <input type="hidden" name="action" value="update" />
+        <input type="submit" value="Save" class="btn btn-lg btn-primary" />
+    </div>
+</form>
+
+                </div></div>
+            </div>
+        </div>
+    </div></div></div>
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'before-footer',
+    }} %}
+{% endblock %}

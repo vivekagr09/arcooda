@@ -1,0 +1,115 @@
+/**
+ * Project: Product Builder
+ *
+ * style.css
+ *
+ * @author Kelvin (khtat@highwaygroup.net)
+ * @since  09 JAN 2018
+ */
+body,html{margin:0;padding:0;font-family:Lato,sans-serif;width:100%}
+
+/**
+ * General
+ */
+.clr{margin:0;padding:0}
+table.clr{border-collapse:collapse;border:0}
+.align-middle{text-align:center}
+.sep-10{margin:0 10px}
+div.line-sep{height:1px;background:#f0f0f0}
+img{vertical-align:top}
+.font-12{font-size:12px}
+.font-14{font-size:14px}
+.font-1p5em{font-size:1.5em}
+ul.non-liststyle{list-style:none}
+
+/**
+ * Grid
+ */
+.grid-inline-top{display:inline-block;vertical-align:top}
+.grid-inline-mid{display:inline-block;vertical-align:middle}
+.grid-pdx10{padding:10px}
+.grid-pdtbx10{padding:10px 0}
+.grid-pdlrx10{padding:0 10px}
+
+/**
+ * Header
+ */
+#header-container{padding:20px 0}
+#logo-wrapper{margin:0 15px;float:left}
+#builder-title-wrapper{padding:5px}
+#builder-title{font-size:1.5em}
+
+/**
+ * page title
+ */
+#page-title-wrapper{padding:20px 0;background:#f0f0f0;color:#888;text-align:center}
+
+/**
+ * Buttons
+ */
+.alt-blue-btn,.blue-btn,.mob-org-select-btn{width:100px;height:50px;color:#fff;background:#ffb500;border:1px solid #ffb500;font-size:.8em;font-weight:700;cursor:pointer;outline:0}
+.mob-org-select-btn{color:#ffb500;background:#fff}
+.button-selector.selected{color:#fff;background:#ffb500}
+.y-btn:hover{background:#ffc300!important}
+.alt-blue-btn:hover{color:#fff;background:#ffb500;border-color:#fff}
+div.button-selector-wrapper{margin:20px 0}
+div.option-btn-radio{border:1px solid #f0f0f0;width:30px;height:30px;border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;margin:auto}
+div.option-btn-radio-selected{/*background:#FFB500;*/background:url("../graphic/cd_checked.png");background-size:100% 100%}
+
+/**
+ * Main Content
+ */
+#main-content{padding-bottom:76px}
+div.option-container{position:relative}
+div.option-container-border{border:1px solid silver;border-radius:10px;-moz-border-radius:10px;-webkit-border-radius:10px;width:auto}
+div.option-container-border.selected{border:1px solid #ffb500;background:#fff;color:#ffb500}
+div.option-description-wrapper{width:30px;height:30px;background:url(../graphic/info_icon.png) no-repeat;background-size:100% 100%;position:absolute;bottom:10px;right:10px}
+.option-description{display:none}
+img.option-image{margin:auto}
+.selection-bar-grid{width:100%}
+.selection-bar-grid td{text-align:center}
+.selection-bar-grid td:last-child{width:42px}
+.selection-bar{padding:15px 10px;font-size:14px}
+
+/**
+ * Contact Form
+ */
+.form-list li{margin-bottom:10px}
+input.text-input,select.select-input{width:99%;height:40px;border:1px solid #e0e0e0;outline:0;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;font-size:14px;text-indent:5px}
+input.text-input:focus{border-color:#ffb500}
+div.text-area-wrapper{padding:5px;border:1px solid #e0e0e0;height:200px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px}
+textarea.textarea-input{background:#fff;outline:0;border:none;width:100%;height:100%;font-family:Lato,sans-serif;font-size:14px;resize:none}
+#err{padding:10px;border:1px solid #f03;background:#fcc;margin-bottom:25px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;display:none}
+#err-list{list-style:none;font-size:12px}
+#err-list li{margin:10px 0}
+.summary-sep{width:90%;margin:auto;height:1px;background:#e0e0e0}
+.sent-notification{width:95%;margin:auto;text-align:center;display:none}
+
+/**
+ * Footer
+ */
+#footer-container{position:fixed;bottom:0;left:0;width:100%;padding:10px 0;border-top:1px solid silver;display:none;background:#fff}
+
+/**
+ * Loading
+ */
+#loading-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,.8);display:table;z-index:999;display:none}
+#loading-gif-wrapper{display:table-cell;vertical-align:middle;width:100%;height:100%;text-align:center}
+#loading-gif{width:50px;height:50px;background:url(../graphic/loading.gif);background-size:100% 100%;margin:auto}
+
+/**
+ * Cart
+ */
+#cart-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:999;background:rgba(0,0,0,.5);display:none}
+#cart-container{width:90%;height:100%;background:#fff;overflow:auto}
+#cart-header{position:fixed;top:0;left:0;width:90%;background:#fff;padding:20px 0;border-bottom:1px solid #f0f0f0}
+#cart-title{padding:0 10px}
+#cart-hide-icon{float:right;font-size:1.17em;margin:0 20px}
+#cart-content{padding-top:63px}
+.cart-detail{padding:10px}
+.cart-price{font-size:18px;margin-left:10px}
+.cart-currency{font-size:12px}
+#cart-img{width:35px;height:35px;background:url(../graphic/cart_icons.png) no-repeat;position:relative}
+.cart-empty{background-position:0 0!important}
+.cart-fill{background-position:-42px 0!important}
+#cart-num-wrapper{position:absolute;top:5px;left:1px;width:30px;text-align:center;font-size:12px;font-weight:700;color:#fff}

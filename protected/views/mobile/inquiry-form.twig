@@ -1,0 +1,90 @@
+<style>
+    table tr{
+        line-height: 42px;
+    }
+
+</style>
+{% set allow_inquiry = allowInquirySectionOnMobile() %}
+{% set country_list = countries() %}
+ {% if allow_inquiry==1 %}
+    <div class="mobile-menu__divider"></div>
+    <a class="mobile-menu__contacts" style="display:none;">
+         <div style="text-align: center; padding-top: 15px; "><button class="btn btn-success btn-lg btn-block" type="button" onclick="window.location.href='/inquiry';" style="">Send Inquiry</button></div>
+    </a>
+{% endif %}
+
+<form action="/inquiry" method="post" id="inquiry-form-contact">
+<div class="markdown">
+<h2>Get in Touch with Us</h2>
+</div>
+<table style="margin: 0 auto;">
+    <tr>
+        <th class="display-none-mobile">
+            <label for="form-name">First Name <span class="color-red">*</span></label>
+        </th>
+        <td>
+            <input type="text" id="form-name" name='given-name' class="form-control" placeholder="First Name"  value="{{ (member.first_name != '') ? member.first_name : ''}}" required>
+        </td>
+    </tr> 
+    <tr>
+        <th class="display-none-mobile">
+            <label for="form-name">Last Name <span class="color-red">*</span></label>
+        </th>
+        <td>
+            <input type="text" id="form-name" name='family-name' class="form-control" placeholder="Last Name"  value="{{ (member.last_name != '') ? member.last_name : ''}}" required>
+        </td>
+     </tr>   
+     <tr>
+        <td class="display-none-mobile">
+            <label for="form-email"><b>Email <span class="color-red">*</span></b></label>
+        </td>
+        <td>
+            <input type="email" id="form-email" name='member_email' class="form-control" placeholder="Email"  value="{{ (member.email_address != '') ? member.email_address : ''}}" required>
+        </td>
+    </tr>
+    <tr>
+        <th class="display-none-mobile">
+            <label for="form-email">Your Location <span class="color-red">*</span></label>
+        </th>
+        <td>
+            <select id="member_location" class="form-control" name="member_location" autocomplete="section-register billing country" required>
+                <option value="">Select Country</option>
+                {% for  country in country_list %}
+                    <option value="{{country.code}}" {{ (member.country == country.code) ? 'selected' : ''}}>{{country.name}}</option>
+                {% endfor %}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th class="display-none-mobile">
+            <label for="form-subject">Subject <span class="color-red">*</span></label>
+        </th>
+        <td>
+            <input type="text" id="form-subject" name='product_name' class="form-control" placeholder="Subject" required>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <textarea id="form-message" name='comments' class="form-control" rows="4" required placeholder="please type your message here"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div class="g-recaptcha" data-sitekey="6Ld2WYEnAAAAAJL089eYW4Yl-JLJ35x7M3kbTNb6" style="width: 100%;padding-top: 7px;display: inline-block;"></div>
+        </td>
+    </tr>
+    <tr style="text-align: center;">
+        <td colspan="2">
+            <input type="hidden" value="inquiry" name="action" />
+            <button type="submit" id="inquiry_form" class="btn btn-primary" >Send Message</button>
+        </td>
+    </tr>
+</table>
+</form>
+<script type="text/javascript">
+    if ($(window).width() >= 600){  
+            $('input[type=text]').removeAttr('placeholder');
+            $('input[type=email]').removeAttr('placeholder');
+        }   
+
+</script>

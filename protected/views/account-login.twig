@@ -1,0 +1,89 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+#}
+
+{% set global_page_title           = inputs.title|default('Login')                %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/login'                             %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'},
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/blocks/block-header.twig' with {inputs: {
+        title: 'Login',
+        breadcrumb: global_page_breadcrumbs,
+    }} %}
+    <div class="block"><div class="container"><div class="row justify-content-center"><div class="col-lg-6 col-12">
+    	<div class="bg-white border p-5 p_5">
+    	<form action="" method="post" name="loginform">
+
+        {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+		<div class="form-group">
+			<div class="form-row">
+			<div class="col-4">
+				<label for="account-login-username">Email Address*</label>
+			</div>
+			<div class="col-8">
+				<input autocomplete="username" class="form-control{{ (issues.username) ? ' is-invalid' : '' }}" id="account-login-username" name="username" placeholder="name@mail.com" required="required" type="email" />
+				{% if issues.username %}<span class="invalid-feedback"><strong>{{ issues.username }}</strong></span>{% endif %}
+			</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="form-row">
+				<div class="col-4">
+					<label for="account-login-current-password">Password*</label>
+				</div>
+				<div class="col-8">
+					<input autocomplete="current-password" class="form-control{{ (issues['current-password']) ? ' is-invalid' : '' }}" id="account-login-current-password" name="current-password" placeholder="Enter password" required="required" type="password" />
+					{% if issues['current-password'] %}<span class="invalid-feedback"><strong>{{ issues['current-password'] }}</strong></span>{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+		<div class="form-row">
+			<div class="col-4"></div>
+			<div class="col-8">
+				<a href="https://www.highwaygroup.org/" target="_blank"><img src="/img/hgr-icon.jpg" alt="Highway Group Pty Ltd Logo" class="float-left m-2"></a>
+				<small >Members of <a href="https://www.highwaygroup.org/" target="_blank">Highway Group</a> can use their login above.<br> If you have forgotten your password please  <a href="/account/passwordFind" target="_blank">click here</a> <br/></small>
+			</div>
+		</div></div>
+		<div class="form-group" style="margin-bottom:0px;">
+			<div class="form-row">
+			<div class="col-4"></div>
+			<div class="col-8">
+				<input type="hidden" name="action" value="login" />
+				<input type="submit" value="Log In" class="btn btn-primary w-100" />
+				<br>
+				<p class="text-center" style="padding-top:20px; ">Or</p>
+			</div>
+		</div>
+		</div>
+		<div class="form-group"><div class="form-row">
+			<div class="col-4"></div>
+			<div class="col-8">
+			<a href="/account/register" class="btn btn-success w-100">Create an account</a>
+		</div>
+	</div>
+		</div>
+	</form></div></div></div></div></div>
+    {% include '/blocks/block-space.twig' with {inputs: {
+		layout: 'before-footer',
+	}} %}
+{% endblock %}

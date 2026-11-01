@@ -1,0 +1,24 @@
+body{font-family:Verdana,Arial,Helvetica,sans-serif;background-color:#f0f4f9}
+div#labcontent .unfinished{background-color:#ff0}
+div#labcontent a{color:#fff}
+div#labcontent{width:100%;margin-left:auto;margin-right:auto;font-family:Verdana,Arial,Helvetica,Sans-serif;font-size:9pt}
+div#labcontent table{text-align:left;width:80%;margin-left:auto;margin-right:auto;border-collapse:collapse;border:1px #ccc solid}
+div#labcontent tr{background-color:#fff;color:#000;font-family:Verdana;font-size:12px;font-weight:400}
+div#labcontent pre{margin:0}
+div#labcontent pre.alt{background-color:#eee}
+div#labcontent td{padding:2px 1px 2px 1px}
+div#labcontent th,div#labcontent thead{background-color:#fec;color:#000;font-weight:700;text-align:center}
+div#labcontent table.vbox td,div#labcontent table.vbox th,div#labcontent table.vbox thead{border:1px solid #fff}
+div#labcontent table.buttons{text-align:center}
+div#labcontent table.wide{width:90%}
+div#labcontent tr.alt{background-color:#eeeee0}
+div#labcontent tr.highlight{background-color:#90eea0}
+div#labcontent tr.mylock{background-color:#90a0ee}
+div#labcontent tr.locked{background-color:#ee90a0}
+div#labcontent td.collapse{width:1px}
+div#labcontent th.collapse{width:1px}
+div#labcontent td.left_title{width:30%;text-align:right;background-color:#eeeee0;color:#000;font-weight:700}
+div#labcontent input.infile,div#labcontent input.intext,div#labcontent select,div#labcontent textarea{width:98%}
+div#labcontent th a{color:#000}
+div#labcontent td a{color:#000}
+div#labcontent table.spacetable td{border:2px solid #fff}

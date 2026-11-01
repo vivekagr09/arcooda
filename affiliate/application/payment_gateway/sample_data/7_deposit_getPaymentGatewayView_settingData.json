@@ -1,0 +1,9 @@
+{
+  "is_install": "1",
+  "shop_id": "11111",
+  "secret_key": "test_loremipsumloremipsumloremipsum",
+  "order_status": "1",
+  "title": "Test payment",
+  "icon": "assets/payment_gateway/test_payment.png",
+  "name": "test_payment"
+}

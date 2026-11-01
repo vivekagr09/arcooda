@@ -1,0 +1,880 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - error:
+// - success:
+// - tab:
+// - updated:
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set products   = inputs.products %}
+{% set helpText = inputs.helpText %}
+{% set sortby = inputs.sortby %}
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    <style type="text/css">
+        .table-background-colour {
+            background-color: #f2f2f2 !important;
+        }
+        .compare-table__column--header, .compare-table__column--product {
+            padding: 5px 5px;
+        }
+        .compare-table__column--header {
+            min-width: 250px;
+        }
+        .spec__name {
+            padding-right: 1px !important; 
+        }
+        .col-6-value{
+                margin-left: 12px;
+        }
+        .compare-table__column--product {
+            min-width: 200px!important;
+        }
+        .spec__row{
+            border: none !important;
+        }
+      .table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Sticky first column (left side) */
+.compare-table th:first-child,
+.compare-table td:first-child {
+  position: sticky;
+  left: 0;
+  background: #f8f8f8;
+  z-index: 3; /* slightly lower than header row */
+}
+
+/* Sticky first row (for rotated table) */
+/* Wrap your table for scrolling */
+.table-sticky-wrapper {
+    max-height: 500px;         /* adjust height */
+    overflow: auto;
+    position: relative;
+}
+
+/* Sticky first row */
+.table-sticky-wrapper table thead th {
+    position: sticky;
+    top: 0;
+    background: #fff;          /* required */
+    z-index: 10;
+}
+
+/* Sticky first column */
+.table-sticky-wrapper table th:first-child,
+.table-sticky-wrapper table td:first-child {
+    position: sticky;
+    left: 0;
+    background: #fff;          /* required */
+    z-index: 5;
+}
+
+/* Fix overlap where header & first column meet */
+.table-sticky-wrapper table thead th:first-child {
+    z-index: 20;
+}
+</style>
+    <div class="site__body">
+    {% include '/blocks/block-header.twig' with {inputs: {
+        breadcrumb: global_page_breadcrumbs,
+        cart_items: [],
+        title: global_page_title
+    }} %}
+       <div class="block">
+        <div class="container">
+            <div class="compare card">
+       {% if products|length > 0 %}
+                <div class="table-responsive" id="printTable" style="transform:rotateX(180deg)">
+                    <table class="compare__table compare-table"  style="transform:rotateX(180deg)">
+                        <tbody>
+                        <tr class="compare-table__row sticky-table-row">
+                            <th class="compare-table__column compare-table__column--header" style="vertical-align: top;">
+
+                                <div class="view-options__select">
+                                    <label for="view-option-sort">Sort:</label>
+                                    <select id="view-option-sort" class="form-control form-control-sm" style="background-color:#ffecf2" name="sort" onchange="window.location.href='?sortby='+ this.value;">
+                                        <option value="">Select Value</option>
+                                        <option value="price" {{sortby == 'price' ? 'selected' : ''}}>Price</option>
+                                        <option value="size" {{sortby == 'size' ? 'selected' : ''}}>Monitor Size</option>
+                                        <option value="ratio" {{sortby == 'ratio' ? 'selected' : ''}}>Aspect Ratio</option>
+                                        <option value="name" {{sortby == 'name' ? 'selected' : ''}}>Name</option>
+                                    </select>
+                                </div>
+                                <div style="    margin-top: 45%;">Product</div>
+                               
+                            </th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    <a href="{{ product.url|e }}" class="compare-table__product" target="_blank">
+                                        <div class="compare-table__product-image">
+                                            <img src="{{ image(product.images[0], {size: 150}) }}" width="150" />
+                                        </div>
+                                        <div class="compare-table__product-name">
+                                            {{ product.name|e }}
+                                        </div>
+                                    </a>
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Price</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product product__price--new">
+                                            {{ product.price.format('[symbol_e]<span class="product-price-update">[price_inc_gst_e]</span> <span style="font-size:60%" id="labelUSD">[currency_e]</span>')|currency }}
+                                       
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row">
+                            <th class="compare-table__column compare-table__column--header">Monitor Size {% if helpText.monitor_size != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_size}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_size')[product.monitoOptions.monitor_size] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Monitor Resolution <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_resolution}}"></i></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_resolution')[product.monitor_resolution] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Monitor Aspect Ratio <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_ratio}}"></i></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_ratio')[product.monitor_ratio] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Software Aspect Ratio <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.aspect_ratio_software}}"></i></th>
+                            {% for product in products %}
+                                {% set aspect_ratio_software = product.monitoOptions.aspect_ratio_software|split(',') %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                   {% for ratio in aspect_ratio_software %}
+                                        {{product.productGetOptionListData('monitor_ratio')[ratio] }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header table-background-colour"> Inputs {% if helpText.inputs != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.inputs}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                   {% set inputs = [] %}
+
+                                    {% if product.monitoOptions.input_vga > 0 %}
+                                      {% set inputs = inputs|merge([product.monitoOptions.input_vga ~ ' * ' ~ 'VGA']) %}
+                                    {% endif %}
+                                    {% if product.monitoOptions.input_hdmi > 0 %}
+                                      {% set inputs = inputs|merge([product.monitoOptions.input_hdmi ~ ' * ' ~ 'HDMI']) %}
+                                    {% endif %}
+                                    {% if product.monitoOptions.input_dvi > 0 %}
+                                      {% set inputs = inputs|merge([product.monitoOptions.input_dvi ~ ' * ' ~ 'DVI']) %}
+                                    {% endif %}
+                                    {% if product.monitoOptions.input_displayport > 0 %}
+                                      {% set inputs = inputs|merge([product.monitoOptions.input_displayport ~ ' * ' ~ 'DisplayPort']) %}
+                                    {% endif %}
+                                    {% if product.monitoOptions.input_usb > 0 %}
+                                      {% set inputs = inputs|merge([product.monitoOptions.input_usb ~ ' * ' ~ 'USB (type A)']) %}
+                                    {% endif %}
+                                    {% if product.monitoOptions.input_usb_type_c > 0 %}
+                                      {% set inputs = inputs|merge([product.monitoOptions.input_usb_type_c ~ ' * ' ~ 'USB (type C)']) %}
+                                    {% endif %}
+
+                                    {{ inputs|join('<br>')|raw }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Panel Type <i class="far fa-question-circle" data-html="true" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_type}}"></i></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_type')[product.monitor_type] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        
+
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Brightness <i class="far fa-question-circle" data-html="true" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_brightness}}"></i></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_brightness')[product.monitoOptions.monitor_brightness] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Contrast Ratio <i class="far fa-question-circle" data-html="true" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_contrast_ratio}}"></i></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_contrast_ratio')[product.monitoOptions.monitor_contrast_ratio] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Viewing Angle <i class="far fa-question-circle" data-html="true" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_viewing_angle}}"></i></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_viewing_angle')[product.monitoOptions.monitor_viewing_angle] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Display Color {% if helpText.monitor_display_color != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_display_color}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_display_color')[product.monitoOptions.monitor_display_color] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Refresh Rate  {% if helpText.monitor_refresh_rate != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_refresh_rate}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_refresh_rate')[product.monitoOptions.monitor_refresh_rate] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Display Surface {% if helpText.monitor_display_surface != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_display_surface}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_display_surface')[product.monitoOptions.monitor_display_surface] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Power {% if helpText.monitor_power != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_power}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_power')[product.monitoOptions.monitor_power] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Low Resolution Support {% if helpText.monitor_low_resolution_support != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_low_resolution_support}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                        {% set monitor_low_resolution_support_value = product.monitoOptions.monitor_low_resolution_support_value|split(',') %}
+                                        
+                                           {% for ratio in monitor_low_resolution_support_value %}
+
+                                                {{product.productGetOptionListData('monitor_low_resolution_support')[ratio] }}<br>
+                                            {% endfor %}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Low Resolution Auto Picture {% if helpText.low_resolution_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.low_resolution_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{ product.monitoOptions.low_resolution_option|capitalize }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row">
+                            <th class="compare-table__column compare-table__column--header">Integrated Speakers</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                     {% if product.integrated_speakers == 'yes' %}
+                                        <div>{{markdown( product.speakers_support_type) }}</div>
+                                        {{markdown( product.integrated_speakers_comment)}}
+                                    {% else  %}
+                                        No
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Low Resolution Analysis {% if helpText.low_resolution_analysis_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.low_resolution_analysis_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.low_resolution_analysis_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header">Screen Mirror Mode {% if helpText.screen_mirror_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.screen_mirror_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.screen_mirror_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Low Resolution Rotate {% if helpText.monitor_low_resolution_rotate != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_low_resolution_rotate}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                        {% set monitor_low_resolution_rotate = product.monitoOptions.monitor_low_resolution_rotate|split(',') %}
+                                        
+                                           {% for ratio in monitor_low_resolution_rotate %}
+
+                                                {{product.productGetOptionListData('monitor_low_resolution_support')[ratio] }}{% if not loop.last %}, {% endif %}
+                                            {% endfor %}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header">PC Monitor Resolution <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_pc_resolution}}"></i></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.productGetOptionListData('monitor_pc_resolution')[product.monitoOptions.monitor_pc_resolution] }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Screen Rotate PC Mode {% if helpText.screen_rotate_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.screen_rotate_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {% if product.monitoOptions.screen_rotate_option == 'yes' %}
+                                        {% set screen_rotate_option_value = product.monitoOptions.screen_rotate_option_value|split(',') %}
+                                        
+                                           {% for ratio in screen_rotate_option_value %}
+                                                {{product.productGetOptionListData('screen_rotate_option_value')[ratio] }}{% if not loop.last %}, {% endif %}
+                                            {% endfor %}
+                                    {% else  %}
+                                        No
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Audio Output {% if helpText.audio_output_jack != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.audio_output_jack}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                   {% if product.monitoOptions.audio_output_jack == 'yes' %}
+                                        {{markdown(product.monitoOptions.audio_output_jack_comment) }}<br>
+                                    {% else  %}
+                                        No
+                                    {% endif %} 
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Audio Input {% if helpText.audio_input_jack != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.audio_input_jack}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {% if product.monitoOptions.audio_input_jack == 'yes' %}
+                                        {{markdown(product.monitoOptions.audio_input_jack_comment)}}<br>
+                                    {% else  %}
+                                        No
+                                    {% endif %} 
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Mounting Brackets {% if helpText.mounting_brackets != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.mounting_brackets}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                   {% if product.monitoOptions.mounting_brackets == 'yes' %}
+                                        {{product.monitoOptions.mounting_brackets_value }} pieces<br>
+                                    {% else  %}
+                                        No
+                                    {% endif %} 
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">VESA Mount {% if helpText.monitor_vesa_mount != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_vesa_mount}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {% if product.monitoOptions.monitor_vesa_mount == 'yes' %}
+                                        {% set monitor_vesa_mount_value = product.monitoOptions.monitor_vesa_mount_value|split(',') %}
+                                        
+                                           {% for ratio in monitor_vesa_mount_value %}
+                                                {{product.productGetOptionListData('monitor_vesa_mount')[ratio] }}<br>
+                                            {% endfor %}
+                                    {% else  %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour"> OSD Button Extension Option {% if helpText.osd_buton_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.osd_buton_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.osd_buton_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">RGB Board Option {% if helpText.rgb_board_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.rgb_board_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.rgb_board_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                          <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Cable Management {% if helpText.cable_management_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.cable_management_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.cable_management_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">DDCCI {% if helpText.ddcci_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.ddcci_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.ddcci_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">FreeSync Pro {% if helpText.freesync_Pro_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.freesync_Pro_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.freesync_Pro_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Ultra HDR {% if helpText.ultra_hdr_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.ultra_hdr_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.ultra_hdr_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Ultra Vivid {% if helpText.ultra_vivid_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.ultra_vivid_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.ultra_vivid_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Over Drive  {% if helpText.over_drive_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.over_drive_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.over_drive_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Over Scan {% if helpText.over_scan_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.over_scan_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.over_scan_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">DisplayPort MST {% if helpText.displayport_mst_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.displayport_mst_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.displayport_mst_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Screen Clone {% if helpText.screen_clone_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.screen_clone_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.screen_clone_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Picture in Picture  {% if helpText.pinp_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.pinp_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.pinp_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Multi Display  {% if helpText.multi_display != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.multi_display}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.multi_display|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">OSD Board Extention Option {% if helpText.osd_board_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.osd_board_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.osd_board_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header">Remote Control Option {% if helpText.remote_controll_option != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.remote_controll_option}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.monitoOptions.remote_controll_option|capitalize}}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Screen Viewing Size {% if helpText.screen_size != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.screen_size}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    <table style="width: 100%;">
+                                       <tbody>
+                                          <tr>
+                                            <td style="width: 100%" valign="top">
+                                               
+                                                <div class="spec__row">
+                                                   <div class="spec__name" style="width:33%">Width</div>
+                                                   <div class="spec__value" style="width:67%">
+                                                      <div class="row">
+                                                         <div class="col-6-value"> {{product.monitoOptions.screen_width}} cm</div>
+                                                         <div class="col-6-value">{{product.monitoOptions.convertToInch(product.monitoOptions.screen_width)}}</div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="spec__row">
+                                                   <div class="spec__name" style="width:33%">Height</div>
+                                                   <div class="spec__value" style="width:67%">
+                                                      <div class="row">
+                                                         <div class="col-6-value">{{product.monitoOptions.screen_height}} cm</div>
+                                                         <div class="col-6-value">{{product.monitoOptions.convertToInch(product.monitoOptions.screen_height)}}</div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header">Monitor Dimensions {% if helpText.monitor_dimensions != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.monitor_dimensions}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    <table style="width: 100%;">
+                                       <tbody>
+                                          <tr>
+                                            <td style="width: 100%" valign="top">
+                                               
+                                                <div class="spec__row">
+                                                   <div class="spec__name" style="width:33%">Width</div>
+                                                   <div class="spec__value" style="width:67%">
+                                                      <div class="row">
+                                                         <div class="col-6-value"> {{product.width}} cm</div>
+                                                         <div class="col-6-value">{{product.monitoOptions.convertToInch(product.width)}}</div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="spec__row">
+                                                   <div class="spec__name" style="width:33%">Height</div>
+                                                   <div class="spec__value" style="width:67%">
+                                                      <div class="row">
+                                                         <div class="col-6-value">{{product.height}} cm</div>
+                                                         <div class="col-6-value">{{product.monitoOptions.convertToInch(product.height)}}</div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                 <div class="spec__row">
+                                                   <div class="spec__name" style="width:33%">Depth</div>
+                                                   <div class="spec__value" style="width:67%">
+                                                      <div class="row">
+                                                         <div class="col-6-value">{{product.depth}} cm</div>
+                                                         <div class="col-6-value">{{product.monitoOptions.convertToInch(product.depth)}}</div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header">Monitor Dimensions with Brackets {% if helpText.screen_with_brackets != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.screen_with_brackets}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    <table style="width: 100%;">
+                                       <tbody>
+                                          <tr>
+                                            <td style="width: 100%" valign="top">
+                                               
+                                                <div class="spec__row">
+                                                   <div class="spec__name" style="width:33%">Width</div>
+                                                   <div class="spec__value" style="width:67%">
+                                                      <div class="row">
+                                                         <div class="col-6-value"> {{product.monitoOptions.screen_width_brackets}} cm</div>
+                                                         <div class="col-6-value">{{product.monitoOptions.convertToInch(product.monitoOptions.screen_width_brackets)}}</div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="spec__row">
+                                                   <div class="spec__name" style="width:33%">Height</div>
+                                                   <div class="spec__value" style="width:67%">
+                                                      <div class="row">
+                                                         <div class="col-6-value"> {{product.monitoOptions.screen_height_brackets}} cm</div>
+                                                         <div class="col-6-value">{{product.monitoOptions.convertToInch(product.monitoOptions.screen_height_brackets)}}</div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                 <div class="spec__row">
+                                                   <div class="spec__name" style="width:33%">Depth</div>
+                                                   <div class="spec__value" style="width:67%">
+                                                      <div class="row">
+                                                        <div class="col-6-value"> {{product.monitoOptions.screen_depth_brackets}} cm</div>
+                                                         <div class="col-6-value">{{product.monitoOptions.convertToInch(product.monitoOptions.screen_depth_brackets)}}</div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Monitor Weight</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{product.item_weight }} kg
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                         <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header table-background-colour">Best Uses {% if helpText.best_uses != ''%} <i class="far fa-question-circle" data-html="true" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{helpText.best_uses}}"></i> {% endif %}</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                   {{markdown(product.monitoOptions.best_uses) }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header">Notes</th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    {{markdown(product.monitoOptions.notes) }}
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        <tr class="compare-table__row table-background-colour">
+                            <th class="compare-table__column compare-table__column--header "></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    <form action="{{ product.url|e }}" method="post">
+                                        <input  name="product_qty" type="hidden"  value="1" />
+                                        <input type="hidden" name="product_name" value="{{ product.name|e }}" />
+                                        <input type="hidden" name="product_id" value="{{ product.id|e }}" />
+                                        <input type="hidden" name="product_price" value="{{ product.priceValue|e }}" />
+                                        <input type="hidden" name="product_img" value="{{ product.images[0]|e }}" />
+                                        <input type="hidden" name="product_url" value="{{ product.url|e }}" />
+                                        <button type="submit" class="btn btn-sm btn-primary">Add to cart</button>
+                                      </form>
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                          <tr class="compare-table__row ">
+                            <th class="compare-table__column compare-table__column--header">Remove Column<div style="font-size:12px;">(refresh page to show all products)</div></th>
+                            {% for product in products %}
+                                <td class="compare-table__column compare-table__column--product" draggable="true">
+                                    <input type ="checkbox" class="remove-col" data-col="{{ loop.index0 + 1  }}">
+                                </td>
+                            {% endfor %}
+                            <td class="compare-table__column compare-table__column--fake"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:center;">
+                <button onclick="printTable();" class="btn btn-primary" style="width: 10%; margin: 15px;">
+                    Print Table
+                </button>
+                </div>
+{% else %}
+                <div style="text-align: center; padding: 10px; font-size: 16px;">
+                    <div>
+                        <img src="/svg/compare-16.svg" style="vertical-align:top;" width="16" height="16">
+                        <span>No Monitor available in Compare list.</span>
+                    </div>
+                </div>
+{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="block-space block-space--layout--before-footer"></div>
+  </div>
+  <script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function () {
+  const table = document.querySelector('.compare__table');
+  const rows = Array.from(table.querySelectorAll('tr'));
+
+  let dragStartIndex = null;
+
+  // make only product columns draggable
+  rows.forEach(row => {
+    const cols = row.querySelectorAll('.compare-table__column--product');
+    cols.forEach((col, index) => {
+      col.setAttribute('draggable', true);
+
+      col.addEventListener('dragstart', e => {
+        dragStartIndex = index;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', index);
+      });
+
+      col.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        col.style.outline = '2px dashed #4CAF50';
+      });
+
+      col.addEventListener('dragleave', () => {
+        col.style.outline = '';
+      });
+
+      col.addEventListener('drop', e => {
+        e.preventDefault();
+        col.style.outline = '';
+
+        const dragEndIndex = Array.from(col.parentElement.children)
+          .filter(c => c.classList.contains('compare-table__column--product'))
+          .indexOf(col);
+
+        if (dragStartIndex === dragEndIndex) return;
+
+        // Swap columns for all rows
+        rows.forEach(r => {
+          const cells = Array.from(r.querySelectorAll('.compare-table__column--product'));
+          if (cells[dragStartIndex] && cells[dragEndIndex]) {
+            if (dragStartIndex < dragEndIndex) {
+              cells[dragEndIndex].after(cells[dragStartIndex]);
+            } else {
+              cells[dragEndIndex].before(cells[dragStartIndex]);
+            }
+          }
+        });
+      });
+    });
+  });
+});
+document.addEventListener("change", function (e) {
+  if (e.target.classList.contains("remove-col")) {
+    const colIndex = parseInt(e.target.dataset.col);
+    const table = document.querySelector(".compare-table");
+
+    // Toggle show/hide for that column
+    for (const row of table.rows) {
+      if (row.cells[colIndex]) {
+        row.cells[colIndex].style.display = e.target.checked ? "none" : "";
+      }
+    }
+  }
+});
+function printTable() {
+    window.open("/download-arcooda-monitor-comparison-table.html", "_blank");
+    /*const table = document.getElementById("printTable").outerHTML;
+
+    const newWindow = window.open("", "", "width=900,height=700");
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = mm + '-' + dd + '-' + yyyy;
+    newWindow.document.write(`
+        <html>
+        <head>
+            <title>Arcooda Monitor Comparison Table - `+today+`</title>
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid #000;
+                    padding: 8px;
+                }
+            </style>
+        </head>
+        <body>${table}</body>
+        </html>
+    `);
+
+    newWindow.document.close();
+    newWindow.focus();
+    newWindow.print();
+    newWindow.close();*/
+}
+</script>
+{% endblock %}
+

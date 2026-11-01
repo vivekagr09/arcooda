@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'GilroyRegular';
+    src: url('../fonts/GilroyRegular.eot');
+    src: url('../fonts/GilroyRegular.eot') format('embedded-opentype'),
+         url('../fonts/GilroyRegular.woff2') format('woff2'),
+         url('../fonts/GilroyRegular.woff') format('woff'),
+         url('../fonts/GilroyRegular.ttf') format('truetype'),
+         url('../fonts/GilroyRegular.svg#GilroyRegular') format('svg');
+}
+@font-face {
+    font-family: 'GilroyBold';
+    src: url('../fonts/GilroyBold.eot');
+    src: url('../fonts/GilroyBold.eot') format('embedded-opentype'),
+         url('../fonts/GilroyBold.woff2') format('woff2'),
+         url('../fonts/GilroyBold.woff') format('woff'),
+         url('../fonts/GilroyBold.ttf') format('truetype'),
+         url('../fonts/GilroyBold.svg#GilroyBold') format('svg');
+}
+@font-face {
+    font-family: 'GilroyMedium';
+    src: url('../fonts/GilroyMedium.eot');
+    src: url('../fonts/GilroyMedium.eot') format('embedded-opentype'),
+         url('../fonts/GilroyMedium.woff2') format('woff2'),
+         url('../fonts/GilroyMedium.woff') format('woff'),
+         url('../fonts/GilroyMedium.ttf') format('truetype'),
+         url('../fonts/GilroyMedium.svg#GilroyMedium') format('svg');
+}

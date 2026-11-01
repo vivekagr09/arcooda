@@ -1,0 +1,42 @@
+<style>
+    .hidden{
+        display: none;
+    }
+</style>
+<tr>
+    <td class="left_title"></td>
+    <td style="width: 80%; border: none; background: #d9eff5; font-size: 17px;">
+        {{Top Keywords}}
+        <a  href="javascript::void()" style="font-size: 10px; margin-left: 10px; text-decoration: underline;" onclick="displayhide();">(view all)</a>
+        <span style="font-size: 10px; margin-left: 60px;">Total Words: [[TOTALWORDS]]</span>
+    </td>
+</tr>
+<tr>
+    <td class="left_title"></td>
+    <td style="width: 80%;">
+        <table class="table_grid" style="width:100%;" id="keyword-dencity">
+        <thead>
+            <tr>
+                <th style="min-width: 200px;">{{Keyword}}</th>
+                <th class="center" style="min-width: 100px;">{{Count}}</th>
+                <th class="center" style="min-width: 100px;">density %</th>
+                <th class="center" style="min-width: 100px;">{{In Title}}</th>
+                <th class="center" style="min-width: 100px;">{{In Description}}</th>
+                <th class="center" style="min-width: 100px;">In Keywords</th>
+                <th class="center" style="min-width: 100px;">{{Weight}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            [[ITEMS]]
+        </tbody>
+    </table>
+    </td>
+</tr>
+<script type="text/javascript">
+    function displayhide(){
+        var hiddenElements = document.querySelectorAll('.hidden.toggleDiv');
+        hiddenElements.forEach(function(element) {
+            element.classList.remove('hidden');
+        });
+    }
+</script>

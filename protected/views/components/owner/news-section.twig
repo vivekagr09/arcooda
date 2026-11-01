@@ -1,0 +1,41 @@
+{% set blogs = inputs.blogs %}
+
+{% if blogs | length > 0 %}
+
+
+
+
+		<div id="blog_section">
+			{% for key,blog in blogs %}
+				<div class="well well-sm">
+					<div class="media">
+					<div class="media-left media-top" style="padding-right: 10px;">
+						{% if blog.image %}
+						<img src="/blogimage/{{blog.image}}?crop=true&width=200&height=200" class="media-object" width="96px" height="96px" />
+						{% endif %}
+					</div>
+					<div class="media-body">
+						<h5 class="media-heading"><a href="{{blog.url(product.id)}}" target="_blank">{{blog.title}} </a></h5>
+						{{blog.blog}}
+					</div>
+					</div>
+					<div class="media-footer" style="text-align: right; border-top: 1px solid #e0e0e0;">
+						<small>{{blog.createdat}}</small> <small style="color: #c0c0c0;">&nbsp;•&nbsp;</small>
+						<a href="#" onclick="return openComment(this);"><small>Comments: {{blog.blogCommentsCount}}</small></a>
+					</div>
+
+					<div class="comment-area" style="display: none;">
+						{{blog.HTMLBlogCommentArea(blog.getid,0,product.id)}}
+						<div style="border-top: 1px solid #e0e0e0; margin-top: 10px; padding-top: 10px;">
+									{{ blog.HTMLBlogComments(blog.getid, 0) }}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			{% if product.getblogscount>5 %}
+				<div style="text-align: center;" class="load-more-blogs">
+					<button class="btn btn-primary" type="button" onclick="loadMoreBlogs(this,5)">Load More</button>
+				</div>
+			{% endif %}
+		</div>
+{% endif %}

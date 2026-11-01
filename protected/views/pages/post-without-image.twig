@@ -1,0 +1,19 @@
+{#
+// inputs:
+#}
+
+{% set categories = inputs.categories %}
+{% set posts = inputs.posts %}
+{% set comments = inputs.comments %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/components/post-page.twig' with {inputs: {
+        image: false,
+        sidebar: 'none',
+        categories: categories,
+        posts: posts,
+        comments: comments,
+    }} %}
+{% endblock %}

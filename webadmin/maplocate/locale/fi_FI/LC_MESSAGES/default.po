@@ -1,0 +1,3189 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Map Locator\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-03 14:35+0100\n"
+"PO-Revision-Date: 2024-02-03 17:20+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: showcase/index.php:322 showcase/cookie_consent.php:114 viewer/index.php:1244
+#: viewer/cookie_consent.php:127 backend/footer.php:33
+#: backend/footer_login.php:29 backend/cookie_consent.php:113
+msgid "Cookie Preferences"
+msgstr "Evästeasetukset"
+
+#: showcase/index.php:343 showcase/cookie_consent.php:9
+#: showcase/cookie_consent.php:11 viewer/cookie_consent.php:10
+#: viewer/cookie_consent.php:12 backend/footer.php:28 backend/footer.php:30
+#: backend/footer.php:114 backend/settings.php:319 backend/footer_login.php:24
+#: backend/footer_login.php:26 backend/footer_login.php:110
+msgid "Cookie Policy"
+msgstr "Evästekäytäntö"
+
+#: showcase/index.php:352 backend/add_marker.php:562 backend/add_marker.php:589
+#: backend/add_marker.php:610 backend/add_marker.php:631
+#: backend/add_marker.php:652 backend/add_marker.php:708 backend/users.php:98
+#: backend/edit_showcase.php:425 backend/edit_showcase.php:442
+#: backend/edit_profile.php:99 backend/edit_user.php:203
+#: backend/edit_user.php:221 backend/markers_connections.php:102
+#: backend/markers_connections.php:161 backend/publish.php:253
+#: backend/footer.php:83 backend/footer.php:103 backend/footer.php:123
+#: backend/footer.php:143 backend/footer.php:163 backend/footer.php:183
+#: backend/maps.php:58 backend/maps.php:75 backend/edit_map.php:1572
+#: backend/edit_map.php:1588 backend/story.php:101 backend/story.php:153
+#: backend/markers.php:117 backend/markers.php:154 backend/markers.php:174
+#: backend/edit_category.php:171 backend/edit_category.php:188
+#: backend/footer_login.php:79 backend/footer_login.php:99
+#: backend/footer_login.php:119 backend/footer_login.php:139
+#: backend/footer_login.php:159 backend/footer_login.php:179
+#: backend/edit_marker.php:640 backend/edit_marker.php:667
+#: backend/edit_marker.php:688 backend/edit_marker.php:709
+#: backend/edit_marker.php:730 backend/edit_marker.php:786
+#: backend/edit_marker.php:803
+msgid "Close"
+msgstr "Sulje"
+
+#: showcase/cookie_consent.php:21 viewer/cookie_consent.php:22
+#: backend/cookie_consent.php:12
+msgid "Usage"
+msgstr "Käyttö"
+
+#: showcase/cookie_consent.php:22 viewer/cookie_consent.php:23
+#: backend/cookie_consent.php:13
+msgid ""
+"We use cookies to help you navigate efficiently and perform certain "
+"functions. You will find detailed information about all cookies under each "
+"consent category below."
+msgstr ""
+"Käytämme evästeitä auttaaksemme sinua navigoimaan tehokkaasti ja "
+"suorittamaan tiettyjä toimintoja. Löydät yksityiskohtaiset tiedot kaikista "
+"evästeistä kunkin suostumusluokan alta."
+
+#: showcase/cookie_consent.php:25 viewer/cookie_consent.php:26
+#: backend/cookie_consent.php:16
+msgid "Strictly Necessary <span class=\"pm__badge\">Always Enabled</span>"
+msgstr "Ehdottoman välttämätön <span class=\"pm__badge\">Aina käytössä</span>"
+
+#: showcase/cookie_consent.php:26 viewer/cookie_consent.php:27
+#: backend/cookie_consent.php:17
+msgid ""
+"Necessary cookies help make a website usable by enabling basic functions "
+"like page navigation and access to secure areas of the website. The website "
+"cannot function properly without these cookies."
+msgstr ""
+"Välttämättömät evästeet auttavat tekemään verkkosivustosta käyttökelpoisen "
+"mahdollistamalla perustoiminnot, kuten sivulla navigoinnin ja pääsyn "
+"verkkosivuston suojatuille alueille. Sivusto ei voi toimia kunnolla ilman "
+"näitä evästeitä."
+
+#: showcase/cookie_consent.php:35 viewer/cookie_consent.php:36
+#: backend/cookie_consent.php:26
+msgid "Analytics"
+msgstr "Analytiikat"
+
+#: showcase/cookie_consent.php:36 viewer/cookie_consent.php:37
+#: backend/cookie_consent.php:27
+msgid ""
+"Analytical cookies are used to understand how visitors interact with the "
+"website. These cookies help provide information on metrics such as the "
+"number of visitors, bounce rate, traffic source, etc."
+msgstr ""
+"Analyyttisiä evästeitä käytetään ymmärtämään, kuinka kävijät ovat "
+"vuorovaikutuksessa verkkosivuston kanssa. Nämä evästeet auttavat tarjoamaan "
+"tietoja mittareista, kuten kävijämäärästä, poistumisprosentista, liikenteen "
+"lähteestä jne."
+
+#: showcase/cookie_consent.php:45 viewer/cookie_consent.php:46
+#: backend/cookie_consent.php:47
+msgid "Functional"
+msgstr "Toimiva"
+
+#: showcase/cookie_consent.php:46 viewer/cookie_consent.php:47
+#: backend/cookie_consent.php:48
+msgid ""
+"Functional cookies help perform certain functionalities like sharing the "
+"content of the website on social media platforms, collecting feedback, and "
+"other third-party features."
+msgstr ""
+"Toiminnalliset evästeet auttavat suorittamaan tiettyjä toimintoja, kuten "
+"verkkosivuston sisällön jakamista sosiaalisen median alustoilla, palautteen "
+"keräämistä ja muita kolmannen osapuolen ominaisuuksia."
+
+#: showcase/cookie_consent.php:106 viewer/cookie_consent.php:119
+#: backend/cookie_consent.php:105
+msgid "We value your privacy!"
+msgstr "Arvostamme yksityisyyttäsi!"
+
+#: showcase/cookie_consent.php:107 viewer/cookie_consent.php:120
+#: backend/cookie_consent.php:106
+msgid ""
+"We use cookies to enhance your browsing experience, serve personalized "
+"content, and analyze our traffic. By clicking \"Accept All\", you consent to "
+"our use of cookies."
+msgstr ""
+"Käytämme evästeitä parantaaksemme selauskokemustasi, tarjotaksemme "
+"personoitua sisältöä ja analysoidaksemme liikennettämme. Napsauttamalla "
+"\"Hyväksy kaikki\" hyväksyt evästeiden käytön."
+
+#: showcase/cookie_consent.php:108 showcase/cookie_consent.php:115
+#: viewer/cookie_consent.php:121 viewer/cookie_consent.php:128
+#: backend/cookie_consent.php:107 backend/cookie_consent.php:114
+msgid "Accept all"
+msgstr "Hyväksy kaikki"
+
+#: showcase/cookie_consent.php:109 showcase/cookie_consent.php:116
+#: viewer/cookie_consent.php:122 viewer/cookie_consent.php:129
+#: backend/cookie_consent.php:108 backend/cookie_consent.php:115
+msgid "Reject all"
+msgstr "Hylkää kaikki"
+
+#: showcase/cookie_consent.php:110 viewer/cookie_consent.php:123
+#: backend/cookie_consent.php:109
+msgid "Manage preferences"
+msgstr "Hallinnoi asetuksia"
+
+#: showcase/cookie_consent.php:117 viewer/cookie_consent.php:130
+#: backend/cookie_consent.php:116
+msgid "Save preferences"
+msgstr "Tallenna asetukset"
+
+#: showcase/cookie_consent.php:118 viewer/cookie_consent.php:131
+#: backend/cookie_consent.php:117
+msgid "Close modal"
+msgstr "Sulje modaali"
+
+#: showcase/cookie_consent.php:119 viewer/cookie_consent.php:132
+#: backend/cookie_consent.php:118
+msgid "Service|Services"
+msgstr "Palvelu|Palvelut"
+
+#: viewer/index.php:456
+msgid "This Map is password protected"
+msgstr "Tämä kartta on suojattu salasanalla"
+
+#: viewer/index.php:459
+msgid "type your password"
+msgstr "kirjoita salasanasi"
+
+#: viewer/index.php:631
+msgid "add new marker"
+msgstr "lisää uusi merkki"
+
+#: viewer/index.php:635
+msgid "click on the map and place your marker"
+msgstr "napsauta karttaa ja aseta merkintä"
+
+#: viewer/index.php:638
+msgid "drag the marker to adjust the position"
+msgstr "säädä sijaintia vetämällä merkkiä"
+
+#: viewer/index.php:638
+msgid "confirm"
+msgstr "vahvista"
+
+#: viewer/index.php:649
+msgid "DIRECTIONS"
+msgstr "OHJEET"
+
+#: viewer/index.php:650
+msgid "STREET VIEW"
+msgstr "KATUNÄKYMÄ"
+
+#: viewer/index.php:651
+msgid "WRITE A REVIEW"
+msgstr "KIRJOITA ARVOSTELU"
+
+#: viewer/index.php:738
+msgid "Average Rating"
+msgstr "Keskiarvo"
+
+#: viewer/index.php:793
+msgid "loading route in progress"
+msgstr "latausreitti käynnissä"
+
+#: viewer/index.php:808
+msgid "My Location"
+msgstr "Minun sijainti"
+
+#: viewer/index.php:837 backend/reviews.php:31 backend/add_marker.php:65
+#: backend/edit_showcase.php:35 backend/edit_showcase.php:67
+#: backend/edit_showcase.php:68 backend/showcases.php:14
+#: backend/showcases.php:34 backend/categories.php:36 backend/maps.php:17
+#: backend/edit_map.php:108 backend/edit_map.php:449 backend/markers.php:78
+#: backend/add_category.php:16 backend/edit_category.php:54
+#: backend/edit_marker.php:127
+msgid "Name"
+msgstr "Nimi"
+
+#: viewer/index.php:840 backend/markers.php:47
+msgid "CANCEL"
+msgstr "PERUUTA"
+
+#: viewer/index.php:841
+msgid "ADD"
+msgstr "LISÄÄ"
+
+#: viewer/index.php:847 backend/add_marker.php:170 backend/add_marker.php:225
+#: backend/edit_marker.php:244 backend/edit_marker.php:303
+msgid "Latitude"
+msgstr "Leveysaste"
+
+#: viewer/index.php:848 backend/add_marker.php:176 backend/add_marker.php:226
+#: backend/edit_marker.php:250 backend/edit_marker.php:304
+msgid "Longitude"
+msgstr "Pituusaste"
+
+#: viewer/index.php:862 backend/add_marker.php:91 backend/edit_map.php:1219
+#: backend/edit_marker.php:165
+msgid "Street"
+msgstr "Katu"
+
+#: viewer/index.php:868 backend/add_marker.php:97 backend/edit_map.php:450
+#: backend/edit_marker.php:171
+msgid "City"
+msgstr "Kaupunki"
+
+#: viewer/index.php:874 backend/add_marker.php:103 backend/edit_marker.php:177
+msgid "Postal Code"
+msgstr "Postinumero"
+
+#: viewer/index.php:880 backend/add_marker.php:109 backend/edit_marker.php:183
+msgid "Country"
+msgstr "Maa"
+
+#: viewer/index.php:886 backend/edit_map.php:620
+msgid "Website"
+msgstr "Verkkosivu"
+
+#: viewer/index.php:892 backend/reviews.php:32 backend/add_marker.php:139
+#: backend/edit_marker.php:213
+msgid "E-mail"
+msgstr "Sähköpostiosoite"
+
+#: viewer/index.php:898 backend/add_marker.php:127 backend/edit_map.php:626
+#: backend/edit_marker.php:201
+msgid "Phone"
+msgstr "Puhelin"
+
+#: viewer/index.php:904 backend/add_marker.php:133 backend/edit_map.php:252
+#: backend/edit_map.php:629 backend/settings.php:490
+#: backend/edit_marker.php:207
+msgid "Whatsapp"
+msgstr "Whatsapp"
+
+#: viewer/index.php:910 backend/add_marker.php:145 backend/edit_map.php:635
+#: backend/edit_marker.php:219
+msgid "Hours"
+msgstr "Tuntia"
+
+#: viewer/index.php:916 backend/add_marker.php:151
+#: backend/edit_showcase.php:224 backend/publish.php:68
+#: backend/edit_map.php:632 backend/edit_map.php:1359 backend/story.php:93
+#: backend/story.php:144 backend/edit_marker.php:225
+msgid "Description"
+msgstr "Kuvaus"
+
+#: viewer/index.php:940
+msgid "delete images"
+msgstr "poistaa kuvia"
+
+#: viewer/index.php:950
+msgid "Your Rating"
+msgstr "Arviosi"
+
+#: viewer/index.php:958
+msgid "Your Name"
+msgstr "Nimesi"
+
+#: viewer/index.php:961
+msgid "Your Email Address (optional)"
+msgstr "Sähköpostiosoitteesi (valinnainen)"
+
+#: viewer/index.php:964
+msgid "Type your Review here"
+msgstr "Kirjoita arvostelusi tähän"
+
+#: viewer/index.php:968
+msgid "Type the code above"
+msgstr "Kirjoita yllä oleva koodi"
+
+#: viewer/index.php:971
+msgid "Submit"
+msgstr "Lähetä"
+
+#: viewer/index.php:974
+msgid "Thanks for your review!"
+msgstr "Kiitos arvostelustasi!"
+
+#: viewer/index.php:977 backend/reviews.php:71 backend/users.php:126
+#: backend/edit_showcase.php:193 backend/edit_user.php:291
+#: backend/showcases.php:73 backend/markers.php:224
+msgid "Search"
+msgstr "Hae"
+
+#: viewer/index.php:1147
+msgid "Are you sure you want to CANCEL the request to insert this marker?"
+msgstr "Haluatko varmasti PERUUTA pyynnön lisätä tämä merkintä?"
+
+#: viewer/index.php:1148
+msgid "Are you sure you want to SEND the request to insert this marker?"
+msgstr "Haluatko varmasti LÄHETÄ pyynnön tämän merkin lisäämiseksi?"
+
+#: viewer/index.php:1149
+msgid ""
+"Thanks for inserting the marker! As soon as it is approved it will be "
+"visible on the map."
+msgstr ""
+"Kiitos merkin lisäämisestä! Heti kun se on hyväksytty, se näkyy kartalla."
+
+#: viewer/index.php:1150
+msgid "An error has occurred, please try again later."
+msgstr "Tapahtui virhe, yritä myöhemmin uudelleen."
+
+#: viewer/index.php:1151
+msgid "reset"
+msgstr "nollaa"
+
+#: viewer/index.php:1152
+msgid "Start, Scroll down"
+msgstr "Aloita, Vieritä alas"
+
+#: viewer/index.php:1153
+msgid "End"
+msgstr "Loppu"
+
+#: viewer/index.php:1154
+msgid "Searching"
+msgstr "Haetaan"
+
+#: viewer/index.php:1155 backend/add_marker.php:826 backend/edit_map.php:1714
+#: backend/edit_category.php:210 backend/edit_marker.php:948
+msgid "No results found."
+msgstr "Tuloksia ei löytynyt."
+
+#: viewer/index.php:1156
+msgid "Add New Marker"
+msgstr "Lisää uusi merkki"
+
+#: viewer/index.php:1157
+msgid "Do you want to use my position to add the marker?"
+msgstr "Haluatko käyttää sijaintiani merkin lisäämiseen?"
+
+#: viewer/index.php:1158 backend/edit_showcase.php:304 backend/publish.php:152
+msgid "No"
+msgstr "Ei"
+
+#: viewer/index.php:1159 backend/edit_showcase.php:304 backend/publish.php:152
+msgid "Yes"
+msgstr "Kyllä"
+
+#: viewer/index.php:1160
+msgid "Social Share"
+msgstr "Somepainikkeet"
+
+#: viewer/index.php:1161
+msgid "To use this function you must enable the cookies relating to it."
+msgstr ""
+"Käyttääksesi tätä toimintoa sinun on otettava käyttöön siihen liittyvät "
+"evästeet."
+
+#: viewer/index.php:1162
+msgid "Open Cookie Preferences"
+msgstr "Avaa Evästeasetukset"
+
+#: viewer/index.php:1165
+msgid "Are you sure you want to insert this marker?"
+msgstr "Haluatko varmasti lisätä tämän merkin?"
+
+#: viewer/index.php:1166
+msgid "Thanks for inserting the marker! Please reload the map to view it."
+msgstr "Kiitos merkin lisäämisestä! Lataa kartta uudelleen nähdäksesi sen."
+
+#: viewer/ajax/upload_new_marker_image.php:23
+msgid "Invalid image."
+msgstr "Virheellinen kuva."
+
+#: viewer/ajax/upload_new_marker_image.php:31
+#: backend/ajax/upload_b_logo_image.php:51
+#: backend/ajax/upload_b_background_image.php:43
+msgid "Only jpg,png files are supported."
+msgstr "Vain jpg, png-tiedostoja tuetaan."
+
+#: viewer/ajax/upload_new_marker_image.php:35
+#: backend/ajax/upload_s_logo_image.php:56
+#: backend/ajax/upload_s_banner_image.php:48
+#: backend/ajax/upload_intro_image.php:67 backend/ajax/upload_meta_image.php:69
+#: backend/ajax/upload_file.php:32 backend/ajax/upload_logo_image.php:41
+#: backend/ajax/upload_icon_image.php:72
+#: backend/ajax/upload_background_image_m.php:67
+#: backend/ajax/upload_b_logo_image.php:55
+#: backend/ajax/upload_b_background_image.php:47
+#: backend/ajax/upload_geojson.php:41
+#: backend/ajax/upload_background_image.php:67
+msgid "File not provided."
+msgstr "Tiedostoa ei toimitettu."
+
+#: backend/login.php:197
+msgid "Welcome!"
+msgstr "Tervetuloa!"
+
+#: backend/login.php:198
+msgid "Login to your account here"
+msgstr "Kirjaudu tilillesi tästä"
+
+#: backend/login.php:202 backend/users.php:44 backend/users.php:68
+#: backend/edit_profile.php:20 backend/edit_user.php:41
+msgid "Username"
+msgstr "Käyttäjätunnus"
+
+#: backend/login.php:205 backend/users.php:84 backend/edit_profile.php:65
+#: backend/edit_profile.php:85 backend/edit_user.php:189 backend/publish.php:41
+msgid "Password"
+msgstr "Salasana"
+
+#: backend/login.php:212
+msgid "Remember me"
+msgstr "Muista minut"
+
+#: backend/login.php:217
+msgid "Login"
+msgstr "Kirjaudu"
+
+#: backend/reviews.php:16 backend/icons_library.php:16 backend/draw.php:18
+#: backend/add_marker.php:30 backend/edit_showcase.php:16
+#: backend/edit_user.php:22 backend/markers_connections.php:17
+#: backend/categories.php:17 backend/publish.php:25 backend/edit_map.php:73
+#: backend/settings.php:15 backend/story.php:17 backend/edit_category.php:16
+#: backend/updater.php:42 backend/import.php:40 backend/edit_marker.php:25
+msgid "Permission denied"
+msgstr "Lupa evätty"
+
+#: backend/reviews.php:17 backend/icons_library.php:17 backend/draw.php:19
+#: backend/add_marker.php:31 backend/edit_user.php:23
+#: backend/markers_connections.php:18 backend/categories.php:18
+#: backend/publish.php:26 backend/edit_map.php:74 backend/story.php:18
+#: backend/edit_category.php:17 backend/import.php:41
+#: backend/edit_marker.php:26
+msgid "It looks like you found a glitch in the matrix..."
+msgstr "Näyttää siltä, että olet löytänyt vian matriisista..."
+
+#: backend/reviews.php:18 backend/icons_library.php:18 backend/draw.php:20
+#: backend/add_marker.php:32 backend/edit_showcase.php:18
+#: backend/edit_user.php:24 backend/markers_connections.php:19
+#: backend/categories.php:19 backend/publish.php:27 backend/edit_map.php:75
+#: backend/settings.php:17 backend/story.php:19 backend/edit_category.php:18
+#: backend/updater.php:44 backend/import.php:42 backend/edit_marker.php:27
+msgid "Back to Dashboard"
+msgstr "Takaisin hallintapaneeliin"
+
+#: backend/reviews.php:29 backend/edit_showcase.php:63
+#: backend/edit_showcase.php:64
+msgid "Date"
+msgstr "Päivämäärä"
+
+#: backend/reviews.php:30 backend/markers_connections.php:36
+#: backend/markers_connections.php:38 backend/markers_connections.php:60
+#: backend/markers_connections.php:68 backend/markers_connections.php:118
+#: backend/markers_connections.php:126 backend/story.php:36
+#: backend/story.php:60
+msgid "Marker"
+msgstr "Merkitsin"
+
+#: backend/reviews.php:33
+msgid "Rating"
+msgstr "Arvostelu"
+
+#: backend/reviews.php:34
+msgid "Comment"
+msgstr "Kommentti"
+
+#: backend/reviews.php:62 backend/users.php:117 backend/edit_user.php:282
+#: backend/showcases.php:64 backend/markers.php:215
+msgid "No data available in table"
+msgstr "Tietoja ei löytynyt taulusta"
+
+#: backend/reviews.php:63 backend/users.php:118 backend/edit_user.php:283
+#: backend/showcases.php:65 backend/markers.php:216
+#, php-format
+msgid "Showing %s to %s of %s entries"
+msgstr "Näytetään %s - %s / %s:sta"
+
+#: backend/reviews.php:64 backend/users.php:119 backend/edit_user.php:284
+#: backend/showcases.php:66 backend/markers.php:217
+msgid "Showing 0 to 0 of 0 entries"
+msgstr "Näytetään 0 - 0 (yhteensä 0)"
+
+#: backend/reviews.php:65 backend/users.php:120 backend/edit_user.php:285
+#: backend/showcases.php:67 backend/markers.php:218
+#, php-format
+msgid "(filtered from %s total entries)"
+msgstr "(suodatettu %s yhteensä)"
+
+#: backend/reviews.php:68 backend/users.php:123 backend/edit_user.php:288
+#: backend/showcases.php:70 backend/markers.php:221
+#, php-format
+msgid "Show %s entries"
+msgstr "%s riviä"
+
+#: backend/reviews.php:69 backend/index.php:266 backend/users.php:124
+#: backend/edit_user.php:289 backend/showcases.php:71 backend/markers.php:222
+msgid "Loading"
+msgstr "Ladataan"
+
+#: backend/reviews.php:70 backend/users.php:125 backend/edit_user.php:290
+#: backend/showcases.php:72 backend/markers.php:223
+msgid "Processing"
+msgstr "Käsittelyssä"
+
+#: backend/reviews.php:72 backend/users.php:127 backend/edit_user.php:292
+#: backend/showcases.php:74 backend/markers.php:225
+msgid "No matching records found"
+msgstr "Ei tuloksia"
+
+#: backend/reviews.php:74 backend/users.php:129 backend/edit_user.php:294
+#: backend/showcases.php:76 backend/markers.php:227
+msgid "First"
+msgstr "Ensimmäinen"
+
+#: backend/reviews.php:75 backend/users.php:130 backend/edit_user.php:295
+#: backend/showcases.php:77 backend/markers.php:228
+msgid "Last"
+msgstr "Viimeinen"
+
+#: backend/reviews.php:76 backend/users.php:131 backend/edit_user.php:296
+#: backend/showcases.php:78 backend/markers.php:229
+msgid "Next"
+msgstr "Seuraava"
+
+#: backend/reviews.php:77 backend/users.php:132 backend/edit_user.php:297
+#: backend/showcases.php:79 backend/markers.php:230
+msgid "Previous"
+msgstr "Edellinen"
+
+#: backend/reviews.php:80 backend/users.php:135 backend/edit_user.php:300
+#: backend/showcases.php:82 backend/markers.php:233
+msgid "activate to sort column ascending"
+msgstr "aktivoi, jos haluat lajitella sarakkeen nousevasti"
+
+#: backend/reviews.php:81 backend/users.php:136 backend/edit_user.php:301
+#: backend/showcases.php:83 backend/markers.php:234
+msgid "activate to sort column descending"
+msgstr "aktivoi, jos haluat lajitella sarakkeen laskevasti"
+
+#: backend/icons_library.php:35
+msgid "Icons List"
+msgstr "Kuvakkeet luettelo"
+
+#: backend/icons_library.php:39
+msgid "Loading icons"
+msgstr "Ladataan kuvakkeita"
+
+#: backend/index.php:264
+msgid "UPDATE IN PROGRESS"
+msgstr "PÄIVITYS KÄYNNISSÄ"
+
+#: backend/index.php:268
+msgid "Not close this window"
+msgstr "Älä sulje tätä ikkunaa"
+
+#: backend/index.php:316
+msgid "EDIT"
+msgstr "MUOKKAA"
+
+#: backend/index.php:317
+msgid "PUBLISH"
+msgstr "JULKAISE"
+
+#: backend/index.php:318
+msgid "PREVIEW"
+msgstr "ESIKATSAUS"
+
+#: backend/index.php:319 backend/edit_map.php:601 backend/edit_map.php:726
+#: backend/edit_category.php:152
+msgid "MARKERS"
+msgstr "MARKKERIT"
+
+#: backend/index.php:320 backend/add_marker.php:463 backend/markers.php:51
+#: backend/edit_marker.php:541 backend/topbar.php:54 backend/topbar.php:76
+#: backend/topbar.php:109 backend/topbar.php:128
+msgid "DELETE"
+msgstr "POISTA"
+
+#: backend/index.php:321
+msgid "DUPLICATE"
+msgstr "KAPPALE"
+
+#: backend/index.php:322
+msgid "MAIN IMAGE"
+msgstr "PÄÄKUVA"
+
+#: backend/index.php:323 backend/add_marker.php:460 backend/edit_marker.php:538
+msgid "SET AS MAIN"
+msgstr "ASETA PÄÄSÄÄNNÖKSI"
+
+#: backend/index.php:324
+msgid "SEARCHING"
+msgstr "HAKU"
+
+#: backend/index.php:325 backend/add_marker.php:215 backend/edit_marker.php:293
+msgid "GET GPS POSITION"
+msgstr "HAE GPS-SIJAINTI"
+
+#: backend/index.php:326
+msgid "No icon images in this library!"
+msgstr "Tässä kirjastossa ei ole kuvakekuvia!"
+
+#: backend/index.php:327
+msgid "Are you sure you want to delete?"
+msgstr "Haluatko varmasti poistaa?"
+
+#: backend/index.php:328
+msgid "Are you sure you want to assign this icon to all the markers?"
+msgstr "Haluatko varmasti määrittää tämän kuvakkeen kaikille merkeille?"
+
+#: backend/index.php:329
+msgid ""
+"Are you sure you want to assign this extra fields icons to all the markers?"
+msgstr ""
+"Haluatko varmasti määrittää tämän ylimääräisen kentän kuvakkeet kaikille "
+"merkeille?"
+
+#: backend/index.php:330
+msgid "copied"
+msgstr "kopeeritud"
+
+#: backend/add_marker.php:38 backend/edit_map.php:84 backend/edit_marker.php:36
+msgid "SETTINGS"
+msgstr "ASETUKSET"
+
+#: backend/add_marker.php:41 backend/edit_map.php:90 backend/settings.php:39
+#: backend/edit_marker.php:39
+msgid "STYLE"
+msgstr "TYYLI"
+
+#: backend/add_marker.php:44 backend/edit_marker.php:42
+msgid "IMAGES"
+msgstr "KUVAT"
+
+#: backend/add_marker.php:47 backend/edit_marker.php:45
+msgid "EXTRA INFORMATIONS"
+msgstr "LISÄTIEDOT"
+
+#: backend/add_marker.php:50 backend/edit_marker.php:48
+msgid "SCHEDULE"
+msgstr "AJOITTAA"
+
+#: backend/add_marker.php:59 backend/edit_map.php:1160 backend/settings.php:472
+#: backend/edit_marker.php:121
+msgid "General"
+msgstr "Yleiset"
+
+#: backend/add_marker.php:71 backend/users.php:46 backend/edit_user.php:102
+#: backend/markers.php:83 backend/edit_marker.php:133
+msgid "Active"
+msgstr "Aktiivinen"
+
+#: backend/add_marker.php:77 backend/markers.php:86 backend/edit_marker.php:151
+msgid "Featured"
+msgstr "Suositellut"
+
+#: backend/add_marker.php:77 backend/edit_marker.php:151
+msgid "show this marker on featured list"
+msgstr "näytä tämä merkki suositeltujen luettelossa"
+
+#: backend/add_marker.php:83 backend/markers.php:80 backend/edit_marker.php:157
+msgid "Category"
+msgstr "Kategoria"
+
+#: backend/add_marker.php:115 backend/edit_marker.php:189
+msgid "Website Link"
+msgstr "Verkkosivun linkki"
+
+#: backend/add_marker.php:121 backend/edit_marker.php:195
+msgid "Website Name"
+msgstr "Verkkosivuston nimi"
+
+#: backend/add_marker.php:164 backend/edit_marker.php:238
+msgid "Position"
+msgstr "Asemointi"
+
+#: backend/add_marker.php:182 backend/edit_marker.php:256
+msgid "Visible from Zoom Level"
+msgstr "Näkyy Zoom Levelistä"
+
+#: backend/add_marker.php:196 backend/edit_marker.php:274
+msgid "Geofence Radius"
+msgstr "Geoaidan säde"
+
+#: backend/add_marker.php:202 backend/edit_marker.php:280
+msgid "Geofence Color"
+msgstr "Geoaidan väri"
+
+#: backend/add_marker.php:209 backend/edit_marker.php:287
+msgid "ADDRESS"
+msgstr "OSOITE"
+
+#: backend/add_marker.php:209 backend/edit_marker.php:287
+msgid "POSITION"
+msgstr "SIJOITUS"
+
+#: backend/add_marker.php:212 backend/edit_marker.php:290
+msgid "SET POSITION"
+msgstr "SET POSITION"
+
+#: backend/add_marker.php:227 backend/edit_marker.php:305
+msgid "Zoom Level"
+msgstr "Zoomaustaso"
+
+#: backend/add_marker.php:228 backend/edit_marker.php:306
+msgid "click/drag on map to change marker's position"
+msgstr "napsauta/vetämällä karttaa muuttaaksesi merkin sijaintia"
+
+#: backend/add_marker.php:241 backend/edit_marker.php:319
+msgid "Enable Schedule"
+msgstr "Ota aikataulu käyttöön"
+
+#: backend/add_marker.php:247 backend/edit_marker.php:325
+msgid "Date - From"
+msgstr "Päivämäärä - Alkaen"
+
+#: backend/add_marker.php:253 backend/edit_marker.php:331
+msgid "Date - To"
+msgstr "Päivämäärä - Mihin"
+
+#: backend/add_marker.php:260 backend/statistics.php:99
+#: backend/edit_marker.php:338 backend/statistics_all.php:113
+msgid "Monday"
+msgstr "Maanantai"
+
+#: backend/add_marker.php:261 backend/statistics.php:99
+#: backend/edit_marker.php:339 backend/statistics_all.php:113
+msgid "Tuesday"
+msgstr "Tiistai"
+
+#: backend/add_marker.php:262 backend/statistics.php:99
+#: backend/edit_marker.php:340 backend/statistics_all.php:113
+msgid "Wednesday"
+msgstr "Keskiviikko"
+
+#: backend/add_marker.php:263 backend/statistics.php:99
+#: backend/edit_marker.php:341 backend/statistics_all.php:113
+msgid "Thursday"
+msgstr "Torstai"
+
+#: backend/add_marker.php:264 backend/statistics.php:99
+#: backend/edit_marker.php:342 backend/statistics_all.php:113
+msgid "Friday"
+msgstr "Perjantai"
+
+#: backend/add_marker.php:265 backend/statistics.php:99
+#: backend/edit_marker.php:343 backend/statistics_all.php:113
+msgid "Saturday"
+msgstr "Lauantai"
+
+#: backend/add_marker.php:266 backend/statistics.php:99
+#: backend/edit_marker.php:344 backend/statistics_all.php:113
+msgid "Sunday"
+msgstr "Sunnuntai"
+
+#: backend/add_marker.php:272 backend/edit_marker.php:350
+msgid "Hour - From"
+msgstr "Tunti - Alkaen"
+
+#: backend/add_marker.php:278 backend/edit_marker.php:356
+msgid "Hour - To"
+msgstr "Tunti - Mihin"
+
+#: backend/add_marker.php:293 backend/edit_marker.php:371
+msgid "Icon Style"
+msgstr "Kuvakkeiden tyyli"
+
+#: backend/add_marker.php:299 backend/edit_category.php:89
+#: backend/edit_marker.php:377
+msgid "Type"
+msgstr "Tyyppi"
+
+#: backend/add_marker.php:301 backend/edit_map.php:516 backend/edit_map.php:670
+#: backend/edit_category.php:91 backend/edit_marker.php:379
+msgid "Circle"
+msgstr "Ympyrä"
+
+#: backend/add_marker.php:302 backend/add_marker.php:309
+#: backend/add_marker.php:319 backend/edit_map.php:517 backend/edit_map.php:524
+#: backend/edit_map.php:534 backend/edit_map.php:671 backend/edit_map.php:678
+#: backend/edit_map.php:688 backend/edit_category.php:92
+#: backend/edit_category.php:99 backend/edit_category.php:109
+#: backend/edit_marker.php:380 backend/edit_marker.php:387
+#: backend/edit_marker.php:397
+msgid "Icon"
+msgstr "Kuvake"
+
+#: backend/add_marker.php:303 backend/edit_map.php:518 backend/edit_map.php:672
+#: backend/edit_category.php:93 backend/edit_marker.php:381
+msgid "Icon Library"
+msgstr "Kuvakekirjasto"
+
+#: backend/add_marker.php:310 backend/add_marker.php:491
+#: backend/add_marker.php:530 backend/edit_map.php:525 backend/edit_map.php:679
+#: backend/edit_category.php:100 backend/edit_marker.php:388
+#: backend/edit_marker.php:569 backend/edit_marker.php:608
+msgid "Select Icon"
+msgstr "Valitse kuvake"
+
+#: backend/add_marker.php:320 backend/edit_map.php:535 backend/edit_map.php:689
+#: backend/edit_category.php:110 backend/edit_marker.php:398
+msgid "Select Library Icon"
+msgstr "Valitse Kirjastokuvake"
+
+#: backend/add_marker.php:327 backend/edit_map.php:544 backend/edit_map.php:696
+#: backend/edit_category.php:117 backend/edit_marker.php:405
+msgid "Size"
+msgstr "Koko"
+
+#: backend/add_marker.php:335 backend/edit_map.php:560 backend/edit_map.php:702
+#: backend/edit_map.php:1326 backend/edit_category.php:125
+#: backend/edit_marker.php:413
+msgid "Background"
+msgstr "Tausta"
+
+#: backend/add_marker.php:341 backend/edit_map.php:566 backend/edit_map.php:708
+#: backend/edit_category.php:131 backend/edit_marker.php:419
+msgid "Color"
+msgstr "Väri"
+
+#: backend/add_marker.php:347 backend/edit_map.php:714
+#: backend/edit_category.php:137 backend/edit_marker.php:425
+msgid "Background (Hover)"
+msgstr "Tausta (hoittaa)"
+
+#: backend/add_marker.php:353 backend/edit_map.php:720
+#: backend/edit_category.php:143 backend/edit_marker.php:431
+msgid "Color (Hover)"
+msgstr "Väri (Hover)"
+
+#: backend/add_marker.php:362 backend/edit_marker.php:440
+msgid "Detail Window"
+msgstr "Yksityiskohtaiset ikkunat"
+
+#: backend/add_marker.php:362 backend/edit_marker.php:440
+msgid "opens the details window by clicking on this marker"
+msgstr "avaa tietoikkunan napsauttamalla tätä merkkiä"
+
+#: backend/add_marker.php:369 backend/edit_map.php:215
+#: backend/edit_marker.php:447
+msgid "Directions"
+msgstr "Reittiohjeet"
+
+#: backend/add_marker.php:369 backend/edit_marker.php:447
+msgid "enable the button 'directions' for this marker"
+msgstr "ota käyttöön tämän merkin painike \"ohjeet\"."
+
+#: backend/add_marker.php:375 backend/edit_map.php:221
+#: backend/edit_marker.php:453
+msgid "Street View"
+msgstr "Katunäkymä"
+
+#: backend/add_marker.php:375 backend/edit_marker.php:453
+msgid "enable the button 'street view' for this marker"
+msgstr "ota käyttöön painike \"katunäkymä\" tälle merkinnälle"
+
+#: backend/add_marker.php:381 backend/edit_marker.php:459
+msgid "Review"
+msgstr "Arvostelu"
+
+#: backend/add_marker.php:381 backend/edit_marker.php:459
+msgid "enable the reviews for this marker"
+msgstr "ota tämän merkin arvostelut käyttöön"
+
+#: backend/add_marker.php:387 backend/edit_marker.php:465
+msgid "Share"
+msgstr "Jaa"
+
+#: backend/add_marker.php:387 backend/edit_marker.php:465
+msgid "enable share buttons for this marker"
+msgstr "ota tämän merkin jakopainikkeet käyttöön"
+
+#: backend/add_marker.php:396 backend/edit_map.php:203
+#: backend/edit_marker.php:474
+msgid "Popup"
+msgstr "Ponnahdusikkuna"
+
+#: backend/add_marker.php:396 backend/edit_marker.php:474
+msgid "display popup on hover over this marker"
+msgstr "näytä ponnahdusikkuna viemällä hiiri tämän merkin päälle"
+
+#: backend/add_marker.php:403 backend/edit_marker.php:481
+msgid "Image Height"
+msgstr "Kuvan korkeus"
+
+#: backend/add_marker.php:414 backend/edit_showcase.php:41
+#: backend/edit_marker.php:492
+msgid "Background Color"
+msgstr "Taustaväri"
+
+#: backend/add_marker.php:420 backend/edit_marker.php:498
+msgid "Text Color"
+msgstr "Tekstin väri"
+
+#: backend/add_marker.php:435 backend/edit_map.php:638
+#: backend/edit_marker.php:513
+msgid "Images"
+msgstr "Kuvat"
+
+#: backend/add_marker.php:452 backend/edit_marker.php:530
+msgid "Image Action"
+msgstr "Kuvan toiminta"
+
+#: backend/add_marker.php:457 backend/edit_marker.php:535
+msgid "Select image first!"
+msgstr "Valitse ensin kuva!"
+
+#: backend/add_marker.php:476 backend/edit_marker.php:554
+msgid "Extra Button / Content"
+msgstr "Lisäpainike / Sisältö"
+
+#: backend/add_marker.php:484 backend/edit_marker.php:562
+msgid "Open directly"
+msgstr "Avaa suoraan"
+
+#: backend/add_marker.php:484 backend/edit_marker.php:562
+msgid ""
+"open this content when clicking on the marker instead of the detail window"
+msgstr "avaa tämä sisältö, kun napsautat merkkiä tietoikkunan sijaan"
+
+#: backend/add_marker.php:490 backend/edit_marker.php:568
+msgid "Button Icon"
+msgstr "Painikkeen kuvake"
+
+#: backend/add_marker.php:500 backend/edit_marker.php:578
+msgid "Button Title"
+msgstr "Napin otsikko"
+
+#: backend/add_marker.php:508 backend/edit_marker.php:586
+msgid "Custom Content"
+msgstr "Mukautettu sisältö"
+
+#: backend/add_marker.php:508 backend/add_marker.php:539
+#: backend/edit_map.php:906 backend/edit_map.php:939 backend/edit_map.php:1086
+#: backend/edit_map.php:1116 backend/edit_marker.php:586
+#: backend/edit_marker.php:617
+msgid "link"
+msgstr "linkki"
+
+#: backend/add_marker.php:508 backend/edit_marker.php:586
+msgid "embed link"
+msgstr "upota linkki"
+
+#: backend/add_marker.php:508 backend/add_marker.php:539
+#: backend/edit_marker.php:586 backend/edit_marker.php:617
+msgid "text"
+msgstr "teksti"
+
+#: backend/add_marker.php:521 backend/edit_marker.php:599
+msgid "Extra Fields"
+msgstr "Lisäkentät"
+
+#: backend/add_marker.php:529 backend/edit_map.php:589
+#: backend/edit_marker.php:607
+msgid "Field Icon"
+msgstr "Kentän kuvake"
+
+#: backend/add_marker.php:539 backend/edit_marker.php:617
+msgid "Field Value"
+msgstr "Kentän arvo"
+
+#: backend/add_marker.php:539 backend/edit_marker.php:617
+msgid "download"
+msgstr "lataa"
+
+#: backend/add_marker.php:556 backend/edit_map.php:1566
+#: backend/edit_map.php:1582 backend/edit_category.php:165
+#: backend/edit_marker.php:634
+msgid "Library Icons"
+msgstr "Kirjaston kuvakkeet"
+
+#: backend/add_marker.php:575 backend/add_marker.php:665
+#: backend/edit_marker.php:653 backend/edit_marker.php:743
+msgid "Link Text"
+msgstr "Linkin teksti"
+
+#: backend/add_marker.php:581 backend/add_marker.php:602
+#: backend/add_marker.php:623 backend/add_marker.php:700
+#: backend/edit_marker.php:659 backend/edit_marker.php:680
+#: backend/edit_marker.php:701 backend/edit_marker.php:778
+msgid "URL"
+msgstr "URL"
+
+#: backend/add_marker.php:588 backend/add_marker.php:609
+#: backend/add_marker.php:630 backend/add_marker.php:651
+#: backend/add_marker.php:707 backend/edit_marker.php:666
+#: backend/edit_marker.php:687 backend/edit_marker.php:708
+#: backend/edit_marker.php:729 backend/edit_marker.php:785
+msgid "Insert"
+msgstr "Lisää"
+
+#: backend/add_marker.php:644 backend/edit_marker.php:722
+msgid "Text"
+msgstr "Teksti"
+
+#: backend/add_marker.php:671 backend/edit_marker.php:749
+msgid "File"
+msgstr "Tiedosto"
+
+#: backend/add_marker.php:681 backend/edit_marker.php:759
+msgid "Upload File"
+msgstr "Lataa tiedosto"
+
+#: backend/add_marker.php:823 backend/edit_map.php:1711
+#: backend/edit_category.php:207 backend/edit_marker.php:945
+msgid "Search Icon"
+msgstr "Hakukuvake"
+
+#: backend/add_marker.php:824 backend/edit_map.php:1712
+#: backend/edit_category.php:208 backend/edit_marker.php:946
+msgid "Show All"
+msgstr "Näytä kaikki"
+
+#: backend/add_marker.php:825 backend/edit_map.php:1713
+#: backend/settings.php:932 backend/settings.php:973 backend/settings.php:991
+#: backend/settings.php:1013 backend/settings.php:1035
+#: backend/settings.php:1057 backend/settings.php:1080
+#: backend/edit_category.php:209 backend/edit_marker.php:947
+#: backend/topbar.php:242
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: backend/add_marker.php:906 backend/edit_marker.php:1027
+msgid "Drop files or click here to upload"
+msgstr "Pudota tiedostot tai lataa tiedosto napsauttamalla tätä"
+
+#: backend/add_marker.php:907 backend/edit_marker.php:1028
+msgid "Your browser does not support drag'n'drop file uploads."
+msgstr "Selaimesi ei tue drag'n'drop-tiedostojen latauksia."
+
+#: backend/add_marker.php:908 backend/edit_marker.php:1029
+msgid ""
+"Please use the fallback form below to upload your files like in the olden "
+"days."
+msgstr ""
+"Käytä alla olevaa varalomaketta ladataksesi tiedostosi, kuten ennen vanhaan."
+
+#: backend/add_marker.php:909 backend/edit_marker.php:1030
+#, php-format
+msgid "File is too big (%sMiB). Max filesize: %sMiB."
+msgstr "Tiedosto on liian suuri (%sMiB). Suurin tiedostokoko: %sMiB."
+
+#: backend/add_marker.php:910 backend/edit_marker.php:1031
+msgid "You can't upload files of this type."
+msgstr "Tämäntyyppisiä tiedostoja ei voi ladata."
+
+#: backend/add_marker.php:911 backend/edit_marker.php:1032
+#, php-format
+msgid "Server responded with %s code."
+msgstr "Palvelin vastasi koodilla %s."
+
+#: backend/add_marker.php:912 backend/edit_marker.php:1033
+msgid "Cancel upload"
+msgstr "Keskeytä lataus"
+
+#: backend/add_marker.php:913 backend/edit_marker.php:1034
+msgid "Are you sure you want to cancel this upload?"
+msgstr "Haluatko varmasti peruuttaa tämän latauksen?"
+
+#: backend/add_marker.php:914 backend/edit_marker.php:1035
+msgid "Remove file"
+msgstr "Poista tiedosto"
+
+#: backend/add_marker.php:915 backend/edit_marker.php:1036
+msgid "You can not upload any more files."
+msgstr "Et voi ladata enempää tiedostoja."
+
+#: backend/ajax/duplicate_marker.php:55 backend/ajax/duplicate_map.php:36
+msgid "duplicated"
+msgstr "monistettu"
+
+#: backend/ajax/upload_s_logo_image.php:52
+#: backend/ajax/upload_s_banner_image.php:44
+#: backend/ajax/upload_intro_image.php:63 backend/ajax/upload_meta_image.php:65
+#: backend/ajax/upload_background_image_m.php:63
+#: backend/ajax/upload_background_image.php:63
+msgid "Only jpg,png,webp files are supported."
+msgstr "Vain jpg, png, webp-tiedostoja tuetaan."
+
+#: backend/ajax/upload_intro_image.php:55 backend/ajax/upload_meta_image.php:57
+#: backend/ajax/upload_background_image_m.php:55
+#: backend/ajax/upload_background_image.php:55
+msgid "Retry."
+msgstr "Yritä uudelleen."
+
+#: backend/ajax/upload_logo_image.php:37
+msgid "Only png files are supported."
+msgstr "Vain png-tiedostoja tuetaan."
+
+#: backend/ajax/save_profile.php:28
+msgid "Username already registered!"
+msgstr "Käyttäjänimi on jo rekisteröity!"
+
+#: backend/ajax/save_profile.php:57 backend/ajax/save_profile.php:60
+msgid "Error"
+msgstr "Virhe"
+
+#: backend/ajax/upload_geojson.php:37
+msgid "Only json, geojson files are supported."
+msgstr "Vain json- ja geojson-tiedostoja tuetaan."
+
+#: backend/users.php:20
+msgid "User's Role Permissions"
+msgstr "Käyttäjän roolin käyttöoikeudet"
+
+#: backend/users.php:23
+msgid "ADMINISTRATOR"
+msgstr "JÄRJESTELMÄNVALVOJA"
+
+#: backend/users.php:23
+msgid "manage users | manage maps of all users"
+msgstr "hallita käyttäjiä | hallita kaikkien käyttäjien karttoja"
+
+#: backend/users.php:24
+msgid "EDITOR"
+msgstr "TOIMITTAJA"
+
+#: backend/users.php:24
+msgid "they only manage the maps that are associated with them"
+msgstr "he hallitsevat vain niihin liittyviä karttoja"
+
+#: backend/users.php:25
+msgid "CUSTOMER"
+msgstr "ASIAKAS"
+
+#: backend/users.php:25
+msgid "they only manage their own maps"
+msgstr "he hallitsevat vain omia karttojaan"
+
+#: backend/users.php:33
+msgid "ADD USER"
+msgstr "LISÄÄ KÄYTTÄJÄ"
+
+#: backend/users.php:45 backend/users.php:74 backend/edit_user.php:86
+msgid "Role"
+msgstr "Rooli"
+
+#: backend/users.php:62
+msgid "New User"
+msgstr "Uusi käyttäjä"
+
+#: backend/users.php:76 backend/edit_user.php:88
+msgid "Customer"
+msgstr "Asiakas"
+
+#: backend/users.php:77 backend/edit_user.php:89
+msgid "Administrator"
+msgstr "Ylläpitäjä"
+
+#: backend/users.php:78 backend/edit_user.php:90
+msgid "Editor"
+msgstr "Editori"
+
+#: backend/users.php:90 backend/edit_profile.php:91
+msgid "Repeat Password"
+msgstr "Salasana uudelleen"
+
+#: backend/users.php:97 backend/showcases.php:20 backend/maps.php:22
+msgid "Create"
+msgstr "Luo"
+
+#: backend/edit_showcase.php:17 backend/settings.php:16 backend/updater.php:43
+msgid "It looks like that you do not have permission to access this page"
+msgstr "Näyttää siltä, että sinulla ei ole lupaa käyttää tätä sivua"
+
+#: backend/edit_showcase.php:29 backend/add_category.php:10
+#: backend/edit_category.php:48
+msgid "Details"
+msgstr "Lisätiedot"
+
+#: backend/edit_showcase.php:61
+msgid "Sorting"
+msgstr "Lajittelu"
+
+#: backend/edit_showcase.php:65 backend/edit_showcase.php:66
+msgid "Relevance (Custom Sort)"
+msgstr "Osuvuus (muokattu lajittelu)"
+
+#: backend/edit_showcase.php:69 backend/edit_showcase.php:70
+msgid "Views"
+msgstr "Katselukerrat"
+
+#: backend/edit_showcase.php:76
+msgid "Open target"
+msgstr "Avaa kohde"
+
+#: backend/edit_showcase.php:78
+msgid "Same window"
+msgstr "URL (sama ikkuna)"
+
+#: backend/edit_showcase.php:79
+msgid "New window"
+msgstr "Uudessa ikkunassa"
+
+#: backend/edit_showcase.php:85 backend/settings.php:509
+msgid "Google Analytics Tracking ID"
+msgstr "Google Analytics seurantatunnus"
+
+#: backend/edit_showcase.php:85
+msgid ""
+"Google Analytics Tracking ID (G-XXXXXXXXX). Note: Use the Friendly URL in "
+"Google Analytics's property url setting."
+msgstr ""
+"Google Analyticsin seurantatunnus (G-XXXXXXXXX). Huomautus: Käytä "
+"ystävällistä URL-osoitetta Google Analyticsin verkko-omaisuuden URL-"
+"asetuksissa."
+
+#: backend/edit_showcase.php:91 backend/edit_map.php:416
+msgid "Enable Cookie Consent"
+msgstr "Ota eväste suostumus käyttöön"
+
+#: backend/edit_showcase.php:99
+msgid "Custom HTML Header"
+msgstr "Muokattu HTML-otsikko"
+
+#: backend/edit_showcase.php:105
+msgid "Custom HTML Footer"
+msgstr "Mukautettu HTML-alatunniste"
+
+#: backend/edit_showcase.php:112 backend/edit_map.php:741
+#: backend/settings.php:642
+msgid "Logo"
+msgstr "Logo"
+
+#: backend/edit_showcase.php:117 backend/edit_showcase.php:152
+#: backend/edit_showcase.php:230 backend/publish.php:74
+#: backend/settings.php:647 backend/settings.php:685
+msgid "DELETE IMAGE"
+msgstr "POISTA KUVA"
+
+#: backend/edit_showcase.php:129 backend/edit_map.php:769
+#: backend/edit_map.php:811 backend/settings.php:662
+msgid "Upload Logo Image"
+msgstr "Lataa logokuva"
+
+#: backend/edit_showcase.php:147
+msgid "Banner image"
+msgstr "Bannerikuva"
+
+#: backend/edit_showcase.php:164
+msgid "Upload Banner Image"
+msgstr "Lataa bannerikuva"
+
+#: backend/edit_showcase.php:191 backend/edit_user.php:149
+msgid "Assigned Maps"
+msgstr "Määritetyt kartat"
+
+#: backend/edit_showcase.php:196
+msgid "Sort List"
+msgstr "Lajittele luettelo"
+
+#: backend/edit_showcase.php:197
+msgid "Confirm"
+msgstr "Vahvista"
+
+#: backend/edit_showcase.php:213 backend/publish.php:57
+msgid "Meta Tag"
+msgstr "Metatunniste"
+
+#: backend/edit_showcase.php:220 backend/publish.php:64
+#: backend/edit_map.php:1334
+msgid "Title"
+msgstr "Otsikko"
+
+#: backend/edit_showcase.php:228 backend/publish.php:72
+#: backend/edit_map.php:1383
+msgid "Image"
+msgstr "Kuva"
+
+#: backend/edit_showcase.php:238 backend/publish.php:82
+#: backend/edit_map.php:1403
+msgid "Upload Image"
+msgstr "Lataa kuva"
+
+#: backend/edit_showcase.php:253 backend/publish.php:97 backend/sidebar.php:255
+#: backend/topbar.php:89
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: backend/edit_showcase.php:297 backend/publish.php:141
+msgid "Share & Embed"
+msgstr "Jaa Upota"
+
+#: backend/edit_showcase.php:303 backend/publish.php:151
+msgid "Show as first page"
+msgstr "Näytä ensimmäisenä sivuna"
+
+#: backend/edit_showcase.php:303 backend/publish.php:151
+msgid "only visible to administrators"
+msgstr "näkyvät vain järjestelmänvalvojille"
+
+#: backend/edit_showcase.php:309 backend/publish.php:157
+#: backend/edit_map.php:855
+msgid "Link"
+msgstr "Linkki"
+
+#: backend/edit_showcase.php:313 backend/edit_showcase.php:362
+#: backend/publish.php:162 backend/publish.php:210 backend/edit_marker.php:74
+msgid "OPEN LINK"
+msgstr "AVAA LINKKI"
+
+#: backend/edit_showcase.php:316 backend/edit_showcase.php:365
+#: backend/edit_showcase.php:383 backend/publish.php:165
+#: backend/publish.php:213 backend/publish.php:229 backend/edit_marker.php:77
+msgid "COPY TO CLIPBOARD"
+msgstr "KOPIOI LEIKEPÖYDÄLLE"
+
+#: backend/edit_showcase.php:319 backend/edit_showcase.php:368
+#: backend/publish.php:168 backend/publish.php:216 backend/edit_marker.php:80
+msgid "QR CODE"
+msgstr "QR KOODI"
+
+#: backend/edit_showcase.php:346 backend/publish.php:196
+#: backend/edit_marker.php:106
+msgid ""
+"To use sharing via social networks, enable \"Social Share\" cookies in the "
+"<a data-cc='show-consentModal' href='#'>cookie preferences</a>."
+msgstr ""
+"Jos haluat käyttää jakamista sosiaalisten verkostojen kautta, ota \"Social "
+"Share\" -evästeet käyttöön <a data-cc='show-consentModal' "
+"href='#'>evästeasetuksissa</a> ."
+
+#: backend/edit_showcase.php:355 backend/publish.php:203
+msgid "Friendly Link"
+msgstr "Ystävällinen linkki"
+
+#: backend/edit_showcase.php:379 backend/publish.php:225
+msgid "Embed Code"
+msgstr "Upotuskoodi"
+
+#: backend/edit_showcase.php:400 backend/settings.php:133
+#: backend/settings.php:204
+msgid "Custom CSS"
+msgstr "Mukautettu CSS"
+
+#: backend/edit_showcase.php:417
+msgid "Delete Showcase"
+msgstr "Poista Showcase"
+
+#: backend/edit_showcase.php:420
+msgid "Are you sure you want to delete the showcase?"
+msgstr "Haluatko varmasti poistaa esittelyn?"
+
+#: backend/edit_showcase.php:424 backend/edit_user.php:220 backend/maps.php:57
+#: backend/markers.php:116 backend/edit_category.php:187
+msgid "Yes, Delete"
+msgstr "Kyllä, Poista"
+
+#: backend/edit_showcase.php:435 backend/publish.php:246
+#: backend/edit_marker.php:796
+msgid "QR Code"
+msgstr "QR Code"
+
+#: backend/edit_profile.php:14 backend/edit_user.php:35
+msgid "Account"
+msgstr "Tili"
+
+#: backend/edit_profile.php:26 backend/edit_user.php:47
+#: backend/edit_map.php:122
+msgid "Language"
+msgstr "Kieli"
+
+#: backend/edit_profile.php:28 backend/edit_user.php:49
+#: backend/edit_map.php:124 backend/settings.php:366
+msgid "Default Language"
+msgstr "Oletuskieli"
+
+#: backend/edit_profile.php:66
+msgid "CHANGE"
+msgstr "MUUTTAA"
+
+#: backend/edit_profile.php:79 backend/edit_user.php:183
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+#: backend/edit_profile.php:98 backend/edit_user.php:202
+msgid "Change"
+msgstr "Vaihda"
+
+#: backend/edit_user.php:97
+msgid "CHANGE PASSWORD"
+msgstr "VAIHDA SALASANA"
+
+#: backend/edit_user.php:118 backend/dashboard.php:36 backend/dashboard.php:105
+#: backend/sidebar.php:204 backend/statistics_all.php:19
+msgid "Maps"
+msgstr "Kartat"
+
+#: backend/edit_user.php:133 backend/dashboard.php:53 backend/sidebar.php:209
+#: backend/statistics.php:19 backend/statistics_all.php:34
+#: backend/topbar.php:30
+msgid "Markers"
+msgstr "Merkitsimet"
+
+#: backend/edit_user.php:155
+msgid "Assign"
+msgstr "Valitse"
+
+#: backend/edit_user.php:156 backend/sidebar.php:195 backend/sidebar.php:236
+#: backend/markers.php:134 backend/topbar.php:15 backend/topbar.php:93
+msgid "Map"
+msgstr "Kartta"
+
+#: backend/edit_user.php:157 backend/topbar.php:25
+msgid "Edit Map"
+msgstr "Muokkaa karttaa"
+
+#: backend/edit_user.php:158
+msgid "Create Markers"
+msgstr "Luo merkit"
+
+#: backend/edit_user.php:159
+msgid "Edit Markers"
+msgstr "Muokkaa merkkejä"
+
+#: backend/edit_user.php:160
+msgid "Delete Markers"
+msgstr "Poista merkit"
+
+#: backend/edit_user.php:161 backend/sidebar.php:210 backend/topbar.php:60
+msgid "Connections"
+msgstr "Yhteydet"
+
+#: backend/edit_user.php:162 backend/sidebar.php:211 backend/topbar.php:121
+msgid "Geometries"
+msgstr "Geometriat"
+
+#: backend/edit_user.php:163 backend/sidebar.php:212 backend/edit_map.php:197
+#: backend/topbar.php:64
+msgid "Story"
+msgstr "Tarina"
+
+#: backend/edit_user.php:164 backend/sidebar.php:213 backend/edit_map.php:167
+#: backend/edit_map.php:617 backend/topbar.php:68
+msgid "Categories"
+msgstr "Kategoriat"
+
+#: backend/edit_user.php:165 backend/sidebar.php:224 backend/topbar.php:81
+msgid "Icons Library"
+msgstr "Ikonikirjasto"
+
+#: backend/edit_user.php:166 backend/dashboard.php:70 backend/sidebar.php:248
+#: backend/statistics.php:34 backend/edit_map.php:227
+#: backend/statistics_all.php:49 backend/topbar.php:85
+msgid "Reviews"
+msgstr "Arvostelut"
+
+#: backend/edit_user.php:167 backend/sidebar.php:232 backend/topbar.php:93
+#: backend/topbar.php:124
+msgid "Publish"
+msgstr "Julkaise"
+
+#: backend/edit_user.php:195
+msgid "Repeat password"
+msgstr "Toista salasana"
+
+#: backend/edit_user.php:213
+msgid "Delete User"
+msgstr "Poista käyttäjä"
+
+#: backend/edit_user.php:216
+msgid "Are you sure you want to delete the user?"
+msgstr "Haluatko varmasti poistaa käyttäjän?"
+
+#: backend/edit_user.php:217
+msgid "Attention: all the maps of that user will be deleted!"
+msgstr "Huomio: kaikki kyseisen käyttäjän kartat poistetaan!"
+
+#: backend/markers_connections.php:25
+msgid "ADD CONNECTION"
+msgstr "LISÄÄ YHTEYDET"
+
+#: backend/markers_connections.php:37 backend/edit_map.php:261
+#: backend/settings.php:499
+msgid "Line"
+msgstr "Viiva"
+
+#: backend/markers_connections.php:54
+msgid "Add Connection"
+msgstr "Lisää yhteys"
+
+#: backend/markers_connections.php:76 backend/markers_connections.php:134
+msgid "Line Color"
+msgstr "Viivan väri"
+
+#: backend/markers_connections.php:82 backend/markers_connections.php:140
+msgid "Line Width"
+msgstr "Rivin leveys"
+
+#: backend/markers_connections.php:88 backend/markers_connections.php:146
+msgid "Popup Title"
+msgstr "Ponnahdusikkunan otsikko"
+
+#: backend/markers_connections.php:94 backend/markers_connections.php:152
+msgid "Popup Description"
+msgstr "Ponnahdusikkunan kuvaus"
+
+#: backend/markers_connections.php:101 backend/story.php:100
+msgid "Yes, Add"
+msgstr "Kyllä, Lisää"
+
+#: backend/markers_connections.php:112
+msgid "Edit Connection"
+msgstr "Muokkaa yhteyttä"
+
+#: backend/markers_connections.php:159 backend/story.php:151
+msgid "Yes, Save"
+msgstr "Kyllä, Tallenna"
+
+#: backend/markers_connections.php:160 backend/story.php:152
+msgid "Delete"
+msgstr "Poista"
+
+#: backend/showcases.php:35
+msgid "Author"
+msgstr "Tekijä"
+
+#: backend/showcases.php:36
+msgid "N. Maps"
+msgstr "N. Maps"
+
+#: backend/categories.php:25
+msgid "ADD CATEGORY"
+msgstr "LISÄÄ LUOKKA"
+
+#: backend/categories.php:37 backend/add_category.php:31
+#: backend/edit_category.php:69
+msgid "Default selected"
+msgstr "Oletus valittu"
+
+#: backend/dashboard.php:12
+#, php-format
+msgid ""
+"Welcome to %s configuration panel, where you can create your maps in a few "
+"simple steps."
+msgstr ""
+"Tervetuloa %s-määrityspaneeliin, jossa voit luoda karttojasi muutamalla "
+"yksinkertaisella vaiheella."
+
+#: backend/dashboard.php:20
+msgid "Welcome"
+msgstr "Tervetuloa"
+
+#: backend/dashboard.php:72 backend/statistics.php:36
+#: backend/statistics_all.php:51
+msgid "rating"
+msgstr "arvio"
+
+#: backend/dashboard.php:87 backend/statistics.php:50
+#: backend/statistics_all.php:65
+msgid "Total Visitors"
+msgstr "Vierailijat yhteensä"
+
+#: backend/dashboard.php:102
+msgid "Visitors N."
+msgstr "Vierailijat N."
+
+#: backend/dashboard.php:105
+#, php-format
+msgid "No maps created yet. Go to %s and create a new one!"
+msgstr "Karttoja ei ole vielä luotu. Siirry osoitteeseen %s ja luo uusi!"
+
+#: backend/dashboard.php:114
+msgid "Markers Count"
+msgstr "Merkkien määrä"
+
+#: backend/publish.php:35
+msgid "Protection"
+msgstr "Suojaus"
+
+#: backend/publish.php:46 backend/topbar.php:24 backend/topbar.php:33
+#: backend/topbar.php:54 backend/topbar.php:71 backend/topbar.php:76
+#: backend/topbar.php:96 backend/topbar.php:111 backend/topbar.php:116
+#: backend/topbar.php:128
+msgid "SAVE"
+msgstr "TALLENNA"
+
+#: backend/publish.php:147 backend/settings.php:98
+msgid "Status"
+msgstr "Tila"
+
+#: backend/publish.php:148
+msgid "Activated"
+msgstr "Aktivoitu"
+
+#: backend/publish.php:148
+msgid "Deactivated"
+msgstr "Poistettu käytöstä"
+
+#: backend/publish.php:158
+msgid "Url variables"
+msgstr "URL-muuttujat"
+
+#: backend/footer.php:5 backend/footer_login.php:7
+msgid "Version"
+msgstr "Versio"
+
+#: backend/footer.php:18 backend/footer.php:20 backend/footer.php:74
+#: backend/settings.php:253 backend/footer_login.php:14
+#: backend/footer_login.php:16 backend/footer_login.php:70
+msgid "Terms and Conditions"
+msgstr "Käyttöehdot"
+
+#: backend/footer.php:23 backend/footer.php:25 backend/footer.php:94
+#: backend/settings.php:256 backend/footer_login.php:19
+#: backend/footer_login.php:21 backend/footer_login.php:90
+msgid "Privacy Policy"
+msgstr "Tietosuojakäytäntö"
+
+#: backend/maps.php:33
+msgid "LOADING MAPS"
+msgstr "LADATAAN KARTTA"
+
+#: backend/maps.php:51
+msgid "Delete Map"
+msgstr "Poista kartta"
+
+#: backend/maps.php:54
+msgid ""
+"Are you sure you want to delete the entire map, included all the markers?"
+msgstr "Haluatko varmasti poistaa koko kartan, mukaan lukien kaikki merkit?"
+
+#: backend/maps.php:68
+msgid "Duplicate Map"
+msgstr "Kopioi kartta"
+
+#: backend/maps.php:71
+msgid ""
+"Are you sure you want to duplicate the entire map, included all the markers?"
+msgstr "Haluatko varmasti kopioida koko kartan, mukaan lukien kaikki merkit?"
+
+#: backend/maps.php:74 backend/markers.php:153
+msgid "Yes, Duplicate"
+msgstr "Kyllä, kopio"
+
+#: backend/sidebar.php:173
+msgid "DEMO MODE"
+msgstr "ESITTELY-TILA"
+
+#: backend/sidebar.php:173
+msgid "ADD / SAVE features are disabled."
+msgstr "LISÄÄ/TALLENNA ominaisuudet ovat poissa käytöstä."
+
+#: backend/sidebar.php:186 backend/topbar.php:11
+msgid "Dashboard"
+msgstr "Hallintapaneeli"
+
+#: backend/sidebar.php:191 backend/topbar.php:15 backend/topbar.php:18
+msgid "Statistics"
+msgstr "Tilastot"
+
+#: backend/sidebar.php:196 backend/topbar.php:18
+msgid "Overall"
+msgstr "Yleisesti"
+
+#: backend/sidebar.php:208 backend/topbar.php:21
+msgid "List Maps"
+msgstr "Listaa kartat"
+
+#: backend/sidebar.php:220
+msgid "Media"
+msgstr "Media"
+
+#: backend/sidebar.php:237 backend/topbar.php:124
+msgid "Showcases"
+msgstr "Esimerkit"
+
+#: backend/sidebar.php:244
+msgid "Collected Data"
+msgstr "Kerätyt tiedot"
+
+#: backend/sidebar.php:262 backend/edit_map.php:1287 backend/topbar.php:97
+msgid "Settings"
+msgstr "Asetukset"
+
+#: backend/sidebar.php:267 backend/topbar.php:100
+msgid "Upgrade"
+msgstr "Päivitä"
+
+#: backend/sidebar.php:272 backend/topbar.php:103
+msgid "Users"
+msgstr "Käyttäjät"
+
+#: backend/statistics.php:66 backend/statistics_all.php:81
+msgid "Map Accesses"
+msgstr "Karttapääsy"
+
+#: backend/statistics.php:76 backend/statistics_all.php:91
+msgid "Marker views"
+msgstr "Merkkinäkymät"
+
+#: backend/statistics.php:97 backend/statistics_all.php:111
+msgid "Loading..."
+msgstr "Ladataan…"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "January"
+msgstr "Tammikuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "February"
+msgstr "Helmikuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "March"
+msgstr "Maaliskuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "April"
+msgstr "Huhtikuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "May"
+msgstr "Toukokuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "June"
+msgstr "Kesäkuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "July"
+msgstr "Heinäkuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "August"
+msgstr "Elokuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "September"
+msgstr "Syyskuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "October"
+msgstr "Lokakuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "November"
+msgstr "Marraskuu"
+
+#: backend/statistics.php:98 backend/statistics_all.php:112
+msgid "December"
+msgstr "Joulukuu"
+
+#: backend/statistics.php:101 backend/statistics_all.php:115
+msgid "Export"
+msgstr "Vie"
+
+#: backend/statistics.php:102 backend/statistics_all.php:116
+msgid "Import"
+msgstr "Tuo"
+
+#: backend/statistics.php:103 backend/statistics_all.php:117
+msgid "From"
+msgstr "Lähettäjä"
+
+#: backend/statistics.php:104 backend/statistics_all.php:118
+msgid "To"
+msgstr "Vastaanottaja"
+
+#: backend/statistics.php:105 backend/statistics_all.php:119
+msgid "Period"
+msgstr "Ajanjakso"
+
+#: backend/statistics.php:106 backend/statistics_all.php:120
+msgid "Download image PNG"
+msgstr "Lataa kuva PNG"
+
+#: backend/statistics.php:107 backend/statistics_all.php:121
+msgid "Download image JPEG"
+msgstr "Lataa kuva JPEG"
+
+#: backend/statistics.php:108 backend/statistics_all.php:122
+msgid "Download document PDF"
+msgstr "Lataa asiakirja PDF"
+
+#: backend/statistics.php:109 backend/statistics_all.php:123
+msgid "Download image SVG"
+msgstr "Lataa kuva SVG"
+
+#: backend/statistics.php:110 backend/statistics_all.php:124
+msgid "Print"
+msgstr "Tulosta"
+
+#: backend/edit_map.php:87
+msgid "SEARCH"
+msgstr "ETSI"
+
+#: backend/edit_map.php:93
+msgid "LOADING"
+msgstr "LASTAA"
+
+#: backend/edit_map.php:96
+msgid "DEFAULTS"
+msgstr "OLETUSasetukset"
+
+#: backend/edit_map.php:114
+msgid "User"
+msgstr "Käyttäjä"
+
+#: backend/edit_map.php:114
+msgid "owner of the map"
+msgstr "kartan omistaja"
+
+#: backend/edit_map.php:161
+msgid "List"
+msgstr "Lista"
+
+#: backend/edit_map.php:161
+msgid "enables the list of markers in the map"
+msgstr "ottaa käyttöön merkitsimien luettelon kartalla"
+
+#: backend/edit_map.php:167
+msgid "enable the category filter in the map"
+msgstr "ota luokkasuodatin käyttöön kartassa"
+
+#: backend/edit_map.php:173
+msgid "Auto show List"
+msgstr "Auto show List"
+
+#: backend/edit_map.php:173
+msgid "automatically open the marker's list at first map loading"
+msgstr ""
+"avaa automaattisesti merkin luettelon ensimmäisen karttalatauksen yhteydessä"
+
+#: backend/edit_map.php:179
+msgid "Auto show Categories"
+msgstr "Autonäyttelyn luokat"
+
+#: backend/edit_map.php:179
+msgid "automatically open the categories filter"
+msgstr "avaa luokkien suodattimen automaattisesti"
+
+#: backend/edit_map.php:185
+msgid "Auto show My Location"
+msgstr "Näytä automaattisesti Oma sijainti"
+
+#: backend/edit_map.php:185
+msgid "automatically geolocate and show the location"
+msgstr "paikantaa automaattisesti ja näyttää sijainnin"
+
+#: backend/edit_map.php:191
+msgid "Control Arrows Markers"
+msgstr "Ohjausnuolet merkit"
+
+#: backend/edit_map.php:191
+msgid "show controls arrows to loop through the markers"
+msgstr "näytä ohjausnuolet kiertääksesi merkkien läpi"
+
+#: backend/edit_map.php:197
+msgid "enables the story feature in the map"
+msgstr "ottaa tarinaominaisuuden käyttöön kartassa"
+
+#: backend/edit_map.php:203
+msgid "display popup on hover over markers"
+msgstr "näytä ponnahdusikkuna viemällä hiiri merkintöjen päälle"
+
+#: backend/edit_map.php:209
+msgid "Details Window"
+msgstr "Yksityiskohdat-ikkuna"
+
+#: backend/edit_map.php:209
+msgid "opens the details window by clicking on markers"
+msgstr "avaa tietoikkunan napsauttamalla merkkejä"
+
+#: backend/edit_map.php:215
+msgid "enable the button 'directions' for markers"
+msgstr "ota käyttöön painike \"ohjeet\" merkkejä varten"
+
+#: backend/edit_map.php:221
+msgid "enable the button 'street view' for markers"
+msgstr "ota käyttöön painike \"katunäkymä\" merkkejä varten"
+
+#: backend/edit_map.php:227
+msgid "enable the reviews for markers"
+msgstr "ota käyttöön merkintöjen arvostelut"
+
+#: backend/edit_map.php:233
+msgid "Share - Map"
+msgstr "Jaa - kartta"
+
+#: backend/edit_map.php:233
+msgid "enable share buttons for map"
+msgstr "ota käyttöön kartan jakamispainikkeet"
+
+#: backend/edit_map.php:239
+msgid "Share - Markers"
+msgstr "Jaa - merkit"
+
+#: backend/edit_map.php:239
+msgid "enable share buttons for markers"
+msgstr "ota jakopainikkeet käyttöön merkkejä varten"
+
+#: backend/edit_map.php:248
+msgid "Providers"
+msgstr "Tarjoajat"
+
+#: backend/edit_map.php:249 backend/settings.php:414 backend/settings.php:487
+msgid "items selected"
+msgstr "valittuja kohteita"
+
+#: backend/edit_map.php:249 backend/settings.php:414 backend/settings.php:487
+msgid "Deselect All"
+msgstr "Poista kaikkien valinnat"
+
+#: backend/edit_map.php:249 backend/settings.php:414 backend/settings.php:487
+msgid "Select All"
+msgstr "Valitse kaikki"
+
+#: backend/edit_map.php:249 backend/settings.php:414 backend/settings.php:487
+msgid "Nothing selected"
+msgstr "Mitään ei valittu"
+
+#: backend/edit_map.php:249 backend/settings.php:414 backend/settings.php:487
+#: backend/functions.php:847
+msgid "No results matched"
+msgstr "Ei vastaavia tuloksia"
+
+#: backend/edit_map.php:250 backend/settings.php:488
+msgid "Copy Link"
+msgstr "Kopioi linkki"
+
+#: backend/edit_map.php:251 backend/settings.php:489
+msgid "Email"
+msgstr "Sähköposti"
+
+#: backend/edit_map.php:253 backend/settings.php:491
+msgid "Facebook"
+msgstr "Facebook"
+
+#: backend/edit_map.php:254 backend/settings.php:492
+msgid "Threads"
+msgstr "Säikeet"
+
+#: backend/edit_map.php:255 backend/settings.php:493
+msgid "Twitter"
+msgstr "Twitter"
+
+#: backend/edit_map.php:256 backend/settings.php:494
+msgid "Linkedin"
+msgstr "Linkedin"
+
+#: backend/edit_map.php:257 backend/settings.php:495
+msgid "Telegram"
+msgstr "Telegram"
+
+#: backend/edit_map.php:258 backend/settings.php:496
+msgid "Facebook Messenger"
+msgstr "Facebook Messenger"
+
+#: backend/edit_map.php:259 backend/settings.php:497
+msgid "Pinterest"
+msgstr "Pinterest"
+
+#: backend/edit_map.php:260 backend/settings.php:498
+msgid "Reddit"
+msgstr "Reddit"
+
+#: backend/edit_map.php:262 backend/settings.php:500
+msgid "Viber"
+msgstr "Viber"
+
+#: backend/edit_map.php:263 backend/settings.php:501
+msgid "VK"
+msgstr "VK"
+
+#: backend/edit_map.php:264 backend/settings.php:502
+msgid "Qzone"
+msgstr "Qzone"
+
+#: backend/edit_map.php:265 backend/settings.php:503
+msgid "Wechat"
+msgstr "Wechat"
+
+#: backend/edit_map.php:271
+msgid "Directions Map Provider"
+msgstr "Reittiohjeiden tarjoaja"
+
+#: backend/edit_map.php:271
+msgid ""
+"when you click 'get directions' on the marker you will use this provider to "
+"get directions"
+msgstr ""
+"Kun napsautat merkinnän \"hae reittiohjeet\", käytät tätä palveluntarjoajaa "
+"reittiohjeiden hankkimiseen"
+
+#: backend/edit_map.php:273
+msgid "built-in"
+msgstr "sisäänrakennettu"
+
+#: backend/edit_map.php:283
+msgid "Streetview Map Provider"
+msgstr "Streetview-kartan tarjoaja"
+
+#: backend/edit_map.php:283
+msgid ""
+"when you click 'street view' on the marker you will use this provider to get "
+"the street view"
+msgstr ""
+"kun napsautat \"katunäkymä\" merkinnässä, käytät tätä palveluntarjoajaa "
+"katunäkymän saamiseen"
+
+#: backend/edit_map.php:293
+msgid "Mobile Marker Sheets"
+msgstr "Mobile Marker Sheets"
+
+#: backend/edit_map.php:293
+msgid "displays marker's detail window reduced or opened on mobile"
+msgstr "näyttää merkin tietoikkunan pienennettyä tai avattua mobiililaitteella"
+
+#: backend/edit_map.php:295
+msgid "Collapsed"
+msgstr "Romahtanut"
+
+#: backend/edit_map.php:296
+msgid "Opened"
+msgstr "Avattu"
+
+#: backend/edit_map.php:302
+msgid "Add Markers from Map"
+msgstr "Lisää merkit kartalta"
+
+#: backend/edit_map.php:302
+msgid "enables adding markers directly from the map"
+msgstr "mahdollistaa merkkien lisäämisen suoraan kartalta"
+
+#: backend/edit_map.php:304 backend/edit_map.php:458 backend/edit_map.php:1228
+#: backend/edit_map.php:1295 backend/settings.php:553
+msgid "Disabled"
+msgstr "Pois käytöstä"
+
+#: backend/edit_map.php:305 backend/edit_map.php:1229 backend/edit_map.php:1296
+#: backend/settings.php:554
+msgid "Enabled"
+msgstr "Käytössä"
+
+#: backend/edit_map.php:306
+msgid "Enabled (Automatic Approval)"
+msgstr "Käytössä (automaattinen hyväksyntä)"
+
+#: backend/edit_map.php:312
+msgid "Density color"
+msgstr "Tiheyden väri"
+
+#: backend/edit_map.php:312
+msgid "displays different colors based on the density of marker grouping"
+msgstr "näyttää eri värejä merkkien ryhmittelyn tiheyden perusteella"
+
+#: backend/edit_map.php:318
+msgid "Density Color Tolerance"
+msgstr "Tiheyden väritoleranssi"
+
+#: backend/edit_map.php:318
+msgid "tolerance to color the grouped markers"
+msgstr "toleranssi ryhmiteltyjen merkkien värittämiseen"
+
+#: backend/edit_map.php:324
+msgid "Density Distance"
+msgstr "Tiheysetäisyys"
+
+#: backend/edit_map.php:324
+msgid ""
+"distance in pixels within which features will be clustered together. 0 to "
+"disable clustering"
+msgstr ""
+"etäisyys pikseleinä, jonka sisällä ominaisuudet ryhmitellään yhteen. 0 "
+"poistaaksesi klusteroinnin käytöstä"
+
+#: backend/edit_map.php:330
+msgid "Initial Zoom"
+msgstr "Alkuzoomaus"
+
+#: backend/edit_map.php:330
+msgid "initial zoom when the map is loaded (1 far - 20 near)"
+msgstr "alkuperäinen zoomaus, kun kartta on ladattu (1 kauas - 20 lähellä)"
+
+#: backend/edit_map.php:332
+msgid "Fit Markers"
+msgstr "Sopivat merkit"
+
+#: backend/edit_map.php:347
+msgid "Marker Zoom"
+msgstr "Marker Zoom"
+
+#: backend/edit_map.php:347
+msgid "zoom level when the marker is clicked (1 far - 20 near)"
+msgstr "zoomaustaso, kun merkkiä napsautetaan (1 kauas - 20 lähellä)"
+
+#: backend/edit_map.php:349 backend/edit_map.php:366
+msgid "No change"
+msgstr "Ei muutosta"
+
+#: backend/edit_map.php:364
+msgid "My Location Zoom"
+msgstr "Oma sijainti Zoom"
+
+#: backend/edit_map.php:364
+msgid "zoom level when enabling geolocation (1 far - 20 near)"
+msgstr ""
+"zoomaustaso, kun otat maantieteellisen sijainnin käyttöön (1 kaukana - 20 "
+"lähellä)"
+
+#: backend/edit_map.php:381
+msgid "Categories Filter Type"
+msgstr "Luokat Suodatintyyppi"
+
+#: backend/edit_map.php:383
+msgid "OR"
+msgstr "TAI"
+
+#: backend/edit_map.php:384
+msgid "AND"
+msgstr "JA (AND)"
+
+#: backend/edit_map.php:390
+msgid "Quality"
+msgstr "Laatu"
+
+#: backend/edit_map.php:390
+msgid "map quality (high can slow movement)"
+msgstr "kartan laatu (korkea voi hidastaa liikettä)"
+
+#: backend/edit_map.php:392
+msgid "Low"
+msgstr "Matala"
+
+#: backend/edit_map.php:393
+msgid "Medium"
+msgstr "Keskikoko"
+
+#: backend/edit_map.php:394
+msgid "High"
+msgstr "Korkea"
+
+#: backend/edit_map.php:400
+msgid "Weather"
+msgstr "Sää"
+
+#: backend/edit_map.php:402
+msgid "None"
+msgstr "Ei mitään"
+
+#: backend/edit_map.php:403
+msgid "Celsius"
+msgstr "Celsius"
+
+#: backend/edit_map.php:404
+msgid "Fahrenheit"
+msgstr "Fahrenheit"
+
+#: backend/edit_map.php:410
+msgid "Google Analytics"
+msgstr "Google Analytics"
+
+#: backend/edit_map.php:410
+msgid ""
+"Google Analytics Tracking ID. Note: Use the Friendly URL in Google "
+"Analytics's property url setting."
+msgstr ""
+"Google Analyticsin seurantatunnus. Huomautus: Käytä ystävällistä URL-"
+"osoitetta Google Analyticsin verkko-omaisuuden URL-asetuksissa."
+
+#: backend/edit_map.php:434
+msgid "Enable Search"
+msgstr "Aktivoi haku"
+
+#: backend/edit_map.php:434
+msgid "enable the search box in the map"
+msgstr "ota hakukenttä käyttöön kartassa"
+
+#: backend/edit_map.php:440
+msgid "Search Locations"
+msgstr "Etsi paikkakunnista"
+
+#: backend/edit_map.php:440
+msgid "enables the search for a location / city"
+msgstr "mahdollistaa paikan/kaupungin haun"
+
+#: backend/edit_map.php:446
+msgid "Markers Order by"
+msgstr "Merkit Tilaa mukaan"
+
+#: backend/edit_map.php:448
+msgid "Priority"
+msgstr "Prioriteetti"
+
+#: backend/edit_map.php:456
+msgid "Highlight Markers Position"
+msgstr "Korosta Merkkien sijainti"
+
+#: backend/edit_map.php:456
+msgid ""
+"highlights the position of the marker when you hover over the search results "
+"(1 far - 20 near)"
+msgstr ""
+"korostaa merkin paikan, kun viet hiiren osoittimen hakutulosten päälle (1 "
+"kaukana - 20 lähellä)"
+
+#: backend/edit_map.php:459
+msgid "Keep Zoom Level"
+msgstr "Pidä zoomaus tasolla"
+
+#: backend/edit_map.php:479
+msgid "Search Radius"
+msgstr "Haun säde"
+
+#: backend/edit_map.php:485 backend/edit_map.php:508 backend/settings.php:308
+msgid "Enable"
+msgstr "Ota käyttöön"
+
+#: backend/edit_map.php:485
+msgid "enables the ability to change the search radius of your location"
+msgstr "mahdollistaa mahdollisuuden muuttaa sijaintisi hakusädettä"
+
+#: backend/edit_map.php:491
+msgid "Default Radius Size"
+msgstr "Oletussäteen koko"
+
+#: backend/edit_map.php:502
+msgid "Highlight Markers Search"
+msgstr "Korosta Markers Search"
+
+#: backend/edit_map.php:508
+msgid "enables placement of a marker when hovering over search results"
+msgstr ""
+"mahdollistaa merkin sijoittamisen, kun hiiri viedään hakutulosten päälle"
+
+#: backend/edit_map.php:514 backend/edit_map.php:668
+msgid "Icon Type"
+msgstr "Kuvakkeen tyyppi"
+
+#: backend/edit_map.php:550
+msgid "Alignment"
+msgstr "Tasaus"
+
+#: backend/edit_map.php:552
+msgid "Bottom"
+msgstr "Alhaalla"
+
+#: backend/edit_map.php:553
+msgid "Middle"
+msgstr "Keskellä"
+
+#: backend/edit_map.php:554
+msgid "Top"
+msgstr "Ylhäällä"
+
+#: backend/edit_map.php:581
+msgid "Default Extra Fields Icons"
+msgstr "Lisäkenttien oletuskuvakkeet"
+
+#: backend/edit_map.php:601
+msgid "ASSIGN FIELD ICONS TO"
+msgstr "MÄÄRITÄ KENTTÄKUVAKKEET"
+
+#: backend/edit_map.php:611
+msgid "Add Markers From Map - Fields"
+msgstr "Lisää merkit kartalta - Kentät"
+
+#: backend/edit_map.php:623
+msgid "E-Mail"
+msgstr "Sähköpostiosoite"
+
+#: backend/edit_map.php:644
+msgid "Field"
+msgstr "Kenttä"
+
+#: backend/edit_map.php:649
+msgid "placeholder"
+msgstr "paikanvaraaja"
+
+#: backend/edit_map.php:662
+msgid "Default Markers Icon"
+msgstr "Oletusmerkkien kuvake"
+
+#: backend/edit_map.php:726 backend/edit_category.php:152
+msgid "ASSIGN ICON TO"
+msgstr "MÄÄRITÄ KUVAKE"
+
+#: backend/edit_map.php:748
+msgid "Logo (Desktop)"
+msgstr "Logo (työpöytä)"
+
+#: backend/edit_map.php:754 backend/edit_map.php:796
+msgid "DELETE LOGO"
+msgstr "POISTA LOGO"
+
+#: backend/edit_map.php:763 backend/edit_map.php:805 backend/edit_map.php:1253
+#: backend/edit_map.php:1397 backend/edit_map.php:1486
+#: backend/edit_map.php:1532 backend/settings.php:656 backend/settings.php:694
+msgid "Choose file"
+msgstr "Valitse tiedosto"
+
+#: backend/edit_map.php:790
+msgid "Logo (Mobile)"
+msgstr "Logo (mobiili)"
+
+#: backend/edit_map.php:833
+msgid "Height (Desktop)"
+msgstr "Korkeus (työpöytä)"
+
+#: backend/edit_map.php:844
+msgid "Height (Mobile)"
+msgstr "Korkeus (mobiili)"
+
+#: backend/edit_map.php:866
+msgid "Map - Street"
+msgstr "Kartta - Katu"
+
+#: backend/edit_map.php:871 backend/edit_map.php:1057
+msgid "Style"
+msgstr "Tyyli"
+
+#: backend/edit_map.php:874 backend/edit_map.php:1060
+msgid "DEFAULT"
+msgstr "OLETUS"
+
+#: backend/edit_map.php:883 backend/edit_map.php:1069
+msgid "CUSTOM"
+msgstr "MUKAUTETTU"
+
+#: backend/edit_map.php:929 backend/edit_map.php:1106
+msgid "Tile Url"
+msgstr "Laatan URL-osoite"
+
+#: backend/edit_map.php:1031 backend/edit_map.php:1136
+msgid "Max Zoom"
+msgstr "Max Zoom"
+
+#: backend/edit_map.php:1037 backend/edit_map.php:1142
+msgid "Attributions"
+msgstr "Attribuutit"
+
+#: backend/edit_map.php:1037 backend/edit_map.php:1142
+msgid "uncheck to hide the attributions, leave empty for default attributions"
+msgstr ""
+"poista valinta piilottaaksesi attribuutit, jätä tyhjäksi oletusmäärityksiä "
+"varten"
+
+#: backend/edit_map.php:1038 backend/edit_map.php:1043
+#: backend/edit_map.php:1143 backend/edit_map.php:1148
+msgid "Default Attributions"
+msgstr "Oletusmääritykset"
+
+#: backend/edit_map.php:1052
+msgid "Map - Satellite"
+msgstr "Kartta - Satelliitti"
+
+#: backend/edit_map.php:1166
+msgid "Main color"
+msgstr "Pääväri"
+
+#: backend/edit_map.php:1172
+msgid "Font Viewer"
+msgstr "Font Viewer"
+
+#: backend/edit_map.php:1202
+msgid "View"
+msgstr "Näytä"
+
+#: backend/edit_map.php:1208
+msgid "Map type"
+msgstr "Kartan tyyppi"
+
+#: backend/edit_map.php:1210
+msgid "Default"
+msgstr "Oletus"
+
+#: backend/edit_map.php:1211
+msgid "High number of markers"
+msgstr "Suuri määrä merkkejä"
+
+#: backend/edit_map.php:1217
+msgid "Default view"
+msgstr "Oletusnäkymä"
+
+#: backend/edit_map.php:1220
+msgid "Satellite"
+msgstr "Satelliittikartta"
+
+#: backend/edit_map.php:1226
+msgid "Globe view"
+msgstr "Maapallon näkymä"
+
+#: backend/edit_map.php:1230
+msgid "Enabled (autostart)"
+msgstr "Käytössä (automaattinen käynnistys)"
+
+#: backend/edit_map.php:1244
+msgid "Link or upload Json"
+msgstr "Linkitä tai lataa Json"
+
+#: backend/edit_map.php:1259
+msgid "Upload Json"
+msgstr "Lataa Json"
+
+#: backend/edit_map.php:1293
+msgid "Auto start"
+msgstr "Automaattinen käynnistys"
+
+#: backend/edit_map.php:1293
+msgid "start the map automatically on loading"
+msgstr "käynnistää kartta automaattisesti latauksen yhteydessä"
+
+#: backend/edit_map.php:1297
+msgid "Enabled (Disabled when embedded)"
+msgstr "Käytössä (ei käytössä, kun se on upotettu)"
+
+#: backend/edit_map.php:1303
+msgid "Loading Background Color"
+msgstr "Ladataan taustaväriä"
+
+#: backend/edit_map.php:1309
+msgid "Loading Text Color"
+msgstr "Ladataan tekstin väriä"
+
+#: backend/edit_map.php:1320
+msgid "Intro"
+msgstr "Lyhyt esittely"
+
+#: backend/edit_map.php:1320
+msgid ""
+"this section will be shown just after the map loads and before you can view "
+"it"
+msgstr ""
+"tämä osa tulee näkyviin heti, kun kartta on latautunut ja ennen kuin voit "
+"tarkastella sitä"
+
+#: backend/edit_map.php:1340
+msgid "Title - Size"
+msgstr "Otsikko - Koko"
+
+#: backend/edit_map.php:1351
+msgid "Title - Color"
+msgstr "Otsikko - Väri"
+
+#: backend/edit_map.php:1365
+msgid "Description - Size"
+msgstr "Kuvaus - Koko"
+
+#: backend/edit_map.php:1376
+msgid "Description - Color"
+msgstr "Kuvaus - Väri"
+
+#: backend/edit_map.php:1388 backend/edit_map.php:1477
+#: backend/edit_map.php:1523
+msgid "REMOVE IMAGE"
+msgstr "POISTA KUVA"
+
+#: backend/edit_map.php:1422
+msgid "Image - Height"
+msgstr "Kuva - Korkeus"
+
+#: backend/edit_map.php:1435
+msgid "Button"
+msgstr "Painike"
+
+#: backend/edit_map.php:1441
+msgid "Button - Size"
+msgstr "Painike - Koko"
+
+#: backend/edit_map.php:1452
+msgid "Button - Background"
+msgstr "Painike - tausta"
+
+#: backend/edit_map.php:1458
+msgid "Button - Color"
+msgstr "Painike - väri"
+
+#: backend/edit_map.php:1469
+msgid "Background Image (Desktop)"
+msgstr "Taustakuva (työpöytä)"
+
+#: backend/edit_map.php:1469
+msgid ""
+"image displayed as background during initial loading and used as preview "
+"image for share"
+msgstr ""
+"kuva näytetään taustana ensimmäisen latauksen aikana ja sitä käytetään "
+"esikatselukuvana jaettavaksi"
+
+#: backend/edit_map.php:1492 backend/edit_map.php:1538
+msgid "Upload Background Image"
+msgstr "Lataa taustakuva"
+
+#: backend/edit_map.php:1515
+msgid "Background Image (Mobile)"
+msgstr "Taustakuva (mobiili)"
+
+#: backend/edit_map.php:1515
+msgid "image displayed as background during initial loading on a mobile"
+msgstr "kuva näkyy taustana ensimmäisen latauksen aikana matkapuhelimeen"
+
+#: backend/settings.php:24
+msgid "Please enter a valid purchase code to continue using the application."
+msgstr "Anna kelvollinen ostokoodi jatkaaksesi sovelluksen käyttöä."
+
+#: backend/settings.php:32
+msgid "LICENSE"
+msgstr "KÄYTTÖOIKEUS"
+
+#: backend/settings.php:36
+msgid "GENERAL"
+msgstr "YLEISTÄ"
+
+#: backend/settings.php:42
+msgid "LOCALIZATION"
+msgstr "LOKALISAATIO"
+
+#: backend/settings.php:45
+msgid "TOOLS"
+msgstr "TYÖKALUT"
+
+#: backend/settings.php:48
+msgid "CUSTOM CSS / JS"
+msgstr "MUKAUTETTU CSS / JS"
+
+#: backend/settings.php:51
+msgid "LEGAL"
+msgstr "LAKI"
+
+#: backend/settings.php:66
+msgid "API Key"
+msgstr "API-avain"
+
+#: backend/settings.php:66
+#, php-format
+msgid "Request it from %s"
+msgstr "Pyydä sitä osoitteesta %s"
+
+#: backend/settings.php:81
+msgid "License"
+msgstr "Lisenssi"
+
+#: backend/settings.php:87
+msgid "Purchase Code"
+msgstr "Ostokoodi"
+
+#: backend/settings.php:87
+msgid "Where i can find it?"
+msgstr "Mistä löydän sen?"
+
+#: backend/settings.php:94
+msgid "CHECK"
+msgstr "TARKISTA"
+
+#: backend/settings.php:122
+msgid "Viewer"
+msgstr "Katseluoikeudet"
+
+#: backend/settings.php:125
+msgid "Backend"
+msgstr "Hallintapuoli"
+
+#: backend/settings.php:139 backend/settings.php:162 backend/settings.php:185
+msgid "General (affects all maps)"
+msgstr "Yleistä (vaikuttaa kaikkiin karttoihin)"
+
+#: backend/settings.php:156 backend/settings.php:220
+msgid "Custom JS"
+msgstr "Mukautettu JS"
+
+#: backend/settings.php:179 backend/settings.php:236
+msgid "Custom Head Elements"
+msgstr "Mukautetut pääelementit"
+
+#: backend/settings.php:253 backend/settings.php:256
+msgid "visible on backend footer"
+msgstr "näkyy taustapuolen alatunnisteessa"
+
+#: backend/settings.php:259
+msgid "Cookie"
+msgstr "Evästeet"
+
+#: backend/settings.php:302
+msgid "Cookie Consent"
+msgstr "Evästeiden suostumus"
+
+#: backend/settings.php:308
+msgid "enable cookie consent modal on the backend"
+msgstr "ota evästeen suostumusmodaali käyttöön taustajärjestelmässä"
+
+#: backend/settings.php:319
+msgid "visible in backend footer and / or into consent modal"
+msgstr "näkyy taustan alatunnisteessa ja/tai suostumusmodaalissa"
+
+#: backend/settings.php:341
+msgid "Localization"
+msgstr "Lokalisointi"
+
+#: backend/settings.php:347
+msgid "Timezone"
+msgstr "Aikavyöhyke"
+
+#: backend/settings.php:404
+msgid "Translation Type"
+msgstr "Käännöstyyppi"
+
+#: backend/settings.php:413
+msgid "Languages Enabled"
+msgstr "Kielet käytössä"
+
+#: backend/settings.php:477
+msgid "Font Provider"
+msgstr "Fontin tarjoaja"
+
+#: backend/settings.php:486
+msgid "Share Providers"
+msgstr "Jaa palveluntarjoajat"
+
+#: backend/settings.php:509
+msgid "Google Analytics Tracking ID (G-XXXXXXXXX)."
+msgstr "Google Analyticsin seurantatunnus (G-XXXXXXXXX)."
+
+#: backend/settings.php:515
+msgid "Friendly Urls Blacklist"
+msgstr "Ystävällisten URL-osoitteiden musta lista"
+
+#: backend/settings.php:516
+msgid "Enter friendly urls separated by comma"
+msgstr "Anna ystävälliset URL-osoitteet pilkuilla erotettuina"
+
+#: backend/settings.php:530
+msgid "Branding"
+msgstr "Brändäys"
+
+#: backend/settings.php:536
+msgid "Application Name"
+msgstr "sovelluksen nimi"
+
+#: backend/settings.php:542
+msgid "Sidebar"
+msgstr "Sivupalkki"
+
+#: backend/settings.php:544
+msgid "Gradient"
+msgstr "Liukuväri"
+
+#: backend/settings.php:545
+msgid "Flat"
+msgstr "Litteä"
+
+#: backend/settings.php:551
+msgid "Dark Mode"
+msgstr "Tumma tila"
+
+#: backend/settings.php:555
+msgid "Forced (only dark mode)"
+msgstr "Pakotettu (vain tumma tila)"
+
+#: backend/settings.php:562
+msgid "Font"
+msgstr "Fontti"
+
+#: backend/settings.php:590 backend/settings.php:608
+msgid "Theme Color"
+msgstr "Teeman väri"
+
+#: backend/settings.php:596 backend/settings.php:614
+msgid "Sidebar Color 1"
+msgstr "Sivupalkin väri 1"
+
+#: backend/settings.php:602 backend/settings.php:620
+msgid "Sidebar Color 2"
+msgstr "Sivupalkin väri 2"
+
+#: backend/settings.php:626
+msgid "Welcome Message"
+msgstr "Tervetuloa Viesti"
+
+#: backend/settings.php:626
+msgid "leave empty for default welcome message"
+msgstr "jätä tyhjäksi oletustervetuloviestiä varten"
+
+#: backend/settings.php:632
+msgid "Login Theme"
+msgstr "Kirjautumisteema"
+
+#: backend/settings.php:634
+msgid "Style 1 (image alongside the form)"
+msgstr "Tyyli 1 (kuva lomakkeen vieressä)"
+
+#: backend/settings.php:635
+msgid "Style 2 (image as background)"
+msgstr "Tyyli 2 (kuva taustana)"
+
+#: backend/settings.php:680
+msgid "Login image"
+msgstr "Kirjautumiskuva"
+
+#: backend/settings.php:700
+msgid "Upload Login Image"
+msgstr "Lataa kirjautumiskuva"
+
+#: backend/settings.php:726
+msgid "Footer"
+msgstr "Alatunniste"
+
+#: backend/settings.php:732
+msgid "Name Item 1"
+msgstr "Nimike 1"
+
+#: backend/settings.php:738
+msgid "Content Item 1"
+msgstr "Sisältökohde 1"
+
+#: backend/settings.php:738 backend/settings.php:753 backend/settings.php:768
+msgid "insert a textual content or a link to an external site"
+msgstr "lisätä tekstisisältöä tai linkin ulkoiselle sivustolle"
+
+#: backend/settings.php:747
+msgid "Name Item 2"
+msgstr "Nimike 2"
+
+#: backend/settings.php:753
+msgid "Content Item 2"
+msgstr "Sisältökohde 2"
+
+#: backend/settings.php:762
+msgid "Name Item 3"
+msgstr "Nimike 3"
+
+#: backend/settings.php:768
+msgid "Content Item 3"
+msgstr "Sisältökohde 3"
+
+#: backend/settings.php:930
+msgid "Edit the content in HTML format"
+msgstr "Muokkaa sisältöä HTML-muodossa"
+
+#: backend/settings.php:931 backend/import.php:99
+msgid "Ok"
+msgstr "Ok"
+
+#: backend/settings.php:934
+msgid "Show HTML Source"
+msgstr "Näytä HTML-lähde"
+
+#: backend/settings.php:974 backend/settings.php:992 backend/settings.php:1014
+#: backend/settings.php:1036 backend/settings.php:1058
+#: backend/settings.php:1081
+msgid "Choose"
+msgstr "Valitse"
+
+#: backend/story.php:25
+msgid "ADD MARKER TO STORY"
+msgstr "LISÄÄ MERKKI TARINAAN"
+
+#: backend/story.php:37 backend/story.php:66 backend/story.php:117
+msgid "Zoom"
+msgstr "Zoomaa"
+
+#: backend/story.php:38 backend/markers.php:87
+msgid "Order"
+msgstr "Järjestys"
+
+#: backend/story.php:54
+msgid "Add Marker to Story"
+msgstr "Lisää merkintä tarinaan"
+
+#: backend/story.php:111 backend/topbar.php:56
+msgid "Edit Marker"
+msgstr "Muokkaa merkkiä"
+
+#: backend/markers.php:27
+msgid "ADD MARKER"
+msgstr "LISÄÄ MERKKI"
+
+#: backend/markers.php:32
+msgid "IMPORT EXCEL"
+msgstr "TUO EXCEL"
+
+#: backend/markers.php:36
+msgid "BATCH GEOCODE"
+msgstr "ERÄGEOKOODI"
+
+#: backend/markers.php:39
+msgid "BULK SELECT"
+msgstr "BULK SELECT"
+
+#: backend/markers.php:44
+msgid "SELECTED MARKERS"
+msgstr "VALITUT MERKKIT"
+
+#: backend/markers.php:44
+msgid "select all"
+msgstr "Valitse kaikki"
+
+#: backend/markers.php:44
+msgid "deselect all"
+msgstr "poista kaikki valinnat"
+
+#: backend/markers.php:55
+msgid "ACTIVATE"
+msgstr "AKTIVOI"
+
+#: backend/markers.php:58
+msgid "DISABLE"
+msgstr "POISTA KÄYTÖSTÄ"
+
+#: backend/markers.php:61
+msgid "VALIDATE"
+msgstr "VAHVISTA"
+
+#: backend/markers.php:64 backend/markers.php:67
+msgid "FEATURED"
+msgstr "SUOSITELTU"
+
+#: backend/markers.php:82
+msgid "Address"
+msgstr "Osoite"
+
+#: backend/markers.php:84 backend/edit_marker.php:139
+msgid "Validated"
+msgstr "Validoitu"
+
+#: backend/markers.php:85 backend/edit_marker.php:145
+msgid "Centered"
+msgstr "Keskitetty"
+
+#: backend/markers.php:102
+msgid "export markers"
+msgstr "vientimerkit"
+
+#: backend/markers.php:110
+msgid "Delete Marker"
+msgstr "Poista merkki"
+
+#: backend/markers.php:113
+msgid "Are you sure you want to delete the marker?"
+msgstr "Haluatko varmasti poistaa merkin?"
+
+#: backend/markers.php:127
+msgid "Duplicate Marker"
+msgstr "Kaksoismerkki"
+
+#: backend/markers.php:130
+msgid "Are you sure you want to duplicate the marker?"
+msgstr "Haluatko varmasti kopioida merkin?"
+
+#: backend/markers.php:136
+msgid "On the same map"
+msgstr "Samalla kartalla"
+
+#: backend/markers.php:164
+msgid "Batch Geocode"
+msgstr "Erä Geokoodi"
+
+#: backend/markers.php:167
+msgid ""
+"This procedure will try to associate the coordinates to all those markers "
+"that are missing, converting them from the addresses."
+msgstr ""
+"Tämä menettely yrittää liittää koordinaatit kaikkiin puuttuviin merkkeihin "
+"ja muuntaa ne osoitteista."
+
+#: backend/markers.php:173
+msgid "Start"
+msgstr "Alku"
+
+#: backend/add_category.php:22 backend/edit_category.php:60
+msgid "Parent Category"
+msgstr "Yläkategoria"
+
+#: backend/functions.php:408 backend/functions.php:431
+msgid "No icons in this library."
+msgstr "Tässä kirjastossa ei ole kuvakkeita."
+
+#: backend/functions.php:605
+msgid "administrator"
+msgstr "ylläpitäjä"
+
+#: backend/edit_category.php:29 backend/edit_marker.php:64
+msgid "Direct Link"
+msgstr "Suora linkki"
+
+#: backend/edit_category.php:83
+msgid "Assign Markers Icon"
+msgstr "Määritä merkkien kuvake"
+
+#: backend/edit_category.php:181
+msgid "Delete Category"
+msgstr "Poista kategoria"
+
+#: backend/edit_category.php:184
+msgid "Are you sure you want to delete the category?"
+msgstr "Haluatko varmasti poistaa luokan?"
+
+#: backend/updater.php:52
+msgid "Version Check"
+msgstr "Version tarkistus"
+
+#: backend/updater.php:57
+msgid "Current Version"
+msgstr "Nykyinen versio"
+
+#: backend/updater.php:57
+msgid "Latest Version"
+msgstr "Uusin versio"
+
+#: backend/updater.php:61
+msgid "Changelog"
+msgstr "Muutosloki"
+
+#: backend/updater.php:75
+msgid "Download and Update"
+msgstr "Lataa ja päivitä"
+
+#: backend/updater.php:83
+msgid "Can't upgrade, please enable php zip extension."
+msgstr "Päivitys ei onnistu, ota php zip -laajennus käyttöön."
+
+#: backend/updater.php:91
+msgid ""
+"Be sure to perform a full manual backup of your current files and database "
+"before upgrading."
+msgstr ""
+"Muista tehdä täydellinen manuaalinen varmuuskopio nykyisistä tiedostoistasi "
+"ja tietokannastasi ennen päivitystä."
+
+#: backend/updater.php:94
+msgid "I made the backup, continue"
+msgstr "Tein varmuuskopion, jatka"
+
+#: backend/updater.php:100
+msgid "UPGRADE NOW!"
+msgstr "PÄIVITÄ NYT!"
+
+#: backend/updater.php:103
+msgid "click upgrade now to start"
+msgstr "Aloita napsauttamalla päivitä nyt"
+
+#: backend/updater.php:134
+msgid "downloading ..."
+msgstr "ladataan..."
+
+#: backend/updater.php:150 backend/updater.php:157 backend/updater.php:181
+#: backend/updater.php:188
+msgid "error, please retry"
+msgstr "virhe, yritä uudelleen"
+
+#: backend/updater.php:164
+msgid "installing ... do not close this window!"
+msgstr "asennus ... älä sulje tätä ikkunaa!"
+
+#: backend/updater.php:174
+msgid "upgrade completed successfully, you will now be logged out in 5 seconds"
+msgstr ""
+"päivitys suoritettu onnistuneesti, kirjaudut nyt ulos 5 sekunnin kuluttua"
+
+#: backend/updater.php:198
+msgid "checking license"
+msgstr "lisenssin tarkistaminen"
+
+#: backend/updater.php:232
+msgid "invalid license, unable to update"
+msgstr "virheellinen lisenssi, ei voi päivittää"
+
+#: backend/import.php:56
+#, php-format
+msgid ""
+"Use %s template excel or the exported csv to import multiple markers at once."
+msgstr ""
+"Käytä %s excel-mallia tai vietyä csv-tiedostoa tuodaksesi useita merkkejä "
+"kerralla."
+
+#: backend/import.php:56
+msgid "this"
+msgstr "tämä"
+
+#: backend/import.php:66 backend/import.php:93
+msgid "Import Markers"
+msgstr "Tuo merkit"
+
+#: backend/import.php:155
+msgid "IMPORTING MARKERS ... DO NOT CLOSE THIS WINDOW!!!!"
+msgstr "TUONTUJA TUNNUSTEITA ... ÄLÄ SULJE TÄTÄ IKKUNAA!!!!"
+
+#: backend/edit_marker.php:56
+msgid ""
+"This marker was added by a person outside the system. Check the data entered "
+"before approving it."
+msgstr ""
+"Tämän merkin lisäsi järjestelmän ulkopuolinen henkilö. Tarkista syötetyt "
+"tiedot ennen niiden hyväksymistä."
+
+#: backend/edit_marker.php:139
+msgid "it must be validated to be visible on the map"
+msgstr "se on vahvistettava, jotta se näkyy kartalla"
+
+#: backend/edit_marker.php:145
+msgid "center the map on this marker"
+msgstr "keskitä kartta tähän merkintään"
+
+#: backend/topbar.php:34
+msgid "Add Marker"
+msgstr "Lisää merkki"
+
+#: backend/topbar.php:44
+msgid "EDIT PREVIOUS MARKER"
+msgstr "MUOKKAA EDELTÄ MERKKIÄ"
+
+#: backend/topbar.php:49
+msgid "EDIT NEXT MARKER"
+msgstr "MUOKKAA SEURAAVAA MERKKIÄ"
+
+#: backend/topbar.php:72
+msgid "Add Category"
+msgstr "Lisää kategoria"
+
+#: backend/topbar.php:77
+msgid "Edit Category"
+msgstr "Muokkaa kategoriaa"
+
+#: backend/topbar.php:112
+msgid "Edit User"
+msgstr "Muokkaa käyttäjää"
+
+#: backend/topbar.php:117
+msgid "Edit Profile"
+msgstr "Muokkaa profiilia"
+
+#: backend/topbar.php:129
+msgid "Edit Showcase"
+msgstr "Muokkaa esittelyä"
+
+#: backend/topbar.php:219
+msgid "Edit profile"
+msgstr "Muokkaa tietojasi"
+
+#: backend/topbar.php:223 backend/topbar.php:243
+msgid "Logout"
+msgstr "Kirjaudu ulos"
+
+#: backend/topbar.php:235
+msgid "Ready to Leave?"
+msgstr "Valmis lähtöön?"
+
+#: backend/topbar.php:240
+msgid "Select Logout below if you are ready to end your current session."
+msgstr ""
+"Valitse alta Kirjaudu ulos, jos olet valmis lopettamaan nykyisen istunnon."
+
+#~ msgid "only needed if map style is different from default or custom version"
+#~ msgstr ""
+#~ "tarvitaan vain, jos kartan tyyli eroaa oletus- tai mukautetusta versiosta"
+
+#~ msgid "Street Url"
+#~ msgstr "Katun URL-osoite"
+
+#~ msgid "Street Max Zoom"
+#~ msgstr "Street Max Zoom"
+
+#~ msgid "Satellite Url"
+#~ msgstr "Satelliitin URL-osoite"
+
+#~ msgid "Satellite Max Zoom"
+#~ msgstr "Satellite Max Zoom"
+
+#~ msgid "Satellite Attributions"
+#~ msgstr "Satelliittimääritteet"
+
+#~ msgid "Arabic"
+#~ msgstr "Arabia"
+
+#~ msgid "Chinese Simplified"
+#~ msgstr "kiina, yksinkertaistettu"
+
+#~ msgid "Chinese Traditional (Hong Kong)"
+#~ msgstr "perinteinen kiina (Hongkong)"
+
+#~ msgid "Chinese Traditional (Taiwan)"
+#~ msgstr "perinteinen kiina (Taiwan)"
+
+#~ msgid "Czech"
+#~ msgstr "Tšekki"
+
+#~ msgid "Dutch"
+#~ msgstr "Hollanti"
+
+#~ msgid "English"
+#~ msgstr "Englanti"
+
+#~ msgid "Filipino"
+#~ msgstr "Filipino"
+
+#~ msgid "French"
+#~ msgstr "Ranska"
+
+#~ msgid "German"
+#~ msgstr "Saksa"
+
+#~ msgid "Hindi"
+#~ msgstr "Hindi"
+
+#~ msgid "Hungarian"
+#~ msgstr "Unkari"
+
+#~ msgid "Kinyarwanda"
+#~ msgstr "Kinyarwanda"
+
+#~ msgid "Korean"
+#~ msgstr "Korea"
+
+#~ msgid "Indonesian"
+#~ msgstr "Indonesia"
+
+#~ msgid "Italian"
+#~ msgstr "Italia"
+
+#~ msgid "Japanese"
+#~ msgstr "Japani"
+
+#~ msgid "Polish"
+#~ msgstr "Puola"
+
+#~ msgid "Portuguese Brazilian"
+#~ msgstr "portugalilainen brasilialainen"
+
+#~ msgid "Portuguese European"
+#~ msgstr "portugalilainen eurooppalainen"
+
+#~ msgid "Spanish"
+#~ msgstr "Espanja"
+
+#~ msgid "Romanian"
+#~ msgstr "Romanian"
+
+#~ msgid "Russian"
+#~ msgstr "Venäjä"
+
+#~ msgid "Swedish"
+#~ msgstr "Ruotsi"
+
+#~ msgid "Tajik"
+#~ msgstr "tadžikki"
+
+#~ msgid "Thai"
+#~ msgstr "thai"
+
+#~ msgid "Turkish"
+#~ msgstr "Turkki"
+
+#~ msgid "Vietnamese"
+#~ msgstr "Vietnam"

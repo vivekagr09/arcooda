@@ -1,0 +1,5 @@
+<!ENTITY % misc.inline "ins|del|script|negotiate_list">
+<!ELEMENT negotiate_item (#PCDATA|a|b|i|negotiate_list|p|span)*>
+<!ATTLIST negotiate_item default (default) #IMPLIED value CDATA #IMPLIED>
+<!ELEMENT negotiate_list (negotiate_item)+>
+<!ATTLIST negotiate_list field CDATA #IMPLIED>

@@ -1,0 +1,449 @@
+/* Import font. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+/* Preloader. */
+.fwd360-preloader-text{
+	font: 300 14px Poppins !important;
+	padding-top: 22px !important;
+}
+
+.fwd360-preloader-bar-background{
+	height: 1px !important;
+	border-radius: 1.5px;
+}
+
+.fwd360-preloader-bar-fill{
+	height: 3px !important;
+	border-radius: 1.5px;
+}
+
+/* Right click menu.*/
+.fwd360-ctxm{
+	border-radius: 5px;
+	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.12);
+}
+
+.fwd360-ctxm-text{
+	font: 400 14px Poppins !important;
+	padding: 10px 15px !important;
+}
+
+.fwd360-ctxm-text.dev{
+	font-style: italic !important;
+}
+
+/* Controler buttons tooltips. */
+.fwd3660-button-tooltip{
+	font: 400 12px Poppins !important;
+	line-height: 18px !important;
+	border-radius: 5px;
+	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.12)!important;
+	padding: 5px 14px !important;
+}
+
+.fwd360-button-tooltip-pointer.fwd360-pointer-down{
+	box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.fwd360-button-tooltip-pointer.fwd360-pointer-up{
+	box-shadow: -2px -2px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Markers. */
+.fwd360-marker{
+	border-radius: 100%;
+	box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.35);
+}
+
+.fwd360-png-marker{
+	filter: drop-shadow(3px 5px 4px rgba(0, 0, 0, 0.48));
+}
+
+/* Markers tooltip simple (links and info markers). */
+.fwd3660-marker-tooltip{
+	font: 400 12px Poppins !important;
+	line-height: 18px !important;
+	border-radius: 5px;
+	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.12)!important;
+	padding: 10px 20px !important;
+	background: #FFFFFF !important;
+	color: #3A334B;
+}
+
+.fwd360-marker-tooltip-pointer.fwd360-pointer-down{
+	background: #FFFFFF !important;
+	box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.fwd360-marker-tooltip-pointer.fwd360-pointer-up{
+	background: #FFFFFF !important;
+	box-shadow: -2px -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Markers tooltip window. */
+.fwd3660-marker-tooltip-window{
+	font: 400 12px Poppins !important;
+	line-height: 18px !important;
+	border-radius: 5px;
+	line-height: 18px !important;
+	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.12)!important;
+	padding: 15px 15px !important;
+	background: #FFFFFF !important;
+	color: #3A334B;
+}
+
+.fwd360-marker-tooltip-window-pointer.fwd360-pointer-down{
+	background: #FFFFFF !important;
+	box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.fwd360-marker-tooltip-window-pointer.fwd360-pointer-up{
+	background: #FFFFFF !important;
+	box-shadow: -2px -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.fwd3660-marker-tooltip-window p{
+	font: 400 12px Poppins !important;
+	margin: 7px 0 0;
+}
+
+.fwd360-info-window-in a,
+.fwd3660-marker-tooltip-window a{
+	display: inline-block;
+	margin-top: 11px;
+    text-decoration: none;
+    text-transform: uppercase;
+	background-image: linear-gradient(#BFBF06 calc(100% - 1px), #BFBF06 1px);
+	background-position: 0 calc(100% + 1px);
+	background-repeat: no-repeat;
+	background-size: 0% 1px;
+	transition: background-size .6s cubic-bezier(.215,.61,.355,1), color .3s ease-out, background .3s ease-out, border-color .3s ease-out;
+	border-bottom: 1px solid rgba(191, 191, 6, 0.3);
+	color: #BFBF06;
+}
+
+.fwd360-info-window-in a:hover,
+.fwd3660-marker-tooltip-window a:hover{
+	background-size: 100% 1px;
+}
+
+.fwd3660-marker-tooltip-window img{
+	width: 100%;
+}
+
+/* Info window. */
+.fwd360-info-window-in{
+	border-radius: 5px !important;
+	box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.12) !important;
+	background: #FFF !important;
+}
+
+.fwd360-info-window-in a{
+	display: inline;
+	text-transform: none;
+}
+
+.fwd360-info-window h1{
+	font: 700 28px Poppins !important;
+	line-height: 40px !important;
+	margin: -10px 0 12px 0;
+	color: #3A334B;
+}
+
+.fwd360-info-window p{
+	font: 400 12px Poppins !important;
+	line-height: 18px;
+	margin: 0;
+	color: #3A334B;
+}
+
+.fwd360-info-window p + p{
+	margin-top: 14px;
+}
+
+
+.fwd360-info-window .first img,
+.fwd360-info-window .second img{
+	float: left;
+	width: 100%;
+	max-width: 250px;
+	border-radius: 5px;
+	margin: 9px 20px 10px 0;
+}
+
+.fwd360-info-window .no-padding-bottom img{
+	margin-bottom: 0;
+}
+
+.fwd360-info-window .spacer{
+	width: 100%;
+	height: 1px;
+	margin: 30px 0;
+	background: #e5e4e8;
+}
+
+.fwd360-info-window .second img{
+	float: right;
+	margin: 9px 0px 10px 20px;
+}
+
+.fwd360-info-window .youtube{
+	position: relative;
+	padding-top: 56.25%
+}
+
+.fwd360-info-window .youtube iframe{
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+}
+
+.fwd360-info-window .youtube + p{
+	margin-top: 24px;
+}
+
+
+@media screen and (max-width: 700px){
+	.fwd360-info-window .first img,
+	.fwd360-info-window .second img{
+		float: none;
+		max-width: none;
+		margin: 9px 20px 10px 0;
+	}
+
+	.fwd360-info-window h1{
+		margin-top: 0;
+	}
+}
+
+
+
+/* ############################################################*/
+/* Vector font and vector skin. */
+/* ############################################################*/
+@font-face {
+  font-family: 'fwd360';
+  src:
+    url('fonts/fwd360.ttf?a7tz41') format('truetype'),
+    url('fonts/fwd360.woff?a7tz41') format('woff'),
+    url('fonts/fwd360.svg?a7tz41#fwd360') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.fwd360-icon,
+[class^="fwd360-icon-"]:before,
+[class*=" fwd360-icon-"]:before {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'fwd360' !important;
+  speak: never;
+  position: relative;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fwd360-icon-close:before{
+  content: "\e900";
+}
+
+.fwd360-icon-fullscr-full:before{
+  content: "\e901";
+}
+
+.fwd360-icon-fullscr-normal:before{
+  content: "\e902";
+}
+
+.fwd360-icon-info:before{
+  content: "\e903";
+}
+
+.fwd360-icon-info2:before{
+  content: "\e904";
+}
+
+.fwd360-icon-left:before{
+  	content: "\e905";
+  	left: -1px;
+}
+
+.fwd360-icon-link:before{
+  content: "\e906";
+}
+
+.fwd360-icon-move:before{
+  content: "\e907";
+}
+
+.fwd360-icon-pause:before{
+  content: "\e908";
+}
+
+.fwd360-icon-play:before{
+  content: "\e909";
+}
+
+.fwd360-icon-link2:before {
+  content: "\e910";
+}
+
+.fwd360-icon-play2:before{
+  content: "\e90a";
+  left: 1px;
+}
+
+.fwd360-icon-plus:before{
+  content: "\e90b";
+}
+
+.fwd360-icon-right:before{
+  	content: "\e90c";
+  	left: 1px;
+}
+
+.fwd360-icon-rotate:before{
+  content: "\e90d";
+  top: 1px;
+}
+
+.fwd360-icon-zoomin:before{
+  content: "\e90e";
+}
+
+.fwd360-icon-zoomout:before{
+  content: "\e90f";
+}
+
+/* Both vector skins. */
+.fwd360-vector-scrollbar-background{
+	height: 5px !important;
+	border-radius: 2.5px;
+	background-color: #E5E4E8;
+}
+
+.fwd360-vector-scrollbar-progress{
+	border-radius: 2.5px;
+	background-color: #8B859B !important;
+}
+
+.fwd360-vector-scrollbar-handler-normal{
+	box-sizing: border-box;
+	border: 1px solid #FFFFFF !important;
+	border-radius: 50%;
+	background-color: #8B859B;
+}
+
+.fwd360-vector-scrollbar-handler-selected{
+	box-sizing: border-box;
+	border: 1px solid #FFFFFF !important;
+	border-radius: 50%;
+	background-color: #BFBF06;
+}
+
+.fwd360-vector-scrollbar-handler-normal .fwd360-icon-zoomout:before,
+.fwd360-vector-scrollbar-handler-selected .fwd360-icon-zoomout:before{
+	opacity: 0;
+}
+
+.fwd360-skin-vector-close-button-icon-normal{
+	font-size: 19px !important;
+    padding: 4px !important;
+	border-radius: 50%;
+	background-color: #8B859B;
+	color: #FFFFFF;
+}
+
+.fwd360-skin-vector-close-button-icon-selected{
+	font-size: 19px !important;
+    padding: 4px !important;
+	border-radius: 50%;
+	background-color:#BFBF06;
+	color: #FFFFFF;
+}
+
+.fwd360-skin-vector-marker-button-normal{
+	font-size: 12px !important;
+	border: 1px solid #FFFFFF !important;
+	border-radius: 50%;
+	background-color: #8B859B;
+	color: #FFFFFF;
+}
+
+.fwd360-skin-vector-marker-button-selected{
+	font-size: 12px !important;
+	border: 1px solid #FFFFFF !important;
+	border-radius: 50%;
+	background-color: #BFBF06;
+	color: #FFFFFF;
+}
+
+
+/* Vector skin 1. */
+.fwd360-skin1-vector-button-icon-normal{
+	font-size: 24px !important;
+	color:#8B859B;
+}
+
+.fwd360-skin1-vector-button-icon-selected{
+	font-size: 24px !important;
+	color:#BFBF06;
+}
+
+.fwd360-controler-skin1-vector{
+	box-sizing: border-box;
+	height: 50px !important;
+	border: 2px solid #e5e4e8 !important;
+	border-radius: 45.5px;
+	background-color: #FFFFFF !important;
+}
+
+
+/* Vector skin 2. */
+.fwd360-skin2-vector-button-backround-normal{
+	font-size: 24px !important;
+	border: 2px solid #E5E4E8;
+	border-radius: 50%;
+	width: 40px !important;
+	height: 40px !important;
+	box-sizing: border-box;
+	background-color: #FFFFFF;
+}
+
+.fwd360-skin2-vector-button-backround-selected{
+	font-size: 24px !important;
+	border: 2px solid #E5E4E8;
+	border-radius: 50%;
+	width: 40px !important;
+	height: 40px !important;
+	box-sizing: border-box;
+	background-color: #BFBF06;
+}
+
+.fwd360-skin2-vector-button-icon-normal{
+	font-size: 24px !important;
+	color: #8B859B !important;
+}
+
+.fwd360-skin2-vector-button-icon-selected{
+	font-size: 24px !important;
+	color: #FFFFFF !important;
+}
+
+.fwd360-controler-skin2-vector{
+	box-sizing: border-box;
+	height: 40px !important;
+	border: 2px solid #e5e4e8 !important;
+	border-radius: 45.5px;
+	background-color: #FFFFFF !important;
+}

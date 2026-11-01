@@ -1,0 +1,2 @@
+<!-- inventory.tpl -->
+<!-- /inventory.tpl -->

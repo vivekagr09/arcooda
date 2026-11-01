@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /account/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /freight-calculator/
+Sitemap: https://www.arcooda.com/sitemap.xml

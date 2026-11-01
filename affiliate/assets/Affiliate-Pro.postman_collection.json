@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "your-postman-id",
+		"name": "name",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "firstname",
+							"value": "Keri",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "Taylor",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "taylor.keri",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "taylor.keri@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "terms",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://yourdomain.com/api/register",
+					"protocol": "https",
+					"host": [
+						"yourdomain",
+						"yourdomain",
+						"com"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Register Custom Field",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://yourdomain.com/api/register",
+					"protocol": "https",
+					"host": [
+						"yourdomain",
+						"yourdomain",
+						"com"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "your-item-license-key",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "your-item-license-key",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

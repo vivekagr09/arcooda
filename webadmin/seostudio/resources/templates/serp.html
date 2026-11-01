@@ -1,0 +1,95 @@
+<div class="form-container">
+    <h2>{{ "Enter Keyword" | rt }}</h2>
+
+    <form action="" method="POST">
+        <div class="tool-form">
+            <div class="input">
+                <input type="text" class="text-input" name="keyword" value="{{ keyword | e('html_attr') }}" />
+            </div>
+            {% if countries %}
+            <div class="input">
+                <select name="country" class="select-input">
+                    <option value=""></option>
+                    {% for code, name in countries %}
+                        <option value="{{ code }}" {% if code == activeCountry %} selected {% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+            <div class="button">
+                <button type="submit" class="loadable">{{ "Test" | rt }}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% if show_tables %}
+<div class="text-container">
+    <h2>{{ "Your Rank" | rt }}</h2>
+    <div class="text">
+        <p>
+            {{ rank }}
+        </p>
+    </div>
+</div>
+
+
+<div class="table-container">
+    <div class="table-actions" data-target="#serp">
+        <h2>{{ title }}</h2>
+        <div class="actions-container">
+            {% if results %}
+                {% include 'actions/download.html' %}
+            {% endif %}
+        </div>
+    </div>
+
+    <table id="serp" data-name="{{ keyword | e('html_attr') }}-{{ activeCountry | lower }}-%tool">
+        <thead>
+            <tr>
+                <th class="center shrink">{{ "Rank" | rt }}</th>
+                <th data-split="{{ "Title" | rt }},{{ "Link" | rt }},{{ "Description" | rt }}">{{ "Website" | rt }}</th>
+                <th class="center shrink" title="{{ "Page Authority" | rt | e('html_attr') }}">{{ "PA" | rt }}</th>
+                <th class="center shrink" title="{{ "Domain Authority" | rt | e('html_attr') }}">{{ "DA" | rt }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr class="{{ result.is_match ? 'highlight' : '' }}">
+                    <td class="center">{{ result.rank }}</td>
+                    <td class="serp" data-split="title,link,description">
+                        <div class="serp-title ellipsis">
+                            <a href="{{ result.href | e('html_attr') }}" target="_blank" rel="noopener nofollow" data-key="link" data-value="{{ result.href | e('html_attr') }}">
+                                {% if favicons %}
+                                <img class="favicon" src="https://www.google.com/s2/favicons?domain={{ result.hostname }}">
+                                {% endif %}
+                                <strong data-key="title">{{ result.title }}</strong>
+                            </a>
+                        </div>
+                        <div class="serp-citation ellipsis">{{ result.citation }}</div>
+                        <div class="serp-description" data-key="description">{{ result.description }}</div>
+                    </td>
+                    <td class="center">
+                        <div class="colored-value">
+                            <div class="value">{{ result.inlink_rank }}</div>
+                            <div class="circle" style="background-color: {{ authority_color(result.inlink_rank) }}"></div>
+                        </div>
+                    </td>
+                    <td class="center">
+                        <div class="colored-value">
+                            <div class="value">{{ result.domain_inlink_rank }}</div>
+                            <div class="circle" style="background-color: {{ authority_color(result.domain_inlink_rank) }}"></div>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">
+                        {{ "Nothing to show." | rt }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}

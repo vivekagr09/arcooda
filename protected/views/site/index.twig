@@ -1,0 +1,115 @@
+{#
+// inputs:
+// - banner_list1
+// - banner_list2
+// - banner_list3
+// - icons
+// - latest_news
+// - manufacturers
+// - products_on_sale
+// - product_columns
+// - alert
+// - result
+#}
+
+{% set banner_list1     = inputs.banner_list1     %}
+{% set banner_list2     = inputs.banner_list2     %}
+{% set banner_list3     = inputs.banner_list3     %}
+{% set icons            = inputs.icons            %}
+{% set latest_news      = inputs.latest_news      %}
+{% set manufacturers    = inputs.manufacturers    %}
+{% set products_on_sale = inputs.products_on_sale %}
+{% set product_columns  = inputs.product_columns  %}
+{% set alert            = inputs.alert            %}
+{% set result           = inputs.result           %}
+
+{% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+{% include '/blocks/block-space.twig' with {inputs: {
+    layout: 'divider-xs'
+}} %}
+{% if banner_list1 %}
+    {% include '/blocks/block-slideshow.twig' with {inputs: {
+        slides: banner_list1,
+    }} %}
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'divider-nl'
+    }} %}
+{% endif %}
+{% if latest_news %}
+    {% include '/blocks/block-posts-carousel.twig' with {inputs: {
+        title: 'Latest News',
+        layout: 'grid',
+        posts: latest_news,
+        links: [
+            {title: 'Arcade Games', url: '/n?category=Arcade%20Games'},
+            {title: 'Game Boards', url: '/n?category=Game%20Boards'},
+            {title: 'Arcade Parts', url: '/n?category=Arcade%20Parts'},
+            {title: 'Merchandise', url: '/n?category=Merchandise'},
+        ],
+    }} %}
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'divider-nl'
+    }} %}
+{% endif %}
+{% if products_on_sale %}
+    {% include '/blocks/block-products-carousel.twig' with {inputs: {
+        title: 'Featured Products',
+        layout: 'grid-5',
+        rows: 1,
+        products: products_on_sale,
+    }} %}
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'divider-nl'
+    }} %}
+{% endif %}
+{% if banner_list2 %}
+    {% include '/blocks/block-banners.twig' with {inputs: {
+        banners: banner_list2,
+    }} %}
+    {# Note: not visible on mobile, hence the d-none to hide the space #}
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'divider-nl',
+        classes: 'd-xl-block d-none'
+    }} %}
+{% endif %}
+{#{% include '/blocks/block-products-carousel.twig' with {inputs: {
+    title: 'New Arrivals',
+    layout: 'horizontal',
+    rows: 2,
+    products: new_arrivals,
+}} %}#}
+{% include '/blocks/block-products-columns.twig' with {inputs: {
+    products: product_columns
+}} %}
+{% include '/blocks/block-space.twig' with {inputs: {
+    layout: 'divider-nl'
+}} %}
+{% include '/blocks/block-brands.twig' with {inputs: {
+    layout: 'columns-8-full',
+    brands: manufacturers,
+}} %}
+{#{% include '/blocks/block-space.twig' with {inputs: {
+    layout: 'divider-nl',
+}} %}#}
+{#{% include '/blocks/block-sale.twig' with {inputs: {
+    products: sale_products,
+}} %}#}
+{% include '/blocks/block-space.twig' with {inputs: {
+    layout: 'divider-nl'
+}} %}
+{% include '/blocks/block-long-banners.twig' with {inputs: {
+    banner: banner_list3,
+}} %}
+{% include '/blocks/block-space.twig' with {inputs: {
+    layout: 'divider-nl'
+}} %}
+{#{% include '/blocks/block-categories.twig' with {inputs: {
+    categories:popular_categories,
+}} %}#}
+{% include '/blocks/block-space.twig' with {inputs: {
+    layout: 'divider-nl'
+}} %}
+{% include '/blocks/block-features.twig' with {inputs: {
+    layout: 'bottom-strip',
+    icons: icons
+}} %}

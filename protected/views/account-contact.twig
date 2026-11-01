@@ -1,0 +1,221 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - contact:
+#}
+
+{% set global_page_title           = inputs.title|default('Contact Details')       %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/contacts'                           %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'                  },
+    {title : 'My Account',      url : '/account/dashboard' },
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set contacts    = inputs.contacts                                                  %}
+
+{% extends '/layouts/account.twig' %}
+
+{% block account_body %}
+<div class="card">
+    {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+    <div class="card-header">
+        <h5 class="content_heading_color">Contact Details</h5>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body card-body--padding--2">
+     <div class="addresses-list">
+        <a href="#" class="addresses-list__item addresses-list__item--new" data-toggle="modal" data-target="#account-contact-add-modal">
+            <div class="addresses-list__plus"></div>
+            <div class="btn btn-secondary btn-sm">Add New</div>
+        </a>
+        <div class="addresses-list__divider"></div>
+
+        {% for key,contact in contacts %}
+            <div class="addresses-list__item card address-card">
+                {% if contact.main == 'y' %}
+                    <div class="address-card__badge tag-badge tag-badge--theme">Default</div>
+                {% endif %}
+                <div class="address-card__body">
+                    <div class="address-card__name">{{contact.name|e }} {{contact.last_name|e }}</div>
+                    <div class="address-card__row">
+                        {{ contact.title}}
+                    </div>
+                    {% if contact.phone !=''%}
+                    <div class="address-card__row">
+                        <div class="address-card__row-title">Phone Number</div>
+                        <div class="address-card__row-content">{{ contact.phone }}</div>
+                    </div>
+                    {% endif %}
+                    <div class="address-card__row">
+                        <div class="address-card__row-title">Email Address</div>
+                        <div class="address-card__row-content">{{ contact.email }}</div>
+                    </div>
+                    <div class="address-card__row">
+                        <div class="address-card__row-title">Emails sent to this address</div>
+                        <div class="address-card__row-content" style="{{ (contact.send_email_cc == 'n')?'padding: 5px; background-color: #f37aea; width: 34px;':'padding: 5px; background-color: #d0f37a; width: 42px;'}}">{{ (contact.send_email_cc == 'n')?'No':'YES'}}</div>
+                    </div>
+                    <div class="address-card__footer">
+                        <a href="#" data-toggle="modal" data-target="#account-contact-edit{{ contact.id }}-modal">Edit</a>&nbsp;&nbsp;
+                        {% if contact.is_profile ==0 %}
+                        <a href="#" data-toggle="modal" data-target="#account--delete{{contact.id }}-modal">Remove</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="addresses-list__divider"></div>
+        {% endfor %}
+    </div>
+    {% set prefix = 'account-contact-add' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Add Contact Detail</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="" method="post">
+            <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-name">First Name<span class="color-red">*</span></label>
+                            <input type="text" name="name" class="form-control" id="{{ prefix }}-name"  required />
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-name">Last Name<span class="color-red">*</span></label>
+                            <input type="text" name="last_name" class="form-control" id="{{ prefix }}-name"  required />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-street-title">Title(Owner, Purchase Officer, Technician) <span class="color-red">*</span><i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Often we receive orders from Companies who have many different departments and staff. Please help to share your details for easier handling when we contact your team (owner, accounts, sales, freight dept, etc.)"></i></label>
+                            <input type="text" name="title" required="required" class="form-control" id="{{ prefix }}-street-address" rows="5"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-email">Email Address<span class="color-red">*</span></label>
+                            <input type="email" name="email" required="required" class="form-control" id="{{ prefix }}-email"  />
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-address-level1">Phone</label>
+                            <input type="text" name="phone"  class="form-control"  />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-home-email">Emails sent to this address</label>
+                            <select  name="send_email_cc" class="form-control newcontactEmail" id="{{ prefix }}-home-email">
+                            <option value="n" style="background-color:#fff">No</option>
+                            <option value="y" style="background-color:#fff">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-home-email">Set as Default</label>
+                            <select  name="main" class="form-control newcontactDefault" id="{{ prefix }}-home-email">
+                            <option value="n" style="background-color:#fff">No</option>
+                            <option value="y" style="background-color:#fff">Yes</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            <hr />
+            <div class="form-group">
+                <input type="hidden" value="add" name="action" />
+                <input type="submit" value="Add" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+    {% for key,contact in contacts %}
+        {% set prefix = 'account-contact-edit' ~ contact.id %}
+        <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Contact Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body"><form action="" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                         <div class="form-group">
+                            <label for="{{ prefix }}-name">First Name<span class="color-red">*</span></label>
+                            <input type="text" name="name" class="form-control" id="{{ prefix }}-name" value="{{ contact.name|e }}" required {{contact.is_profile==1?'readonly':''}}/>
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-name">Last Name<span class="color-red">*</span></label>
+                            <input type="text" name="last_name" class="form-control" id="{{ prefix }}-name"  value="{{ contact.last_name|e }}" required {{contact.is_profile==1?'readonly':''}}/>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-street-title">Title(Owner, Purchase Officer, Technician) <span class="color-red">*</span><i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Often we receive orders from Companies who have many different departments and staff. Please help to share your details for easier handling when we contact your team (owner, accounts, sales, freight dept, etc.)"></i></label>
+                            <input type="text" name="title" required="required" class="form-control" id="{{ prefix }}-street-address" rows="5" value="{{ contact.title|e }}" {{contact.is_profile==1?'readonly':''}}/>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-email">Email Address<span class="color-red">*</span></label>
+                            <input type="email" name="email" required="required" class="form-control" id="{{ prefix }}-email"  value="{{ contact.email|e }}" {{contact.is_profile==1?'readonly':''}}/>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-address-level1">Phone</label>
+                            <input type="text" name="phone"  class="form-control"  value="{{ contact.phone|e }}" {{contact.is_profile==1?'readonly':''}}/>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-home-email">Emails sent to this address</label>
+                            <select  name="send_email_cc" class="form-control contactEmail" id="{{ prefix }}-home-email" {{ (contact.send_email_cc == 'n') ? ' style="padding: 5px; background-color: #f37aea;"' : 'style="padding: 5px; background-color: #d0f37a;"' }}>
+                            <option value="n" {{ (contact.send_email_cc == 'n') ? ' selected="selected"' : '' }} style="background-color:#fff">No</option>
+                            <option value="y" {{ (contact.send_email_cc == 'y') ? ' selected="selected"' : '' }} style="background-color:#fff">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-home-email">Set as Default</label>
+                            <select  name="main" class="form-control contactDefault" id="{{ prefix }}-home-email" {{ (contact.main == 'n') ? ' style="padding: 5px; background-color: #f37aea;"' : 'style="padding: 5px; background-color: #d0f37a;"' }}>
+                            <option value="n" {{ (contact.main == 'n') ? ' selected="selected"' : '' }} style="background-color:#fff">No</option>
+                            <option value="y" {{ (contact.main == 'y') ? ' selected="selected"' : '' }} style="background-color:#fff">Yes</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <input type="hidden" value="{{ contact.id }}" name="id" />
+                    <input type="hidden" value="update" name="action" />
+                    <input type="submit" class="btn btn-lg- btn-primary" value="Save" />
+                </div>
+            </form></div>
+        </div></div></div>
+
+        {% set prefix = 'account--delete' ~ contact.id %}
+        <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Contact Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body"><form action="" method="post">
+                <p>
+                    Deleting the following address: <br />
+                    <br />
+                    {% if contact.name %}Contact: {{ contact.name|e }} <br />{% endif %}
+                    {{ contact.phone|e|nl2br }}
+                    {% if contact.email %}<br />Email: {{ contact.email|e }}{% endif %}
+                </p>
+                <hr />
+                <div class="form-group">
+                    <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                    <input type="hidden" value="{{ contact.id }}" name="id" />
+                    <input type="hidden" value="delete" name="action" />
+                    <input type="submit" value="Delete" class="btn btn-lg btn-danger" />
+                </div>
+            </form></div>
+        </div></div></div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

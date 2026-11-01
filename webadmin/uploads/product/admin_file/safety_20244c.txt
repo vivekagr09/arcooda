@@ -1,0 +1,34 @@
+Monitor Desk Stand - Model LDT125-T01
+
+width = 300mm
+height = 440mm
+depth = 240mm
+weight = 2.05kg
+box weight = 2.55kg
+box dimeensions = 260x375x95mm
+
+
+vesa support 75, 100
+vesa hole size = 6.3mm x 7.3mm
+rated for 12kg/24.4lbs
+recommended screen sizes = 34" max
+
+Includes :-
+- Stand bracket (115x115x60mm)
+- stand base (300x240x8mm)
+- stand pole (425x60x32mm)
+- 5 Self adhesive foot pads (26x26x7.2mm)
+- 1* Base Cap (38x68x14.3mm)
+- 1* tightening knob (16.4x31.6x14.7mm w M6*35mm)
+- 2* Cable managment plugs(19.6x30x25mm)
+
+
+- allen key* 4mm
+- allen key* 5mm
+
+
+- 3* M6x25mm Bolts
+- 1* M4x14mm Bolts
+- 4* D5 Washer
+- 3* D6 Washer
+- 3* M6 screw hole cap plug

@@ -1,0 +1,43 @@
+{#
+// inputs:
+page_url - string
+page     - int
+pages    - int
+#}
+
+{% set page_url = inputs.page_url %}
+{% set page     = inputs.page     %}
+{% set pages    = inputs.pages    %}
+
+{% set flag    = true                     %}
+{% set point_a = max(0, page - 2)         %}
+{% set point_b = min(pages - 1, page + 2) %}
+{% if pages>0 %}
+<ul class="pagination">
+    <li class="page-item{{ page > 0 ? '' : ' disabled' }}">
+        <a class="page-link page-link--with-arrow"  rel="prev" href="{{ page_url ~ (page - 1)|e }}" aria-label="Previous">
+            <span class="page-link__arrow page-link__arrow--left" aria-hidden="true">{{ svg_inline('arrow-rounded-left-7x11.svg') }}</span>
+        </a>
+    </li>
+    {% for i in range(0, pages) %}
+        {% if i == page %}
+            {% set flag = true %}
+            <li class="page-item active" aria-current="page"><span class="page-link">
+                {{ i + 1 }}
+                <span class="sr-only">(current)</span>
+            </span></li>
+        {% elseif i < 1 or i >= pages - 1 or i >= point_a and i <= point_b %}
+            {% set flag = true %}
+            <li class="page-item"><a class="page-link"  {% if i >  page %} rel="next"  {% endif %} {% if i <  page %} rel="prev"  {% endif %} href="{{ page_url ~ i|e }}">{{ i + 1 }}</a></li>
+        {% elseif flag %}
+            {% set flag = false %}
+            <li class="page-item page-item--dots" ><div class="pagination__dots"></div></li>
+        {% endif %}
+    {% endfor %}
+    <li class="page-item{{ page < pages - 1 ? '' : ' disabled' }}">
+        <a class="page-link page-link--with-arrow"  rel="next" href="{{ page_url ~ (page + 1)|e }}" aria-label="Next">
+            <span class="page-link__arrow page-link__arrow--right" aria-hidden="true">{{ svg_inline('arrow-rounded-right-7x11.svg') }}</span>
+        </a>
+    </li>
+</ul>
+{% endif %}

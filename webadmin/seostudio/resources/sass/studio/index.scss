@@ -1,0 +1,34 @@
+// out: ../../styles/studio.css, compress: true, autoprefixer: last 5 versions, groupmedia: true
+
+@import './fonts.scss';
+@import './body.scss';
+@import './layout/header.scss';
+@import './layout/navigation.scss';
+@import './layout/footer.scss';
+
+@import './pages/home.scss';
+@import './pages/tools.scss';
+@import './pages/login.scss';
+@import './pages/account.scss';
+@import './pages/custom.scss';
+
+@import './elements/errors.scss';
+@import './elements/generic.scss';
+@import './elements/ads.scss';
+@import './elements/buttons.scss';
+@import './elements/sparklines.scss';
+
+section.tool {
+    padding: 40px 20px 0;
+
+    @import './tools/table.scss';
+    @import './tools/button.scss';
+    @import './tools/form.scss';
+    @import './tools/text.scss';
+    @import './tools/stats.scss';
+    @import './tools/misc.scss';
+    @import './tools/actions.scss';
+    @import './tools/captchas.scss';
+}
+
+@import './embed.scss';

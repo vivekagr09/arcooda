@@ -1,0 +1,342 @@
+ /* Tablet desktop :768px. */
+
+ @media (min-width: 768px) and (max-width: 991px) {
+     .header-navbar {
+         top: 30px;
+     }
+     .header-navbar .navbar-light .navbar-toggler-icon {
+         filter: brightness(0) invert(1);
+     }
+     .header-navbar .navbar-light .navbar-toggler {
+         color: rgba(0, 0, 0, .5);
+         border-color: rgba(255, 255, 255, .1);
+     }
+     .header-navbar .navbar-nav .nav-item .nav-link {
+         font-size: 18px;
+         padding: 9px 15px;
+         /*background: rgba(233, 128, 36, .95);*/
+         margin-right: 0;
+         border-bottom: 1px solid rgba(255, 255, 255, .2);
+     }
+     .header-navbar .collapse.show {
+         background: rgba(233, 128, 36, .95);
+     }
+     .header-navbar.stick .collapse.show {
+         background: transparent;
+     }
+     .header-navbar .btn-login {
+         display: block;
+         background: #fff;
+         padding: 10px;
+         font-size: 16px;
+         color: #E98024;
+         margin: auto;
+     }
+     .affiliate-plan-area .row.mt-5, .our-blog-area .row.mt-5 {
+         justify-content: center;
+     }
+     .affiliate-plan-area .row .col-lg-4, .our-blog-area .row .col-lg-4 {
+         flex: 0 0 50%;
+         max-width: 50%;
+     }
+     .single-price-table {
+         padding: 45px 30px;
+         margin-bottom: 70px;
+     }
+     .featured-image {
+         margin-top: 35px;
+     }
+     .featured-slider .owl-dots {
+         position: static;
+         transform: none;
+         text-align: center;
+     }
+     .featured-slider .owl-dots button.owl-dot {
+         display: inline-block;
+         margin-bottom: 0;
+         margin: 10px 5px 0;
+     }
+     .our-blog-area {
+         padding-bottom: 40px;
+     }
+     .single-blog {
+         margin-bottom: 60px;
+     }
+     .single-blog a {
+         bottom: 28px;
+     }
+     .footer-widget>a, .footer-widget>p {
+         text-align: center;
+         display: inherit;
+     }
+     .footer-widget>p {
+         padding: 0;
+     }
+     .footer-widget {
+         margin-bottom: 30px;
+     }
+     .dropdown-menu {
+         height: auto;
+         overflow: auto;
+     }
+     footer.footer-area .row .col-lg-9 .row .col-lg-3 {
+         flex: 0 0 25%;
+         max-width: 25%;
+     }
+     .footer-widget h4 {
+         font-size: 16px;
+     }
+     .contact-form, .map-location {
+         margin-bottom: 40px;
+     }
+     .contact-address ul li {
+         display: inline-block;
+     }
+ }
+ /* small mobile :320px. */
+
+ @media (max-width: 767px) {
+     .header-navbar {
+         top: 30px;
+     }
+     .header-navbar .navbar-light .navbar-toggler-icon {
+         filter: brightness(0) invert(1);
+     }
+     .header-navbar .navbar-light .navbar-toggler {
+         color: rgba(0, 0, 0, .5);
+         border-color: rgba(255, 255, 255, .1);
+     }
+     .header-navbar .navbar-nav .nav-item .nav-link {
+         font-size: 18px;
+         padding: 9px 15px;
+         /*background: rgba(233, 128, 36, .95);*/
+         margin-right: 0;
+         border-bottom: 1px solid rgba(255, 255, 255, .2);
+     }
+     .header-navbar .collapse.show {
+         background: rgba(233, 128, 36, .95);
+     }
+     .header-navbar.stick .collapse.show {
+         background: transparent;
+     }
+     .header-navbar .btn-login {
+         display: block;
+         background: #fff;
+         padding: 10px;
+         font-size: 16px;
+         color: #E98024;
+         margin: auto;
+     }
+     .wlc-hero-area {
+         height: auto;
+         padding-top: 150px;
+         padding-bottom: 70px;
+     }
+     .wlc-hero-content .display-3 {
+         font-size: 42px;
+         line-height: 55px;
+         margin-bottom: 20px;
+     }
+     .wlc-hero-content p {
+         font-size: 22px;
+         line-height: 32px;
+     }
+     .wlc-hero-content .btn-orage {
+         width: 200px;
+         height: 55px;
+         border-radius: 5px;
+         line-height: 55px;
+         font-size: 20px;
+     }
+     /**/
+     .single-price-table {
+         padding: 45px 30px;
+         margin-bottom: 70px;
+     }
+     .price-discount {
+         top: 60px;
+     }
+     .featured-area {
+         padding: 40px 0;
+     }
+     .featured-content h2 {
+         font-size: 30px;
+     }
+     .featured-image {
+         margin-top: 35px;
+     }
+     .featured-slider .owl-dots {
+         position: static;
+         transform: none;
+         text-align: center;
+     }
+     .featured-slider .owl-dots button.owl-dot {
+         display: inline-block;
+         margin-bottom: 0;
+         margin: 10px 5px 0;
+     }
+     .single-blog {
+         margin-bottom: 65px;
+     }
+     .single-blog a {
+         bottom: 40px;
+     }
+     .footer-widget {
+         text-align: center;
+         margin-bottom: 30px;
+     }
+     .footer-widget p {
+         padding-right: 0;
+         padding: 0 10%;
+     }
+     .footer-widget ul {
+         margin-left: auto;
+         margin-right: auto;
+         width: max-content;
+     }
+     .footer-widget ul li {
+         text-align: left;
+     }
+     .wlc-hero-content h1 {
+         font-size: 40px;
+         margin: 0;
+     }
+     .accordion.faq-accodion .card {
+         margin-bottom: 20px;
+     }
+     .accordion.faq-accodion .card .card-header h2 button {
+         font-size: 20px;
+         padding: 0.75rem 1.5rem;
+         line-height: 35px;
+     }
+     .contact-form, .map-location {
+         margin-bottom: 40px;
+     }
+     .dropdown-menu {
+         height: auto;
+         overflow: auto;
+     }
+ }
+ /* Large Mobile :480px. */
+
+ @media only screen and (min-width: 480px) and (max-width: 767px) {
+     .container {
+         width: 450px
+     }
+     .dropdown-menu {
+         height: auto;
+         overflow: auto;
+     }
+ }
+ @media (min-width: 767px) {
+     .single-blog {
+         position: relative;
+         border: 1px solid #F1F1F1;
+         border-radius: 10px;
+         padding: 20px 20px 50px;
+     }
+ }
+ /* Normal desktop :1200px. */
+
+ @media (min-width: 1200px) and (max-width: 1500px) {
+     .wlc-hero-content .display-3 {
+         font-size: 75px;
+         line-height: 86px;
+     }
+     .single-price-table {
+         padding: 45px 40px;
+     }
+     .footer-widget p {
+         padding-right: 20%;
+     }
+     .contact-address ul li {
+         display: inline-block;
+     }
+     .social-link a {
+         max-width: 34px;
+     }
+     .dropdown-menu {
+         height: auto;
+         overflow: auto;
+     }
+ }
+ /* Normal desktop :992px. */
+
+ @media (min-width: 992px) and (max-width: 1200px) {
+     .header-navbar {
+         top: 40px;
+     }
+     .header-navbar .navbar-nav .nav-item .nav-link {
+         font-size: 18px;
+         margin-right: 22px;
+     }
+     .header-navbar .btn-login {
+         width: 170px;
+         padding: 10px 12px;
+         font-size: 18px;
+     }
+     .wlc-hero-area .row .col-lg-6 {
+         flex: 0 0 80%;
+         max-width: 80%;
+     }
+     .single-price-table {
+         padding: 45px 25px;
+     }
+     .price-discount {
+         top: 80px;
+     }
+     .price-content ul li {
+         font-size: 16px;
+     }
+     .featured-content h2 {
+         font-size: 42px;
+     }
+     .single-blog h3 {
+         width: 200px;
+         height: 50px;
+         line-height: 50px;
+         font-size: 22px;
+     }
+     .footer-widget h4 {
+         font-size: 16px;
+         line-height: 26px;
+     }
+     .footer-widget p {
+         padding-right: 0;
+     }
+     .contact-address ul li {
+         display: inline-block;
+     }
+     .social-link a {
+         max-width: 34px;
+         margin-right: 5px;
+     }
+     .dropdown-menu {
+         height: auto;
+         overflow: auto;
+     }
+ }
+ /* Large desktop :1500px. */
+
+ @media (min-width: 1500px) and (max-width: 1900px) {
+     .dropdown-menu {
+         height: auto;
+         overflow: auto;
+     }
+ }
+ @media (max-width: 1680px) {
+     .home-top-slider .owl-nav .owl-prev {
+         position: absolute;
+         left: 0px;
+         top: 50%;
+         font-weight: bolder;
+         color: white;
+     }
+     .home-top-slider .owl-nav .owl-next {
+         position: absolute;
+         right: 25px;
+         top: 50%;
+         font-weight: bolder;
+         color: white;
+     }
+ }

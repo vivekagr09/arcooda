@@ -1,0 +1,1084 @@
+X-Account-Key: account1
+X-UIDL: 00001c9b4fd7bcb0
+X-Mozilla-Status: 0011
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <SRS0=QGcNk/=IX=optimal-automation.com=mevaz@yourhostingaccount.com>
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on trevor.servdns.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.6 required=8.0 tests=BAYES_00,HTML_MESSAGE,
+	LOTS_OF_MONEY,RCVD_IN_DNSWL_NONE,RP_MATCHES_RCVD,URI_MALWARE_BH autolearn=no
+	version=3.3.1
+X-Original-To: sales@converters.tv
+Delivered-To: converters-converters.tv@trevor.servdns.com
+Received: from mailout15.yourhostingaccount.com (mailout15.yourhostingaccount.com [65.254.253.120])
+	by trevor.servdns.com (Postfix) with ESMTP id 1440E266034A
+	for <sales@converters.tv>; Sat, 27 Oct 2012 07:01:03 +1100 (EST)
+Received: from mailscan15.yourhostingaccount.com ([10.1.15.15] helo=mailscan15.yourhostingaccount.com)
+	by mailout15.yourhostingaccount.com with esmtp (Exim)
+	id 1TRq5x-0000ev-9L
+	for sales@converters.tv; Fri, 26 Oct 2012 16:01:29 -0400
+Received: from impout02.yourhostingaccount.com ([10.1.55.2] helo=impout02.yourhostingaccount.com)
+	by mailscan15.yourhostingaccount.com with esmtp (Exim)
+	id 1TRq5x-0002ki-2Q
+	for sales@converters.tv; Fri, 26 Oct 2012 16:01:29 -0400
+Received: from authsmtp05.yourhostingaccount.com ([10.1.18.5])
+	by impout02.yourhostingaccount.com with NO UCE
+	id Fw1U1k00A06ZpSa01w1Uga; Fri, 26 Oct 2012 16:01:28 -0400
+X-Authority-Analysis: v=2.0 cv=HIVB5/Rv c=1 sm=1
+ a=Li4iHURftnu7sepkjQQtXw==:17 a=hijUkb3g3JYA:10 a=i0-Iah0v-SgA:10
+ a=s4gTzjOeAAAA:8 a=EZDVfYMqBzYA:10 a=kphrAeN5AAAA:8 a=3oc9M9_CAAAA:8
+ a=BFTVBTBr_1nYgbuXgsoA:9 a=QEXdDO2ut3YA:10 a=Z3a0a4WN1kYA:10
+ a=-CWYwAfhYmcA:10 a=dhh6q2qSREcA:10 a=uyHgA6y2svkA:10 a=NaHLTKGtNMIA:10
+ a=--Or3xGmvj8A:10 a=MsTrNBs5duYA:10 a=sizoJuB8zoIA:10 a=NH-IZBeSoQQA:10
+ a=U8Ie8EnqySEA:10 a=xO7k-Y2jqcBLqlQ4:21 a=H7fWG1wsGdGQ27Jn:21
+ a=yMhMjlubAAAA:8 a=SSmOFEACAAAA:8 a=9JPjkVdiopjcHQOx8ksA:9 a=gKO2Hq4RSVkA:10
+ a=UiCQ7L4-1S4A:10 a=hTZeC7Yk6K0A:10 a=frz4AuCg-hUA:10 a=tXsnliwV7b4A:10
+ a=OXq-rsKCBgc4makO:21 a=ZzjMyTagtUNfVuM0:21 a=jx5dY9WErCVY245o:21
+ a=foJJWi1jAAAA:8 a=e48IJ3fNdJ2GVd5v7bcA:9 a=KQqxNPgzF0kA:10
+ a=gdC2JSxqkoPBtVKB:18 a=lmjPP4ucUiKmeW37_6cA:9 a=1Vq_FK4TplAA:10
+ a=JhUdt5H-dPUh4pCQx70A:9 a=VUJBZPXx00jbGRYO:18 a=1X4FUZbIMClm-suaSkMA:9
+ a=HXjIzolwW10A:10 a=j3TOBlJdNfEMsuWQ:18 a=9O1N9SI/4ZbXZMy1Cl+5fA==:117
+X-EN-OrigOutIP: 10.1.18.5
+X-EN-IMPSID: Fw1U1k00A06ZpSa01w1Uga
+Received: from 24-197-169-163.dhcp.gwnt.ga.charter.com ([24.197.169.163] helo=MARIAi7P665)
+	by authsmtp05.yourhostingaccount.com with esmtpa (Exim)
+	id 1TRq5v-0004jy-Ih
+	for sales@converters.tv; Fri, 26 Oct 2012 16:01:27 -0400
+From: "Maria Vaz" <mevaz@optimal-automation.com>
+To: "'Converters.tv Staff'" <sales@converters.tv>
+References: <20c93c9d295a33085443c98ae74a3091@www.converters.tv>
+In-Reply-To: <20c93c9d295a33085443c98ae74a3091@www.converters.tv>
+Subject: RE: Signup Successful
+Date: Fri, 26 Oct 2012 16:01:28 -0400
+Message-ID: <01c101cdb3b4$b09125c0$11b37140$@optimal-automation.com>
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	boundary="----=_NextPart_000_01C2_01CDB393.29852B10"
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQKiPEMMVH9e7Brw7UXEYIWjbGjyvJYi7+sQ
+Content-Language: en-us
+X-EN-UserInfo: 0d51cc1cd8f9c44b329ae80022c18085:49285213731caf96f1a59433bbbec17e
+X-EN-AuthUser: mevaz@optimal-automation.com
+Sender:  "Maria Vaz" <mevaz@optimal-automation.com>
+X-EN-OrigIP: 24.197.169.163
+X-EN-OrigHost: 24-197-169-163.dhcp.gwnt.ga.charter.com
+
+This is a multipart message in MIME format.
+
+------=_NextPart_000_01C2_01CDB393.29852B10
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_001_01C3_01CDB393.29852B10"
+
+
+------=_NextPart_001_01C3_01CDB393.29852B10
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello ConvertersTV Staff:
+
+=20
+
+    I was on your site, trying to get pricing for my purchase request =
+and my shopping cart had an unexplained $25 added to it.    Can you =
+explain why that is?  Please verify, your totals don=E2=80=99t add up.  =
+Also, one of the items is on backorder.  Can you tell me what the =
+leadtime is?
+
+=20
+
+   I look forward to hearing from you.
+
+=20
+
+
+
+Shopping Cart
+
+  _____ =20
+
+Shipping/Billing
+
+  _____ =20
+
+Order Complete
+
+  _____ =20
+
+
+Items in the Cart :
+
+
+
+
+Product
+
+Availability
+
+Price (USD)
+
+QTY
+
+Weight
+
+Subtotal
+
+Remove
+
+
+ <http://www.converters.tv/products/cables_and_adapters_74.html> =
+Universal Grounded Wall Outlet Adapter Plug - USA. / Canada / Japan
+
+ <http://www.converters.tv/products/cables_and_adapters_74.html> =
+Universal Grounded Wall Outlet Adapter Plug - USA. / Canada / Japan
+Warranty: 12 Months
+
+In Stock
+
+$2.50
+
+Update
+
+0.2 KG
+
+$12.50
+
+ =
+<http://www.converters.tv/checkout/removefromcart_3f8e39cfbf0635e5423b2ce=
+660576367.html> Remove
+
+
+ <http://www.converters.tv/products/hdtv_to_hdtv/931.html> Dual HDMI to =
+Component HD with Stereo audio out
+
+ <http://www.converters.tv/products/hdtv_to_hdtv/931.html> Dual HDMI to =
+Component HD with Stereo audio out
+Power Supply Voltage: 110-240V
+Power Adapter ID: 74
+Warranty: 12 Months
+
+Backorder
+
+$250.00
+
+Update
+
+2.5 KG
+
+$1250.00
+
+ =
+<http://www.converters.tv/checkout/removefromcart_e6e9b998496283a1fc7e301=
+2edc5a076.html> Remove
+
+=09
+Freight : TNT Express
+Freight automatically selected based on your main shipping address, your =
+preferences and/or availability. To choose different freight please =
+click button below.
+
+Add/Edit Freight Courier
+
+	$88.00
+
+		$88.00
+
+ <http://www.converters.tv/checkout/index.html> Remove Freight
+
+=09
+2.7 KG
+
+$1375.75USD
+
+=09
+
+
+
+
+
+
+Continue Shopp
+
+=20
+
+=20
+
+=20
+
+=20
+
+Regards/Sds,
+
+=20
+
+Maria E. Vaz
+
+Description: oas icon master
+
+Optimal Automation  Solutions, Inc.
+
+770-682-8997 (Office)
+
+770-682-9882 (Fax)
+
+678-773-3006 (Cell)
+
+mevaz@optimal-automation.com
+
+mevaz@aol.com
+
+Skype:  maria_e_vaz
+
+=20
+
+=20
+
+=20
+
+=20
+
+=20
+
+From: Converters.tv Staff [mailto:sales@converters.tv]=20
+Sent: Friday, October 26, 2012 3:43 PM
+To: MARIA VAZ
+Subject: Signup Successful
+
+=20
+
+Dear MARIA VAZ,
+
+Thank you for joining Converters.tv. Your username and password are as =
+follows:
+Username : mevaz@optimal-automation.com
+Password : oas1998
+
+Please note that the password is case-sensitive. Please check your CAPS =
+lock key, when entering the password to login to the site.
+
+You can now login and shop online through our system. You can also =
+view/modify your account details in our Members Only section.
+
+Thank you for choosing Converters.tv
+
+Regards,
+Converters.tv Staff.=20
+
+
+------=_NextPart_001_01C3_01CDB393.29852B10
+Content-Type: text/html;
+	charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8"><meta =
+name=3DGenerator content=3D"Microsoft Word 14 (filtered medium)"><!--[if =
+!mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Brush Script MT";
+	panose-1:3 6 8 2 4 4 6 7 3 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-priority:99;
+	mso-style-link:"Balloon Text Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";}
+span.EmailStyle17
+	{mso-style-type:personal-reply;
+	font-family:"Calibri","sans-serif";
+	color:#1F497D;}
+span.BalloonTextChar
+	{mso-style-name:"Balloon Text Char";
+	mso-style-priority:99;
+	mso-style-link:"Balloon Text";
+	font-family:"Tahoma","sans-serif";}
+span.apple-converted-space
+	{mso-style-name:apple-converted-space;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri","sans-serif";}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US link=3Dblue =
+vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>Hello ConvertersTV Staff:<o:p></o:p></span></p><p =
+class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>=C2=A0=C2=A0=C2=A0 I was on your site, trying to get pricing for my =
+purchase request and my shopping cart had an unexplained $25 added to =
+it.=C2=A0 =C2=A0=C2=A0Can you explain why that is?=C2=A0 Please verify, =
+your totals don=E2=80=99t add up.=C2=A0 Also, one of the items is on =
+backorder.=C2=A0 Can you tell me what the leadtime =
+is?<o:p></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>=C2=A0=C2=A0 I look forward to hearing from =
+you.<o:p></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><table class=3DMsoNormalTable border=3D0 =
+cellspacing=3D0 cellpadding=3D0 width=3D976 =
+style=3D'width:732.0pt;background:white;border-collapse:collapse'><tr><td=
+ width=3D778 style=3D'width:583.5pt;padding:.75pt .75pt .75pt =
+.75pt'><div align=3Dright><table class=3DMsoNormalTable border=3D0 =
+cellspacing=3D7 cellpadding=3D0><tr><td style=3D'padding:.75pt .75pt =
+.75pt .75pt'><p class=3DMsoNormal><b><span =
+style=3D'font-size:11.5pt;font-family:"Verdana","sans-serif";color:#0066F=
+F'>Shopping Cart<o:p></o:p></span></b></p><div class=3DMsoNormal =
+align=3Dcenter style=3D'text-align:center'><b><span =
+style=3D'font-size:11.5pt;font-family:"Verdana","sans-serif";color:#0066F=
+F'><hr size=3D3 width=3D"100%" noshade style=3D'color:#0066FF' =
+align=3Dcenter></span></b></div></td><td style=3D'padding:.75pt .75pt =
+.75pt .75pt'><p class=3DMsoNormal><b><span =
+style=3D'font-size:11.5pt;font-family:"Verdana","sans-serif";color:#DDDDD=
+D'>Shipping/Billing<o:p></o:p></span></b></p><div class=3DMsoNormal =
+align=3Dcenter style=3D'text-align:center'><b><span =
+style=3D'font-size:11.5pt;font-family:"Verdana","sans-serif";color:#DDDDD=
+D'><hr size=3D3 width=3D"100%" noshade style=3D'color:#DDDDDD' =
+align=3Dcenter></span></b></div></td><td style=3D'padding:.75pt .75pt =
+.75pt .75pt'><p class=3DMsoNormal><b><span =
+style=3D'font-size:11.5pt;font-family:"Verdana","sans-serif";color:#DDDDD=
+D'>Order Complete<o:p></o:p></span></b></p><div class=3DMsoNormal =
+align=3Dcenter style=3D'text-align:center'><b><span =
+style=3D'font-size:11.5pt;font-family:"Verdana","sans-serif";color:#DDDDD=
+D'><hr size=3D3 width=3D"100%" noshade style=3D'color:#DDDDDD' =
+align=3Dcenter></span></b></div></td></tr></table></div></td></tr></table=
+><p class=3DMsoNormal><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:black'>=
+<br><b><span style=3D'background:white'>Items in the Cart =
+:</span></b><br style=3D'orphans: 2;text-align:start;widows: =
+2;-webkit-text-size-adjust: auto;-webkit-text-stroke-width: =
+0px;word-spacing:0px'><br></span><o:p></o:p></p><table =
+class=3DMsoNormalTable border=3D1 cellspacing=3D0 cellpadding=3D0 =
+width=3D975 =
+style=3D'width:731.25pt;background:white;border-collapse:collapse;border:=
+none;orphans: 2;text-align:start;widows: 2;-webkit-text-size-adjust: =
+auto;-webkit-text-stroke-width: 0px;word-spacing:0px'><tr><td =
+width=3D588 colspan=3D2 style=3D'width:441.0pt;border:solid #CCCCCC =
+1.0pt;background:#BBBBBB;padding:3.0pt 3.0pt 3.0pt 3.0pt'><p =
+class=3DMsoNormal align=3Dcenter style=3D'text-align:center'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:white'>=
+Product<o:p></o:p></span></b></p></td><td style=3D'border:solid #CCCCCC =
+1.0pt;border-left:none;background:#BBBBBB;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:white'>=
+Availability<o:p></o:p></span></b></p></td><td style=3D'border:solid =
+#CCCCCC 1.0pt;border-left:none;background:#BBBBBB;padding:3.0pt 3.0pt =
+3.0pt 3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:white'>=
+Price (USD)<o:p></o:p></span></b></p></td><td style=3D'border:solid =
+#CCCCCC 1.0pt;border-left:none;background:#BBBBBB;padding:3.0pt 3.0pt =
+3.0pt 3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:white'>=
+QTY<o:p></o:p></span></b></p></td><td style=3D'border:solid #CCCCCC =
+1.0pt;border-left:none;background:#BBBBBB;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:white'>=
+Weight<o:p></o:p></span></b></p></td><td style=3D'border:solid #CCCCCC =
+1.0pt;border-left:none;background:#BBBBBB;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:white'>=
+Subtotal<o:p></o:p></span></b></p></td><td style=3D'border:solid #CCCCCC =
+1.0pt;border-left:none;background:#BBBBBB;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:white'>=
+Remove<o:p></o:p></span></b></p></td></tr><tr><td style=3D'border:solid =
+#CCCCCC 1.0pt;border-top:none;padding:6.0pt 6.0pt 6.0pt 6.0pt'><p =
+class=3DMsoNormal align=3Dcenter style=3D'text-align:center'><a =
+href=3D"http://www.converters.tv/products/cables_and_adapters_74.html" =
+target=3D"_blank"><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#373E48=
+;text-decoration:none'><img border=3D0 width=3D96 height=3D96 =
+id=3D"Picture_x0020_6" src=3D"cid:image001.jpg@01CDB393.28344110" =
+alt=3D"Universal Grounded Wall Outlet Adapter Plug - USA. / Canada / =
+Japan"></span></b></a><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:black'>=
+<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:black'>=
+<a =
+href=3D"http://www.converters.tv/products/cables_and_adapters_74.html" =
+target=3D"_blank"><b><span =
+style=3D'color:#0066FF;text-decoration:none'>Universal Grounded Wall =
+Outlet Adapter Plug - USA. / Canada / =
+Japan</span></b></a><br></span><span =
+style=3D'font-size:7.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>Warranty: 12 Months</span><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:black'>=
+<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>In Stock<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>$2.50<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'margin-bottom:12.0pt;text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'><o:p></o:p></span></p><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center;background:white'><b><span =
+style=3D'font-size:7.5pt;font-family:"Verdana","sans-serif";color:#0033FF=
+'>Update<o:p></o:p></span></b></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>0.2 KG<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>$12.50<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><a =
+href=3D"http://www.converters.tv/checkout/removefromcart_3f8e39cfbf0635e5=
+423b2ce660576367.html"><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#373E48=
+;text-decoration:none'><img border=3D0 width=3D23 height=3D23 =
+id=3D"Picture_x0020_5" src=3D"cid:image002.gif@01CDB393.28344110" =
+alt=3DRemove></span></b></a><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'><o:p></o:p></span></p></td></tr><tr><td style=3D'border:solid #CCCCCC =
+1.0pt;border-top:none;padding:6.0pt 6.0pt 6.0pt 6.0pt'><p =
+class=3DMsoNormal align=3Dcenter style=3D'text-align:center'><a =
+href=3D"http://www.converters.tv/products/hdtv_to_hdtv/931.html" =
+target=3D"_blank"><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#373E48=
+;text-decoration:none'><img border=3D0 width=3D96 height=3D96 =
+id=3D"Picture_x0020_4" src=3D"cid:image003.jpg@01CDB393.28344110" =
+alt=3D"Dual HDMI to Component HD with Stereo audio =
+out"></span></b></a><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:black'>=
+<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:black'>=
+<a href=3D"http://www.converters.tv/products/hdtv_to_hdtv/931.html" =
+target=3D"_blank"><b><span =
+style=3D'color:#FF7700;text-decoration:none'>Dual HDMI to Component HD =
+with Stereo audio out</span></b></a><br></span><span =
+style=3D'font-size:7.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>Power Supply Voltage: 110-240V<br>Power Adapter ID: 74<br>Warranty: 12 =
+Months</span><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:black'>=
+<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:red'>Ba=
+ckorder<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>$250.00<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'margin-bottom:12.0pt;text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'><o:p></o:p></span></p><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center;background:white'><b><span =
+style=3D'font-size:7.5pt;font-family:"Verdana","sans-serif";color:#0033FF=
+'>Update<o:p></o:p></span></b></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>2.5 KG<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>$1250.00<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><a =
+href=3D"http://www.converters.tv/checkout/removefromcart_e6e9b998496283a1=
+fc7e3012edc5a076.html"><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#373E48=
+;text-decoration:none'><img border=3D0 width=3D23 height=3D23 =
+id=3D"Picture_x0020_3" src=3D"cid:image002.gif@01CDB393.28344110" =
+alt=3DRemove></span></b></a><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'><o:p></o:p></span></p></td></tr><tr style=3D'height:75.0pt' =
+id=3D"freight_row"><td style=3D'border:solid #CCCCCC =
+1.0pt;border-top:none;padding:3.0pt 3.0pt 3.0pt =
+3.0pt;height:75.0pt'></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt;height:75.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'margin-bottom:12.0pt;text-align:center'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#0066FF=
+'>Freight :<span class=3Dapple-converted-space>&nbsp;</span>TNT =
+Express</span></b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#0066FF=
+'><br></span><span =
+style=3D'font-size:7.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>Freight automatically selected based on your main shipping address, =
+your preferences and/or availability. To choose different freight please =
+click button below.</span><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#0066FF=
+'><o:p></o:p></span></p><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center;background:#999999'><b><span =
+style=3D'font-size:7.5pt;font-family:"Verdana","sans-serif";color:white'>=
+Add/Edit Freight Courier<o:p></o:p></span></b></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt;height:75.0pt'></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt;height:75.0pt' id=3D"courier_value"><p class=3DMsoNormal =
+align=3Dcenter style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>$88.00<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt;height:75.0pt'></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt;height:75.0pt'></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt;height:75.0pt' id=3D"courier_total_value"><p class=3DMsoNormal =
+align=3Dcenter style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>$88.00<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt;height:75.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><a =
+href=3D"http://www.converters.tv/checkout/index.html"><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#373E48=
+;text-decoration:none'><img border=3D0 width=3D23 height=3D23 =
+id=3D"Picture_x0020_2" src=3D"cid:image002.gif@01CDB393.28344110" =
+alt=3D"Remove Freight"></span></b></a><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'><o:p></o:p></span></p></td></tr><tr><td colspan=3D5 =
+style=3D'border:solid #CCCCCC 1.0pt;border-top:none;padding:3.0pt 3.0pt =
+3.0pt 3.0pt'></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:11.25pt 3.0pt 11.25pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>2.7 KG<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:11.25pt 3.0pt 11.25pt =
+3.0pt'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center'><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:#777777=
+'>$1375.75USD<o:p></o:p></span></p></td><td =
+style=3D'border-top:none;border-left:none;border-bottom:solid #CCCCCC =
+1.0pt;border-right:solid #CCCCCC 1.0pt;padding:3.0pt 3.0pt 3.0pt =
+3.0pt'></td></tr></table><p class=3DMsoNormal><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:black'>=
+<br style=3D'orphans: 2;text-align:start;widows: =
+2;-webkit-text-size-adjust: auto;-webkit-text-stroke-width: =
+0px;word-spacing:0px'><br></span><o:p></o:p></p><div =
+align=3Dcenter><table class=3DMsoNormalTable border=3D0 cellspacing=3D4 =
+cellpadding=3D0><tr><td style=3D'padding:.75pt .75pt .75pt .75pt'><div =
+style=3D'border:solid #999999 1.0pt;padding:5.0pt 5.0pt 5.0pt =
+5.0pt;cursor:pointer'><p class=3DMsoNormal align=3Dcenter =
+style=3D'text-align:center;background:#999999'><b><span =
+style=3D'font-size:8.5pt;font-family:"Verdana","sans-serif";color:white'>=
+Continue Shopp<o:p></o:p></span></b></p></div></td></tr></table></div><p =
+class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>Regards/Sds,<o:p></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:18.0pt;font-family:"Brush Script =
+MT";color:#1F497D'>Maria E. Vaz<o:p></o:p></span></p><p =
+class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><img border=3D0 width=3D64 height=3D29 id=3D"Picture_x0020_85" =
+src=3D"cid:image004.png@01CDB393.28344110" alt=3D"Description: oas icon =
+master"><o:p></o:p></span></p><p class=3DMsoNormal><b><i><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>Optimal Automation=C2=A0 Solutions, =
+Inc.<o:p></o:p></span></i></b></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>770-682-8997 (Office)<o:p></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>770-682-9882 (Fax)<o:p></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>678-773-3006 (Cell)<o:p></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><a =
+href=3D"mailto:mevaz@optimal-automation.com">mevaz@optimal-automation.com=
+</a><o:p></o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><a =
+href=3D"mailto:mevaz@aol.com">mevaz@aol.com</a><o:p></o:p></span></p><p =
+class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'>Skype:=C2=A0 maria_e_vaz<o:p></o:p></span></p><p =
+class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+style=3D'font-size:11.0pt;font-family:"Calibri","sans-serif";color:#1F497=
+D'><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><b><span =
+style=3D'font-size:10.0pt;font-family:"Tahoma","sans-serif"'>From:</span>=
+</b><span style=3D'font-size:10.0pt;font-family:"Tahoma","sans-serif"'> =
+Converters.tv Staff [mailto:sales@converters.tv] <br><b>Sent:</b> =
+Friday, October 26, 2012 3:43 PM<br><b>To:</b> MARIA =
+VAZ<br><b>Subject:</b> Signup Successful<o:p></o:p></span></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Dear MARIA =
+VAZ,<br><br>Thank you for joining Converters.tv. Your username and =
+password are as follows:<br>Username : <a =
+href=3D"mailto:mevaz@optimal-automation.com">mevaz@optimal-automation.com=
+</a><br>Password : oas1998<br><br>Please note that the password is =
+case-sensitive. Please check your CAPS lock key, when entering the =
+password to login to the site.<br><br>You can now login and shop online =
+through our system. You can also view/modify your account details in our =
+Members Only section.<br><br>Thank you for choosing =
+Converters.tv<br><br>Regards,<br>Converters.tv Staff. =
+<o:p></o:p></p></div></body></html>
+------=_NextPart_001_01C3_01CDB393.29852B10--
+
+------=_NextPart_000_01C2_01CDB393.29852B10
+Content-Type: image/jpeg;
+	name="image001.jpg"
+Content-Transfer-Encoding: base64
+Content-ID: <image001.jpg@01CDB393.28344110>
+
+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
+IDQahMbbl3y1ecHoqz/j7Xuc/9k=
+
+------=_NextPart_000_01C2_01CDB393.29852B10
+Content-Type: image/gif;
+	name="image002.gif"
+Content-Transfer-Encoding: base64
+Content-ID: <image002.gif@01CDB393.28344110>
+
+R0lGODlhFwAXANU+ACmRKf///4bbKWC/OITZKlu8OnXPMHLMMYTaKXrSLla4O27JM0OeQ33ULWXD
+NlCzPoLYKoDWKZnMmWnGNKjSqGOvY1ipWDmZOX/WK3zSKarhf4/aSzOZM0uwP3zNTFGwKTSaKer3
+4cnvpGG+KsXsolGxLD6iKvL67Pn99fj89tXwvlCvKTCXKmXDNEWpNHfOKV66KUmuP02uLU+wMX7V
+KjuhMl28Nz+kMD+kNzqfK06yPC2VK3rSK8bptf///wAAACH5BAEAAD4ALAAAAAAXABcAAAb/QJ9w
+6KNUGIAko0IhOoeSS9L0qZqSF8lzaAGAYK+MWPyCgQCWLXKVibjf78wKwHB2R4i8fq8foaEAHwKD
+hIWGHwBaPhcgNASPkJGSNCAXRQAjEJoQJCIiG5obnhqbfkYAPBiqGBoBASoYGygBJxurPABHJg28
+vSSuJCEBKBu9vCZIJQnLzAkqrq4azcslSSUG2NkGHifA2tnVADIH5OUHra4nHubkMnQ5C/HysgEh
+KfXy8jlLAC0T/xO4BUjhAZ0KgBNa5KIAYIaDhw6EEXzYIxrEGQCaXGBhY4DHjyBD2mBhyYcEADcK
+qFzJsuWNRFwAuFBAs6bNmi7+EEFSQ8eDJ59AgeqoQWdLlx04YnRYujQGjh06t0RJwqFqVSyKtgwx
+gkQJky1BAAA7
+
+------=_NextPart_000_01C2_01CDB393.29852B10
+Content-Type: image/jpeg;
+	name="image003.jpg"
+Content-Transfer-Encoding: base64
+Content-ID: <image003.jpg@01CDB393.28344110>
+
+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
+0VZ/j7Xuc//Z
+
+------=_NextPart_000_01C2_01CDB393.29852B10
+Content-Type: image/png;
+	name="image004.png"
+Content-Transfer-Encoding: base64
+Content-ID: <image004.png@01CDB393.28344110>
+
+iVBORw0KGgoAAAANSUhEUgAAAEAAAAAdCAYAAAAaeWr3AAAAAXNSR0IArs4c6QAAAAlwSFlzAAAO
+xAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUATWljcm9zb2Z0IE9mZmljZX/tNXEAABBRSURBVFhH
+rVkJkBRlln6ZlXV39UEf9AHNbXO02AitgCLHgsRwBM6CMzGKrAMiy8SgLMwQ7KyywgSghCCKMwjL
+sSoT4AizuhgyAwsKhKOwBA3IMQINTUMD9kEfVV1dR1blfl9WZdM0LToR+xN/Z1Ye73/v/d9773uJ
+tnTpUrnXSE9/yPn6648ODoW0IRFd6RuLxrJV1YirauRbuz141uWq+9/KygfKli1bGr+nINz8+YED
+PWJVVUMlog+MtDTnRQzDHRWp193uiojNdvxScfHxy6Wltd8n54fcX7Kkn61Xrx8N8vu1B3TdKIrr
+7gyb/Uzziy/umt/2fe27hO3dOz3n/Pm8BX6/fXo0qhXEYu2f9IoiGaLa0sXjuXQxNbV269y5FRsU
+5Vxd+ydnffLJT9zl5b80mptH+KJR0eNxieAhGC8Uq2MGbTaJ37zZ3PnIkU8j/fuvOz5mzOEfYmj7
+Z6qqJno+/LDfvNdes88Jh+09sJQYBp9qEZd7v4wc+Y9nR44sPrps2bITvNqhA955Z/5Tt255VofD
+Wm7HSlCigX+60DEtLTm9w+H05W+/rf5y0qQuK7duHbYeC+iz6+oK3Dt3rk+vrp4c03VpxFs1SYNp
+uDUJHR2CfLGY1xsKPVlz7NiTA0OhDx7Zvftf169ff/mHOmL79rmjrlxJe6elxVF05zt+/Nwsqlop
+caNlw7VrFTJr1qxXNm/evPQuB7z11oLf1tWlvEQB+fmGhMKKNNSLxOlKc6+oNs8TTkicx3A/LLW1
+mXkff3zrrYUvH/2n1cXe9+rmrF6Y3thU6Pd6JZqbK4HaWgmFQq07b8VMW0lEhbO5WWJHj/700LRp
+E2Zs2LD6vT/+8d5xine2bJk/7fp17wfRqE3NzjHEpsLZNQo2iBKPY4ZE1zXZt2+vNDYUSXFxya+W
+LFmy8g4H/O5385fReJ9PZMoUQ86cUeT0aRoXNCEkEk46QMHRlgQQj/yNFXGsr7fJujXhwd1zvxo8
+u7FJmocPF3tertR9fkgaYXwIT0XwnG46L/EWJ6XwaOCeir824Lb50CFf2a8XvTLrPzaOLMjNfQao
+quoIDe++O3fw9eueHTR+6lSEV0SVAwfiMJ6Bdh2T+tvNWAi1hMTv9+OeGdOuVgds2jRvSm1d6sup
+qSILFhgQoEhZGY1uwAQEpDnpACrO11yY7uSE8FYnuCQaDMkLl0ZI2pCAPDG4q1Ru3SFNAb8QiAHM
+EAzk8jSYb1KSEz50QLTNdEHCIWmYFz/ZLeGXXx49+o03DmLHxsAJlW2dgGvKqlUtG5CnbD+aEJfc
+PFU2rEeeiTUldecxoR81V1VVFIUrJ3bAdMDhw9N91dXe9XFoNX68Ifv38xoNrm4zmdvoSaqXgtkJ
+Z50gJY6jB0fLCRTJ8yJ5pbJWvKd+Kz5sBHeebqQUOoIOcGACbEilOEIdLx1BJZMOoKTOmGWbNknK
+sGG9SqdO/TMMLoUTqJw5evRoGtvSkjrYbjfk5g1V9uwB5A2uxGzzbfJIvRm+1P3OYTrg5MncX4TD
+jrysLEO+Oa/IqZNUlwIInwrMK5j0pFUK+FomjO6No4YjTeE1S3X+tsvl6nzZIT3lcblkBs9NTDqA
+53Q/1SGGCjC7mG8knMJBSZTI350w969YId0ffbRfPBh8Ez+fSz4mdXXak0xPCoSVlVEqfdOAeQPz
+AiajhqGgSDQCFCQir3VoqJfqypXaHF7RY4j5r2kkBbAcE23nMQPi9mgyZLBDunRRET9xqaiolmPH
+ULri6biPuGkFLtW2UJAmXyilUmBcMv3PgOL6nvvuE3f//qJ6PBKpr5cbZSfEffOGUBIHQGoC1pJE
+vIXLy+WzDz6QKc89N2vBggXvr1mz5iCfjUS0h3mMQfeEodxt1hs64Kp5raDALv37qbBBEQfiLBZD
+BTMMEw5aUdHYIl139OCPxgbmCe4+QUoHUEBAOne2yzPPuCQP8cWFNM0mo0ZpMmJEi2zYUC2BQF7S
+aKps5YjEebUUyhnFA4gHTbjnTJwoqSNHmltm5gCnS+Ljx0vL9u0SPXLERAEnAyvKZJj8zWuVX34p
+VydMECUn5wX8PHj4vyemxeNKV+qeGHQz8UUUMAwi0quXXWbOdIkLSSYWVySM2263BzZodEBYq693
+llgkxzBYmLhPFowaxW63yZM/cUpOjoISpkl2drb07dsP5Mcj4x6PSe/eusyda4HZTC4YVDtRHWLI
+FzckG8ZekaxBg8Q3ahQSQkhSUBp79uwpXbt2FQMkKDZ6tDROmyaOCxcAe8MslXRhQopiJsfmigo5
+/803kpOWNmXJkkU9lH+vD2iaCT8MOp7o5ZtEAjdSZNgwO3YdVSfmAhIKpE+fPpKWlkb9yVXCGjzS
+7XZcWAIohJ7UpXcfmxR2VQVZ1lT24YcfloyMjJ0QskFV4/rPflb3i40bXVPLyjyw3uIFVDuplKHC
+nT5TLRWwN7BgakqKPPTQQ1JYWHg1NTV1JZQ54de0QTfG/MNLcuEC4ZTI2EnjkwlbYk1+aairEx31
+DiidgPT5J8MAHFtHgpNYXEW1KZKVRS6gSvfu3eTBBx/Uc3NzV/l8vh0w/mu+ptlsBpNwclgkhz8T
+lTk7G/5XQXozOklpaSnIUf6vEX+v335HPq+tXbgPosYmrtFUK9tSHkueJuAgErVpYkcZGjBgABTq
+fhayRkERZluOLycfPOTIU9U3/MhqfJNSyDdplkmaYrpEgJ66W7dAanyFAHOqYbCIcljOt2gVKgoy
+qBPQdzrdQG1fhHDePOj+ThvdibIQsgYLkPUil2XEMWK9EvA3iYq6CYUJm+PtjDdlVVfbWL2SI6F2
+azwqcdR3OAEWRCNh8QD6lJWenr6wjfHmu/H6upq2pIjQT7ggiQH81EGpm8kUYyHkRlfOnVmdHCLe
+6jKEB0JYkZQUH5NeNCUl5eO2xvMcuSBYpSiZWMF6kSrQnnTMbnL+/AVpaopi57OQPLy72gv49NPZ
+RbGYw8zECX3bGG/mEh2EJih2OCBYVSUpWVnYSL0KzvxLe1l2TQPW2o52NYvmAR1hhJHTGUtHGhof
+ZNJvHbTBQkLcNN5uR/Z3u8Vms1GZRGJoM+CA+jOKkocmwYI/oU9YkYcVIsPb5aOPrsrkyc0Ih7BZ
+Laxx+vT01HPnMt7XddWRlW1IsFmRYJAJiImUvMEPlUOSpdRJCvRyHzsmLZfKxTZ+PCHH5MV61Xbc
+zVSSdxMsLi5ebxBJrQE6eR6LRGzIA4Q5MlbY6it5pA4RsSMEmOw1zc6dthqZOx0wYED1SfD/pkgk
+FwpZkUf6wepLZ3hBlArk+dkxWfirlqcLC2fvBG+40NjofCQQcP2mudnRt6QkLvcVqbJrF+OfZJd2
+IbSVCFheteSAmTGourW0iPO1VdJkd6RXDB26bHhV1cqeJ0+m2v3+4VtE9qiNjay/HQ6+X9fkk4/+
+a5Jse79A/nauaxdEgzz2mIEmTJGzZ63sT+dz/QjCTIWzTJgTAYk2pN3QRoz4a/DYsfSdkUjnmbfv
+k4q4klWYm2WT42U2efpprzvV5/1zsMWGlt6mkYH16xeXyZNU2bwFiUun/hYNJRFRpY+cgQsNE1Ok
+tT0CAWlevFicPt8LBbo+Cy2w+6hqU8t//MTwzhkZTgO1vqPBktjkT5PDh4a13i4uNqSkRJFNm7m5
+RDgnjSff1KVboROGk/w4zVjHRZa2O4ZJhYsKb6463myfEY1mJpsj8jCikUhoS0rdUMIkq+ZziEHA
+T5W1b8bRYRHyFv+uwO6HYfgtKTK+NjN4OiYyjYkrvCbYdf72nsD5DsxZzz77cVNlpUu++KIDxp4s
+i0ioiRaG4WDIt98qsm4d+kojEW4Jw0l96/GhRsXm2FC+FUGphRMc15F02yeVhCETph7/Rj51bzly
+xP18YgW7ST1ovJGsxollrTqbIDyhkCEnThBVVIDMkWz/YvLokFLZDxey+U04gFnFZpLchB4XwQY/
+R9KktPKL5dlSQ954e3xnQqAmgF9NjcVaaTydT+rOGZXBDzqRuKG/YZPMzEwmwrsqAFdqbYe/+qrH
+S2PGVEz77DM7eg+UjdYGh48QYowxTqv/R32O03jGvAX7yzgnfbZJd+MAmpzzZjok9FlUaWjYLFKK
+eb08aStXKEdy9CKlM8syE3EVq2Fq45M2p3yC67Lja8C8BtRhfaMZBmvoau3YfRU0nriTCJywvSM5
+rQ5Ytmxbzdat05cvXFi1etcuNkBUm70a049FShPcLKEancGwovfZNkMBE4KGlA5zyP2pmlxBoctK
+Gk8p1hcF0lrTOPQjFnmO6fzwkvhGxCCrBjqqgA6u1obq3bZBwY4bp5PG0wnQwQhLeoYmM2Y4zfBU
+VacMHDiQIbAX8OdDd41WB/DOu+9uW/P73894PD8/MH7dujJcyUmqT5Wsnbc+jVmljkZzJ0JINKqM
+G+dEZkbxi48RJTVbGvfsET8SH59gBrKaZhrGqm0Zp8BgTrr8bzD7SDJaE/cT3eHtAVuMj5LG063U
+RQHbc+BLlgPZH9wf1LNPn17oYXKCYJwLOjKe1+5wAC/k5HR/ZuVK5+EhQ7Si5cv/CiLEqxYSeE5F
+rGaDMaiLDYYPGODAF1e7dEW7HAopkuZNkcEzZ4o2Y4Yc3bhRLuzbJxpoLCmWtajVepnKYbcdqGus
+AbuSjiFqEuYnWuO4SbIYYpswme1BrR1gqd3soOkadEggNB53oAvsbvYtLpfr+RUrVvDDQIfjLgeQ
+ni5atGjctGmD/jR0aN6Qbds+Q2KulsuXw1LfgO9t3EbulBuNRqYq3bo54XkNCYcfG9g02c244+Jp
+Pl+52+e71LukZFzZwYNycvduaTxzRiI3b0ocdNYA7BX0MnZ8hNSQtWvRrUWnT5dB6A5r8UzAj/yS
+zIQMmzwlX4bH30PliaK3z5BUnw5+r0h2lk00MD7GvMfjxQfPYjiglwHj/xlflf/wXcZ3iABeXLVq
+1VV8ehqFTurtOXMmPjt58jV8HD0nN27UY3f5ORO7he1xuVArgFFdp/GadOqUYTYdgBy5/vtZWVkv
+wqH18+fNm/7I2LGv3T9sWP6pU6fk2qVL0tLQILEI8ggMV0FViQADDnj0qafE63LJV/g2UAXqzLCw
+Rh7Qdj/Kq8ebj12OofQGzc/yNrQibHHRXWJDujHmT4Fq/8vatWsP3Mv473QAbyS/u/188eLF2zXN
++xuPJ/MRw4hptfi03QDlw+GISftRX2ks2s4sko0wsu0XUGY5nNi6+Np167bBoX/xNTX9m+uBB35a
+XFSU2wQeUFNTYzY2eiSChksx2+0ctMp6TA8NLSlxBXr37hi2YHZobqwvu2byxG77sfY56LIR5/8J
+/a3vd/f0wV0h0P7pV199dS+u7YUB9wUCgSeysnImBYPB7pFIhInBgANa0GVdgcd34/ghFq7oaMVk
+5zcfcpZA4dG3bt16Cp+6B0NWBj5R2zFi2LlKHN/Mz8z/H6w1Ds8VRqPR1k4Tv2G3EQYqzMYFtR2f
+EbTrMJgVtQprsBz9XeN7HWBJg3Cmw1WcsIHJmaXBzIi4Z/0fx/cujmfJmkhKTGICWSSGZo7DPZIK
+a2z+XmH/Dw/8H4W8jWQZ2+HzAAAAAElFTkSuQmCC
+
+------=_NextPart_000_01C2_01CDB393.29852B10--
+
+

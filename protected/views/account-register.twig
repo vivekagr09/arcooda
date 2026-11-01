@@ -1,0 +1,692 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - member:
+#}
+
+{% set global_page_title           = inputs.title|default('Account Registration') %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/register'                          %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'},
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{# % set member    = inputs.member                                                  % #}
+{% set model = inputs.model %}
+{% set courier_list= inputs.courier_list %}
+{% set account_type_list = {
+	private : 'I would like to join as a private / home buyer',
+	company : 'I would like to join as a company / commercial buyer',
+} %}
+{% set address_type_list = {
+	commercial  : 'Commercial Property',
+	residential : 'Residential Property',
+} %}
+
+{% set currency_list = inputs.currency_list %}
+{% set country_list = countries() %}
+
+{% set error_summary = inputs.error_summary %}
+
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+
+{{GlobalCurrencyList}}
+	{% include '/blocks/block-header.twig' with {inputs: {
+        title: 'Register',
+        breadcrumb: global_page_breadcrumbs,
+    }} %}
+    <div class="block"><div class="container">
+
+    	<div class="row justify-content-center"><div class="col-sm-10 col-md-8 col-lg-10 bg-white border p-sm-5">
+    <form action="" method="post" id="userRegisterForm" name="userRegisterForm">
+         {% if issues | length > 0%}
+            <ul class="alert alert-danger">
+            {% for issue in issues %}
+            <li >{{ markdown(issue) }}</li>
+            {% endfor%}
+         </ul>
+         {% endif %}
+        {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+        <div class="card">
+			<div class="card-header"><h2 class="card-title mb-0">Joining Preference (Please select one)</h2></div>
+			<div class="card-body"><div class="row">
+				<div class="col-xl-6 order-xl-last p-0"><div class="alert alert-success">
+					<b>Personal</b>
+					<p>For individuals that shop online.</p>
+					<b>Company</b>
+						<p>More flexible for companies, allowing all correspondence to be copied to other departments (your accounts dept, warehouse team), and much more.</p>
+				</div></div>
+				<div class="col-xl-6">
+						{% for k, v in account_type_list %}
+							<div class="form-group form-row field-register_account_type_private required">
+							<div class="col-sm-1"></div><div class="col-sm-11"><div class="form-check"><input type="radio" id="register_account_type_{{k}}" class="form-check-input" name="account_type" value="{{k}}" aria-required="true" required="required" {{model.account_type==k?'checked':''}}><label class="form-check-label" for="register_account_type_private">{{v}}</label> <div class="invalid-feedback "></div> </div></div>
+							</div>
+						{% endfor %}
+				</div>
+			</div></div>
+		</div>
+		<div class="card require_account_type" {{ (model.account_type == '') ? 'style="display:none"' : 'style="display:block"' }}>
+			<div class="card-header">
+				<h2 class="card-title mb-0">Login Information</h2>
+			</div>
+				<div class="card-body">
+					<div class="row">
+					<div class="col-xl-6 order-xl-last p-0"><div class="alert alert-success">
+						<b>Your Login Information</b>
+						<p>Please enter the password and email address you would like to use for all correspondence.</p>
+                  <p>Please choose 8 characters for your password</p>
+					</div></div>
+					<div class="col-xl-6">
+					<div class="form-group form-row field-username required">
+							<div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="username">Email Address</label><span class="text-danger">*</span></div><div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8"><input type="email" id="username" class="form-control" name="username" autocomplete="section-register billing username" aria-required="true" required="required" value="{{model.username}}">  <div class="invalid-feedback "></div></div>
+							</div>
+										<div class="form-group form-row field-newpassword required">
+							<div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="newpassword">Password</label><span class="text-danger">*</span></div><div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8"><input type="password" id="newPassword" class="form-control" name="newPassword" autocomplete="section-register billing new-password" aria-required="true" required="required"> 
+                        <div id="password-strength-status"></div>        
+                     </div>
+							</div>
+										<div class="form-group form-row field-newpassword_repeat required">
+							<div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="newpassword_repeat">Confirm Password</label><span class="text-danger">*</span></div><div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8"><input type="password" id="newpassword_repeat" class="form-control" name="newPassword_repeat" autocomplete="section-register billing new-password" aria-required="true" required="required">  <div class="invalid-feedback "></div></div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<div class="require_account_type" {{ model.account_type == '' ? 'style="display:none"' : '' }}>
+   <!-- Company/Private Buyer -->
+   <div class="card">
+      <div class="card-header">
+         <h2 class="card-title mb-0">
+            <div class="require_account_type_company" {{ model.account_type == 'company' ? '' : 'style="display:none"' }}>Company Buyer</div>
+            <div class="require_account_type_private" {{ model.account_type == 'private' ? '' : 'style="display:none"' }}>Private Buyer</div>
+         </h2>
+      </div>
+      <div class="card-body">
+         <div class="row">
+            <div class="col-xl-6 order-xl-last p-0">
+               <div class="alert alert-success">
+                  <div class="require_account_type_company" {{ model.account_type == 'company' ? '' : 'style="display:none"' }}>
+                     <b>Colleagues</b>
+                     <p>You can add additional colleagues to your account by going into your "My Account", then visit "Contacts".</p>
+                     <b>Your Company Information</b>
+                     <p>Please enter the details for your company, government group or organization. We will use this information to send invoices and also make contact for your order.</p>
+                     <b>Address Type</b>
+                     <p>Different couriers have certain requirements for delivery to residential addresses or commercial addresses. For example, some couriers deliver over the weekend, whilst others will only ship to commercial buyers.</p>
+                     <b>Zip/Post Code</b>
+                     <p>If you do not have a post code, please enter N/A</p>
+                     <b>Company Number & Registrations</b>
+                     <ul><li><b>ABN Number: </b> For Australian customers, please add your Australian Business number</li>
+                        <li><b>Company Number: </b> for International customers, please add your company number </li>
+                        <li><b>VAT Number: </b> if you are registered for VAT, please add your details </li>
+                        <li><b>EORI Number:</b> if you are located in the EU and registered (Economic Operators Registration and Identification number), please add details here</li></ul>
+                  </div>
+                  <div class="require_account_type_private" {{ model.account_type == 'private' ? '' : 'style="display:none"' }}>
+                     <b>Private Buyer</b>
+                     <p>Please enter all your information in the boxes provided on the left. We will use this information to send invoices and also make contact for your order.</p>
+                     <b>Address Type</b>
+                     <p>Different couriers have certain requirements for delivery to residential addresses or commercial addresses. For example, some couriers deliver over the weekend, whilst others will only ship to commercial buyers.</p>
+                     <b>Zip/Post Code</b>
+                     <p>If you do not have a post code, please enter N/A</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-xl-6">
+               <div class="form-group form-row field-b_givenname">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_givenname">First Name</label><span class="text-danger">*</span></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="text" id="b_givenname" class="form-control" name="b_givenName" autocomplete="section-register billing given-name"  value="{{model.b_givenName}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_familyname">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_familyname">Last Name</label><span class="text-danger">*</span></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="text" id="b_familyname" class="form-control" name="b_familyName" autocomplete="section-register billing family-name" value="{{model.b_familyName}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="" >
+                  <div class="form-group form-row field-b_organizationtitle require_account_type_company" {{ model.account_type == 'company' ? '' : 'style="display:none"' }}>
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_organizationtitle">Title</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="b_organizationtitle" class="form-control" name="b_organizationTitle" autocomplete="section-register billing organization-title" value="{{model.b_organizationTitle}}"> <small class="form-text text-muted ">Owner, Purchase Officer, Technician, ...</small> 
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-b_addresstype">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_addresstype">Address Type</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <select id="b_addresstype" class="form-control" name="b_addressType">
+                           <option value=""></option>
+                           <option value="commercial" {{(model.b_addressType=='commercial')?'selected':''}}>Commercial Property</option>
+                           <option value="residential" {{(model.b_addressType=='residential')?'selected':''}}>Residential Property</option>
+                        </select>
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-b_organization require_account_type_company" {{ model.account_type == 'company' ? '' : 'style="display:none"' }}>
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_organization">Company Name</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="b_organization" class="form-control" name="b_organization" autocomplete="section-register billing organization" value="{{model.b_organization}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_streetaddress">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_streetaddress">Street Address</label><span class="text-danger">*</span></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <textarea id="b_streetaddress" class="form-control" name="b_streetAddress" rows="2" autocomplete="section-register billing street-address">{{model.b_streetAddress}}</textarea>
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_addresslevel2">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_addresslevel2">City / Suburb</label><span class="text-danger">*</span></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="text" id="b_addresslevel2" class="form-control" name="b_addressLevel2" autocomplete="section-register billing address-level2" value="{{model.b_addressLevel2}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_addresslevel1">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_addresslevel1">State</label><span class="text-danger">*</span></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="text" id="b_addresslevel1" class="form-control" name="b_addressLevel1" autocomplete="section-register billing address-level1" value="{{model.b_addressLevel1}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_postalcode">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_postalcode">Zip / Post Code</label><span class="text-danger">*</span></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="text" id="b_postalcode" class="form-control" name="b_postalCode" autocomplete="section-register billing postal-code" value="{{model.b_postalCode}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_country">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_country">Country</label><span class="text-danger">*</span></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <select id="b_country" class="form-control" name="b_country" autocomplete="section-register billing country">
+                        <option value=""></option>
+                       	{% for  country in country_list %}
+                       		<option value="{{country.code}}" {{(model.b_country==country.code)?'selected':''}}>{{country.name}}</option>
+                       	{% endfor %}
+                     </select>
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="require_account_type_company" {{ model.account_type == 'company' ? '' : 'style="display:none"' }}>
+                   <div class="form-group form-row field-b_abn_number">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_abn_number">ABN Number</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="b_abn_number" class="form-control" name="b_abn_number" value="{{model.b_abn_number}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-b_company_number">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_company_number">Company Number</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="b_company_number" class="form-control" name="b_company_number" value="{{model.b_company_number}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-b_vat_number">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_vat_number">VAT Number</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="b_vat_number" class="form-control" name="b_vat_number" value="{{model.b_vat_number}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-b_eori_number">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_eori_number">EORI Number</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="b_eori_number" class="form-control" name="b_eori_number" value="{{model.b_eori_number}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_url">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_url">Website</label></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8" style="display:flex;">
+                  <div style="width:36%" class="form-control">
+                     https://www.</div><input type="text" id="b_url" class="form-control" name="b_url" autocomplete="section-register billing url" value="{{model.b_url}}" style="width: 60%;float:right">  
+                     <div class="invalid-feedback "></div>
+               
+               </div>
+               </div>
+            </div>
+         </div>
+         <div class="alert alert-info row">
+            <div class="col-xl-6 order-xl-last p-0 pl-xl-3">
+               <b>Phone Numbers</b>
+               <p>For freight courier purposes, we need <strong class="text-danger">2 contact phone numbers</strong> (phone, fax, mobile) in case there is a problem with your main contact number. If the courier is not able to get in touch with you, cargo will be returned back to our warehouse at extra costs.</p>
+               <!-- <p>If you do not have a 2nd phone number please re-enter your main phone number as your 2nd number.</p> TODO -->
+            </div>
+            <div class="col-xl-6 p-0 pr-xl-3">
+               <div class="form-group form-row field-b_hometel">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_hometel">Main Phone Number</label><span class="text-danger">*</span></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="tel" id="b_hometel" class="form-control" name="b_homeTel" autocomplete="section-register billing home tel" value="{{model.b_homeTel}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_worktel">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_worktel">2nd Contact Number</label></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="tel" id="b_worktel" class="form-control" name="b_workTel" autocomplete="section-register billing work tel" value="{{model.b_workTel}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_mobiletel">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_mobiletel">Mobile</label></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="tel" id="b_mobiletel" class="form-control" name="b_mobileTel" autocomplete="section-register billing mobile tel" value="{{model.b_mobileTel}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-b_faxtel">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_faxtel">Fax</label></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <input type="tel" id="b_faxtel" class="form-control" name="b_faxTel" autocomplete="section-register billing fax tel" value="{{model.b_faxTel}}">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+ 
+   </div>
+   <!-- My Details &amp; Colleagues / Work Mates -->
+   <!-- Shipping Details -->
+   <div class="card">
+      <div class="card-header">
+         <h2 class="card-title mb-0">Shipping Details</h2>
+      </div>
+      <div class="card-body">
+         <div class="row">
+            <div class="col-xl-6 order-xl-last p-0">
+               <div class="alert alert-success">
+                  <b>Shipping Details</b>
+                  <p>If your bill to and ship to addresses are the same, please leave as the default "use above details for shipping". However if you would like the goods sent to different warehouse please fill in the new shipping address.</p>
+                  <p>Please note :</p>
+                  <ul>
+                     <li>We can ship to multiple addresses - you can make and adjust ship to templates in your "My Account" section once you are logged in.</li>
+                     <li>Many Couriers do not deliver to PO Box addresses, so it will take longer to process your order if PO Box address is entered.</li>
+                  </ul>
+               </div>
+            </div>
+            <div class="col-xl-6">
+               <div class="form-group form-row field-register_billing_as_shipping_y">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-11">
+                     <div class="form-check">
+                        <input type="radio" id="register_billing_as_shipping_y" class="form-check-input" name="billing_as_shipping" value="y" {{model.billing_as_shipping=='y'?'checked':''}}><label class="form-check-label" for="register_billing_as_shipping_y">Use above details for shipping</label> 
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-register_billing_as_shipping_n">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-11">
+                     <div class="form-check">
+                        <input type="radio" id="register_billing_as_shipping_n" class="form-check-input" name="billing_as_shipping" value="n" {{model.billing_as_shipping=='n'?'checked':''}}><label class="form-check-label" for="register_billing_as_shipping_n">Use different details for shipping</label> 
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="require_billing_as_shipping_n" {{ model.billing_as_shipping == 'n' ? '' : 'style="display:none"' }}>
+                  <div class="form-group form-row field-s_givenname">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_givenname">First Name<span class="text-danger">*</span></label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="s_givenname" class="form-control" name="s_givenName" autocomplete="section-register shipping given-name" value="{{model.s_givenName}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-s_familyname">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_familyname">Last Name<span class="text-danger">*</span></label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="s_familyname" class="form-control" name="s_familyName" autocomplete="section-register shipping family-name" value="{{model.s_familyName}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                     <div class="form-group form-row field-s_addresstype">
+                        <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_addresstype">Address Type</label><span class="text-danger">*</span></div>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                           <select id="s_addresstype" class="form-control" name="s_addressType">
+                              <option value=""></option>
+                              <option value="commercial" {{(model.s_addressType=='commercial')?'selected':''}}>Commercial Property</option>
+                              <option value="residential" {{(model.s_addressType=='residential')?'selected':''}}>Residential Property</option>
+                           </select>
+                           <div class="invalid-feedback "></div>
+                        </div>
+                     </div>
+                     <div class="form-group form-row field-s_organization">
+                        <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_organization">Company Name</label><span class="text-danger require_account_type_company"  {{ model.account_type == 'company' ? '' : 'style="display:none"' }}>*</span></div>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                           <input type="text" id="s_organization" class="form-control" name="s_organization" autocomplete="section-register shipping organization" value="{{model.s_organization}}">  
+                           <div class="invalid-feedback "></div>
+                        </div>
+                     </div>
+                  <div class="form-group form-row field-s_streetaddress">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_streetaddress">Street Address</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="s_streetaddress" class="form-control" name="s_streetAddress" autocomplete="section-register shipping street-address" value="{{model.s_streetAddress}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-s_addresslevel2">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_addresslevel2">City / Suburb</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="s_addresslevel2" class="form-control" name="s_addressLevel2" autocomplete="section-register shipping address-level2" value="{{model.s_addressLevel2}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-s_addresslevel1">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_addresslevel1">State </label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="s_addresslevel1" class="form-control" name="s_addressLevel1" autocomplete="section-register shipping address-level1" value="{{model.s_addressLevel1}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-s_postalcode">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_postalcode">Zip / Post Code</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="s_postalcode" class="form-control" name="s_postalCode" autocomplete="section-register shipping postal-code" value="{{model.s_postalCode}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-s_country">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_country">Country</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <select id="s_country" class="form-control" name="s_country" autocomplete="section-register shipping country">
+                           <option value=""></option>
+                           	{% for  country in country_list %}
+	                       		<option value="{{country.code}}" {{(model.s_country==country.code)?'selected':''}}>{{country.name}}</option>
+	                       	{% endfor %}
+                        </select>
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="require_account_type_company" {{ model.account_type == 'company' ? '' : 'style="display:none"' }}>
+                     <div class="form-group form-row field-s_abn_number">
+                        <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_abn_number">ABN Number</label></div>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                           <input type="text" id="s_abn_number" class="form-control" name="s_abn_number" value="{{model.s_abn_number}}">  
+                           <div class="invalid-feedback "></div>
+                        </div>
+                     </div>
+                     <div class="form-group form-row field-s_company_number">
+                        <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_company_number">Company Number</label></div>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                           <input type="text" id="s_company_number" class="form-control" name="s_company_number" value="{{model.s_company_number}}">  
+                           <div class="invalid-feedback "></div>
+                        </div>
+                     </div>
+                     <div class="form-group form-row field-s_vat_number">
+                        <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_vat_number">VAT Number</label></div>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                           <input type="text" id="s_vat_number" class="form-control" name="s_vat_number" value="{{model.s_vat_number}}">  
+                           <div class="invalid-feedback "></div>
+                        </div>
+                     </div>
+                     <div class="form-group form-row field-s_eori_number">
+                        <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_eori_number">EORI Number</label></div>
+                        <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                           <input type="text" id="s_eori_number" class="form-control" name="s_eori_number" value="{{model.s_eori_number}}">  
+                           <div class="invalid-feedback "></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="require_billing_as_shipping_n" {{ model.billing_as_shipping == 'n' ? '' : 'style="display:none"' }}>
+            <div class="alert alert-info row">
+               <div class="col-xl-6 order-xl-last p-0 pl-xl-3">
+                  <b>Phone Numbers</b>
+                  <p>For freight courier purposes, we need <strong class="text-danger">2 contact phone numbers</strong> (phone, fax, mobile) in case there is a problem with your main contact number. If the courier is not able to get in touch with you, cargo will be returned back to our warehouse at extra costs</p>
+               </div>
+               <div class="col-xl-6 p-0 pr-xl-3">
+                  <div class="form-group form-row field-s_hometel">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_hometel">Main Phone Number</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="tel" id="s_hometel" class="form-control" name="s_homeTel" autocomplete="section-register shipping home tel" value="{{model.s_homeTel}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-s_worktel">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_worktel">2nd Contact Number</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="tel" id="s_worktel" class="form-control" name="s_workTel" autocomplete="section-register shipping work tel" value="{{model.s_workTel}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-s_mobiletel">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_mobiletel">Mobile</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="tel" id="s_mobiletel" class="form-control" name="s_mobileTel" autocomplete="section-register shipping mobile tel" value="{{model.s_mobileTel}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-s_faxtel">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_faxtel">Fax</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="tel" id="s_faxtel" class="form-control" name="s_faxTel" autocomplete="section-register shipping fax tel" value="{{model.s_faxtel}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-xl-6">
+                  <div class="form-group form-row field-s_email">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_email">Contact Email <span class="text-danger">*</span></label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="email" id="s_email" class="form-control" name="s_email" autocomplete="section-register shipping home email" value="{{model.s_email}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Shipping &amp; Insurance -->
+   <div class="card">
+      <div class="card-header">
+         <h2 class="card-title mb-0">Shipping &amp; Insurance</h2>
+      </div>
+      <div class="card-body">
+         <div class="row">
+            <div class="col-xl-6 order-xl-last p-0">
+               <div class="alert alert-success">
+                  <b>Using Our Courier Quotes</b>
+                  <p>We currently use various couriers for shipping. Depending on the country, different couriers will offer better rates. Please choose from;</p>
+                  <p>Lowest Freight Cost: this offers no tracking number, and normally the longest transit time, but with the lowest freight cost.</p>
+                  <p>Lowest Freight Costs with tracking: you are able to track the status online for this shipment and receive exact delivery dates.</p>
+                  <b>Using My Freight Account</b>
+                  <p>If you have your own courier (Fedex, DHL, etc.) please enter your details including the account number. Please make sure you have an international account. When using your account you can also choose to accept courier's insurance.</p>
+                  <b>Shipping Instructions</b>
+                  <p>These instructions will always be a default setting for all your orders. Some examples include;</p>
+                  <ul>
+                     <li>"always choose International Economy" service on our Fedex Account</li>
+                     <li>do not send invoice with goods</li>
+                     <li>delivery after 10am</li>
+                  </ul>
+                  <div class="require_own_freight_n" {{ (model.own_freight == 'n') ? 'style="opacity: 0.00346577;"' : 'style="display:none;opacity: 0.00346577;"' }}>
+                     <b>Insurance</b>
+                     <p>Insurance is available for all shipments with tracking, and covers goods in transit. For example, you have purchased parts value of $5,000usd plus $500usd courier costs, and the cargo has been lost. If you have chosen insurance, we will cover the full loss of $5,500usd.</p>
+                     <p>Please note that if you do not choose insurance, any loss is fully sustained by you. Generally the courier companies offers limited liability with most up to a value of $100usd or the cost of transport only.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-xl-6">
+               <div class="form-group form-row field-register_own_freight_n">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-11">
+                     <div class="form-check">
+                        <input type="radio" id="register_own_freight_n" class="form-check-input" name="own_freight" value="n" {{(model.own_freight=='n')?'checked':''}}><label class="form-check-label" for="register_own_freight_n">Use our online freight quote when purchasing</label> 
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-register_own_freight_y">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-11">
+                     <div class="form-check">
+                        <input type="radio" id="register_own_freight_y" class="form-check-input" name="own_freight" value="y" {{(model.own_freight=='y')? 'checked':''}}><label class="form-check-label" for="register_own_freight_y"   >Use my own freight account</label> 
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="require_own_freight_n" {{ (model.own_freight == 'n') ? '' : 'style="display:none;"' }}>
+                  <div class="form-group form-row field-freight_priority">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="freight_priority">Shipping Priority</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <select id="freight_priority" class="form-control" name="freight_priority" required="required">
+                           <option value="cheapest" {{(model.freight_priority=='cheapest')?'selected':''}}>Lowest Freight Cost</option>
+                           <option value="tracking" {{(model.freight_priority=='tracking')?'selected':''}}>Lowest Freight Cost with Tracking</option>
+                        </select>
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+               
+               <div class="require_own_freight_y" {{ model.own_freight == 'y' ? '' : 'style="display:none;"' }}>
+                  <div class="form-group form-row field-courier">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="courier">Courier</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <select id="courier" class="form-control" name="courier">
+                           <option value=""></option>
+                           {% for keycou,courier_data in courier_list %}
+                            <option value="{{keycou}}" {{(model.courier==keycou)?'selected':''}}>{{courier_data}}</option>
+                            {% endfor %}
+                            <option value="0">Other</option>
+                        </select>
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-courier_name" style="display:none;">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="courier_name">Courier Name</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="courier_name" class="form-control" name="courier_name" value="{{model.courier_name}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-account_number">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="account_number">Account Number</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <input type="text" id="account_number" class="form-control" name="account_number" value="{{model.account_number}}">  
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+                  <div class="form-group form-row field-ship_insurance">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="ship_insurance">Ship Insurance</label></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <select id="ship_insurance" class="form-control" name="ship_insurance">
+                           <option value="n" {{(model.ship_insurance=='n')?'selected':''}}>No</option>
+                           <option value="y" {{(model.ship_insurance=='y')?'selected':''}}>Yes</option>
+                        </select>
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-s_instructions">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="s_instructions">Shipping Instructions</label></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <textarea id="s_instructions" class="form-control" name="s_instructions" rows="8">{{model.s_instructions}}</textarea>
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="require_own_freight_n" {{ model.own_freight == 'n' ? '' : 'style="display:none;"' }}>
+                  <div class="form-group form-row field-insurance_required">
+                     <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="insurance_required">Insurance</label><span class="text-danger">*</span></div>
+                     <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                        <select id="insurance_required" class="form-control" name="insurance_required" required="required">
+                           <option value="y" {{(model.insurance_required=='y')?'selected':''}}>Yes - I want my shipment insured</option>
+                           <option value="n" {{(model.insurance_required=='n')?'selected':''}}>No - I do not need insurance</option>
+                        </select>
+                        <div class="invalid-feedback "></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- Your Preferences -->
+   <div class="card">
+      <div class="card-header">
+         <h2 class="card-title mb-0">Your Preferences</h2>
+      </div>
+      <div class="card-body">
+         <div class="row">
+            <div class="col-xl-6 order-xl-last p-0">
+               <div class="alert alert-success">
+                  <p>
+<b>Default Currency</b><br>
+Arcooda only issues invoices in USD or AUD (with GST tax), however, we can offer approximate costs in your currency (please mouse over the ($) icon near the sell price to view the approximate price in your currency). </p>
+                  <b>Mailing List</b>
+                  <p>Join our newsletter for the latest product information, specials and clearance sales. You can turn on/off to receive the newsletter in your "My Account".</p>
+               </div>
+            </div>
+            <div class="col-xl-6">
+               <div class="form-group form-row field-b_transactioncurrency">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="b_transactioncurrency">Default Currency</label></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <select id="b_transactioncurrency" class="form-control" name="b_transactionCurrency" autocomplete="section-register billing transaction-currency">
+                         {% for  currency in currency_list %}
+                           <option value="{{ currency.code }}"{{ ('USD' == currency.code) ? ' selected="selected"' : '' }}>{{ currency.code }} - {{ currency.name|e }}</option>
+                        {% endfor %}
+                     </select>
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-mailing_list">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="mailing_list">Join Mailing List</label></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8">
+                     <select id="mailing_list" class="form-control" name="mailing_list">
+                        <option value="y" {{(model.mailing_list=='y')?'selected':''}}>Yes</option>
+                        <option value="n" {{(model.mailing_list=='n')?'selected':''}}>No</option>
+                     </select>
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+               <div class="form-group form-row field-mailing_list">
+                  <div class="col-sm-5 col-md-4 col-lg-3 col-xl-5 col-xxl-4 col-form-label"><label for="mailing_list">Captcha</label></div>
+                  <div class="col-sm-7 col-md-8 col-lg-9 col-xl-7 col-xxl-8" style="display:flex;">
+                     <img src="/captchaimage?v={{ date().timestamp }}" style="height: 36px;">
+                     <input type="text"  required class="form-control" name="captcha" style="width:50%;margin-left: 5px;" placeholder="Total">  
+                     <div class="invalid-feedback "></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% if issues.action %}<div class="alert alert-danger">{{ issues.action }}</div>{% endif %}
+   <input type="hidden" name="action" value="register" />
+   <div class="text-center">
+      <button type="submit" class="btn btn-primary mt-3" id="registerBtn" >Register</button>
+   </div>
+</div>
+	</form></div></div></div></div>
+<script type="text/javascript">
+//<![CDATA[
+window.addEventListener("DOMContentLoaded", function() {
+	LoginRegister.registerInit($("#userRegisterForm"));
+});
+//]]>
+</script>
+	{% include '/blocks/block-space.twig' with {inputs: {layout: 'before-footer'}} %}
+{% endblock %}

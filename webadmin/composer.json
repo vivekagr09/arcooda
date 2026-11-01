@@ -1,0 +1,39 @@
+{
+    "name": "arcooda/arcooda_backend",
+    "description": "Arcooda Website Backend 2022",
+    "keywords": ["arcooda", "2022", "www", "Website", "Arcooda", "backend"],
+    "homepage": "https://www.arcooda.com/webadmin/",
+    "type": "project",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+    "require": {
+        "browscap/browscap-php": "^4.3",
+        "commerceguys/addressing": "^1.0",
+        "erusev/parsedown-extra": "^0.8.1",
+        "ext-ctype":"*",
+        "ext-iconv":"*",
+        "ext-mbstring":"*",
+        "fpdf/fpdf": "^1.85",
+        "php": ">=7.3.23",
+        "phpmailer/phpmailer": "^6.1",
+        "stripe/stripe-php": "^7.13",
+        "tecnickcom/tcpdf": "^6.6"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": ""
+        }
+    }
+}

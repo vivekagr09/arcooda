@@ -1,0 +1,355 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - addresses:
+#}
+{% set global_page_title           = inputs.title|default('Shipping Details')     %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/shipping'                          %}
+{% set global_page_breadcrumbs     = [
+{title : 'Home',            url : '/'                  },
+{title : 'My Account',      url : '/account/dashboard' },
+{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set addresses = inputs.addresses                                               %}
+{% set member    = inputs.member  %}
+{% set country_list = countries() %}
+{% extends '/layouts/account.twig' %}
+{% block account_body %}
+<div class="card-header ">
+   <h5 class="content_heading_color">Shipping Address</h5>
+</div>
+{% if result %}
+<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>
+{% endif %}
+<div class="addresses-list">
+   <a href="#" class="addresses-list__item addresses-list__item--new" data-toggle="modal" data-target="#account-shipping-add-modal">
+      <div class="addresses-list__plus"></div>
+      <div class="btn btn-secondary btn-sm">Add New</div>
+   </a>
+   <div class="addresses-list__divider"></div>
+   {% for address in addresses %}
+   <div class="addresses-list__item card address-card">
+      {% if address.default == 'y' or addresses|length == 1 %}
+      <div class="address-card__badge tag-badge tag-badge--theme">Default</div>
+      {% endif %}
+      <div class="address-card__body">
+         <div class="address-card__name">
+
+          {% if address.company_name == ''%}
+            {{ address.contact|e }} {{address.contact_last}}
+          {% else %}
+            {{ address.company_name|e }}
+          {% endif %}
+         </div>
+         <div class="address-card__row">
+          <div class="address-card__row-title">{{ address.address_type|title }} Address</div>
+
+             {{ address.address|e }} <br>
+             {{ address.city|e }}, {{ address.state|e }} - {{address.post_code|e}}<br/> 
+             {% for country in country_list %}
+                  {% if address.country == country.code %}
+                     {{ country.name|e }}
+                  {%endif%}
+              {% endfor %} 
+              -{{address.country}}<br>
+         </div>
+         <div class="address-card__row">
+            <div class="address-card__row-title">Phone Number</div>
+            <div class="address-card__row-content">{{ address.phone_no }}</div>
+         </div>
+         <div class="address-card__row">
+            <div class="address-card__row-title">Contact Name</div>
+            <div class="address-card__row-content">{{ address.contact|e }} {{address.contact_last}}</div>
+         </div>
+         <div class="address-card__row">
+            <div class="address-card__row-title">Email Address</div>
+            <div class="address-card__row-content">{{ address.email }}</div>
+         </div>
+         <div class="address-card__footer">
+            <a href="#" data-toggle="modal" data-target="#account-shipping-edit{{ address.id }}-modal">Edit</a>&nbsp;&nbsp;
+            <a href="#" data-toggle="modal" data-target="#account-shipping-delete{{ address.id }}-modal">Remove</a>
+         </div>
+      </div>
+   </div>
+   <div class="addresses-list__divider"></div>
+   {% endfor %}
+</div>
+{% set prefix = 'account-shipping-add' %}
+<div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Add Shipping Address</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         </div>
+         <div class="modal-body">
+            <form action="" method="post">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="{{ prefix }}-organization">Company<span class="color-red address_type0">*</span></label>
+                      <input type="text" name="organization" class="form-control" id="organization0" autocomplete="section-{{ prefix }} shipping organization" required }} />
+                   </div>
+                   <div class="form-group company-data address_type0">
+                     <label for="{{ prefix }}-company_number" class="">Company Number</label>
+                     <input type="text" name="company_number" class="form-control {{ (issues['company_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-vat_number"  />
+                     {% if (issues['company_number']) %}<span class="invalid-feedback"><strong>{{ issues['company_number'] }}</strong></span>{% endif %}
+                  </div>
+                  <div class="form-group company-data address_type0">
+                     <label for="{{ prefix }}-eori_number" class="">EORI Number</label>
+                     <input type="text" name="eori_number" class="form-control {{ (issues['eori_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-eori_number"  />
+                     {% if (issues['eori_number']) %}<span class="invalid-feedback"><strong>{{ issues['eori_number'] }}</strong></span>{% endif %}
+                  </div>
+                  <div class="form-group company-data address_type0" >
+                       <label for="{{ prefix }}-vat_number">VAT Number #</label>
+                       <input type="text" name="vat_number" class="form-control" id="{{ prefix }}-vat_number" />
+                  </div>
+                  <div class="form-group company-data address_type0">
+                     <label for="abn_number">ABN Number</label>
+                     <input type="text" id="abn_number" class="form-control" name="abn_number" >  
+                     <div class="invalid-feedback "></div>
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-name">Contact Person-First Name</label>
+                     <input type="text" name="name-first" class="form-control" id="{{ prefix }}-name" autocomplete="section-{{ prefix }} shipping name" />
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-name">Contact Person-Last Name</label>
+                     <input type="text" name="name-last" class="form-control" id="{{ prefix }}-last-name" autocomplete="section-{{ prefix }} shipping name" />
+                  </div>
+                   <div class="form-group">
+                       <label for="{{ prefix }}-home-email">Contact Email<span class="color-red">*</span></label>
+                       <input type="email" name="home-email" class="form-control" id="{{ prefix }}-home-email" autocomplete="section-{{ prefix }} shipping home email" required />
+                    </div>
+                    <div class="form-group">
+                       <label for="{{ prefix }}-home-email">Set as Default</label>
+                       <select  name="default" class="form-control contactDefault" id="{{ prefix }}-home-email" {{ (addresses | length > 0) ? ' style="background-color: #f37aea;"' : 'style=" background-color: #d0f37a;"' }}>
+                        {% if addresses | length > 0 %}
+                        <option value="n" style="background-color:#fff">No</option>
+                        {% endif %}
+                       <option value="y" style="background-color:#fff">Yes</option>
+                       </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                        <label for="addresstype">Address Type<span class="text-danger">*</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Different couriers have certain requirements for delivery to residential addresses or commercial addresses. For example, some couriers deliver over the weekend, whilst others will only ship to commercial buyers."></i></label>
+                        <select  class="form-control" name="addresstype" required="required" onchange="updateshipingAddressType(0,this)">
+                           <option value="commercial" >Commercial Property</option>
+                           <option value="residential" >Residential Property</option>
+                        </select>
+                        {% if (issues['addresstype']) %}<span class="invalid-feedback"><strong>{{ issues['addresstype'] }}</strong></span>{% endif %}
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-street-address">Address<span class="color-red">*</span></label>
+                     <textarea name="street-address" required="required" class="form-control" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} shipping street-address" ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="{{ prefix }}-address-level2">City<span class="color-red">*</span></label>
+                    <input type="text" name="address-level2" required="required" class="form-control" id="{{ prefix }}-address-level2" autocomplete="section-{{ prefix }} shipping address-level2" />
+                  </div>
+                  <div class="form-group">
+                      <label for="{{ prefix }}-address-level1">State / Province / Region<span class="color-red">*</span></label>
+                      <input type="text" name="address-level1" required="required" class="form-control" id="{{ prefix }}-address-level1" autocomplete="section-{{ prefix }} shipping address-level1" />
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-postal-code">Zip / Post Code<span class="color-red">*</span>(If no Zip please use N/A)</label>
+                     <input type="text" name="postal-code" class="form-control" id="{{ prefix }}-postal-code" autocomplete="section-{{ prefix }} shipping postal-code" required="required"/>
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-country">Country<span class="color-red">*</span></label>
+                     <select class="form-control custom-select" name="country" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} shipping country" required="required">
+                     <option value="" selected="selected">Please choose country...</option>
+                     {% for country in country_list %}<option value="{{ country.code }}">{{ country.name|e }}</option>{% endfor %}
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="{{ prefix }}-home-tel">Phone Number<span class="color-red">*</span></label>
+                     <input type="tel" name="home-tel" class="form-control" id="{{ prefix }}-home-tel" autocomplete="section-{{ prefix }} shipping home tel" required="required" />
+                  </div>
+                  <div class="form-group">
+                       <label for="{{ prefix }}-phone_no2">2nd Contact Number</label>
+                       <input type="tel" name="phone_no2" class="form-control" id="{{ prefix }}-phone_no2" />
+                    </div>
+                    <div class="form-group">
+                       <label for="{{ prefix }}-mobile-tel">Mobile Number</label>
+                       <input type="tel" name="mobile-tel" class="form-control" id="{{ prefix }}-mobile-tel" autocomplete="section-{{ prefix }} shipping mobile tel" />
+                    </div>
+                    <input type="hidden" name="address-level3" class="form-control" id="{{ prefix }}-address-level3" autocomplete="off" />
+                    <div class="form-group">
+                       <label for="{{ prefix }}-fax-tel">Fax Number</label>
+                       <input type="tel" name="fax-tel" class="form-control" id="{{ prefix }}-fax-tel" autocomplete="section-{{ prefix }} shipping fax tel" />
+                    </div>
+                </div>
+              </div>
+              <hr />
+              <div class="form-group">
+              <input type="hidden" value="add" name="action" />
+              <input type="submit" value="Add" class="btn btn-lg- btn-primary" />
+              </div>
+            </form>
+        </div>
+</div></div></div>
+{% for address in addresses %}
+{% set prefix = 'account-shipping-edit' ~ address.id %}
+<div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog">
+   <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title">Edit Shipping Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                      <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="{{ prefix }}-organization">Company<span class="color-red address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>*</span></label>
+                              <input type="text" name="organization" class="form-control" id="organization{{ address.id }}" autocomplete="section-{{ prefix }} shipping organization" value="{{ address.company_name|e }}" {{ address.address_type == 'commercial' ? 'required="required"' : '' }} />
+                           </div>
+                            <div class="form-group company-data address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>
+                               <label for="{{ prefix }}-company_number" class="">Company Number</label>
+                               <input type="text" name="company_number" class="form-control {{ (issues['company_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-company_number"  value="{{ address.company_number|e }}"/>
+                               {% if (issues['company_number']) %}<span class="invalid-feedback"><strong>{{ issues['company_number'] }}</strong></span>{% endif %}
+                            </div>
+                            <div class="form-group company-data address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>
+                                <label for="{{ prefix }}-eori_number" class="">EORI Number</label>
+                                <input type="text" name="eori_number" class="form-control {{ (issues['eori_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-eori_number" value="{{ address.eori_number|e }}" />
+                                {% if (issues['eori_number']) %}<span class="invalid-feedback"><strong>{{ issues['eori_number'] }}</strong></span>{% endif %}
+                            </div>
+                            <div class="form-group company-data address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>
+                                <label for="{{ prefix }}-vat_number">VAT Number #</label>
+                                <input type="text" name="vat_number" class="form-control" id="{{ prefix }}-vat_number" value="{{ address.vat_number|e }}"/>
+                             </div>
+                              <div  class="form-group company-data address_type{{address.id}}" {{ address.address_type != 'commercial' ? 'style="display:none"' : '' }}>
+                                <label for="abn_number">ABN Number</label>
+                                <input type="text" id="abn_number" class="form-control" name="abn_number" value="{{ address.abn_number|e }}">  
+                             <div class="invalid-feedback "></div>
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-name">Contact Person-First Name</label>
+                             <input type="text" name="name-first" class="form-control" id="{{ prefix }}-name-first" autocomplete="section-{{ prefix }} shipping name-first" value="{{ address.contact|e }}" />
+                          </div>
+                          <div class="form-group">
+                                 <label for="{{ prefix }}-last-name">Contact Person-Last Name</label>
+                                 <input type="text" name="name-last" class="form-control" id="{{ prefix }}-name-last" autocomplete="section-{{ prefix }} shipping name-last" value="{{ address.contact_last|e }}" />
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-home-email">Contact Email<span class="color-red">*</span></label>
+                             <input type="email" name="home-email" class="form-control" id="{{ prefix }}-home-email" autocomplete="section-{{ prefix }} shipping home email" value="{{ address.email|e }}" required="required" />
+                          </div>
+                          <div class="form-group">
+                                <label for="{{ prefix }}-home-email">Set as Default</label>
+                                <select  name="default" class="form-control contactDefault" id="{{ prefix }}-home-email" {{ (address.default == 'n') ? ' style="background-color: #f37aea;"' : 'style=" background-color: #d0f37a;"' }} >
+                                 {% if addresses | length > 1 %}
+                                    <option value="n" {{ (address.default =='n') ? ' selected="selected"' : '' }} style="background-color:#fff">No</option>
+                                 {% endif %}
+
+                                <option value="y" {{ (address.default =='y') ? ' selected="selected"' : '' }} style="background-color:#fff">Yes</option>
+                                </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="addresstype">Address Type<span class="text-danger">*</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Different couriers have certain requirements for delivery to residential addresses or commercial addresses. For example, some couriers deliver over the weekend, whilst others will only ship to commercial buyers."></i></label>
+                            <select  class="form-control" name="addresstype" required="required" onchange="updateshipingAddressType({{address.id}},this)">
+                               <option value=""></option>
+                               <option value="commercial" {{(address.address_type=='commercial')?'selected':''}}>Commercial Property</option>
+                               <option value="residential" {{(address.address_type=='residential')?'selected':''}}>Residential Property</option>
+                            </select>
+                            {% if (issues['addresstype']) %}<span class="invalid-feedback"><strong>{{ issues['addresstype'] }}</strong></span>{% endif %}
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-street-address">Address<span class="color-red">*</span></label>
+                             <textarea name="street-address" required="required" class="form-control" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} shipping street-address" >{{ address.address}}</textarea>
+                          </div>
+                          <input type="hidden" name="address-level3" class="form-control" id="{{ prefix }}-address-level3" autocomplete="off" />
+                          <div class="form-group">
+                                <label for="{{ prefix }}-address-level2">City<span class="color-red">*</span></label>
+                                <input type="text" name="address-level2" required="required" class="form-control" id="{{ prefix }}-address-level2" autocomplete="section-{{ prefix }} shipping address-level2" value="{{ address.city|e }}" />
+                          </div>
+                          <div class="form-group">
+                            <label for="{{ prefix }}-address-level1">State / Province / Region<span class="color-red">*</span></label>
+                            <input type="text" name="address-level1" required="required" class="form-control" id="{{ prefix }}-address-level1" autocomplete="section-{{ prefix }} shipping address-level1" value="{{ address.state|e }}" />
+                         </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-postal-code">Zip / Post Code<span class="color-red">*</span>(If no Zip please use N/A)</label>
+                             <input type="text" name="postal-code" class="form-control" id="{{ prefix }}-postal-code" autocomplete="section-{{ prefix }} shipping postal-code" value="{{ address.post_code|e }}" />
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-country">Country<span class="color-red">*</span></label>
+                             <select class="form-control custom-select" name="country" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} shipping country" required="required">
+                                <option  selected="selected" value="">Please choose country...</option>
+                                {% for country in country_list %}<option value="{{ country.code }}"{{ (address.country == country.code) ? ' selected="selected"' : '' }}>{{ country.name|e }}</option>{% endfor %}
+                             </select>
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-home-tel">Phone Number<span class="color-red">*</span></label>
+                             <input type="tel" name="home-tel" class="form-control" id="{{ prefix }}-home-tel" autocomplete="section-{{ prefix }} shipping home tel" value="{{ address.phone_no|e }}" required="required" />
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-phone_no2">2nd Contact Number</label>
+                             <input type="tel" name="phone_no2" class="form-control" id="{{ prefix }}-phone_no2" value="{{ address.phone_no2|e }}"/>
+                          </div>
+                          <div class="form-group">
+                               <label for="{{ prefix }}-mobile-tel">Mobile Number</label>
+                               <input type="tel" name="mobile-tel" class="form-control" id="{{ prefix }}-mobile-tel" autocomplete="section-{{ prefix }} shipping mobile tel" value="{{ address.mobile_no|e }}" />
+                          </div>
+                          <div class="form-group">
+                             <label for="{{ prefix }}-fax-tel">Fax Number</label>
+                             <input type="tel" name="fax-tel" class="form-control" id="{{ prefix }}-fax-tel" autocomplete="section-{{ prefix }} shipping fax tel" value="{{ address.fax_no|e }}" />
+                          </div>
+                        </div>
+                      </div>
+                     <div class="form-group">
+                         <input type="hidden" value="{{ address.id }}" name="id" />
+                         <input type="hidden" value="update" name="action" />
+                         <input type="submit" class="btn btn-lg- btn-primary" value="Save" style="    margin-left: 10px;"/>
+                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% set prefix = 'account-shipping-delete' ~ address.id %}
+<div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Delete Shipping Address</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         </div>
+         <div class="modal-body">
+            <form action="" method="post">
+               <p>
+                  Deleting the following address: <br />
+                  <br />
+                  {% if address.name %}Contact: {{ address.name|e }} {{ address.surname|e }}<br />{% endif %}
+                  {{ markdown(address.address_full)}}
+                  {% if address.email %}<br />Email: {{ address.email|e }}{% endif %}
+               </p>
+               <hr />
+               <div class="form-group">
+                  <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                  <input type="hidden" value="{{ address.id }}" name="id" />
+                  <input type="hidden" value="delete" name="action" />
+                  <input type="submit" value="Delete" class="btn btn-lg btn-danger" />
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endfor %}
+{% endblock %}

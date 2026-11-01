@@ -1,0 +1,142 @@
+/**
+ *	Survey Editor Style
+ *
+ *	@author Kelvin <khtat@highwaygroup.net>
+ */
+
+.clr {
+	margin: 0;
+	padding: 0;
+}
+
+ul.clr {
+	list-style: none;
+}
+
+table.clr {
+	border-collapse: collapse;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.btn {
+	width: 100px;
+}
+
+table.view-table, table.form-table {
+	width: 96%;
+	margin: auto;
+	border-collapse: collapse;
+	border: 1px solid #ffffff;
+	font-size: 12px;
+}
+
+table.form-table {
+	border: 1px solid #cccccc;
+}
+
+table.form-table td {
+	padding: 2px 0;
+}
+
+table.view-table th, table.view-table td {
+	padding: 5px;
+	border: 1px solid #ffffff;
+	text-align: center;
+}
+
+table.view-table th {
+	background: #FFEECC;
+	color: #000000;
+}
+
+table.view-table tr:nth-child(2n+1) {
+	background: #EEEEE0;
+}
+
+#answer-sortable-table {
+	text-align: center;
+}
+
+#answer-sortable-table td {
+	border: 1px solid #cccccc;
+}
+
+a.sort-link {
+	text-decoration: underline;
+	color: #000000;
+}
+
+a.sort-link:hover {
+	font-style: italic;
+}
+
+table.form-table td.left-title {
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+	padding-right: 2px;
+}
+
+input.text-input {
+	width: 98%;
+}
+
+.textarea-input {
+	resize: vertical;
+	width: 98%;
+	height: 150px;
+}
+
+/** 
+ *	Sortable Question list
+ */
+.position-mover {
+	cursor: move;
+}
+
+.sortable-table tr.placeholder {
+	position: relative;
+}
+
+.sortable-table tr.placeholder:before {
+	position: absolute;
+}
+
+.dragged {
+	position: absolute;
+	opacity: 0.5;
+	z-index: 2000;
+}
+
+.report-answer-table {
+	width: 100%;
+	border-collapse: collapse;
+
+}
+
+.report-answer-table .nv {
+	width: 50px;
+	padding: 2px 0;
+	text-align: center;
+}
+
+.report-answer-table tr:first-child {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.report-answer-table tr:not(:first-child):hover {
+	background-color: #c0c0c0;
+}
+
+.result-table {
+	border-collapse: collapse;
+}
+
+.result-table tr.checked {
+	background-color: #c0c0c0;
+}

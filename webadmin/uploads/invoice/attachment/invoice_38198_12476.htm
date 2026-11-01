@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>KB국민은행</title>
+  <style type="text/css">
+      * html .png24{tmp:expression(setPng24(this));}
+      
+      /* default setting */
+      body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,button,form,fieldset,p,blockquote{margin:0;padding:0}
+      
+      img, fieldset {border:0 none}
+      body, h1, h2, h3, h4, h5, dl, dt, dd, th, td, div, p, a,
+      form, fieldset,legend, input, button, label, textarea {color:#4e473f;font-size:12px;line-height:1.65;font-family:'돋움', dotum, Arial, Helvetica, sans-serif}
+      ul, ol, li {list-style:none outside}
+      table{border-collapse:collapse}
+      input, textarea{display:inline-block;font-size:1em;vertical-align:top;*vertical-align:middle}
+      address, em{font-style:normal}
+      caption{visibility:hidden;overflow:hidden;left:-9999px;font-size:0;line-height:0}
+      a{text-decoration:none;color:#4e473f}
+      a:hover,a:focus,a:active{text-decoration:underline;cursor:pointer !important}
+      a:hover,a:focus,a:active{text-decoration:underline;cursor:pointer !important}
+      
+      html, body, #WPOP{height:100%;}
+      body > #WPOP{hei ght:auto}
+      #pop_wrapper{position:relative;height:auto;min-height:100%;padding:0 20px;*zoom:1}
+      #pop_head{overflow:hidden;position:relative;margin-bottom:35px;padding:18px 0 0;background:url(https://oimg1.kbstar.com/img/ocommon/popup/bg_popHead.gif) repeat-x 0 100%;}
+      #pop_contents{padding:0 0 105px;}
+      #pop_footer{clear:both;position:relative;height:50px;margin:-50px 0 25px 0;padding:0 20px;background:url(https://oimg1.kbstar.com/img/ocommon/popup/bg_popfoot_logo.gif) no-repeat 20px 13px;}
+      
+      #pop_head .tit_dep1{padding:0 0 12px 0;font-size:18px;font-family:'돋움', Dotum;background:url(https://oimg1.kbstar.com/img/ocommon/popup/logo_kbstar.gif) no-repeat 100% 0}
+      #pop_head .logo{position:absolute;top:20px;right:8px;font:0/0 Arial}
+      #pop_footer .close{text-align:right}
+      #pop_contents .tType02 td{padding-left:7px;padding-right:5px;}
+      #pop_contents .acct_info .list_account dd{margin-top:0}
+      
+      #pop_wrapper .tType02 td,#pop_wrapper .tType02 th{padding:5px 5px 4px 15px}
+      #pop_wrapper .tType01 td,#pop_wrapper .tType01 th{padding:5px 3px 4px}
+      #pop_wrapper .tType01 td.tLeft{padding-left:7px}
+      
+      /* 영수증 */
+      .dealBox{overflow:hidden;zoom:1;clear:both;margin-top:15px;}
+      .dealBox .list_type1 li{line-height:120%;color:#4e473f;background-position:0 6px;}
+      .dealBox .fl{float:left;}
+      .dealBox .fr{position:relative;float:right;width:95px;}
+      .dealBox .fr .day{width:90px;position:absolute;top:40px;left:3px;text-align:center;font-size:11px;font-family:'돋움',dotum;color:#4d447d;}
+      .dealday{margin-top:-30px !important;text-align:center;font-weight:bold;}
+      
+      
+      /* 문자메세지 전송 */
+      .smsContent{width:208px;height:197px;position:relative;background:url(https://oimg1.kbstar.com/img/ocommon/bg_sms.gif) no-repeat;}
+      .smsContent textarea{width:112px;height:95px;border:0 none;margin:0;padding:7px 10px;position:absolute;top:37px;left:34px;background:#f8f8f8;resize:none;overflow:hidden}
+      .smsContent .checkByte{position:absolute;bottom:22px;right:30px;}
+      
+      /* 가변적인 테이블 여백주기 */
+      .tblWrap{margin-top:35px}
+      .tType01 th.tLeft{padding-left:15px !important;}
+      sup{color:red;font-size:9px;}
+      
+      ol.bold_num{list-style-type:decimal inside !important;}
+      
+      .box_img{min-height:73px;padding:25px 15px 24px 185px;background:url(/img/ocommon/bg_popboxImg.gif) no-repeat}
+      .box_img strong{font-size:16px;letter-spacing:-0.05em}
+      .box_img .comment{margin-top:5px}
+      .box_img .comment strong{font-size:12px}
+      .box_line{margin-top:15px;padding-top:15px;border-top:1px solid #e5e4e3}
+      
+      /* loading text */
+      .loadingTxt {margin:10px 0 0 0;text-align:center;}
+      
+      /* 부동산 프린트화면 */
+      .stamp,.stamp_other {height:70px;margin-top:15px;padding:12px 15px 0 0;text-align:right;font-weight:bold;font-size:14px}
+      .stamp{background:url(https://oimg1.kbstar.com/img/oland/stamp_kb.gif) no-repeat 100% 0}
+      .stamp_other{background:url(https://oimg1.kbstar.com/img/oland/stamp01_kb.jpg) no-repeat 100% 0}
+      
+      .sign_wrap {padding-bottom:15px; border-bottom:1px solid #e6e5e5;}
+      .sign_wrap dl dt {display:inline-block; width:25%; text-align:center; vertical-align:top; padding-top:15px;}
+      .sign_wrap dl dd {display:inline-block; width:70%;}
+      .sign_wrap dl dd ul li span {display:inline-block; margin-left:20%;}
+      
+      .apply_doc_wrap {position:relative;}
+      .apply_doc_wrap .ap_txt {display:inline-block; margin-left:10%;}
+      .apply_doc_wrap .ap_comment {margin-left:15%;}
+      .apply_info {position:absolute; right:0; top:0; border:1px solid #e6e5e5; padding:5px;}
+      
+      .apply_doc_wrap dl dt {margin-top:15px;}
+      .apply_doc_wrap dl dt span {display:inline-block; margin-left:25%;}
+      .apply_doc_wrap dl dd {padding-top:5px;}
+      .apply_doc_wrap dl dd ul li span {display:inline-block; margin-left:25%;}
+      .apply_doc_wrap .ap_box {border:1px solid #e6e5e5; padding:5px;}
+      
+      
+      /* Table */
+      .tType01, .tType02, .tType03 {width:100%;border-bottom:1px solid #ccc;table-layout:fixed;z-index:10}
+      .tType01 th {padding:8px 3px 7px 3px;text-align:center;font-weight:normal;background:#f6f6f5;border-top:1px solid #ccc;border-right:1px solid #e6e5e5;border-bottom:1px solid #e6e5e5}
+      .tType01 th.th01{background:#fcfcfc;border-top:1px solid #e6e5e5;}
+      .tType01 th.th02{font-weight:bold;background:#fff}
+      .tType01 th.th03{border-top:1px solid #e6e5e5}
+      .tType01 th.last{border-bottom:1px solid #ccc}
+      .tType01 th img {vertical-align:middle;padding-bottom:3px}
+      .tType01 td {padding:8px 3px 7px 3px;text-align:center;border-top:1px solid #e6e5e5;border-right:1px solid #e6e5e5;background:#fff;word-wrap:break-word;word-break:break-all}
+      .tType01 .tLeft {padding-left:10px !important;text-align:left}
+      .tType01 .tbLeft {padding:15px 0 15px 15px;text-align:left}
+      .tType01 .tRight {padding-right:5px;text-align:right}
+      .tbl_btn{padding:11px 20px 11px 0 !important;border-right:none !important;text-align:right !important;background:#f9f9f9 !important}
+      .tbl_btn .btn{margin-left:3px}
+      .tType01 tfoot td{padding:11px 0 9px 13px;text-align:left;border-right:none;background:#f9f9f9}
+      .tType01 tfoot td span{padding-right:18px}
+      .tType02{border-top:1px solid #ccc;}
+      .tType02 th{padding:8px 5px 7px 15px;text-align:left;font-weight:normal;background:#f6f6f5;border-top:1px solid #e6e5e5}
+      .tType02 th.sub01{border-left:1px solid #e6e5e5}
+      .tType02 td {z-index:1;padding:8px 5px 7px 20px;text-align:left;border-top:1px solid #e6e5e5;background:#fff;word-wrap:break-word;word-break:break-all}
+      .tType02 td *{vertical-align:middle;}
+      
+      .tType03 th {padding:6px 0 4px;text-align:center;font-weight:normal;background:#f6f6f5;border-bottom:1px solid #e6e5e5;border-right:1px solid #e6e5e5}
+      .tType03 td {padding:7px 0 6px;text-align:center;border-bottom:1px solid #e6e5e5;border-right:1px solid #e6e5e5}
+      .tType03 .tLeft {padding:7px 0 6px 13px;text-align:left}
+      
+      .nbr {border-right:none !important;}
+      .nbb {border-bottom:none !important;}
+      tr.first th, tr.first td {border-top:1px solid #ccc !important;}
+      .br1{border-right:1px solid #e6e5e5 !important}
+      .point{padding-top:2px;padding-left:5px;vertical-align:top;}
+      
+      /* btn */
+      .btn,
+      .btn *{overflow:visible;margin:0;padding:0;display:-moz-inline-stack;display:inline-block;*display:inline;*zoom:1;border:0;font-family:'돋움',Dotum;vertical-align:middle !important;white-space:nowrap;}
+      .btn {margin-right:4px !important}
+      .btn.icon {margin-right:1px !important;}
+      .btn *{cursor:pointer; _cursor:hand;vertical-align:top !important;}
+      .btn *:hover{text-decoration:none}
+      
+      
+      .btn.small, .btn.small *,.btn.medium, .btn.medium *{height:27px;font-size:12px;line-height:27px;_line-height:29px;background:url(https://oimg1.kbstar.com/img/ocommon/bg_btnSmall.gif) no-repeat;zoom:1}
+      .btn.small, .btn.medium{margin-right:2px;background-position:0 0}
+      .btn.small *, .btn.medium *{padding:0 10px 0 11px;text-align:center;background-position:100% 0}
+      .btn.small.action{background-position:0 -100px;}
+      .btn.small.action *{background-position:100% -100px;}
+      
+      .btn.large, .btn.large *{height:34px;font-weight:bold;line-height:34px;_line-height:35px;color:#63605c;background:url(https://oimg1.kbstar.com/img/ocommon/bg_btnLarge.gif) no-repeat;zoom:1}
+      .btn.large *{padding:0 14px 0 16px;font-size:14px;text-align:center;background-position:100% 0}
+      .btn.large.action{background-position:0 -100px}
+      .btn.large.action *{color:#534f4a;background-position:100% -100px}
+      .btn.large.action *:hover,
+      .btn.large.action *:active,
+      .btn.large.action *:focus{color:#000}
+      .btn.large *:hover,
+      .btn.large *:active,
+      .btn.large *:focus{color:#222}
+      .btn.strong *{font-weight:bold !important}
+      
+      /* common */
+      .cr{clear:both !important}
+      .tal{text-align:left !important}
+      .tac{text-align:center !important}
+      .tar{text-align:right !important}
+      .fl{float:left}
+      .fr{float:right !important}
+      .z1{zoom:1;overflow:hidden}
+      
+      .s1{margin-top:5px !important}
+      .s2{margin-top:10px !important}
+      .s3{margin-top:15px !important}
+      .s4{margin-top:20px !important}
+      .s5{margin-top:25px !important}
+      .s6{margin-top:30px !important}
+      .s7{margin-top:35px !important}
+      .s8{margin-top:40px !important}
+      .s9{margin-top:45px !important}
+      .s10{margin-top:50px !important}
+      .mt0{margin-top:0 !important}
+      .mr0{margin-right:0 !important}
+      .mb0{margin-bottom:0 !important}
+      .ml0{margin-left:0 !important}
+      
+      .vn{position:absolute;top:-99999px;left:-99999px;}
+      
+      /* COLOR */
+      .point_orange{color:#ff8400 !important}
+      .point_blue{color:#0391b1 !important}
+      .point_brown{color:#928881 !important}
+  </style>
+</head>
+
+<body>
+  <div id="pop_wrapper">
+      <div id="pop_head">
+<h1 class="tit_dep1">해외은행송금 전자확인증</h1>
+      </div>      <div id="pop_contents">
+<h2 class="tit_dep2">송금정보</h2>
+<table class="tType02" summary="이 표는 송금정보 입력 완료정보를 제공하며, 송금번호, 거래일시, 송금종류로 구성되어 있습니다.">
+<caption>송금정보 입력 완료</caption>
+<colgroup>
+<col width="30%">
+<col></colgroup>
+<tbody>
+<tr class="first">
+<th>송금번호</th>
+<td>OT10011411005496 </td></tr>
+<tr>
+<th>거래일시</th>
+<td>2014.11.26 14:25:22</td></tr>
+<tr>
+<th>송금종류</th>
+<td>물품대금</td></tr></tbody></table>
+<h2 class="tit_dep2 s7">계좌정보 및 송금금액</h2>
+<table class="tType02" summary="이 표는 송금내역 완료 정보를 제공하며, 송금통화종류, 총송금액, 외화출금액, 원화출금외화금액, 적용환율, 원화츨금외화원화금액, 전신료원화, 중계수수료부담구분, 원화출금계좌번호, 원화계좌인출금액, 외화출금계좌번호, 외화계좌인출금액으로 구성되어 있습니다.">
+<caption>송금내역 완료</caption>
+<colgroup>
+<col width="30%">
+<col></colgroup>
+<tbody>
+<tr class="first">
+<th>송금통화종류</th>
+<td>USD (미국 달러)</td></tr>
+<tr>
+<th>총송금액</th>
+<td>2,090.00</td></tr>
+<tr>
+<th>외화출금액</th>
+<td>0.00</td></tr>
+<tr>
+<th>원화출금외화금액</th>
+<td>2,090.00</td></tr>
+<tr>
+<th>적용환율</th>
+<td>1,114.45</td></tr>
+<tr>
+<th>원화출금외화 원화금액</th>
+<td>2,329,200</td></tr>
+<tr>
+<th>전신료(원화)</th>
+<td>5,000</td></tr>
+<tr>
+<th>중계수수료 부담구분</th>
+<td>송금인(원화)</td></tr>
+<tr>
+<th scope="row">중계수수료</th>
+<td>20,060 (USD 18.00 * 1,114.45)</td></tr>
+<tr>
+<th>원화출금계좌번호</th>
+<td>280602-04-003944</td></tr>
+<tr>
+<th>원화계좌인출금액</th>
+<td>2,354,260</td></tr></tbody></table>
+<h2 class="tit_dep2 s7">송금인/수취인 정보</h2>
+<table class="tType02" summary="이 표는 송금인/수취인 정보입력완료 정보를 제공하며, 지정고객여권번호, 또는 지정주민번호, 수취인성명, 수취인주소, 수취은행소재국가, 수취인계좌번호, 수취은행BIC코드, 수취은행명, 수취은행주소, 수취은행코드, 송금의뢰인성명, 송금의뢰인전화번호로 구성되어 있습니다.">
+<caption>송금인/수취인 정보입력완료</caption>
+<colgroup>
+<col width="30%">
+<col></colgroup>
+<tbody>
+<tr class="first">
+<th>지정주민번호</th>
+<td>750411-*******</td></tr>
+<tr>
+<th>수취인 성명</th>
+<td>HIGHWAYGAMES.COM PTY LTD </td></tr>
+<tr>
+<th>수취인 주소</th>
+<td>44-48 MAITLAND ROAD,MAYFIELD EAST 2304,NSW,AUSTRALIA </td></tr>
+<tr>
+<th>수취은행소재국가</th>
+<td>오스트레일리아</td></tr>
+<tr>
+<th>수취인 계좌번호</th>
+<td>100618913USD115601</td></tr>
+<tr>
+<th>수취 은행BIC코드</th>
+<td></td></tr>
+<tr>
+<th>수취 은행명</th>
+<td>COMMONWEALTH BANK OF AUSTRALIA </td></tr>
+<tr>
+<th>수취 은행주소</th>
+<td>HUNTER STREET, NEWCASTLE,NSW,AUSTRALIA</td></tr>
+<tr>
+<th>수취 은행코드</th>
+<td>CTBAAU2S </td></tr>
+<tr>
+<th>송금의뢰인 성명</th>
+<td>SHIN KYUNG SOO </td></tr>
+<tr>
+<th>송금의뢰인 전화번호</th>
+<td>0105230****</td></tr></tbody></table>
+<h2 class="tit_dep2 s7">선택사항</h2>
+<table class="tType02" summary="이 표는 선택사항 입력 완료 정보를 제공하며, 수취인전화번호, 중계은행BIC코드, 중계은행명, 송금인메모로 구성되어 있습니다.">
+<caption>선택사항 입력완료</caption>
+<colgroup>
+<col width="30%">
+<col></colgroup>
+<tbody>
+<tr class="first">
+<th>수취인 전화번호</th>
+<td></td></tr>
+<tr>
+<th>중계 은행BIC코드</th>
+<td></td></tr>
+<tr>
+<th>중계 은행명</th>
+<td></td></tr>
+<tr>
+<th>송금인 메모</th>
+<td></td></tr></tbody></table>
+      </div>
+  </div>
+
+
+</body></html>

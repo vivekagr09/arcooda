@@ -1,0 +1,97 @@
+/**
+ *	Standard template theme for arcade game sales
+ */
+
+ #survey-header {
+	max-width: 700px;
+}
+
+.navbar {
+	background-color: #000000;
+	color: #ffffff;
+}
+
+div.survey-question-container {
+	max-width: 700px;
+	background: #f8f9fa;
+	border-top: 4px solid #006699;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.btn-primary {
+	background: #006699;
+	border-color: #006699;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+	background-color: #004d66;
+	border-color: #004d66;
+}
+
+.btn-primary:hover {
+	background-color: #005699;
+	border-color: #005699;
+}
+
+.form-control:focus, .form-check:hover {
+	border-color: #006699;
+	box-shadow: 0 0 0 0.2rem rgba(0,102,153, .25);
+}
+
+.form-checked {
+	background: rgba(0,102,153, .1) !important;
+}
+
+.form-check {
+	border: 1px solid #ced4da;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	background: #ffffff;
+}
+
+.form-check-label {
+	padding: 10px 0 10px 5px;
+	width: 100%;
+	cursor: pointer;
+}
+
+.form-check-input {
+	margin-top: 15px;
+}
+
+.choice-open-input {
+	border: none;
+	background:inherit;
+	outline: none;
+	display:none;
+}
+
+#loading-page {
+	position: fixed;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255,255,255,0.5);
+}
+
+.loading.center {
+	display: inline-block;
+	vertical-align: middle;
+	width: 100%; 
+	text-align: center;
+}
+
+.loading.helper {
+	display:inline-block;
+	vertical-align: middle;
+	height: 100%;
+	width: 0;
+}

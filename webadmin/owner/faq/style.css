@@ -1,0 +1,24 @@
+body{font-family:Verdana,Arial,Helvetica,sans-serif;background-color:#f0f4f9}
+div#optcontent .unfinished{background-color:#ff0}
+div#optcontent a{color:#fff}
+div#optcontent{width:100%;margin-left:auto;margin-right:auto;font-family:Verdana,Arial,Helvetica,Sans-serif;font-size:9pt}
+div#optcontent table{text-align:left;width:80%;margin-left:auto;margin-right:auto;border-collapse:collapse;border:1px #ccc solid}
+div#optcontent tr{background-color:#fff;color:#000;font-family:Verdana;font-size:12px;font-weight:400}
+div#optcontent pre{margin:0}
+div#optcontent pre.alt{background-color:#eee}
+div#optcontent td{padding:2px 1px 2px 1px}
+div#optcontent th,div#optcontent thead{background-color:#fec;color:#000;font-weight:700;text-align:center}
+div#optcontent table.vbox td,div#optcontent table.vbox th,div#optcontent table.vbox thead{border:1px solid #fff}
+div#optcontent table.buttons{text-align:center}
+div#optcontent table.wide{width:90%}
+div#optcontent tr.alt{background-color:#eeeee0}
+div#optcontent tr.highlight{background-color:#90eea0}
+div#optcontent tr.mylock{background-color:#90a0ee}
+div#optcontent tr.locked{background-color:#ee90a0}
+div#optcontent td.collapse{width:1px}
+div#optcontent th.collapse{width:1px}
+div#optcontent td.left_title{width:30%;text-align:right;background-color:#eeeee0;color:#000;font-weight:700}
+div#optcontent input.infile,div#optcontent input.intext,div#optcontent select,div#optcontent textarea{width:98%}
+div#optcontent th a{color:#000}
+div#optcontent td a{color:#000}
+div#optcontent table.spacetable td{border:2px solid #fff}

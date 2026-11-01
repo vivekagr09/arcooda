@@ -1,0 +1,8 @@
+upwork is not letting me send the message. Can you forward?
+"The username/password for database connection is already in /home/arcooda/domains/current.ethan.ourhunter.com/.my.cnf
+You can clear/reuse arcooda_www database, or create another database but make sure it starts with arcooda_
+The username/password for phpmyadmin is vagrawal/Secure@123
+Since the site is based on coinop I'm not sure which freight database it's matched up to. Check if the schema matches highwaygroup, freight3 or coinop
+I did make a fork where I was trying to link it up to highwaygroup instead of coinop, you can check that too if you like"
+
+"I just deleted /home/arcooda/domains/current.ethan.arcooda.com/public_html/webadmin/.my.cnf and it's now connecting"

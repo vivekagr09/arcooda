@@ -1,0 +1,15 @@
+// out: ../../styles/admin.css, compress: true, autoprefixer: last 5 versions, groupmedia: true
+
+@import 'body.scss';
+@import 'todo.scss';
+@import 'theme.scss';
+
+@import 'layout/sidebar.scss';
+@import 'layout/header.scss';
+@import 'layout/footer.scss';
+@import 'layout/sections.scss';
+
+@import 'elements/tables.scss';
+@import 'elements/buttons.scss';
+
+@import 'features/icon-drawer.scss';

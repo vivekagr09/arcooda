@@ -1,0 +1,275 @@
+#admin_content>*
+{
+	font-family:arial;
+	font-size:12;
+}
+
+#admin_content
+{
+	width:100%;
+	text-align:center;
+}
+
+#admin_content>table
+{
+	width:350px;
+}
+
+#admin_content>table>tbody>tr>td
+{
+	white-space:nowrap;
+	text-align:left;
+	background-color:#DFE1F7;
+}
+
+#admin_content>table>tbody>tr>td:first-child
+{
+	white-space:nowrap;
+	text-align:right;
+	font-weight:bold;
+	background-color:#CCD0F2;
+}
+
+#admin_content>table>tbody>tr>td:first-child[colspan]
+{
+	text-align:center;
+}
+
+#admin_content>table>tbody>tr>td.spacer
+{
+	background-color:white;
+	height:16px;
+}
+
+#admin_content>table>tbody>tr>td.center_title
+{
+	text-align:center;
+	font-weight:bold;
+	background-color:#CCD0F2;
+}
+
+#admin_content>table>tbody>tr>td>input,
+#admin_content>table>tbody>tr>td>select,
+#admin_content>table>tbody>tr>td>textarea
+{
+	width:300px;
+}
+
+#admin_content input_wide
+{
+	width:300px;
+}
+
+#admin_content input_small
+{
+	width:60px;
+}
+
+/*
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-color: #FFFFFF;
+}
+
+.sectionTitle {
+	background-color: #000000;
+	color: #FFFFFF;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: bold;
+	text-align: center;
+}
+
+.sectionBody {
+	background-color: #000066;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: normal;
+}
+
+.titleBar {
+	background-color: #E9E9E9;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 24;
+	font-weight: bold;
+}
+
+.welcomeBar {
+	background-color: #FFFF99;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: bold;
+}
+
+.pageMenu {
+	background-color: #DFE1F7;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: bold;
+}
+
+.tableHeader {
+	background-color: #0055FF;
+	color: #FFFFFF;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: bold;
+	text-align: center;
+	visited: #FFFFFF;
+}
+
+.tableRow {
+	background-color: #DFE1F7;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: normal;
+}
+
+.tableRowAlt {
+	background-color: #B3B9F7;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: normal;
+}
+
+.title {
+	color: #FF0000;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.background {
+	background-color: #F0F4F9;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.windowBackground {
+	background-color: #FFFFFF;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.normal {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.td_options {
+	color: #FFFFFF;
+	font-size: 12px
+}
+
+.top {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #CCCCCC;
+}
+
+.left {
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #CCCCCC;
+	background-color: #CCD0F2;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12;
+	font-weight: bold;
+	text-align: right;
+}
+
+.right {
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #CCCCCC;
+	background-color: #DFE1F7;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12;
+	text-align: left;
+	font-weight: normal;
+}
+
+.centre {
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #CCCCCC;
+	border-bottom-color: #CCCCCC;
+}
+
+.bottom {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCCCCC;
+}
+
+.bottomLeft {
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-bottom-color: #CCCCCC;
+	border-left-color: #CCCCCC;
+}
+
+.bottomRight {
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-right-color: #CCCCCC;
+	border-bottom-color: #CCCCCC;
+}
+
+.bottomLeftRight {
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-bottom-color: #CCCCCC;
+	border-right-color: #CCCCCC;
+	border-left-color: #CCCCCC;
+}
+
+.smallText {
+	font-size: 8pt;
+	font-weight: normal;
+}
+
+.btn {
+	border-width: 1;
+	width: 26px;
+	height: 24px;
+}
+
+.btnDN {
+	border-width: 1;
+	width: 26px;
+	height: 24px;
+	border-style: inset;
+	background-color: buttonhighlight;
+}
+
+.btnNA {
+	border-width: 1;
+	width: 26px;
+	height: 24px;
+	filter: alpha(opacity=25);
+}
+
+.box {
+	border: 1px solid #CCCCCC;
+}
+*/

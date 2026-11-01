@@ -1,0 +1,70 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - orders:
+// - page:
+#}
+
+{% set global_page_title           = inputs.title|default('Payment Failed')        %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/payment_fail'                            %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : 'payment',      url : '/payment_fail' },
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+{% set payment = inputs.payment                                               %}
+{% set error = inputs.error %}
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+{% set title_front           = inputs.title_front  %}
+{% include '/blocks/block-header.twig' with {inputs: {
+  title: '',
+  breadcrumb: global_page_breadcrumbs,
+}} %}
+<link rel="stylesheet" href="/css/checkout.css" />
+<div class="site__body">
+   <div class="block order-success">
+      <div class="container">
+         <div class="order-success__body">
+            <div class="order-success__header" style="padding: 0px 0 52px;">
+               <div class="order-success__icon" style="text-align: center;display: table;">
+                  <div class="row">
+                     <svg viewBox="0 0 24 24" width="100" height="100">
+                        <circle cx="12" cy="12" r="10" fill="red" stroke="#fff" stroke-width="2"/>
+                        <path fill="none" stroke="#fff" stroke-width="2" d="M7,7 L17,17" />
+                        <path fill="none" stroke="#fff" stroke-width="2" d="M7,17 L17,7" />
+                     </svg>
+
+                  <div style="text-align: left; margin-left: 20px; margin-top: -17px;">
+                     <h1 class="order-success__title">Sorry</h1>
+                     <div class="order-success__subtitle">Your payment has failed to process.</div>
+                     <div  style="text-align: center;display: table;margin-top:1rem;">
+                        <p><span style="font-size: 22px;"><b>Reference </b>: </span><span style="color: red; font-weight: 600; font-size: 22px;">{{payment.reference}}</span></p>
+                     </div>
+                  </div>
+               
+               </div>
+            </div>
+               
+            <div class="order-success__icon row" style="text-align: left;display: table;margin-top: 10px;width: 70%;">
+               <p>The bank has recorded this payment error when you tried to make payment:</p>
+               <p style="color:red;text-align:center;font-size:20px;font-weight:500;">{{payment.Message}}</p>
+               <p>Please contact your bank or try to make the payment again below.</p>
+               {# <p>{{error}}</p> #}
+            </div>
+            {{invoice | json_encode()[0]}}
+            <div class="order-success__actions"> <a href="/payment" class="btn btn-primary">Try again to make payment</a><a href="/contact-us" class="btn btn-sm btn-secondary">Contact Us</a>
+            </div>
+         </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'before-footer',
+    }} %}
+{% endblock %}

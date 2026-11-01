@@ -1,0 +1,27 @@
+{% set layout           = inputs.layout|default('sidebar') %}
+{% set productSupported = inputs.productSupported %}
+{## set product          = ??? %#}
+{% set root_classes     = classnames('block block-brands block-brands--layout--' ~ layout) %}
+
+<div class="product-slider">
+	<div class="typography">
+		<div class="spec__section">
+			<h2 class="section-header__title" style="padding-left: 38px;">{{ product.name|e }} Support</h2>
+			<div class="{{ root_classes }}">
+				<div class="container">
+					<ul class="block-brands__list" style="border:none">
+						{% for support in productSupported %}
+							<li class="block-brands__item">
+								<a class="block-brands__item-link" href="/arcade-play/{{ support.slug|e }}" target="_blank">
+									<img src="/arcade-play/{{ support.slug|e }}.png" />
+									<span class="block-brands__item-name">{{ support.text|e }}</span>
+								</a>
+							</li>
+							<li class="block-brands__divider" role="presentation"></li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

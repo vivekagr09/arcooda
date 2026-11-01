@@ -1,0 +1,457 @@
+<?php
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
+/**
+ * @var int     $news_id
+ * @var mixed[] $data1
+ *
+ * @var array{
+ *     news_id:int,
+ *     active:string,
+ *     archived:string,
+ *     category:string,
+ *     news_title:string,
+ *     news_caption:string,
+ *     short_description:string,
+ *     long_description:string,
+ *     meta_title:string,
+ *     meta_key:string,
+ *     meta_desc:string,
+ *     image:string,
+ *     thumbnail:string
+ *     change_by:string,
+ *     last_change:int,
+ *     date_added:string,
+ * } $data1
+ */
+?>
+<script type="text/javascript">
+	function newsValidate(e){
+		let checkbox = document.querySelector('input[name="data1[schedule_news]"]');
+		if(document.getElementsByName("data1[active]")[0].value == 'n' && checkbox.checked){
+			if(!confirm('You have scheduled a news story, but have not made this story active. Are you sure you want to continue?')) {
+		        e.preventDefault();
+		    };
+		}
+	}
+</script>
+<script type="text/javascript">
+//<![CDATA[
+function link_insert(name) {
+    var theElem = document.getElementsByName(name);
+    if (theElem.length == 0) return;
+    theElem = theElem[0];
+    if (theElem.selectionStart != null && theElem.selectionEnd != null) {
+        var a = theElem.selectionStart;
+        var b = theElem.selectionEnd;
+        theElem.value = theElem.value.substring(0, a) + '<a href="http://www.WEBSITE" target="_blank">' + theElem.value.substring(a, b) + '</a>' + theElem.value.substring(b);
+        theElem.selectionStart = a + 20;
+        theElem.selectionEnd = a + 27;
+        theElem.focus();
+    }
+    else {
+        var repltext = null;
+        var seltext = (document.all) ? document.selection.createRange() : document.getSelection();
+        var selit = (document.all) ? document.selection.createRange().text : document.getSelection();
+        if (seltext != null && selit.length >= 1)
+            seltext.text = '<a href="http://www.WEBSITE" target="_blank">' + seltext.text + '</a>';
+        else
+            theElem.value += '<a href="http://www.WEBSITE" target="_blank">LINK</a>';
+    }
+}
+
+//modify for textColor
+	function applyTextColor(textareaId) {
+    const color = prompt("Enter a color (e.g., red, #ff0000):");
+    if (!color) return;
+
+    const textarea = document.querySelector(`[name="${textareaId}"]`);
+    if (!textarea) return;
+
+    const { selectionStart, selectionEnd } = textarea;
+
+    if (selectionStart !== null && selectionEnd !== null && selectionStart !== selectionEnd) {
+        const selectedText = textarea.value.substring(selectionStart, selectionEnd);
+        const coloredText = `<span style="color:${color};">${selectedText}</span>`;
+        textarea.value =
+            textarea.value.substring(0, selectionStart) +
+            coloredText +
+            textarea.value.substring(selectionEnd);
+
+        textarea.selectionStart = selectionStart;
+        textarea.selectionEnd = selectionStart + coloredText.length;
+        textarea.focus();
+    } else {
+        const defaultText = "Your Text";
+        const coloredText = `<span style="color:${color};">${defaultText}</span>`;
+        textarea.value += coloredText;
+    }
+}
+
+let savedSelectionStart = null;
+let savedSelectionEnd = null;
+
+// Function to save the selection range when interacting with the color picker
+function saveSelection(textareaId) {
+    const textarea = document.querySelector(`[name="${textareaId}"]`);
+    if (textarea) {
+        savedSelectionStart = textarea.selectionStart;
+        savedSelectionEnd = textarea.selectionEnd;
+    }
+}
+
+// Function to apply the selected text color
+function applyTextColorWithPicker(textareaId , elementId) {
+    const colorPicker = document.getElementById(elementId);
+    const color = colorPicker.value; // Selected color value
+    if (!color) return;
+
+    const textarea = document.querySelector(`[name="${textareaId}"]`);
+    if (!textarea) return;
+
+    // Use saved selection range if available
+    const selectionStart = savedSelectionStart;
+    const selectionEnd = savedSelectionEnd;
+
+    if (selectionStart !== null && selectionEnd !== null && selectionStart !== selectionEnd) {
+        const selectedText = textarea.value.substring(selectionStart, selectionEnd);
+        const coloredText = `<span style="color:${color};">${selectedText}</span>`;
+        textarea.value =
+            textarea.value.substring(0, selectionStart) +
+            coloredText +
+            textarea.value.substring(selectionEnd);
+
+        // Update selection positions and focus the textarea
+        textarea.selectionStart = selectionStart;
+        textarea.selectionEnd = selectionStart + coloredText.length;
+        textarea.focus();
+    } else {
+        alert("Please select text to apply the color.");
+    }
+}
+
+
+
+//modify for youtube
+function insertYouTubeIframe(textareaId) {
+    const youtubeLink = prompt("Enter the YouTube video link:");
+    if (!youtubeLink) return;
+
+    const videoIdMatch = youtubeLink.match(/(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (!videoIdMatch || !videoIdMatch[1]) {
+        alert("Invalid YouTube URL. Please try again.");
+        return;
+    }
+    const videoId = videoIdMatch[1];
+    const iframeHTML = `<iframe width="640" height="480"  src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+
+    const textarea = document.querySelector(`[name="${textareaId}"]`);
+    if (!textarea) return;
+
+    const { selectionStart, selectionEnd } = textarea;
+
+    if (selectionStart !== null && selectionEnd !== null) {
+        textarea.value =
+            textarea.value.substring(0, selectionStart) +
+            iframeHTML +
+            textarea.value.substring(selectionEnd);
+
+        textarea.selectionStart = selectionStart;
+        textarea.selectionEnd = selectionStart + iframeHTML.length;
+        textarea.focus();
+    } else {
+        textarea.value += iframeHTML;
+    }
+}
+
+
+
+function generic_insert(name, tag) {
+    var theElem = document.getElementsByName(name);
+    if (theElem.length == 0) return;
+    theElem = theElem[0];
+    if (theElem.selectionStart != null && theElem.selectionEnd != null) {
+        var a = theElem.selectionStart;
+        var b = theElem.selectionEnd;
+        theElem.value = theElem.value.substring(0, a) + '<' + tag + '>' + theElem.value.substring(a, b) + '</' + tag + '>' + theElem.value.substring(b);
+        theElem.selectionStart = a + 2 + tag.length;
+        theElem.selectionEnd = 2 + tag.length + b;
+        theElem.focus();
+    }
+    else {
+        var repltext = null;
+        var seltext = (document.all) ? document.selection.createRange() : document.getSelection();
+        var selit = (document.all) ? document.selection.createRange().text : document.getSelection();
+        if (seltext != null && selit.length >= 1)
+            seltext.text = '<' + tag + '>' + seltext.text + '</' + tag + '>';
+        else
+            theElem.value += '<' + tag + '>BOLDTEXT</' + tag + '>';
+    }
+}
+function str_replace(str_normal, str_find, str_replace) {
+    // case sensitive function at the moment...
+    return (str_normal.split(str_find)).join(str_replace);
+}
+function updateTags() {
+    var title = document.getElementsByName('data1[news_title]')[0];
+    var sDesc = document.getElementsByName('data1[short_description]')[0];
+    var mTitle = document.getElementsByName('data1[meta_title]')[0];
+    var mKey = document.getElementsByName('data1[meta_key]')[0];
+    var mDesc = document.getElementsByName('data1[meta_desc]')[0];
+    mTitle.value = (title.value) ? title.value : '';
+    mKey.value = (title.value) ? formatMETA(title.value, 'keyword') : '';
+    mDesc.value = (sDesc.value) ? formatMETA(sDesc.value, 'description') : '';
+    caption = getElement('data1[news_caption]');
+    caption.value = title.value;
+}
+function my_trim(array) {
+    for (i = 0; i < array.length; i++) {
+        //alert(array[i]);
+        var word = array[i] + "";
+        array[i] = word.replace(" ", "");
+    }
+    //alert(array);
+    return array;
+}
+function formatMETA(theString, type) {
+    //theString = strtolower(strip_tags($theString));
+    theString = str_replace(theString, '"', "'");
+    theString = str_replace(theString, ';', "");
+    if (type == 'keyword') {
+        theString = str_replace(theString, ",", " ");
+        theString = str_replace(theString, "-", " ");
+        var words = theString.split(' ');
+        words = my_trim(words);
+        //$words = array_unique($words);
+        var keywords = '';
+        for (i = 0; i < 50 && i < words.length; i++) {
+            if (words[i].replace(" ", "") != '') {
+                var let = words[i].charAt(0);
+                let = let.toUpperCase();
+                keywords += let + words[i].substring(1, words[i].length) + ", ";
+            }
+        }
+        return keywords + "Arcade Game, Arcade Machine";
+    }
+    return theString;
+}
+function getElement(name) {
+    var theElem = document.getElementById(name);
+    if (theElem != null) return theElem;
+    var theElems = document.getElementsByName(name);
+    if (theElems.length > 0) return theElems[0];
+    return null;
+}
+function toggleSection(sectionName) {
+    var theSect = getElement(sectionName);
+    if (theSect == null) return;
+    if (theSect.style.display == 'none')
+        theSect.style.display = 'inline';
+    else
+        theSect.style.display = 'none';
+}
+function deleteValue(obj, value) {
+    if (obj.value == $value)
+        obj.value = '';
+}
+function open_win(url) {
+    window.open(url, '', 'scrollbar=yes,width=400,height=400')
+}
+function copyShort() {
+    var longElem = getElement('data1[long_description]');
+    var shortElem = getElement('data1[short_description]');
+    var old = longElem.value;
+    longElem.value = shortElem.value + "\n\n" + old;
+}
+//]]>
+</script>
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<div class="news_content">
+<form accept-charset="utf-8" action="?action=process" method="post">
+<div align="center">
+<div class="flagHeader" style="width:95%;align:center"><span><a href="javascript:toggleSection('sectionDesc');">News Description</a></span></div>
+</div><br />
+<div id="sectionDesc">
+	<table class="wide" style="width:98%" align="center">
+		<input type="hidden" name="data1[news_id]" value="<?=$data1['news_id']?>" />
+		<tr>
+			<td style="width:15%" class="left_title">Date Posted (dd/mm/yyyy) :</td>
+			<td style="width:85%"><input type="text" name="data1[date_posted]" value="<?=(isset($data1['date_added']) && !empty($data1['date_added'])) ? date('d/m/Y', strtotime($data1['date_added'])) : date('d/m/Y')?>" style="width:98%;" /></td>
+		</tr>
+		<tr>
+			<?php if($data1['news_id']){ 
+                $url_news=sprintf(
+            '/n/%s-%d.html',
+            urlencode(trim(preg_replace('/[^A-Za-z0-9]+/', '-', $data1['news_title']), '-')),
+            $data1['news_id']
+        );
+
+            ?>
+			<td class="left_title"><a href="<?= $url_news?>" target="_blank">Title :</td>
+			<?php }else{ ?>
+			<td class="left_title">Title :</td>
+		<?php } ?>
+			<td>
+				<?php $onchange = ('' == $data1['news_id']) ? 'javascript: updateTags();' : ''?>
+				<input type="text" name="data1[news_title]" value="<?=str_replace('"', '&quot;', $data1['news_title'])?>" style="width:98%;" onchange="<?=$onchange?>"/>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:15%" class="left_title">Short Description test :</td>
+			<td style="width:85%">
+				<?php $onchange = ('' == $data1['news_id']) ? 'javascript: updateTags();' : ''?>
+				<?php $desc     = ('' == $data1['short_description']) ? '' : str_replace('<', '&lt;', str_replace('<br />', '', $data1['short_description']))?>
+				<textarea name="data1[short_description]" style="height:192px;" onchange="<?=$onchange?>"><?=trim($desc)?></textarea>
+				<br />
+				<input type="button" value="Insert Link" onclick="javascript:link_insert('data1[short_description]');" />
+				<input type="button" value="Bold" onclick="javascript:generic_insert('data1[short_description]','b');" />
+				<input type="button" value="Italics" onclick="javascript:generic_insert('data1[short_description]','i');" />
+				<input type="button" value="Underline" onclick="javascript:generic_insert('data1[short_description]','u');" />
+				<!-- <input type="button" value="Text Color" onclick="javascript:applyTextColor('data1[short_description]');" /> -->
+				
+				<input style="width:96px;" type="button" value="Bullet Point" onclick="generic_insert('data1[short_description]','li');" />
+				<input type="button" value="YouTube" onclick="javascript:insertYouTubeIframe('data1[short_description]');" />
+				<!-- <span>Text Colour <input type="color" name="data1[text_color]" value="<?= $data1['font_color'] ?>"></span> -->
+				<span>
+					    Text Color:
+					    <input type="color" id="textColorPicker" name="data1[text_color]" value="#000000" 
+					           onmousedown="saveSelection('data1[short_description]');" 
+					           onchange="applyTextColorWithPicker('data1[short_description]','textColorPicker');">
+					</span>
+
+
+				<!-- <input type="checkbox" name="data1[short_desc_raw]" />Save as Raw HTML -->
+			</td>
+		</tr>
+		<tr><td style="width:15%" class="left_title">&nbsp;</td><td><input type="button" value="Copy From Above" onclick="javascript:copyShort();"></td></tr>
+		<tr>
+			<td style="width:15%" class="left_title">Long Description :</td>
+			<td style="width:85%">
+				<?php $onchange = ('' == $data1['news_id']) ? 'javascript: updateTags();' : ''?>
+				<?php $desc     = ('' == $data1['long_description']) ? '' : str_replace('<', '&lt;', str_replace('<br />', '', $data1['long_description']))?>
+				<textarea name="data1[long_description]" style="height:512px;" onchange="<?=$onchange?>"><?=trim($desc)?></textarea>
+				<br />
+				<input type="button" value="Insert Link" onclick="javascript:link_insert('data1[long_description]');" />
+				<input type="button" value="Bold" onclick="javascript:generic_insert('data1[long_description]','b');" />
+				<input type="button" value="Italics" onclick="javascript:generic_insert('data1[long_description]','i');" />
+				<input type="button" value="Underline" onclick="javascript:generic_insert('data1[long_description]','u');" />
+				<!-- <input type="button" value="Text Color" onclick="javascript:applyTextColor('data1[long_description]');" /> -->
+				
+				<input style="width:96px;" type="button" value="Bullet Point" onclick="generic_insert('data1[long_description]','li');" />
+				<input type="button" value="YouTube" onclick="javascript:insertYouTubeIframe('data1[long_description]');" />
+				<span>
+				 Text Color:
+    			<input type="color" id="textColorPicker1" name="data1[text_color1]" value="#000000" 
+           onmousedown="saveSelection('data1[long_description]');" 
+           onchange="applyTextColorWithPicker('data1[long_description]','textColorPicker1');">
+				<!-- <input type="checkbox" name="data1[long_desc_raw]" />Save as Raw HTML -->
+			</span>
+			</td>
+		</tr>
+	</table>
+</div>
+<br />
+
+<br />
+<?php 
+
+	include __DIR__ . '/meta_tags.tpl.php';
+	//include __DIR__ . '/meta_tags_list.tpl.php';
+	include __DIR__ . '/product_images.php'; 
+
+     include __DIR__.'/videos.tpl.php'; ?>
+<br />
+<div align="center">
+<div class="flagHeader" style="width:95%;align:center"><span><a href="javascript:toggleSection('sectionCom');">Admin Comments</a></span></div>
+</div><br />
+<div id="sectionCom">
+	<table class="wide" style="width:95%" align="center">
+		<tr>
+			<td class="left_title" style="width:14%;">Admin Comment :</td>
+			<td><textarea name="data1[new_comment]" style="width:98%;height:192px;"></textarea></td>
+		</tr>
+	</table>
+<?php
+global $DB;
+$query = $DB->query(sprintf(
+	"SELECT *, UNIX_TIMESTAMP(`comment_date`) AS `comment_time` FROM `news_comments` WHERE `news_id` = %d ORDER BY `comment_id` DESC",
+	$news_id
+));
+if ($DB->num_rows($query) > 0) {
+?>
+	<br />
+	<table align="center" cellpadding=4 cellspacing=0 style="width:95%">
+		<tr><th colspan=3 style="padding: 2 5 2 5;">Previous Comments</th>
+		<tr style="background-color:#E3EBF7">
+			<td class="bottomLeft" style="text-align:center;border-top: 1px solid #CCCCCC"><b>Date</b></td>
+			<td class="bottomLeft" style="text-align:center;border-top: 1px solid #CCCCCC"><b>User</b></td>
+			<td class="bottomLeftRight" style="text-align:center;border-top: 1px solid #CCCCCC"><b>Comment</b></td>
+		</tr>
+<?php
+    $count = 0;
+    while ($row = $DB->fetch_assoc($query)) {
+?>
+			<tr <?=($count % 2 == 1) ? 'style="background-color:#EEEEEE"' : ''?>>
+				<td class="bottomLeft" style="text-align:center;padding: 2 5 2 5;"><?=date('d/m/Y', $row['comment_time'])?></td>
+				<td class="bottomLeft" style="text-align:center;padding: 2 5 2 5;"><?=str_replace('<', '&lt;', $row['user'])?></td>
+				<td class="bottomLeftRight" style="text-align:left;width:98%;padding: 2 5 2 5;"><?=nl2br(str_replace('<', '&lt;', $row['comment_text']))?></td>
+			</tr>
+<?php
+        $count++;
+    }
+?>
+	</table>
+<?php
+}
+?>
+</div>
+<br />
+<div align="center">
+<div class="flagHeader" style="width:95%;align:center"><span><a href="javascript:toggleSection('sectionSta');">News Status</a></span></div>
+</div><br />
+<?php
+
+?>
+<div id="sectionSta">
+	<table class="wide" style="width:98%" align="center">
+	<tr>
+		<td class="left_title">Front Page :</td>
+		<td><input type="checkbox" name="data1[archived]" value="y" <?=('y' == $data1['archived']) ? ' checked="true"' : '' ?>>
+		</td>
+	</tr>
+	<tr>
+		<td class="left_title">Schedule News :</td>
+		<td><input type="checkbox" name="data1[schedule_news]" value="y" <?=(isset($data1['date_schedule']) && '0000-00-00' != $data1['date_schedule']) ? ' checked="true"' : '' ?> onclick="toggleSection('date_schedule', this.checked);">
+			<span id="date_schedule" style="<?= (isset($data1['date_schedule']) && '0000-00-00' != $data1['date_schedule']) ? '' : 'display:none;' ?>">Starting Date : <input type="date" name="data1[date_schedule]" value="<?= $data1['date_schedule']?>"></span>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="left_title">News For :</td>
+
+		<td>
+			<input type="checkbox" value="Latest News" name="data1[category][]" <?= (in_array("Latest News",explode(',', $data1['category']))) ? 'checked' : '' ?> /> Latest News
+			<input type="checkbox" value="Arcade Games" name="data1[category][]" <?= (in_array("Arcade Games",explode(',', $data1['category']))) ? 'checked' : '' ?> /> Arcade Games
+			<input type="checkbox" value="Game Software" name="data1[category][]" <?= (in_array("Game Software",explode(',', $data1['category']))) ? 'checked' : '' ?> />Game Software
+			<input type="checkbox" value="Arcade Parts" name="data1[category][]" <?= (in_array("Arcade Parts",explode(',', $data1['category']))) ? 'checked' : '' ?> /> Arcade Parts
+			<input type="checkbox" value="Merchandise" name="data1[category][]" <?= (in_array("Merchandise",explode(',', $data1['category']))) ? 'checked' : '' ?> /> Merchandise
+		</td>
+	</tr>
+	<tr style="line-height: 50Px;">
+		<td class="left_title" style="width:14%;">Active :</td>
+		<td><select name="data1[active]" <?php if(isset($data1['active'])) {  ?> style="background: <?=('n' == $data1['active']) ? '#FF0000' : '#00FF00'?>;" <?php } ?>  onchange="this.style.backgroundColor=((this.value=='y')?'#00FF00':'#FF0000');" required>
+			<option  value="" >Please Select</option>
+			<option style="background: green;" value="y" <?=('y' == $data1['active']) ? ' selected="selected"' : ''?>>Yes</option>
+			<option style="background:red" value="n" <?=('n' == $data1['active']) ? ' selected="selected"' : ''?>>No</option>
+		</select></td>
+	</tr>
+	</table>
+</div>
+<br />
+<br />
+<div align="center"><input type="submit" value="<?=('' == $data1['news_id'] ? 'Add' : 'Edit')?>" style="width:100px" onclick="newsValidate(event)"/></div>
+</form>
+</table>
+</div>

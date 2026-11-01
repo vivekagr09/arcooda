@@ -1,0 +1,57 @@
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+{% set newsletter_list        = inputs.newsletter_list %}
+{% set user = user() %}
+
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+	{% include '/blocks/block-header.twig' with {inputs: {
+	    title: global_page_title,
+	    breadcrumb: global_page_breadcrumbs,
+	}} %}
+
+   <div class="block">
+      <div class="container container--max--xl">
+         <div class="row">
+            <div class="col-12 col-lg-12 mt-4 mt-lg-0">
+               <div class="card">
+                  <div class="card-header">
+                     <h5>Recent Newsletters</h5>
+                  </div>
+                  <div class="card-divider"></div>
+                  <div class="card-body card-body--padding--2">
+                     <div class="vehicles-list vehicles-list--layout--account">
+                     	<div class="vehicles-list__body">
+		                 	{% for newsletter in newsletter_list %}
+		                           <div class="vehicles-list__item">
+		                              <div class="vehicles-list__item-info">
+		                              	<div class="row">
+		                          		<div class="col-md-3">
+		                          			<img src="{{newsletter.image}}" style="height:96px;width:96px;" alt="{{newsletter.name}}" title="{{newsletter.name}}" />
+		                          		</div>
+		                          		<div class="col-md-9">
+			                                 <div class="vehicles-list__item-name">
+			                                 	<a href="{{newsletter.newsletter_url}}" target="_blank">{{newsletter.name}}</a></div>
+			                                 <div class="vehicles-list__item-details">{{newsletter.short_desc}}</div>
+			                             </div>
+			                         </div>
+		                              </div>
+		                           </div>
+		                    {% endfor %}
+                    	</div>
+                     </div>
+                  </div>
+                  {% if not user %}
+						   <div style="padding:20px;"><i> <a href="/account/register" target="_blank"><span style="color:red;    font-size: 12px;text-decoration: underline;"># Join as a member to subscribe to our mailing list</span></a></i></div>
+						{% endif %}
+               </div>
+                  
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="block-space block-space--layout--before-footer"></div>
+{% endblock %}

@@ -1,0 +1,185 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+}
+
+div#inqcontent .unfinished
+{
+	background-color:yellow;
+}
+
+div#inqcontent a
+{
+	color: white;
+}
+
+div#inqcontent
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div#inqcontent table
+{
+	text-align: left;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div#inqcontent tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+div#inqcontent pre {margin: 0 0 0 0;}
+div#inqcontent pre.alt {background-color: #EEEEEE;}
+
+div#inqcontent td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div#inqcontent th, div#inqcontent thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+}
+
+div#inqcontent table.vbox td, div#inqcontent table.vbox th, div#inqcontent table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div#inqcontent table.buttons {	text-align: center; }
+div#inqcontent table.wide {	width: 90%; }
+div#inqcontent tr.alt		{ background-color: #EEEEE0; }
+div#inqcontent tr.highlight { background-color: #90EEA0; }
+div#inqcontent tr.mylock	{ background-color: #90A0EE; }
+div#inqcontent tr.locked	{ background-color: #EE90A0; }
+div#inqcontent td.collapse {	width: 1px; }
+div#inqcontent th.collapse {	width: 1px; }
+div#inqcontent td.left_title {	width: 30%;
+				text-align: right;
+				background-color: #EEEEE0;
+				color: #000000;
+				font-weight: bold; }
+div#inqcontent input.intext, div#inqcontent input.infile, div#inqcontent textarea, div#inqcontent select {	width: 98%; }
+
+div#inqcontent th a
+{
+	color: #000000;
+}
+
+div#inqcontent td a
+{
+	color: #000000;
+}
+
+div#inqcontent table.spacetable td
+{
+	border:2px solid white;
+}
+
+/* ------------------------------------------- */
+
+div#printcontent
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div#printcontent table
+{
+	text-align: left;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px solid #F0F0F0;
+}
+
+div#printcontent tr
+{
+	background-color: white;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+div#printcontent td
+{
+	padding: 3px;
+}
+
+div#printcontent th, div#printcontent thead
+{
+	background-color: white;
+	color: black;
+	font-weight: bold;
+	text-align: center;
+}
+
+div#printcontent table.vbox td, div#printcontent table.vbox th, div#printcontent table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div#printcontent table.buttons {	text-align: center; }
+div#printcontent table.wide {	width: 90%; }
+div#printcontent tr.alt {	background-color: #F9F9F9; }
+div#printcontent td.collapse {	width: 1px; }
+div#printcontent th.collapse {	width: 1px; }
+div#printcontent td.left_title {	width: 30%;
+				text-align: right;
+				background-color: #F9F9F9;
+				color: #000000;
+				font-weight: bold; }
+div#printcontent input.intext, div#printcontent input.infile, div#printcontent textarea, div#printcontent select {	width: 98%; }
+
+div#printcontent th a
+{
+	color: white;
+	text-decoration: none;
+}
+
+div#plain *
+{
+	background-color:white;
+	color:black;
+	font-weight:normal;
+	font-size:xx-small;
+}
+div#plain table
+{
+	border-width:0px;
+}
+div#plain th
+{
+	background-color:white;
+	font-weight:bold;
+	color:black;
+	border:1px solid gray;
+}
+div#plain td
+{
+	background-color:white;
+	font-weight:normal;
+	color:black;
+	border:1px solid gray;
+}

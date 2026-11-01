@@ -1,0 +1,79 @@
+{#
+// inputs:
+// - category: TwigCategory - category data object
+// - - image_mobile: TwigImage
+// - - image:        TwigImage
+// - - url:          string - url
+// - - children:     TwigCategory[] - Child categories
+// - products: TwigProduct[]
+#}
+
+{% set category = inputs.category %}
+
+{#{% set products = data('shop-products.json') %}#}
+{% set products = inputs.products %}
+
+<div class="block block-zone">
+    <div class="container">
+        <div class="block-zone__body">
+            <div class="block-zone__card category-card category-card--layout--overlay">
+                <div class="category-card__body">
+                    <div class="category-card__overlay-image">
+                        <img srcset="{{ category.image_mobile|e }} 530w, {{ category.image|e }} 305w" src="{{ category.image|e }}" sizes="(max-width: 575px) 530px, 305px" alt="{{ category.image.alt|e }}" />
+                    </div>
+                    <div class="category-card__overlay-image category-card__overlay-image--blur">
+                        <img srcset="{{ category.image_mobile|e }} 530w, {{ category.image|e }} 305w" src="{{ category.image|e }}" sizes="(max-width: 575px) 530px, 305px" alt="{{ category.image.alt|e }}" />
+                    </div>
+                    <div class="category-card__content">
+                        <div class="category-card__info">
+                            <div class="category-card__name">
+                                <a href="{{ category.url|e }}">{{ category|e }}</a>
+                            </div>
+                            <ul class="category-card__children">
+                                {% for child in category.children %}
+                                    <li><a href="{{ child.url|e }}">{{ child|e }}</a></li>
+                                {% endfor %}
+                            </ul>
+                            <div class="category-card__actions">
+                                <a href="{{ category.url|e }}" class="btn btn-primary btn-sm">Shop All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block-zone__widget">
+                <div class="block-zone__widget-header">
+                    <div class="block-zone__tabs">
+                        <button class="block-zone__tabs-button block-zone__tabs-button--active" type="button">Featured</button>
+                        <button class="block-zone__tabs-button" type="button">Bestsellers</button>
+                        <button class="block-zone__tabs-button" type="button">Popular</button>
+                    </div>
+
+                    {% include '/components/arrow.twig' with {inputs: {
+                        classes: 'block-zone__arrow block-zone__arrow--prev',
+                        direction: 'prev',
+                    }} %}
+                    {% include '/components/arrow.twig' with {inputs: {
+                        classes: 'block-zone__arrow block-zone__arrow--next',
+                        direction: 'next',
+                    }} %}
+                </div>
+                <div class="block-zone__widget-body">
+                    <div class="block-zone__carousel">
+                        <div class="block-zone__carousel-loader"></div>
+                        <div class="owl-carousel">
+                            {% for product in products[:8] %}
+                                <div class="block-zone__carousel-item">
+                                    {% include '/components/product-card.twig' with {inputs: {
+                                        product: product,
+                                        exclude: ['features', 'list-buttons'],
+                                    }} %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

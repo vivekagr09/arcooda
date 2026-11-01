@@ -1,0 +1,50 @@
+{% set layout   = inputs.layout|default('sidebar') %}
+{% set classes  = inputs.classes|default('') %}
+{% set slider     = inputs.slider     %}
+<style type="text/css">
+	.ms-align-right{
+		right: -189px!important;
+	}
+</style>
+<div class="product-slider">
+	<div class="typography">
+     	<div class="spec__section">
+            <h2 class="section-header__title" style="padding-left: 38px;">How To Use {{product.name | title}}</h2>
+            <div style="margin-top: 50px;">
+				<div class="ms-tabs-template ms-tabs-vertical-template">
+					<div class="master-slider ms-skin-default" id="productSlider">
+					 {% for slide in slider %}
+					 	<div class="ms-slide">
+					        <img src="/img/blank.gif" data-src="/brochureimage/{{slide.name}}?crop=true&width=850&height=480" alt="{{ slide.title|e }}"/>
+					        <div class="ms-thumb">
+					        	<h3>{{slide.title}}</h3>
+					        	<!-- <p>{{slide.caption}}</p> -->
+					        </div>
+					    </div>
+					{% endfor %}
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", () => {
+var productslider = new MasterSlider();
+productslider.control('arrows');
+productslider.control('circletimer' , {color:"#FFFFFF" , stroke:9});
+productslider.control('thumblist' , {autohide:false ,dir:'v',type:'tabs', align:'right', margin:0, space:0, width:201, height:70, hideUnder:550,color:"#FFFFFF"});
+
+productslider.setup('productSlider' , {
+	width:850,
+	height:480,
+	space:0,
+	view:'wave'
+});
+$('#myTab a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+});
+SyntaxHighlighter.all();
+});
+</script>

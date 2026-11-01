@@ -1,0 +1,157 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - member:
+#}
+
+{% set global_page_title           = inputs.title %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = inputs.keywords|default('')                   %}
+{% set global_page_canonical       = '/product-builder.html'                          %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'},
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set builder_category    = inputs.builder_category %}
+{% set builder_product    = inputs.builder_product %}
+{% set title    = inputs.title %}
+{% set builderurl=inputs.builderurl %}
+{% set selected_category=inputs.selected_category %}
+<html>
+<head>
+	<title>Product Builder</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css"  href="/builder/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/builder/js/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="/builder/js/slick/slick-theme.css"/>
+<style>
+	img.option-image {
+    width: 250px;
+    height: 250px;
+}
+</style>
+</head>
+<body id="app-body">
+				<div id="header-container">
+					<div id="builder-title-wrapper" class="align-middle">
+						<a href="/"><div id="logo-wrapper" class="grid-inline-top"><img src="/brand.png" alt="Logo" height="37" /></div></a>
+					{% if builder_product | length == 0 %}
+						<h1  class="clr" style="width:84%;">Build your own product</h1>
+						<div id="main-page-title" class="page-title clr" style="margin: 10px 0;"><p class="clr">Choose Category</p></div>
+					{% else %}
+						<h1  class="clr" id="builder_name" style="width:84%;">Choose Cabinet</h1>
+						<h4 class="clr" style="margin: 10px 0;">{{selected_category.name}}</h4>
+
+						<ul class="clr" id="options-list" style="display: none;width:80%;" data-url="{{builderurl}}"></ul>
+					
+					{% endif %}
+					</div>
+				</div>
+		    	<div id="main-content" >
+
+		    			{% if builder_product | length == 0 %}
+		    			<div id="category-step">
+		    				<div style="padding: 25px 0; width: 75%; margin: auto;" id="machine-slider">
+			    			
+			    				{% for category in builder_category %}
+			    				<div class='grid-inline-top align-middle cat' style=' width: 270px; margin: 10px; outline: none;' onclick='window.open("/product-builder.html?category={{category.id}}","_self");'>
+			    					<div class='cat-selector button-selector option-container-border'>
+			    						<div class='option-container'>
+			    							<div class='option-name-wrapper'>
+			    								<h4>{{category.name}}</h4>
+			    							</div>
+			    							<div class="option-image-wrapper"><img src="/images/builder/{{category.filename}}" width="250" height="250" class="option-image">
+			    							</div>
+			    							<div style="padding:20px 0;"></div>
+			    						</div>
+			    					</div>
+			    				</div>
+			    				{% endfor %}
+
+			    			</div>
+			    		</div>
+		    			{% else %}
+		    			   
+			            <div id="machine-step">
+			            	<div style="padding: 25px 0; width: 75%; margin: auto;" id="machine-slider">
+			            		{% for key,machine in builder_product %}
+								<div class='grid-inline-top align-middle machines' style=' width: 270px; margin: 10px; outline: none;'>
+									<div class='machine-selector button-selector option-container-border'>
+										<div class='option-container'>
+											<div class='option-name-wrapper'>
+												<h4>{{machine.product.name}}</h4>
+											</div>
+
+											<div class='option-image-wrapper'>
+												<img src='{{machine.product.image}}' width='250' height='250' class='option-image' />
+											</div>	
+											<div class='align-middle'>
+												<span class='option-price font-14'>${{machine.price}}</span><span class='option-price' style='font-size: 10PX;'>{{machine.currency}}</span>
+											</div>
+											<div class='desc-wrapper' style='display: none;'>
+												<p class='clr option-desc'>{{machine.description}}</p>
+											</div>
+											<div class='option-btn-wrapper'>
+												<div class='option-btn-radio' data-machine-name="{{machine.name}}" data-machine-key={{key}} data-machine-price="{{machine.price}}"data-machine-currency="{{machine.currency}}" data-machine-thumb={{machine.product.image}} data-machine-pickup="{{machine.delivery_pickup_price}}" data-machine-sea="{{machine.delivery_sea_price}}" data-machine-air="{{machine.delivery_air_price}}"
+												data-machine-website="{{machine.link}}"
+												data-machine-builderid="{{machine.builder_id}}"
+												data-machine-buildername="{{machine.builder_name}}"
+												>
+												</div>
+											</div>
+										</div>
+									</div>
+				        		</div>
+				        		{% endfor %}
+			        		</div>	
+			        	</div>
+			        	<div id="options-step" style="display:flex;"></div>
+			        	{% endif %}
+			        </div>
+		    	<div id="footer-container">
+						<!-- Preview Image -->
+						<div class="align-middle grid-inline-mid" id="preview-img-container"><div id="preview-img-wrapper" class="grid-pdx10"><img src="http://via.placeholder.com/80x80" width="80" height="80" alt="Product Preview" id="preview-img" /></div></div>
+						<!-- #Preview Image -->
+
+						<div class="grid-inline-mid" id="total-price-container"><div id="total-price-wrapper" class="grid-pdx10 grid-inline-mid">
+							<span style="color: #5D7C89; font-size: 18px;">Total</span><br />
+							$<span id="total-price" data-price='0'>0</span><span id="currency" class="font-12">AUD</span>
+						</div></div>
+
+						<div class="grid-inline-mid" id="summary-footer" style="padding: 25px 10px; display: none;">
+							<h3 class="clr" style="color: #5D7C89;">YOUR BUILD</h3>
+							<h2 class="clr">SUMMARY</h2>
+						</div>
+
+						<!-- Buttons -->
+						<div class="align-middle grid-inline-mid" style="padding: 25px; float: right;" id="button-wrapper">
+							<div class="grid-inline-mid"><button type="button" class="blue-btn" id="previous-step-btn" data-builder-id="" data-website="" data-url="{{builderurl}}">PREVIOUS</button></div>
+							<div class="grid-inline-mid"><button type="button" class="blue-btn" id="next-step-btn" data-builder-id="" data-website="" data-url="{{builderurl}}">NEXT</button></div>
+						</div>
+
+				</div>
+				<div id="loading-overlay">
+					<div id="loading-gif-wrapper"><div id="loading-gif"></div></div>
+				</div>
+
+				<script type="text/javascript" src="/builder/js/slick/slick.min.js"></script>
+				<script src="/js/app.js" type="text/javascript"></script>
+				<script type="text/javascript">
+
+					$(document).ready(function(){
+						$('#machine-slider').slick({
+						  centerMode: false,
+						  infinite: false,
+						  centerPadding: '60px',
+						  slidesToShow: 4,
+						  arrows:true,
+						});
+					});
+				</script>
+</body>
+</html>

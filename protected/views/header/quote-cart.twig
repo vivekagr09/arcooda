@@ -1,0 +1,35 @@
+{#
+// inputs:
+#}
+
+{% set cart = quote_cart() %}
+
+<div class="dropcart">
+    <ul class="dropcart__list">{% for item in cart.items('quote') %}
+        <li class="dropcart__item">
+            <div class="dropcart__item-image"><a href="{{ item.url|e }}"><img src="{{ image(item.image, {size: 70}) }}" alt="{{ item.image.alt|e }}" width="96" height="96"/></a></div>
+            <div class="dropcart__item-info">
+                <div class="dropcart__item-name"><a href="{{ item.url|e }}">{{ item.name }}{% if item.colour_id>0 %} ({{item.colour_name}}) {% endif %}</a></div>
+                <div class="dropcart__item-meta">
+                    <div class="dropcart__item-quantity">{{ item.quantity }}</div>
+                    <div class="dropcart__item-price">{{ item.total }}</div>
+                </div>
+            </div>
+            <form action="/cart/" method="post">
+                <input type="hidden" name="id" value="{{ item.id }}" />
+                <input type="hidden" name="type" value="quote" />
+                <input type="hidden" name="action" value="remove" />
+                <button type="submit" class="dropcart__item-remove">{{ svg_inline('cross-10.svg') }}</button>
+            </form>
+        </li>
+        <li class="dropcart__divider" role="presentation"></li>
+    {% endfor %}</ul>
+    <div class="dropcart__totals"><table>{% for total in cart.totals('quote') %}<tr>
+        <th>{{ total.title }}</th>
+        <td>{{ total.value }}</td>
+    </tr>{% endfor %}</table></div>
+    <div class="dropcart__actions">
+        <a href="/quote-cart" class="btn btn-secondary">View Cart</a>
+        <a href="/quote-cart" class="btn btn-warning">Checkout</a>
+    </div>
+</div>

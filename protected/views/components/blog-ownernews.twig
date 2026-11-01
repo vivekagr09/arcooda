@@ -1,0 +1,126 @@
+{#
+// inputs:
+// - image:   boolean - featured image
+// - sidebar: string  - one of [left, right, none]
+// - page: int
+// - pages: int
+// - page_url: string
+// - categories:
+// - posts:
+// - comments:
+#}
+
+{% set image = inputs.image %}
+{% set sidebar = inputs.sidebar|default('none') %}
+
+{% set page = inputs.page %}
+{% set pages = inputs.pages %}
+{% set page_url = inputs.page_url %}
+
+{#% set posts = data('blog-posts.json') %#}
+{% set posts = inputs.posts %}
+{#% set comments = data('blog-post-comments.json') %#}
+{% set comments = inputs.comments %}
+{% set categories = inputs.categories %}
+{% set product_id = inputs.product_id %}
+{% set post = posts[0] %}
+
+{% set post_header_classes = classnames('post-view__header post-header', {
+    'post-header--has-image': image,
+}) %}
+<link rel="stylesheet" href="/css/flagicons.css" type="text/css" />
+<div class="block post-view">
+    <div class="{{ post_header_classes }}">
+        {% if image %}
+            <div
+                class="post-header__image"
+                style="background-image: url('/blogimage/{{post.headerimage}}?crop=true&width=200&height=200')"
+            ></div>
+        {% endif %}
+        <div class="post-header__body">
+            <div class="post-header__categories">
+                <ul class="post-header__categories-list">
+                    <li class="post-header__categories-item">
+                        <a href="" class="post-header__categories-link">Owner News</a>
+                    </li>
+                </ul>
+            </div>
+            <h1 class="post-header__title">{{ post.title|e }}</h1>
+            <div class="post-header__meta">
+                <ul class="post-header__meta-list">
+                    <li class="post-header__meta-item">{{ post.date_long|e }}</li>
+                    {#<li class="post-header__meta-item"><a href="" class="post-header__meta-link">4 Comments</a></li>#}
+                </ul>
+            </div>
+        </div>
+        {% include '/components/decor.twig' with {inputs: {
+            type: 'bottom',
+            classes: 'post-header__decor',
+        }} %}
+    </div>
+
+    <div class="container">
+        <div class="post-view__body">
+            {% if sidebar == 'left' %}
+                <div class="post-view__item post-view__item-sidebar">
+                    {% include '/components/blog-sidebar.twig' with {inputs: {categories: categories}} %}
+                </div>
+            {% endif %}
+            <div class="post-view__item post-view__item-post">
+                <div class="post-view__card post">
+                    <div class="post__body typography">
+                        {{ markdown(post.long_description) }}
+                    </div>
+                {% if image %}
+                <div class="post-view__img" style="padding: 0 50px">
+                    <img src="{{ '/blogimage/' ~ post.headerimage }}" alt="" style="width:100%"/>
+                </div>
+                {% endif %}
+                <div class="post-view__card">
+                    <h2 class="post-view__card-title" style="font-size:16px;"> <a href="#" onclick="return openComment(this);"><small style="font-size:16px;">Comments: ({{post.blogCommentsCount}})</small></a></h2>
+                        <div class="comment-area" style="display: none;">
+                        {{post.HTMLBlogCommentArea(post.getid,0,product_id)}}
+                        <div style="border-top: 1px solid #e0e0e0; margin-top: 10px; padding-top: 10px;">
+                                    {{ post.HTMLBlogComments(post.getid, 0) }}
+                                </div>
+                        </div>
+                </div>
+
+                <!-- <div class="post-view__card">
+                    <h2 class="post-view__card-title">Write A Comment</h2>
+
+                    <form class="post-view__card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="comment-first-name">First Name</label>
+                                <input type="text" class="form-control" id="comment-first-name" placeholder="First Name" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="comment-last-name">Last Name</label>
+                                <input type="text" class="form-control" id="comment-last-name" placeholder="Last Name" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="comment-email">Email Address</label>
+                                <input type="email" class="form-control" id="comment-email" placeholder="Email Address" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment-content">Comment</label>
+                            <textarea class="form-control" id="comment-content" rows="6"></textarea>
+                        </div>
+                        <div class="form-group mb-0">
+                            <button type="submit" class="btn btn-primary mt-md-4 mt-2">Post Comment</button>
+                        </div>
+                    </form>
+                </div> -->
+            </div>
+            {% if sidebar == 'right' %}
+                <div class="post-view__item post-view__item-sidebar">
+                    {% include '/components/blog-sidebar.twig' with {inputs: {categories: categories}} %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% include '/blocks/block-space.twig' with {inputs: {layout: 'before-footer'}} %}

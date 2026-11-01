@@ -1,0 +1,175 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - member:
+#}
+
+{% set global_page_title           = inputs.title|default('Member Details')       %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/profile'                           %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : 'My Account',      url : '/account/dashboard' },
+    {title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set member    = inputs.member                                                  %}
+
+{% set country_list = countries() %}
+
+{% extends '/layouts/account.twig' %}
+
+{% block account_body %}
+    <div class="card">
+        {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+        <div class="card-header">
+            <h5 class="">My Details</h5>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-body card-body--padding--2">
+
+{% set prefix = 'account-profile-edit' %}
+<form action="" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ prefix }}-account-type" class="">Account Type <span class="color-red">*</span><i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="This will help us better understand how to handle your order and the level of information we need to provide to you for complicated purchases (Bill of Ladings, Certificates of Conformity)."></i></label>
+                <select name="account-type" required="required" class="form-control custom-select" id="{{ prefix }}-account-type">
+                    <option value=""></option>
+                    <option value="company"{{ member.account_type == 'company' ? ' selected="selected"' : '' }}>Commercial Customer</option>
+                    <option value="private"{{ member.account_type == 'private' ? ' selected="selected"' : '' }}>Residential Customer</option>
+                </select>
+            </div>
+             <div class="form-group">
+                <label for="{{ prefix }}-given-name" class="">First Name<span class="color-red">*</span></label>
+                <input type="text" name="given-name" required="required" class="form-control {{ (issues['given-name']) ? 'is-invalid' : '' }}" id="{{ prefix }}-given-name" autocomplete="section-{{ prefix }} billing given-name" value="{{ member.first_name|e }}" />
+                {% if (issues['given-name']) %}<span class="invalid-feedback"><strong>{{ issues['given-name'] }}</strong></span>{% endif %}
+            </div>
+             <div class="form-group">
+                <label for="{{ prefix }}-family-name" class="">Last Name<span class="color-red">*</span></label>
+                <input type="text" name="family-name" required="required" class="form-control {{ (issues['family-name']) ? 'is-invalid' : '' }}" id="{{ prefix }}-family-name" autocomplete="section-{{ prefix }} billing family-name" value="{{ member.last_name|e }}" />
+                {% if (issues['family-name']) %}<span class="invalid-feedback"><strong>{{ issues['family-name'] }}</strong></span>{% endif %}
+            </div>
+             <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                    <label for="{{ prefix }}-organization_title" class="">Title(Owner, Purchase Officer, Technician) <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Often we receive orders from Companies who have many different departments and staff. Please help to share your details for easier handling when we contact your team (owner, accounts, sales, freight dept, etc.)" data-original-title="If no Zip please use N/A."></i></label>
+                    <input type="text" id="organization_title" class="form-control" name="organization_title" autocomplete="section-register billing organization-title" value="{{member.organization_title}}"> <small class="form-text text-muted "></small>
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-address-level1" class="">Email<span class="color-red">*</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="For security reasons, your account email address can only be changed by the administration team. Please contact our office with your new details for account update."></i></label>
+                <input type="email" readonly name="username" required="required" class="form-control {{ (issues['username']) ? 'is-invalid' : '' }}" id="{{ prefix }}-username" value="{{ member.email_address|e }}" autocomplete="section-{{ prefix }} billing username" />
+                {% if (issues['username']) %}<span class="invalid-feedback"><strong>{{ issues['username'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                <label for="{{ prefix }}-organization" class="">Company <span class="color-red company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>*</span>'</label>
+                <input type="text" name="organization" class="form-control {{ (issues['organization']) ? 'is-invalid' : '' }}" id="{{ prefix }}-organization" value="{{ member.company_name|e }}" autocomplete="section-{{ prefix }} billing organization" {{ member.account_type == 'company' ? 'required="required"' : '' }} />
+                {% if (issues['organization']) %}<span class="invalid-feedback"><strong>{{ issues['organization'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                 <label for="abn_number">ABN Number</label>
+                    <input type="text" id="abn_number" class="form-control" name="abn_number" value="{{member.abn_number}}">  
+                    <div class="invalid-feedback "></div>
+            </div>
+            <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }} >
+                <label for="{{ prefix }}-company_number" class="">Company Number</label>
+                <input type="text" name="company_number" class="form-control {{ (issues['company_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-company_number" value="{{ member.company_number|e }}" />
+                {% if (issues['company_number']) %}<span class="invalid-feedback"><strong>{{ issues['company_number'] }}</strong></span>{% endif %}
+            </div>
+             <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                    <label for="{{ prefix }}-vat_number" class="">VAT Number</label>
+                    <input type="text" name="vat_number" class="form-control {{ (issues['vat_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-vat_number" value="{{ member.vat_number|e }}" />
+                    {% if (issues['vat_number']) %}<span class="invalid-feedback"><strong>{{ issues['vat_number'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                    <label for="{{ prefix }}-eori_number" class="">EORI Number</label>
+                    <input type="text" name="eori_number" class="form-control {{ (issues['eori_number']) ? 'is-invalid' : '' }}" id="{{ prefix }}-eori_number" value="{{ member.eori_number|e }}" />
+                    {% if (issues['eori_number']) %}<span class="invalid-feedback"><strong>{{ issues['eori_number'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group company-data" {{ member.account_type != 'company' ? 'style="display:none"' : '' }}>
+                <label for="{{ prefix }}-url" class="">Website</label>
+                <input type="text" name="url" class="form-control {{ (issues['url']) ? 'is-invalid' : '' }}" id="{{ prefix }}-url" value="{{ member.website|e }}" autocomplete="section-{{ prefix }} billing url" />
+                {% if (issues['url']) %}<span class="invalid-feedback"><strong>{{ issues['url'] }}</strong></span>{% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+             <div class="form-group">
+                 <label for="addresstype">Address Type<span class="text-danger">*</span> <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="Different couriers have certain requirements for delivery to residential addresses or commercial addresses. For example, some couriers deliver over the weekend, whilst others will only ship to commercial buyers."></i></label>
+                 
+                    <select id="addresstype" class="form-control" name="addresstype">
+                       <option value=""></option>
+                       <option value="commercial" {{(member.address_type=='commercial')?'selected':''}}>Commercial Property</option>
+                       <option value="residential" {{(member.address_type=='residential')?'selected':''}}>Residential Property</option>
+                    </select>
+                    {% if (issues['addresstype']) %}<span class="invalid-feedback"><strong>{{ issues['addresstype'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-street-address" class="">Street Address<span class="color-red">*</span></label>
+                <textarea name="street-address" required="required" class="form-control {{ (issues['street-address']) ? 'is-invalid' : '' }}" id="{{ prefix }}-street-address" autocomplete="section-{{ prefix }} billing street-address" >{{ member.address|e }}</textarea>
+                {% if (issues['street-address']) %}<span class="invalid-feedback"><strong>{{ issues['street-address'] }}</strong></span>{% endif %}
+            </div>
+             <div class="form-group">
+                <label for="{{ prefix }}-address-level2" class="">City/Suburb<span class="color-red">*</span></label>
+                <input type="text" name="address-level2" required="required" class="form-control {{ (issues['address-level2']) ? 'is-invalid' : '' }}" id="{{ prefix }}-address-level2" value="{{ member.city|e }}" autocomplete="section-{{ prefix }} billing address-level2" />
+                {% if (issues['address-level2']) %}<span class="invalid-feedback"><strong>{{ issues['address-level2'] }}</strong></span>{% endif %}
+            </div>
+              <div class="form-group">
+                <label for="{{ prefix }}-address-level1" class="">State<span class="color-red">*</span></label>
+                <input type="text" name="address-level1" required="required" class="form-control {{ (issues['address-level1']) ? 'is-invalid' : '' }}" id="{{ prefix }}-address-level1" value="{{ member.state|e }}" autocomplete="section-{{ prefix }} billing address-level1" />
+                {% if (issues['address-level1']) %}<span class="invalid-feedback"><strong>{{ issues['address-level1'] }}</strong></span>{% endif %}
+            </div>
+             <div class="form-group">
+                <label for="{{ prefix }}-postal-code" class="">Zip / Postal Code <span class="color-red">*</span><i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="" data-original-title="If no Zip please use N/A."></i></label>
+                <input type="text" name="postal-code" class="form-control {{ (issues['postal-code']) ? 'is-invalid' : '' }}" id="{{ prefix }}-postal-code" value="{{ member.post_code|e }}" autocomplete="section-{{ prefix }} billing postal-code" />
+                {% if (issues['postal-code']) %}<span class="invalid-feedback"><strong>{{ issues['postal-code'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-country" class="">Country<span class="color-red">*</span></label>
+                <select name="country" class="form-control custom-select" id="{{ prefix }}-country" autocomplete="section-{{ prefix }} billing country">
+                    <option disabled="disabled" value="">Please choose country...</option>
+                    {% for country in country_list %}<option value="{{ country.code }}"{{ (country.code == member.country) ? ' selected="selected"' : '' }}>{{ country.name|e }}</option>{% endfor %}
+                </select>
+            </div>
+             <div class="form-group">
+                <label for="{{ prefix }}-home-tel" class="">Main Phone Number<span class="color-red">*</span></label>
+                <input type="tel" name="home-tel" required="required" class="form-control {{ (issues['home-tel']) ? 'is-invalid' : '' }}" id="{{ prefix }}-home-tel" value="{{ member.phone_no|e }}" autocomplete="section-{{ prefix }} billing home tel" />
+                {% if (issues['home-tel']) %}<span class="invalid-feedback"><strong>{{ issues['home-tel'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-home-tel2" class="">2nd Contact Number</label>
+                <input type="tel" name="home-tel2" class="form-control" id="{{ prefix }}-home-tel2" value="{{ member.phone_no2|e }}" autocomplete="section-{{ prefix }} billing home tel 2" />
+                {% if (issues['home-tel2']) %}<span class="invalid-feedback"><strong>{{ issues['home-tel2'] }}</strong></span>{% endif %}
+            </div>
+
+              <div class="form-group">
+                <label for="{{ prefix }}-mobile-tel" class="">Mobile Number</label>
+                <input type="tel" name="mobile-tel" class="form-control {{ (issues['mobile-tel']) ? 'is-invalid' : '' }}" id="{{ prefix }}-mobile-tel" value="{{ member.mobile_no|e }}" autocomplete="section-{{ prefix }} billing mobile tel" />
+                {% if (issues['mobile-tel']) %}<span class="invalid-feedback"><strong>{{ issues['mobile-tel'] }}</strong></span>{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ prefix }}-fax-tel" class="">Fax Number</label>
+                <input type="tel" name="fax-tel" class="form-control {{ (issues['fax-tel']) ? 'is-invalid' : '' }}" id="{{ prefix }}-fax-tel" value="{{ member.fax_no|e }}" autocomplete="section-{{ prefix }} billing fax tel" />
+                {% if (issues['fax-tel']) %}<span class="invalid-feedback"><strong>{{ issues['fax-tel'] }}</strong></span>{% endif %}
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <input type="hidden" value="update" name="action" />
+        <input type="submit" value="Save" class="btn btn-lg btn-primary" />
+    </div>
+</form>
+<p style="margin-top:40px;"><b>NOTE</b> :<span class="note-text">  Above details will be used as the default SHIPPING ADDRESS and CONTACT. If you 
+              would like to change this, please update your My Account section.</span></p>
+        </div>
+    </div>
+{% endblock %}
+

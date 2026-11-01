@@ -1,0 +1,60 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+#}
+
+{% set global_page_title           = inputs.title|default('Not Found')            %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = ''                                           %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home', url : '/'},
+] %}
+{% set global_current_messages_page = global_page_canonical                       %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'spaceship-ledge-height'
+    }} %}
+    <div class="block"><div class="container"><div class="not-found">
+        <div class="not-found__404">Oops! Error 404</div>
+        <div class="not-found__content">
+            <h1 class="not-found__title">Page Not Found</h1>
+            <p class="not-found__text">
+                We can't seem to find the page you're looking for.<br />
+                Try to use the search.
+            </p>
+            <form action="/search" method="post" class="not-found__search">
+                <div class="row w-100">
+                    <div class="col-12 col-sm-10 col-lg-8" style="position:relative;padding-right:0;padding-left:0">
+                        <input id="searchTxtKeyword" name="s" type="text" class="w-100 not-found__search-input form-control " placeholder="Search Query..." />
+                        <div class="search__dropdown search__dropdown--suggestions-error suggestions" style="width: 100%;margin: 0 auto;position: absolute;top:36px;left:0;right:0;z-index:999;">
+                            <div class="suggestions__group">
+                            <div class="suggestions__group-title">Products</div>
+                                <div class="suggestions__group-content" id="search-content-error">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-12 col-sm-4 col-lg-4">
+                        <button type="submit" class="not-found__search-button btn btn-primary w-100">Search</button>
+                    </div>
+                </div>
+               
+                
+                
+                
+                
+            </form>
+            <p class="not-found__text">Or go to the home page to start over.</p>
+            <a class="btn btn-secondary btn-sm" href="/">Go To Home Page</a>
+        </div>
+    </div></div></div>
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'before-footer'
+    }} %}
+{% endblock %}

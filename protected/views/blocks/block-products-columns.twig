@@ -1,0 +1,44 @@
+{#
+// inputs:
+// - products: TwigProduct[]
+#}
+
+{#% set products = data('shop-products.json') %#}
+{% set products = inputs.products %}
+
+{% set columns = [
+    {
+        title: 'On Sale',
+        products: products[:3]
+    },
+    {
+        title: 'Popular',
+        products: products[3:3]
+    },
+    {
+        title: 'Latest Arrivals',
+        products: products[6:3]
+    }
+] %}
+
+<div class="block block-products-columns">
+    <div class="container">
+        <div class="row">
+            {% for column in columns %}
+                <div class="col-4">
+                    <div class="block-products-columns__title">{{ column.title|e }}</div>
+                    <div class="block-products-columns__list">
+                        {% for product in column.products %}
+                            <div class="block-products-columns__list-item">
+                                {% include '/components/product-card.twig' with {inputs: {
+                                    product: product,
+                                    exclude: ['actions', 'status-badge', 'features', 'buttons', 'meta'],
+                                }} %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

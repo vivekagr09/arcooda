@@ -1,0 +1,34 @@
+{#
+// inputs:
+// - product:          TrigProduct - The product to display
+// - categories:
+#}
+
+{% set global_page_title       = inputs.product.name            %}
+{% set global_page_description = inputs.product.sortdescription %}
+{% set global_page_keywords    = inputs.product.keywords         %}
+{% set global_page_canonical   = inputs.product.url              %}
+{% set global_page_breadcrumbs = inputs.product.breadcrumbs      %}
+
+{% set categories              = inputs.categories               %}
+{% set product                 = inputs.product                  %}
+{% set alert            =  inputs.alert %}
+{% set result           = inputs.result %}
+{% set view360           = inputs.view360 %}
+{% set bracket           = inputs.bracket %}
+
+{% set getusercurrency                 = getusercurrency()                 %} 
+
+
+
+ 
+
+{% include '/components/product-page.twig' with {inputs: {
+    layout:           'full',
+    categories:       categories,
+    product:          product,
+    alert:            alert,
+    result:          result,
+    view360:         view360,
+    bracket:        bracket,
+}} %}

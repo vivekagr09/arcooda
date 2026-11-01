@@ -1,0 +1,47 @@
+{#
+// inputs:
+#}
+{% set quote_cart = quote_cart() %}
+{% set cart = cart() %}
+<div class="mobile-header"><div class="container"><div class="mobile-header__body">
+    <button class="mobile-header__menu-button" type="button">
+        {{- svg('menu-18x14.svg') -}}
+    </button>
+    <a class="mobile-header__logo" href="/">
+        <!-- mobile-logo -->
+        <img src="/brand.png" alt="logo" class="w-50"/>
+        <!-- mobile-logo / end -->
+    </a>
+    <div class="mobile-header__search mobile-search"><form action="/search" class="mobile-search__body">
+        <input type="text" class="mobile-search__input" name="s"  placeholder="Enter keyword or part number" />
+        <button type="submit" class="mobile-search__button mobile-search__button--search">
+            {{- svg_inline('search-20.svg') -}}
+        </button>
+        <button type="button" class="mobile-search__button mobile-search__button--close">
+            {{- svg_inline('cross-20.svg') -}}
+        </button>
+        <div class="mobile-search__field"></div>
+    </form></div>
+    <div class="mobile-header__indicators">
+        <div class="mobile-indicator mobile-indicator--search d-md-none"><button type="button" class="mobile-indicator__button"><span class="mobile-indicator__icon">{{ svg('search-20.svg') }}</span></button></div>
+        <div class="mobile-indicator d-none d-md-block"><a href="/account/login" class="mobile-indicator__button"><span class="mobile-indicator__icon">{{ svg('person-20.svg') }}</span></a></div>
+        <div class="mobile-indicator  d-md-block">
+            <a href="/quote-cart" class="mobile-indicator__button">
+                <span class="mobile-indicator__icon">
+                <img src="/svg/cart-32-orange.svg" width="20px;" />
+                <span class="mobile-indicator__counter quote-indicator__counter">{{ quote_cart.items('quote')|length }}
+                </span>
+            </span>
+            </a>
+        </div>
+        
+        <div class="mobile-indicator">
+                <a href="/cart" class="mobile-indicator__button">
+                <span class="mobile-indicator__icon">
+                    <img src="/svg/cart-33-blue.svg" width="20px;" />
+                    <span class="mobile-indicator__counter">{{ cart.items|length }}</span>
+                </span>
+            </a>
+        </div>
+    </div>
+</div></div></div>

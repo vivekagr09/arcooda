@@ -1,0 +1,17 @@
+{#
+// inputs:
+#}
+
+{% set posts = inputs.posts %}
+{% set categories = inputs.categories %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/components/blog-page.twig' with {inputs: {
+        layout: 'grid',
+        sidebar: 'left',
+        posts: posts,
+        categories: categories,
+    }} %}
+{% endblock %}

@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--  showpage.html -->
+<!--  © 2012 UL LLC -->
+<!--  All rights reserved.  -->
+<!--  $Header: javascript.inc; 2.2 98/04/02 10:13:28 erle Stab $ -->
+<!--  Copyright 1997 XYVISION, Inc. -->
+<!--  All rights reserved.  -->
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"><script src="UL%20Certification%2055-47-42-32-26-19%20Inch%20LCD%27s_files/ga.js" async="" type="text/javascript"></script><script language="javascript">
+function IsExplorer()
+{
+    //
+    // function which will return if Microsoft Internet Explorer
+    // is the current browser
+    //
+    if(!(navigator.userAgent.indexOf("MSIE")==-1))
+    {
+	return 1;
+    }
+//    if(!(navigator.userAgent.indexOf("Mozilla/3")==-1))
+//    {
+//	return 0;
+//    }
+
+    return 0;
+}
+
+function IsEmpty(value)
+{
+    //
+    // function which will return true if string is empty
+    //	i.e. null or filled w/ blanks
+    // 
+    xval=value;
+    xlen=value.length;
+    if ( xlen == 0 )
+    {
+	return 1;
+    }
+    for(i=0;i<xlen;i++)
+    {
+        if(value.charAt(i)!=" ")
+            if(value.charAt(i)!="\n")
+                break;
+        if(i==xlen-1)
+        {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+function BldLink(text, url)
+{
+    //
+    // function which will build a link object
+    //  but will first replace spaces w/ '+'
+    //
+    var hotText= text;
+    var temp = url
+    var temp1 = ""
+    for(var i = 0;i <temp.length;i++)
+    {
+	//
+	// replace space w/ plus
+	//
+	if(temp.charAt(i)==" ")
+	    temp1=temp1 + "+"
+	//
+	// replace plus w/ hex value (%2b)
+	//
+	else if(temp.charAt(i)=="+")
+	    temp1=temp1 + "%2B"
+	//
+	// some html templates actually require a space w/in 
+	// the link. what we have done there is to insert &nbsp;
+	// which must be replaced w/ an actual space here
+	//
+	else if(temp.charAt(i)=="&"
+	     && temp.charAt(i+1) == "n" 
+	     && temp.charAt(i+2) == "b"
+	     && temp.charAt(i+3) == "s"
+	     && temp.charAt(i+4) == "p"
+	     && temp.charAt(i+5) == ";")
+	{
+	    temp1=temp1 + " "
+	    i = i+5
+	}
+	//
+	// replace ampersand w/ hex value (%26)
+	//
+	else if(temp.charAt(i)=="&"
+	     && temp.charAt(i+1) == "a" 
+	     && temp.charAt(i+2) == "m"
+	     && temp.charAt(i+3) == "p"
+	     && temp.charAt(i+4) == ";")
+	{
+	    temp1=temp1 + "%26"
+	    i = i+4
+	}
+	else
+	    temp1=temp1 + temp.charAt(i)
+    }
+    url = temp1
+
+    //
+    // method which will build the anchor
+    //
+    document.write(hotText.link(url));
+}
+</script>
+
+
+
+
+<title>NWGQ2.E199636 - Information Technology Equipment Including Electrical Business Equipment - Component</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="googlebot" content="noindex,nofollow">
+<link rel="stylesheet" href="UL%20Certification%2055-47-42-32-26-19%20Inch%20LCD%27s_files/ocdstylesheet_2005.css" type="text/css" media="screen">
+<link rel="stylesheet" href="UL%20Certification%2055-47-42-32-26-19%20Inch%20LCD%27s_files/ocdprint_2005.css" type="text/css" media="print">
+
+<script language="JavaScript">
+<!--//
+function openit(sURL){
+newwindow=open(sURL,"newwin","scrollbars=no,toolbar=no,directories=no,menubar=no,resizable=no,status=no,width=800,height=500");
+}
+
+function openit3(sURL){
+newwindow=open(sURL,"newwin","scrollbars=yes,toolbar=no,directories=no,menubar=yes,resizable=yes,status=no,width=800,height=500");
+}
+//-->
+</script>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6192474-14']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = 'http://www.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+	<div align="center">
+		<div class="content" style="text-align:left;">
+			<div class="topside">
+			<div class="logo"><img src="UL%20Certification%2055-47-42-32-26-19%20Inch%20LCD%27s_files/ocdheader.gif" alt="" border="0"></div>
+			<h1><span>UL Online Certifications Directory</span></h1>
+		
+				<div class="buttons">
+				<a href="http://database.ul.com/cgi-bin/XYV/template/LISEXT/1FRAME/index.html" title="Home">Home</a>
+				<a href="http://database.ul.com/cgi-bin/XYV/template/LISEXT/1FRAME/quickguide.html" title="Quick Guide to the Online Certifications Directory" target="_blank">Quick Guide</a>
+				<a href="http://database.ul.com/cgi-bin/XYV/template/LISEXT/1FRAME/gassist.html" title="Contact Us">Contact Us</a>
+				<a href="http://www.ul.com/" title="UL.com">UL.com</a>
+				</div>
+			</div>
+
+			<div class="listing">
+
+<table border="0" width="100%">
+ <tbody><tr>
+ <td align="CENTER"><h2><b><font size="+1">
+ <script language="JavaScript">
+   var result = "NWGQ2.E199636".split(".");
+   if(
+     (result[0].substr(0,4) == "BXUV" || result[0].substr(0,4) == "BYBU")
+     && result[1] != "GuideInfo")
+   {
+      document.write("Design No. " + result[1] + "<BR>");
+   }
+   else if(
+     (result[0].substr(0,4) == "XHBN" ||
+     result[0] == "XHBO" ||
+     result[0].substr(0,4) == "XHEZ" ||
+     result[0] == "XCLF" ||
+     result[0] == "XHDG" ||
+     result[0] == "FHIT")
+     && result[1] != "GuideInfo")
+   {
+      document.write("System No. " + result[1] + "<BR>");
+   }
+   else if(result[0].substr(0,4) == "TGKX" && result[1] != "GuideInfo")
+   {
+      document.write("Construction No. " + result[1] + "<BR>");
+   }
+   else if(result[0].substr(0,4) == "HNLJ" && result[1] != "GuideInfo")
+   {
+      document.write("Assembly No. " + result[1] + "<BR>");
+   }
+ </script>
+ </font>NWGQ2.E199636</b><br>Information Technology Equipment Including Electrical Business Equipment - Component</h2></td>
+ </tr>
+   <script language="JavaScript">
+   var result = "NWGQ2.E199636".split(".");
+   if(
+     (result[0].substr(0,4) == "QMFZ" ||
+     result[0].substr(0,4) == "QMTM" ||
+     result[0].substr(0,4) == "QMTT" ||
+     result[0].substr(0,4) == "OBJS" ||
+     result[0] == "FDNP2")
+     && result[1] != "GuideInfo")
+   {
+      document.write("<TR><TD ALIGN=CENTER>Additional information regarding this certification can be found in UL's iQ Family of Databases ");
+      document.write('<A HREF="http://iq.ul.com/">(iq.ul.com)</A>.</TD></TR>');
+   }
+   if(
+     (result[0].substr(0,4) == "WOYR" ||
+     result[0].substr(0,4) == "WKKY" ||
+     result[0].substr(0,4) == "ZPMV" ||
+     result[0].substr(0,4) == "QMTS" ||
+     result[0] == "QMJU2" ||
+     result[0] == "ZPXK2")
+     && result[1] != "GuideInfo")
+   {
+      document.write("<TR><TD ALIGN=CENTER>Enhanced searching capability for this category can be found in UL's iQ Family of Databases ");
+      document.write('<A HREF="http://iq.ul.com/">(iq.ul.com)</A>.</TD></TR>');
+   }
+   if(result[0].substr(0,4) == "QMFZ" && result[1] != "GuideInfo")
+   {
+      document.write('<TR><TD ALIGN="CENTER">For additional information concerning the individual material, click on the material designation.</TD></TR>');
+   }
+   </script>
+</tbody></table>
+
+<table width="100%">
+  <tbody><tr>
+    <td align="LEFT" valign="TOP">
+      <script language="JavaScript">
+      var result = "NWGQ2.E199636".split(".");
+      if(result[1] == "GuideInfo")
+      {
+         BldLink("<P>View Listings</P>",
+         "/cgi-bin/XYV/cgifind.new/LISEXT/1FRAME/srchres.html?"
+      +  "collection=/data3/verity_collections/lisext&"
+      +  "vdkhome=/data3/verity_sw_rev24/common&"
+      +  "SORT_BY=textlines:asc,ccnshorttitle:asc&"
+      +  "query="
+      +  result[0]
+      +  "<IN>CCN and not GUIDEINFO")
+      }
+    </script></td>
+    <td align="RIGHT" valign="TOP">
+      <a name="PAGETOP" href="#PAGEBOTTOM"><p>Page Bottom</p></a>
+    </td>
+  </tr>
+</tbody></table>
+
+<!-- code for popup agreement -->
+<script>
+   var result = "NWGQ2.E199636".split(".");
+   if(
+     (result[0].substr(0,4) == "BXUV" ||
+     result[0].substr(0,4) == "BYBU" ||
+     result[0].substr(0,4) == "XHBN" ||
+     result[0] == "XHBO" ||
+     result[0].substr(0,4) == "XHEZ" ||
+     result[0].substr(0,4) == "TGKX" ||
+     result[0].substr(0,4) == "HNLJ" ||
+     result[0] == "XHDG" ||
+     result[0] == "XCLF" ||
+     result[0] == "FHIT")
+     && result[1] != "GuideInfo")
+   {
+      document.write("<HR SIZE='2'><CENTER><H2>Design/System/Construction/Assembly Usage Disclaimer</H2></CENTER><P><UL><LI>Authorities Having Jurisdiction should be consulted in all cases as to the particular requirements covering the installation and use of UL Listed or Classified products, equipment, system, devices, and materials.</LI><LI>Authorities Having Jurisdiction should be consulted before construction.</LI><LI>Fire resistance assemblies and products are developed by the design submitter and have been investigated by UL for compliance with applicable requirements. The published information cannot always address every construction nuance encountered in the field.</LI><LI>When field issues arise, it is recommended the first contact for assistance be the technical service staff provided by the product manufacturer noted for the design. Users of fire resistance assemblies are advised to consult the general Guide Information for each product category and each group of assemblies. The Guide Information includes specifics concerning alternate materials and alternate methods of construction.</LI><LI>Only products which bear UL's Mark are considered as Classified, Listed, or Recognized.</LI></UL></P>");
+   }
+</script>
+<!------------------------------>
+
+<hr size="2">
+
+<!-- read the contents of the blob -->
+<!-- do NOT indent the next 3 lines -->
+<h2><center>Information Technology Equipment Including Electrical Business Equipment - Component</center></h2><br><table width="100%"><tbody><tr><td colspan="3"><a href="http://database.ul.com/cgi-bin/XYV/template/LISEXT/1FRAME/showpage.html?&amp;name=NWGQ2.GuideInfo&amp;ccnshorttitle=Information+Technology+Equipment+Including+Electrical+Business+Equipment+-+Component&amp;objid=1073764471&amp;cfgid=1073741824&amp;version=versionless&amp;parent_id=1073764470&amp;sequence=1">See General Information for Information Technology Equipment Including Electrical Business Equipment - Component</a></td></tr>
+<tr><td><br></td></tr><tr><td align="LEFT"><b><nameline>HUAI I ELECTRONICS CO LTD</nameline></b></td><td align="RIGHT">E199636</td></tr>
+<tr><td align="LEFT"><addressline>59 GONG YE 2ND RD</addressline></td><td align="CENTER"></td><td align="RIGHT"></td></tr>
+<tr><td align="LEFT"><addressline>AN-NAN DISTRICT</addressline></td><td align="CENTER"></td><td align="RIGHT"></td></tr>
+<tr><td align="LEFT"><city>TAINAN,</city> <postalcode>709</postalcode> <country>TAIWAN</country></td></tr>
+</tbody></table><reccomp><p><prodtype><b>32" TFT-LCD Monitor</b></prodtype><prodinfo>, Model(s) <prodid>MT3232AX-XXXX@</prodid></prodinfo></p><p><prodtype><b>High Resolution Monitor</b></prodtype><prodinfo>, Model(s) <prodid>C2929DXXX-XX</prodid>, <prodid>M2929DXXX-XX</prodid></prodinfo></p><p><prodtype><b>LCD Monitor</b></prodtype><prodinfo>, Model(s) <prodid>LMT32191A0-01SG</prodid>, <prodid>MT19XXX-XXXX@</prodid>, <prodid>MT26W-XXXXX@</prodid>, <prodid>MT32W-XXXXX@</prodid>, <prodid>MT42W-XXXXX@, MT55W-XXXX@</prodid>, <prodid>MT47W-XXXX@</prodid></prodinfo></p><p><prodtype><b>LCD Panel</b></prodtype><prodinfo>, Model(s) <prodid>MT23W-XXXX (X=0-9, A-Z or blank)</prodid></prodinfo></p><p><prodinfo><prodid>MT32W-DXXXXX (X=0-9, A-Z or blank for marketing purpose)</prodid></prodinfo></p>
+<table units="RELATIVE" align="CENTER" border="1" cellpadding="5" cellspacing="0" width="90%">
+
+<tbody><tr><th align="CENTER" valign="BOTTOM"><br>Component Dsg</th>
+<th align="CENTER" valign="BOTTOM">Rated<br>Input, V</th>
+<th align="CENTER" valign="BOTTOM">Load<br>Amps</th>
+<th align="CENTER" valign="BOTTOM">Flame<br>Rating</th>
+<th align="CENTER" valign="BOTTOM">Laser<br>Class</th>
+</tr>
+
+<tr><td colspan="5" align="LEFT" valign="TOP"><p><prodtype><b>CRT Monitor</b></prodtype></p></td>
+</tr>
+
+<tr><td align="LEFT" valign="TOP"><prodid>C2720XXX*</prodid></td>
+<td align="RIGHT" valign="TOP">100/240ac</td>
+<td align="RIGHT" valign="TOP">1.3/1.3</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+</tr>
+
+<tr><td align="LEFT" valign="TOP"><prodid>C2725XXX-XX*</prodid></td>
+<td align="RIGHT" valign="TOP">100/240ac</td>
+<td align="RIGHT" valign="TOP">1.5/1.5</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+</tr>
+
+<tr><td align="LEFT" valign="TOP"><prodid>M2720XXX-XX*</prodid></td>
+<td align="RIGHT" valign="TOP">100/240ac</td>
+<td align="RIGHT" valign="TOP">1.3/1.3</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+</tr>
+
+<tr><td align="LEFT" valign="TOP"><prodid>M2725XXX-XXXX*</prodid></td>
+<td align="RIGHT" valign="TOP">100/240ac</td>
+<td align="RIGHT" valign="TOP">1.5/1.5</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+</tr>
+
+<tr><td colspan="5" align="LEFT" valign="TOP"><p><prodtype><b>High Resolution Monitor</b></prodtype></p></td>
+</tr>
+
+<tr><td colspan="5" align="LEFT" valign="TOP"><prodid>M3125XXXX-XXXX(@), C3125XXX-XX(@), 3M25XXX(@), M3129XXXX-XXXX(@), C3129XXX(@)</prodid></td>
+</tr>
+
+<tr><td align="LEFT" valign="TOP"></td>
+<td align="RIGHT" valign="TOP">90/125/100/240</td>
+<td align="RIGHT" valign="TOP">1.8/1.8/1.8/1.8</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+</tr>
+
+<tr><td colspan="5" align="LEFT" valign="TOP"><p><prodtype><b>Open frame color monitors</b></prodtype></p></td>
+</tr>
+
+<tr><td align="LEFT" valign="TOP"><prodid>M2014-21</prodid></td>
+<td align="RIGHT" valign="TOP">100/240ac</td>
+<td align="RIGHT" valign="TOP">1.5/1.5</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+</tr>
+
+<tr><td align="LEFT" valign="TOP"><prodid>M2015-21</prodid></td>
+<td align="RIGHT" valign="TOP">100/240ac</td>
+<td align="RIGHT" valign="TOP">1.5/1.5</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+<td align="RIGHT" valign="TOP">N/A</td>
+</tr>
+
+</tbody></table>
+<p>* - where X can be any alphanumeric character or blank.</p>
+<p>@ - where X may be 0-9, A-Z or blank.</p>
+<br><marking>Marking: Company name or tradename <tradename>"E199636"</tradename>
+ and model designation.</marking></reccomp><table width="100%"><tbody><tr>
+<td align="RIGHT"><a href="javascript:openit('gupdthlp.html')">Last Updated</a> on 2012-10-29</td>
+</tr></tbody></table>
+
+<span style="display:none">
+<name>NWGQ2.E199636</name>
+<file_number>E199636</file_number>
+<ccn>NWGQ2</ccn>
+<subscrbr_id>316156001</subscrbr_id>
+<listing_type>Listing</listing_type>
+<status>Active</status>
+<modified_date>20121029</modified_date>
+<post_date>20121029</post_date>
+</span>
+
+<hr size="2">
+
+<table width="100%">
+  <tbody><tr>
+     <td align="CENTER" valign="TOP" width="25%">
+       <p><a href="http://database.ul.com/cgi-bin/XYV/template/LISEXT/1FRAME/gassist.html">Questions?</a></p>
+     </td>
+     <td align="CENTER" valign="TOP" width="25%">
+       <p><a href="javascript:window.print()">Print this page</a></p>
+     </td>
+     <td align="CENTER" valign="TOP" width="25%">
+       <p><a href="http://database.ul.com/cgi-bin/XYV/template/LISEXT/1FRAME/terms_of_use.html">Terms of Use</a></p>
+     </td>
+     <td align="CENTER" valign="TOP" width="25%">
+       <p><a name="PAGEBOTTOM" href="#PAGETOP">Page Top</a></p>
+     </td>
+  </tr>
+</tbody></table>
+
+<p class="copyright">© 2012 UL LLC</p>
+<p>When the UL Leaf Mark is on the product, or when the word "Environment" is included in the UL Mark, please search the <a href="http://www.ul.com/global/eng/pages/offerings/businesses/environment/databasesearch/iframe/index.jsp">UL Environment database</a> for additional information regarding this product's certification.</p>
+<p> The appearance of a company's name or product in this database does 
+not in itself assure that products so identified have been manufactured 
+under UL's Follow-Up Service. Only those products bearing the UL Mark 
+should be considered to be Listed and covered under UL's Follow-Up 
+Service. Always look for the Mark on the product.</p>
+<p> UL permits the reproduction of the material contained in the Online 
+Certification Directory subject to the following conditions: 1. The 
+Guide Information, Designs and/or Listings (files) must be presented in 
+their entirety and in a non-misleading manner, without any manipulation 
+of the data (or drawings). 2. The statement "Reprinted from the Online 
+Certifications Directory with permission from UL" must appear adjacent 
+to the extracted material.  In addition, the reprinted material must 
+include a copyright notice in the following format: "© 2012 UL LLC".</p>
+
+			</div>
+		</div>
+	</div>
+
+
+
+</body></html>

@@ -1,0 +1,79 @@
+{% set slider = inputs.slider %}
+{% set title = inputs.title %}
+<div class="container" style="background-color: #fafafa;">
+	<div class="section-header">
+		<div class="section-header__body">
+			<h2 class="section-header__title">{{slider.name |title }} </h2>
+			<div class="section-header__divider"></div>
+		</div>
+	</div>
+<div class="ms-tabs-template">
+	{% if slider.getAllImages |length > 0 %}
+	<div class="master-slider ms-skin-default" id="masterslider">
+		{% for slide in slider.getAllImages %}
+	    <div class="ms-slide">
+	        <img src="/img/blank.gif" data-src="{{ image(slide.src, {size: [1150, 550]})|e }}" alt="{{ slide.alt|e }}"  loading="lazy"/>
+	        <div class="ms-thumb">
+	        	<h3><b>{{ slide.alt|e }}</b></h3>
+	        	<p style="margin-top:10px;">{{ slide.caption|e }}</p>
+	        </div>
+	    </div>
+	    {% endfor %}
+	</div>
+	{% endif %}			<!-- end of masterslider -->
+	</div>
+</div>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", () => {
+	var slider = new MasterSlider();
+
+	slider.control('arrows',{ autohide:true, overVideo:false  });
+	slider.control('thumblist', {
+        autohide: false,
+        overVideo: false,
+        dir: 'h',
+        speed: 17,
+        inset: false,
+        arrows: false,
+        hover: false,
+        customClass: '',
+        align: 'bottom',
+        type: 'tabs',
+        margin: -12,
+        width: 240,
+        height: 120,
+        space: 0,
+        fillMode: 'fill',
+        hideUnder: 400
+    });
+
+	slider.setup('masterslider' , {
+		width:1400,
+		height:parseInt("{{slider.page_height}}"),
+		space:0,
+		lazyLoad: true,
+    	preload: 2 ,
+		view:'basic',
+	});
+	  // Once the first slide has loaded, manually load the rest
+   slider.api.addEventListener(MSSliderEvent.INIT, () => {
+   	 	setTimeout(() => {
+	        $('#masterslider .ms-slide').each(function(index) {
+	            if (index > 0) { // Skip the first slide (index 0)
+	                var img = $(this).find('img');
+	                if (img.data('src')) {
+	                   // Set the src attribute to start loading the image
+	                    img.attr('src', img.data('src'));
+	                }
+	            }
+	        }) ;
+         }, 3000); // Adjust the delay time as needed
+    });
+	$('#myTab a').on('click', function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	});
+	SyntaxHighlighter.all();
+});
+
+</script>

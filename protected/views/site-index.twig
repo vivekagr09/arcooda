@@ -1,0 +1,229 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - banner_list1
+// - news_list
+// - onsale_list
+// - banner_list2
+// - banner_list3
+// - popular_list
+#}
+
+{% set global_page_title       = inputs.page_title|default('Arcade Machines and Arcade Game Software Designed and Manufactured by Arcooda') %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set banner_list1     = inputs.banner_list1 %}
+{% set banner_list2     = inputs.banner_list2 %}
+{% set banner_list3     = inputs.banner_list3 %}
+{% set icons            = inputs.icons %}
+{% set brands           = inputs.brands %}
+{% set latest_news      = inputs.latest_news %}
+{% set manufacturers    = inputs.manufacturers %}
+{% set products_on_sale = inputs.products_on_sale %}
+{% set product_columns  = inputs.product_columns %}
+{% set alert            = inputs.alert %}
+{% set result           = inputs.result %}
+{% set slider           = inputs.slider %}
+{% set distributors     = inputs.distributors %}
+{% set carousel         = inputs.carousel %}
+{% set carouseldata     = inputs.carouseldata %}
+{% set front_page_layout     = inputs.front_page_layout %}
+{% set front_page_youtube_video     = inputs.front_page_youtube_video %}
+{% set metaTitle        = inputs.metaTitle %}
+{% set metaDescription  = inputs.metaDescription %}
+{% set ids = front_page_layout | map(item => item.id) %}
+{% set survey  = inputs.survey %}
+{% set latest_products  = inputs.latest_products %}
+{% set production_schedule  = inputs.production_schedule %}
+{% set userreviews  = inputs.userreviews %}
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+	{% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+
+	{% include '/blocks/block-space.twig' with {inputs: {
+		layout: 'divider-xs'
+	}} %}
+
+	{% if banner_list1 %}
+		{% include '/blocks/block-slideshow.twig' with {inputs: {
+			slides: banner_list1,
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+
+	<div class="container" style="margin-bottom:50px;">
+		<h1 style="font-size:35px;margin-bottom:10px">{{ metaTitle|e }}</h1>
+		<div style="font-size:15px;">{{ metaDescription|e }}</div>
+	</div>
+	{% if production_schedule|length > 0 and 1 in ids %}
+			<div class="container" style="margin-bottom:50px;">
+				<div class="section-header">
+					<div class="section-header__body">
+						<h2 class="section-header__title">Production Schedules</h2>
+					</div>
+				</div>
+				<div class="wishlist">
+				<table class="wishlist__table">
+					<tbody class="wishlist__body">
+						{% for schedule in production_schedule %}
+						<tr class="wishlist__row wishlist__row--body"  onmouseover="this.style.backgroundColor='#fff';" onmouseout="this.style.backgroundColor='#fafafa';">
+							<td class="wishlist__column wishlist__column--body wishlist__column--price">
+							{% if schedule.status == 1 %} <span style="color:#5ec47e;">Available</span> {% else %}{{schedule.shipping_date|date("d/m/Y")}}{% endif %}</td>
+							<td class="wishlist__column wishlist__column--body wishlist__column--image">
+							{% if schedule.product.active == 'y' %}
+							<a href="{{schedule.product.url}}" target="_blank">
+							{% endif %}
+							<img src="{{ image(schedule.product.imagescategory[0], {size: 96}) }}" style="width:96px;height:96px;" alt="{{ schedule.product.imagescategory[0].alt|e }}" title="{{ schedule.product.name|e }}" />
+							{% if schedule.product.active == 'y' %}
+							</a>
+							{% endif %}
+							</td>
+							
+							<td class="wishlist__column wishlist__column--body wishlist__column--product" style="font-size:15px;">{% if schedule.product.active == 'y' %}<a href="{{schedule.product.url}}" target="_blank" onmouseover="this.style.color='#686868';" 
+   onmouseout="this.style.color='#0064f0';">{% endif %}{{schedule.title}}{% if schedule.product.active == 'y' %}</a>{% endif %}</td>
+							<td class="wishlist__column wishlist__column--body wishlist__column--quantity" style="font-size:15px;"><i>{{schedule.note}}</i>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			</div>
+			{% endif %}
+	{% if survey|length > 0 and 2 in ids %}
+		{% include '/components/survey.twig' with {inputs: {
+			survey: survey.link,
+			title: 'Survey',
+			survey_image: survey.image,
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+	{% if latest_news and 3 in ids %}
+		{% include '/blocks/block-posts-carousel.twig' with {inputs: {
+			title  : 'Latest News',
+			layout : 'list',
+			posts  : latest_news,
+			links  : [
+				
+			],
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+	{% if 4 in ids %}
+	{% include '/components/front-slider.twig' with {inputs: {
+		slider: slider,
+		title: 'Slider'
+	}} %}
+	{% endif %}
+	{% include '/blocks/block-space.twig' with {inputs: {
+		layout: 'divider-nl'
+	}} %}
+	{% if latest_products and 5 in ids %}
+		{% include '/blocks/block-products-carousel.twig' with {inputs: {
+			title: 'Latest Products',
+			layout: 'grid-5',
+			rows: 1,
+			products: latest_products,
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+	{% if products_on_sale and 6 in ids %}
+		{% include '/blocks/block-products-carousel.twig' with {inputs: {
+			title: 'Featured Products',
+			layout: 'grid-5',
+			rows: 1,
+			products: products_on_sale,
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+
+	{% if front_page_youtube_video and 7 in ids %}
+		{% include '/components/youtube.twig' with {inputs: {
+			youtube: front_page_youtube_video,
+			title: 'Our Latest Video',
+			displayrieiew :  (8 in ids),
+			userreviews : userreviews
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+
+	{% if banner_list2 and 9 in ids %}
+		{% include '/blocks/block-banners.twig' with {inputs: {
+			banners: banner_list2,
+		}} %}
+		{# Note: not visible on mobile, hence the d-none to hide the space #}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl',
+			classes: 'd-xl-block d-none'
+		}} %}
+	{% endif %}
+
+	{% if carousel|length > 0 and 10 in ids %}
+		{% include '/blocks/block-carousel.twig' with {inputs: {
+			layout: layout,
+			classes: 'product__tabs',
+			productcarousel: carousel,
+			carouseldata: carouseldata,
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+
+	{# % include '/blocks/block-social-media.twig' with {inputs: {
+		title: 'Social Media'
+	}} % #}
+	{% include '/blocks/block-space.twig' with {inputs: {
+		layout: 'divider-nl'
+	}} %}
+
+	{% if banner_list3 and 11 in ids %}
+		{% include '/blocks/block-long-banners.twig' with {inputs: {
+			banner: banner_list3,
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+
+	{% if brands and 12 in ids %}
+		{% include '/blocks/block-brands-carousel.twig' with {inputs: {
+			title  : 'Our Brands',
+			layout : 'brand',
+			brands : brands
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+
+	{% if distributors and 13 in ids %}
+		{% include '/blocks/block-distributors.twig' with {inputs: {
+			layout       : 'columns-8-full',
+			distributors : distributors,
+		}} %}
+		{% include '/blocks/block-space.twig' with {inputs: {
+			layout: 'divider-nl'
+		}} %}
+	{% endif %}
+{% endblock %}

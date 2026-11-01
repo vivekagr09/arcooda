@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "default": true,
+        "firstName": "[First Name 1]",
+        "lastName": "[Last Name 1]",
+        "email": "[Account Email 1]",
+        "phone": "[Account Phone 1]",
+        "country": "[Account Country 1]",
+        "city": "[Account City 1]",
+        "postcode": "[Account Postcode 1]",
+        "address": "[Account Address 1]"
+    },
+    {
+        "id": 2,
+        "default": false,
+        "firstName": "[First Name 2]",
+        "lastName": "[Last Name 2]",
+        "email": "[Account Email 2]",
+        "phone": "[Account Phone 2]",
+        "country": "[Account Country 2]",
+        "city": "[Account City 2]",
+        "postcode": "[Account Postcode 2]",
+        "address": "[Account Address 2]"
+    }
+]

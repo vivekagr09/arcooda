@@ -1,0 +1,1 @@
+<p align="right"><a href="forwarder.php">Search / View</a> | <a href="add_forward.php">Add New</a></p>

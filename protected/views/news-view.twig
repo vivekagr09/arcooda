@@ -1,0 +1,30 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - categories:
+// - posts:
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set categories = inputs.categories %}
+{% set posts      = inputs.posts %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {% include '/components/post-page.twig' with {inputs: {
+        image:      true,
+        sidebar:    'none',
+        posts:      posts,
+        categories: categories,
+    }} %}
+{% endblock %}

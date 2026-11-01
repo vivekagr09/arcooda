@@ -1,0 +1,26 @@
+body.dark-mode {
+    background: #070a15;
+}
+.dark-mode .header, .dark-mode footer.footer{background:#0c1123;}
+.dark-mode  footer.footer h3 {
+    color: #8a8f8f;
+  
+}
+.dark-mode  .course-list-item {
+    background: #fff; padding: 10px;
+}
+.dark-mode .course-list-item:hover {
+    background: #fce6a6;
+}
+.dark-mode .course-list-item:hover .list-group-item {
+    background: #fce6a6;
+}
+.dark-mode  .sidebar-accordian  .accordion-button  {
+     background: #1d4741;
+    box-shadow: 1px 1px 1px 0px #ccc;
+        color: #fff;
+   }
+   .dark-mode  h4{ color: #fff }
+ .dark-mode  h5, .dark-mode  p, .dark-mode  span{ color: #8a8f8f }
+  .dark-mode  .progress_bar .progress_bar_title {
+    color: hsl(218deg 43% 94%);}

@@ -1,0 +1,96 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+}
+
+div.products_content .unfinished
+{
+	background-color:yellow;
+}
+
+div.products_content a
+{
+	color: black;
+}
+
+div.products_content
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+	font-size: 9pt;
+}
+
+div.products_content table
+{
+	text-align: left;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div.products_content tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+div.products_content pre {margin: 0 0 0 0;}
+div.products_content pre.alt {background-color: #EEEEEE;}
+
+div.products_content td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.products_content th, div.products_content thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+}
+
+div.products_content table.vbox td, div.products_content table.vbox th, div.products_content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div.products_content table.buttons {	text-align: center; }
+div.products_content table.wide {	width: 90%; }
+div.products_content tr.alt		{ background-color: #EEEEE0; }
+div.products_content tr.highlight { background-color: #90EEA0; }
+div.products_content tr.mylock	{ background-color: #90A0EE; }
+div.products_content tr.locked	{ background-color: #EE90A0; }
+div.products_content td.collapse {	width: 1px; }
+div.products_content th.collapse {	width: 1px; }
+div.products_content td.left_title {	width: 30%;
+				text-align: right;
+				background-color: #EEEEE0;
+				color: #000000;
+				font-weight: bold; }
+div.products_content input.intext, div.products_content input.infile, div.products_content textarea, div.products_content select {	width: 98%; }
+
+
+div.products_content th a
+{
+	color: #000000;
+}
+
+div.products_content td a
+{
+	color: #000000;
+}
+
+div.products_content table.spacetable td
+{
+	border:2px solid white;
+}

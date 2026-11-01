@@ -1,0 +1,114 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+}
+
+@media print
+{
+	.print_hide
+	{
+		display:none;
+	}
+}
+
+div.workmanual_content .unfinished
+{
+	background-color:yellow;
+}
+
+div.workmanual_content a
+{
+	color: black;
+}
+
+div.workmanual_content
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div.workmanual_content table
+{
+	text-align: left;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div.workmanual_content tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-weight: normal;
+}
+
+div.workmanual_content pre {margin: 0 0 0 0;}
+div.workmanual_content pre.alt {background-color: #EEEEEE;}
+
+div.workmanual_content td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.workmanual_content th, div.workmanual_content thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	font-size:75%;
+}
+
+div.workmanual_content table.vbox td, div.workmanual_content table.vbox th, div.workmanual_content table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div.workmanual_content table.buttons {	text-align: center; }
+div.workmanual_content table.wide {	width: 95%; }
+div.workmanual_content tr.alt		{ background-color: #EEEEE0; }
+div.workmanual_content tr.highlight { background-color: #90EEA0; }
+div.workmanual_content td.highlight { background-color: #90EEA0; }
+div.workmanual_content tr.mylock	{ background-color: #90A0EE; }
+div.workmanual_content tr.locked	{ background-color: #EE90A0; }
+div.workmanual_content td.collapse {	width: 1px; }
+div.workmanual_content th.collapse {	width: 1px; }
+div.workmanual_content td.left_title
+{
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+}
+div.workmanual_content input.intext,
+div.workmanual_content input.infile,
+div.workmanual_content textarea,
+div.workmanual_content select
+{
+	width: 98%;
+}
+
+div.workmanual_content th a
+{
+	color: #000000;
+}
+
+div.workmanual_content td a
+{
+	color: #000000;
+}
+
+div.workmanual_content table.spacetable td
+{
+	border:2px solid white;
+}
+

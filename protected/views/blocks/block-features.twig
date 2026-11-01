@@ -1,0 +1,90 @@
+{#
+// inputs:
+// - layout: string - one of [top-strip, bottom-strip] (default: top-strip)
+#}
+
+{% set layout = inputs.layout|default('top-strip') %}
+{% set root_classes = classnames('block-features block', 'block-features--layout--' ~ layout) %}
+
+{% set icons = inputs.icons %}
+<div class="{{ root_classes }}">
+    <div class="container">
+        <ul class="block-features__list">
+
+			{% for icon in icons %}
+				<li class="block-features__item">
+                    {% if (icon.descriptionval != '') %}
+                    <a href="{{ icon.url }}.html" style="color: #fff;height: 100%;display: inline-block;overflow-y: scroll;" class="icn-hvr ccn_display_none">
+                     {{ icon.descriptionval }}
+                    </a>
+                    {% endif %}
+					<div class="block-features__item-icon">
+						{% if (icon.description != '') %} <a href="{{ icon.url }}.html"> {% endif %}
+						{{ icon.image.html({"width":"48"}) }}
+						{% if (icon.description != '') %} </a> {% endif %}
+					</div>
+					<div class="block-features__item-info">
+						<div class="block-features__item-title text-dark">
+							{% if (icon.description != '') %} <a class="text-dark" href="{{ icon.url }}.html"> {% endif %}
+							{{ icon.name }}
+							{% if (icon.description != '') %} </a> {% endif %}
+						</div>
+
+						<div class="block-features__item-subtitle text-muted">
+							{% if (icon.description != '') %} <a class="text-muted" href="{{ icon.url }}.html"> {% endif %}
+							{{ icon.text }}
+							{% if (icon.description != '') %} </a> {% endif %}
+						</div>
+					</div>
+				</li>
+			{% endfor %}
+
+			<!--li class="block-features__item">
+                <div class="block-features__item-icon">
+                    {{ svg_inline('fi-free-delivery-48.svg') }}
+                </div>
+                <div class="block-features__item-info">
+                    <div class="block-features__item-title">Free Shipping</div>
+                    <div class="block-features__item-subtitle">For orders from $50</div>
+                </div>
+            </li>
+            <li class="block-features__item">
+                <div class="block-features__item-icon">
+                    {{ svg_inline('fi-24-hours-48.svg') }}
+                </div>
+                <div class="block-features__item-info">
+                    <div class="block-features__item-title">Support 24/7</div>
+                    <div class="block-features__item-subtitle">Call us anytime</div>
+                </div>
+            </li>
+            <li class="block-features__item">
+                <div class="block-features__item-icon">
+                    {{ svg_inline('fi-payment-security-48.svg') }}
+                </div>
+                <div class="block-features__item-info">
+                    <div class="block-features__item-title">100% Safety</div>
+                    <div class="block-features__item-subtitle">Only secure payments</div>
+                </div>
+            </li>
+            <li class="block-features__item">
+                <div class="block-features__item-icon">
+                    {{ svg_inline('fi-tag-48.svg') }}
+                </div>
+                <div class="block-features__item-info">
+                    <div class="block-features__item-title">Hot Offers</div>
+                    <div class="block-features__item-subtitle">Discounts up to 90%</div>
+                </div>
+            </li-->
+        </ul>
+    </div>
+</div>
+<script>
+function addclass(x) {
+    $(x).find('.icn-hvr').addClass('ccn_display_none');
+}
+
+function removeclass(x) {
+    $(x).find('.icn-hvr').removeClass('ccn_display_none');
+  //x.closest( ".icn-hvr" );
+}
+</script>

@@ -1,0 +1,70 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - member:
+#}
+
+{% set global_page_title           = inputs.title|default('Account Registration') %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/currency-calculator'                          %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'},
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set currency_list    = currencies() %}
+
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+	{% include '/blocks/block-header.twig' with {inputs: {
+        title: 'Currency Calculator',
+        breadcrumb: global_page_breadcrumbs,
+    }} %}
+    <div class="block"><div class="container"><div class="row justify-content-center"><div class="col-sm-10 col-md-8 col-lg-6 bg-white border p-sm-5">
+    	<form action="" method="post" id="currency-calculator">
+        {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+		<div class="form-group">
+			<input autocomplete="section-signup billing given-name" class="form-control{{ (issues['given-name']) ? ' is-invalid' : '' }}" id="account-converter-amount" name="amount" placeholder="Enter Amount" required="required" type="text"  />
+			
+		</div>
+		<div class="form-group">
+			
+			<select class="custom-select" name="from_currency" id="account-from-currency">
+                {% for currency in currency_list %}
+                    <option value="{{ currency.code }}"{{ ('USD' == currency.code) ? ' selected="selected"' : '' }}>{{ currency.name|e }}</option>
+                {% endfor %}
+            </select>
+		</div>
+		<div class="form-group">
+			
+			<select class="custom-select" name="to_currency" id="account-to-currency">
+                {% for currency in currency_list %}
+                    <option value="{{ currency.code }}"{{ ('USD' == currency.code) ? ' selected="selected"' : '' }}>{{ currency.name|e }}</option>
+                {% endfor %}
+            </select>
+		</div>
+		<div class="form-group">
+			
+			<input placeholder="Result"  class="form-control" type="text" readonly="readonly" id='currency_result' />
+		
+		</div>
+		{% if issues.action %}<div class="alert alert-danger">{{ issues.action }}</div>{% endif %}
+		<div class="form-group text-center">
+			 <button type="button" class="btn btn-primary" onclick="currencyCalculator();">Calculate</button>
+		</div>
+	</form></div></div></div></div>
+
+	{% include '/blocks/block-space.twig' with {inputs: {layout: 'before-footer'}} %}
+{% endblock %}

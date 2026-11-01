@@ -1,0 +1,34 @@
+{#
+// inputs:
+// - layout: string - one of [columns-8-full, columns-7-sidebar] (default: columns-8-full)
+// - brands: [image, name]
+#}
+
+{% set layout       = inputs.layout|default('columns-8-full') %}
+{% set root_classes = classnames('block block-brands block-brands--layout--' ~ layout) %}
+
+{% set distributors = inputs.distributors %}
+
+<div class="container"><div class="section-header"><div class="section-header__body">
+	<h2 class="section-header__title">Purchase From Our Distributor</h2>
+	<div class="section-header__divider"></div>
+</div></div></div>
+
+<div class="{{ root_classes }}"><div class="container"><ul class="block-brands__list">
+	{% for distributor in distributors %}
+		<li class="block-brands__item">
+			{% if distributor.url %}
+				<a href="{{ distributor.url|e }}" title="{{ brand.name|e }}" class="block-brands__item-link" target="_blank">
+					<img src="{{ image(distributor.image, {size : 96})|e }}" alt="{{ distributor.image.alt|e }}" loading="lazy"/>
+					<span class="block-brands__item-name">{{ distributor.name|e }}</span>
+				</a>
+			{% else %}
+				<div class="block-brands__item-link">
+					<img src="{{ image(distributor.image, {size : 96})|e }}" alt="{{ distributor.image.alt|e }}" loading="lazy"/>
+					<span class="block-brands__item-name">{{ distributor.name|e }}</span>
+				</div>
+			{% endif %}
+		</li>
+		<li class="block-brands__divider" role="presentation"></li>
+	{% endfor %}
+</ul></div></div>

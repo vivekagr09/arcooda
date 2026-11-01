@@ -1,0 +1,128 @@
+X-Account-Key: account1
+X-UIDL: 0004d09948890e0e
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <sales@converters.tv>
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on trevor.servdns.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.3 required=8.0 tests=ALL_TRUSTED,AWL,BAYES_00,
+	HTML_MESSAGE,MIME_HTML_ONLY autolearn=no version=3.3.1
+Received: from trevor.servdns.com (trevor.servdns.com [127.0.0.1])
+	by trevor.servdns.com (8.13.8/8.13.8) with ESMTP id q564kgbG023365;
+	Wed, 6 Jun 2012 14:46:42 +1000
+DomainKey-Signature: a=rsa-sha1; s=mail; d=converters.tv; c=nofws; q=dns;
+	b=fdEvhASkO7nUYPhiUqqRmr8ONA5Rm82oW2Bs4xhWJe7P5RoOPC+FQdfTSwTr9D1oi
+	ZiZNdHratBckrAXK9Rph7ORFI+PTcqTeR8/IZ6atE5rtTGBTx1dAnEHCoJaRl1g
+Received: (from apache@localhost)
+	by trevor.servdns.com (8.13.8/8.13.8/Submit) id q564kfGW023364;
+	Wed, 6 Jun 2012 14:46:41 +1000
+To: Steve Josifovski <sales@converters.tv>,
+        Valentina Josifovski <valentina@highwaygroup.net>,
+        Daniel Gault <dgault@highwaygroup.net>,
+        Kevin Smith <ksmith@highwaygroup.net>
+Subject: Alert - Manual Payment Received
+Date: Wed, 6 Jun 2012 14:46:41 +1000
+From: Alert - Manual Payment Received <sales@converters.tv>
+Message-ID: <caebe19e2b79aa47b7be9acbad5f4939@www.converters.tv>
+X-Priority: 3
+X-Mailer: PHPMailer 5.2 (http://code.google.com/a/apache-extras.org/p/phpmailer/)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/html; charset="utf-8"
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<style type="text/css">table,tr,td,th {font-family:inherit;font-size:inherit;}</style>
+	<title>[EMAIL_SUBJECT]</title>
+</head>
+<body><div style="font-family:verdana;margin:36px;font-size:11px;color:#777;">
+	<p><b>Status: <span style="color:#f00;">Manual Payment Received</span></b></p>
+	<p>Payment received successfully. The details are as follows :</p>
+	<table border="1" cellspacing="0" cellpadding="2" style="margin:auto;border-collapse:collapse;border:1px solid #ccc;font-size:inherit;">
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Customer Name</th>
+			<td>John Harvey</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Customer Company</th>
+			<td>Whitfunday Pty Ltd</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Customer Reference</th>
+			<td>ICN#24400</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Customer Email</th>
+			<td>whitfunday@bigpond</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Customer IP</th>
+			<td>203.45.74.78</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Customer Country</th>
+			<td>Australia</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Customer Amount</th>
+			<td>$356.10 AUD</td>
+		</tr>
+	</table>
+	<br />
+	<table border="1" cellspacing="0" cellpadding="2" style="margin:auto;border-collapse:collapse;border:1px solid #ccc;font-size:inherit;">
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Transaction ID</th>
+			<td>2000003796</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Receipt Number</th>
+			<td>120606467033</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Purchase Amount</th>
+			<td>$356.10 AUD</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Card Type</th>
+			<td>VC</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Reference Name</th>
+			<td>003423 - ICN#24400</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Reference Info</th>
+			<td>003423 - ICN#24400</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Result Code</th>
+			<td>000</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Result Message</th>
+			<td>Approved or completed successfully</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Approval</th>
+			<td>approved</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Authorise Id</th>
+			<td>364062</td>
+		</tr>
+		<tr>
+			<th align="left" style="background-color:#eee;color:#333;">Batch Number</th>
+			<td>20120606</td>
+		</tr>
+	</table>
+	<br />
+	<p>
+		Links :
+		<a href="http://www.highwaygroup.net/webadmin/payment/?action=view&7904=" target="_blank">View Receipt</a>
+	</p>
+</div></body>
+</html>
+

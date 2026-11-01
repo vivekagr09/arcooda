@@ -1,0 +1,42 @@
+body{font-family:Verdana,Arial,Helvetica,sans-serif;background-color:#f0f4f9}
+div#inqcontent .unfinished{background-color:#ff0}
+div#inqcontent a{color:#fff}
+div#inqcontent{width:100%;margin-left:auto;margin-right:auto;font-family:Verdana,Arial,Helvetica,Sans-serif}
+div#inqcontent table{text-align:left;width:80%;margin-left:auto;margin-right:auto;border-collapse:collapse;border:1px #ccc solid}
+div#inqcontent tr{background-color:#fff;color:#000;font-family:Verdana;font-size:12px;font-weight:400}
+div#inqcontent pre{margin:0}
+div#inqcontent pre.alt{background-color:#eee}
+div#inqcontent td{padding:2px 1px 2px 1px}
+div#inqcontent th,div#inqcontent thead{background-color:#fec;color:#000;font-weight:700;text-align:center}
+div#inqcontent table.vbox td,div#inqcontent table.vbox th,div#inqcontent table.vbox thead{border:1px solid #fff}
+div#inqcontent table.buttons{text-align:center}
+div#inqcontent table.wide{width:90%}
+div#inqcontent tr.alt{background-color:#eeeee0}
+div#inqcontent tr.highlight{background-color:#90eea0}
+div#inqcontent tr.mylock{background-color:#90a0ee}
+div#inqcontent tr.locked{background-color:#ee90a0}
+div#inqcontent td.collapse{width:1px}
+div#inqcontent th.collapse{width:1px}
+div#inqcontent td.left_title{width:30%;text-align:right;background-color:#eeeee0;color:#000;font-weight:700}
+div#inqcontent input.infile,div#inqcontent input.intext,div#inqcontent select,div#inqcontent textarea{width:98%}
+div#inqcontent th a{color:#000}
+div#inqcontent td a{color:#000}
+div#inqcontent table.spacetable td{border:2px solid #fff}
+div#printcontent{width:100%;margin-left:auto;margin-right:auto;font-family:Verdana,Arial,Helvetica,Sans-serif}
+div#printcontent table{text-align:left;width:80%;margin-left:auto;margin-right:auto;border-collapse:collapse;border:1px solid #f0f0f0}
+div#printcontent tr{background-color:#fff;color:#000;font-family:Verdana;font-size:12px;font-weight:400}
+div#printcontent td{padding:3px}
+div#printcontent th,div#printcontent thead{background-color:#fff;color:#000;font-weight:700;text-align:center}
+div#printcontent table.vbox td,div#printcontent table.vbox th,div#printcontent table.vbox thead{border:1px solid #fff}
+div#printcontent table.buttons{text-align:center}
+div#printcontent table.wide{width:90%}
+div#printcontent tr.alt{background-color:#f9f9f9}
+div#printcontent td.collapse{width:1px}
+div#printcontent th.collapse{width:1px}
+div#printcontent td.left_title{width:30%;text-align:right;background-color:#f9f9f9;color:#000;font-weight:700}
+div#printcontent input.infile,div#printcontent input.intext,div#printcontent select,div#printcontent textarea{width:98%}
+div#printcontent th a{color:#fff;text-decoration:none}
+div#plain *{background-color:#fff;color:#000;font-weight:400;font-size:xx-small}
+div#plain table{border-width:0}
+div#plain th{background-color:#fff;font-weight:700;color:#000;border:1px solid gray}
+div#plain td{background-color:#fff;font-weight:400;color:#000;border:1px solid gray}

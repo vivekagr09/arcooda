@@ -1,0 +1,105 @@
+body{background:#f0f4f9;margin:0;padding:0}
+@media print{
+.print_hide{display:none}
+}
+div.product_content .unfinished{background:#ff0}
+div.product_content{width:100%;margin-left:auto;margin-right:auto}
+div.product_content table{text-align:left;width:95%;margin-left:auto;margin-right:auto;border-collapse:collapse;border:1px #ccc solid}
+div.product_content tr{background:#fff;color:#000;font-family:Verdana;font-weight:400}
+div.product_content pre{margin:0}
+div.product_content pre.alt{background:#eee}
+div.product_content td{padding:2px 1px 2px 1px}
+div.product_content table.buttons{text-align:center}
+div.product_content tr.alt{background:#eeeee0}
+div.product_content tr.highlight{background:#90eea0}
+div.product_content td.highlight{background:#90eea0}
+div.product_content tr.mylock{background:#90a0ee}
+div.product_content tr.locked{background:#ee90a0}
+div.product_content select,div.product_content textarea{width:98%}
+div.product_content th a{color:#000}
+div.product_content td a{color:#000}
+
+tr.exists { background:#DFC299; }
+
+.highlight-modified { background:#90EEA0; }
+.highlight-modified>td { background:none; }
+
+.highlight-locked-other { background:#EE90A0; }
+.highlight-locked-other>td { background:none; }
+
+.highlight-locked { background:#90A0EE; }
+.highlight-locked>td { background:none; }
+
+.highlight-special { color:#f00; }
+.highlight-special>td { color:inherit; }
+
+.highlight-superseded { background:#edf; }
+.highlight-stock-stock_for_sale { background:#BBFFBB; }
+.highlight-stock-repair_item { background:#BBEEEE; }
+.highlight-stock-consignment { background:#EEBBEE; }
+.highlight-stock-stock_sample { background:#FEDC6C; }
+
+.fa-check-circle { color:#486b07; }
+.fa-exclamation-triangle { color:#e72b12; }
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab a {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab a:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab a.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.circlecart {
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.f-right {
+  float: right;
+  margin-left: 10px;
+}
+
+.enquiry {
+  background: #e0a800;
+  color: #3a3535;
+}
+
+.invoiced {
+  background: skyblue;
+  color: #3a3535;
+}
+
+.restricted {
+  background: red;
+  color: #3a3535;
+}
+.left_title {
+  background: #eed;
+}

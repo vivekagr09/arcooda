@@ -1,0 +1,43 @@
+{% set product = inputs.product %}
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-md-4 col-lg-5">
+                    
+                    <div class="navbar navbar-default">
+                        <ul class="nav product-tabs__list" id="video-nav-owner" style="padding-left:0px;">
+                            <li class="video-nav-item"><a href="#" onclick="showAllOwnerVideos(this); return false;">All</a></li>
+                            <li class="video-nav-item"><a href="#" onclick="showPublicownerVideos(this); return false;">Public Only</a></li>
+                            <li class="video-nav-item active"><a href="#" onclick="showOwnersVideos(this); return false;"><span class=" members_only" style="background-color: #fff;"><img src="/img/favicon.ico" width="20px;"></span> Owner Only</a></li>
+                        </ul>
+                    </div>
+                    <ul class="nav nav-pills nav-stacked" style="max-width: 560px; max-height: 315px; overflow-y: auto; margin: auto;">
+                        {% set first=true %}
+                        {% set ownervideo=true %}
+                        {% for video in product.videos %}
+                            {% set publicity= ('y' == video.members_only) ? "video_owner_members" : "video_owner_public" %}
+                            {% set badge=  ('y' == video.members_only) ? '<span class=" members_only" style="background-color: #fff;"><img src="/img/favicon.ico" width="20px;"></span>' : "" %}
+ 
+                                {% set active = (first)?'active':'' %}
+                                {% if 'y' == video.members_only and product.is_product_owner %}
+                                    {% set ownervideo=false %}
+                                {% endif %}
+                                <li  style="width:100%" class="{{active}} videoowner {{publicity}}"><a href="#video{{video.id}}" onclick='loadYoutubeowner(this,"{{getvideoid(video.youtube_id)}}"); return false;'>{{badge}}{{video.name}}</a></li>                                               
+                            {% set first=false %}
+                        {% endfor %}
+                        {% if ownervideo==true %}
+                        <li  style="width:100%;display:none;color:red;padding: 20px;" class="video_owner_members nowonervideo"><i>Please <a href="/register-user" target="_blank" style="text-decoration: underline;color:red;">register your machine</a> to view videos</i></a></li>
+                        {% endif %}
+                    </ul>
+                    </div>
+
+                <div class="col-md-8 col-lg-7">
+                    <div class="embed-responsive embed-responsive-16by9" id="video-owner-player" style="max-width:560px;max-height:315px;margin:auto;">
+
+                        {% if product.videos | length > 0 %}
+
+                         <iframe width="560" height="315" src="https://www.youtube.com/embed/{{getvideoid(product.videos[0].youtube_id)}}" frameborder="0" allowfullscreen="allowfullscreen" id="youtube-owner-frame"></iframe>
+                         {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>

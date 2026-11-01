@@ -1,0 +1,371 @@
+<?php
+if (!defined('QUERY_PACKING')) {
+    define('QUERY_PACKING', 90202);
+
+    define('PACKING_ERROR_TOO_BIG', 1);
+    define('PACKING_ERROR_INVALID_SIZE', 2);
+    define('PACKING_ERROR_NO_PRODUCTS', 3);
+
+    if (!function_exists('fact'))
+    {
+        function fact($i)
+        {
+            if ($i < 0) return null;
+            if (floor($i) != ceil($i)) return null;
+            $j = 1;
+            for (;$i > 1;$i--) $j*= $i;
+            return $j;
+        }
+    }
+    function packingContainerToImgString($container)
+    {
+        $crate_list = $container->crate_list;
+        $box_list = packingCratesTo2DMap($crate_list);
+        $sort = array();
+        foreach($crate_list as $key => $crate)
+        {
+            $sort[$key] = $crate->getY() + $crate->getHeight();
+            $crate_list[$key]->orig_key = $key;
+        }
+        array_multisort($sort, SORT_ASC, $crate_list);
+        foreach($crate_list as $key => $crate) if (count($box_list[$crate->orig_key]) == 0) unset($crate_list[$key]);
+        $out_numbers = array();
+        $out_numbers[] = intval($container->getWidth());
+        $out_numbers[] = intval($container->getDepth());
+        $out_numbers[] = intval($container->getHeight());
+        $out_numbers[] = count($crate_list);
+        foreach($crate_list as $crate)
+        {
+            $out_numbers[] = intval($crate->getWidth());
+            $out_numbers[] = intval($crate->getDepth());
+            $out_numbers[] = intval($crate->getX());
+            $out_numbers[] = intval($crate->getZ());
+            $out_numbers[] = intval($crate->getProductID());
+            $out_numbers[] = intval($crate->getSiteID());
+        }
+        return base64_encode(gzcompress(implode(':', $out_numbers)));
+    }
+    function packingCratesTo2DMap($crate_list)
+    {
+        $sort = array();
+        foreach($crate_list as $key => $crate)
+        {
+            $sort[$key] = $crate->getY() + $crate->getHeight();
+            $crate_list[$key]->orig_key = $key;
+        }
+        array_multisort($sort, SORT_ASC, $crate_list);
+        $box_list = array();
+        while (($crate1 = array_shift($crate_list)) !== null)
+        {
+            $areas = array(array($crate1->getX(), $crate1->getZ(), $crate1->getX() + $crate1->getWidth(), $crate1->getZ() + $crate1->getDepth()));
+            foreach($crate_list as $crate2) foreach($areas as $area_id => $area) if ($area[0] < ($crate2->getX() + $crate2->getWidth()) && $area[2] > $crate2->getX() && $area[1] < ($crate2->getZ() + $crate2->getDepth()) && $area[3] > $crate2->getZ())
+            {
+                unset($areas[$area_id]);
+                if ($crate2->getZ() > $area[1])
+                {
+                    $new_area = $area;
+                    $new_area[3] = $crate2->getZ();
+                    $areas[] = $new_area;
+                }
+                if ($crate2->getZ() + $crate2->getDepth() < $area[3])
+                {
+                    $new_area = $area;
+                    $new_area[1] = $crate2->getZ() + $crate2->getDepth();
+                    $areas[] = $new_area;
+                }
+                if ($crate2->getX() > $area[0])
+                {
+                    $new_area = $area;
+                    $new_area[1] = max($crate2->getZ(), $new_area[1]);
+                    $new_area[2] = $crate2->getX();
+                    $new_area[3] = min($crate2->getZ() + $crate2->getDepth(), $new_area[3]);
+                    $areas[] = $new_area;
+                }
+                if ($crate2->getX() + $crate2->getWidth() < $area[2])
+                {
+                    $new_area = $area;
+                    $new_area[0] = $crate2->getX() + $crate2->getWidth();
+                    $new_area[1] = max($crate2->getZ(), $new_area[1]);
+                    $new_area[3] = min($crate2->getZ() + $crate2->getDepth(), $new_area[3]);
+                    $areas[] = $new_area;
+                }
+            }
+            $box_list[$crate1->orig_key] = $areas;
+        }
+        return $box_list;
+    }
+    function packingFromCache($posted)
+    {
+        if (substr($posted['container_list'], 0, 11) == 'b64_gz_ser:') return unserialize(gzuncompress(base64_decode(substr($posted['container_list'], 11))));
+        if (substr($posted['packing_string'], 0, 11) == 'b64_gz_ser:') return unserialize(gzuncompress(base64_decode(substr($posted['packing_string'], 11))));
+        $cache_file = packingGetOptionList('cache_dir') . 'packing_' . md5(print_r($posted, 1)) . '.txt';
+        if (is_file($cache_file))
+        {
+            $cache_time = filemtime($cache_file);
+            if (($cache_time + 18000) > $_SERVER['REQUEST_TIME'])
+            {
+                touch($cache_file, $_SERVER['REQUEST_TIME']);
+                return unserialize(file_get_contents($cache_file));
+            }
+        }
+        $packing = packingFromPost($posted);
+        file_put_contents($cache_file, serialize($packing));
+        return $packing;
+    }
+    function packingFromPost($posted) //,&$error_list)
+    {
+        moduleLoad('invoice'); 
+        moduleLoad('product');
+
+        global $error_list;
+        if (!is_array($error_list)) {
+            $error_list = array();
+        }
+
+        if (substr($posted['container_list'], 0, 11) == 'b64_gz_ser:') {
+            return unserialize(gzuncompress(base64_decode(substr($posted['container_list'], 11))));
+        }
+
+        if (substr($posted['packing_string'], 0, 11) == 'b64_gz_ser:') {
+            return unserialize(gzuncompress(base64_decode(substr($posted['packing_string'], 11))));
+        }
+
+        $total_weight   = 0.0;
+        $crate_list     = array();
+        $container_list = array();
+            foreach ($posted['productPackaging'] as $product) {
+                $product_str = sprintf('%d  %d', $product['product_id'], 3);
+                    $counter      = 1;
+                    $product_dims = array();
+                    $product_dims[] = array('width' => $product['width'], 'depth' => $product['depth'], 'height' => $product['height'], 'weight' => $product['weight']);
+                    if (count($product_dims) == 0) {
+                        $error_list[] = array(4, 'Size information unavailable for: ' . $product['product_qty'] . ' x ' . $product['product_name'] . ' (' . $product['product_id'] . ')', 'Size information unavailable for: ' . $product['product_qty'] . ' x ' . htmlspecialchars($product['product_name']) . ' (' . $product['product_id'] . ')', $product['product_id']);
+                    } else {
+                        foreach ($product_dims as $dims) {
+                            $add_qty = $product['product_qty'];
+                            $row     = array($dims['width'], $dims['depth'], $dims['height']);
+                            sort($row);
+                            if ($row[2] > 1201 || $row[1] > 238 || $row[0] > 235) {
+                                $error_list[] = array(4, 'Object too big to fit in any container: ' . $product['product_qty'] . ' x ' . $product['product_name'] . ' (' . $product['product_id'] . ')', 'Object too big to fit in any container: ' . $product['product_qty'] . ' x ' . htmlspecialchars($product['product_name']) . ' (' . $product['product_id'] . ')', $product['product_id']);
+                            } elseif ($row[0] <= 0) {
+                                $error_list[] = array(5, 'Invalid size information for: ' . $product['product_qty'] . ' x ' . $product['product_name'] . ' (' . $product['product_id'] . ')', 'Invalid size information for: ' . $product['product_qty'] . ' x ' . htmlspecialchars($product['product_name']) . ' (' . $product['product_id'] . ')', $product['product_id']);
+                            } else {
+                                $crate = new Crate();
+                                $crate->setProductID($product['product_id'],3);
+                                if ($dims['carton_units'] > 0) {
+                                    $crate->setVars($dims['carton_width'], $dims['carton_depth'], $dims['carton_height'], $dims['carton_weight'], sprintf('%s (%d units)', $product['product_name'], $dims['carton_units']));
+                                    while ($add_qty >= $dims['carton_units']) {
+                                        $crate_list[] = $crate;
+                                        $add_qty -= $dims['carton_units'];
+                                    }
+                                }
+                                if ($add_qty > 0) {
+                                    $crate->setVars($dims['width'], $dims['depth'], $dims['height'], $dims['weight'], sprintf('%s', $product['product_name']));
+                                    while ($add_qty >= 1) {
+                                        $crate_list[] = $crate;
+                                        $add_qty--;
+                                    }
+                                }
+                            }
+                        }
+                    }
+            }
+        if (count($crate_list) > 1) {
+            $order_list = array();
+            foreach ($crate_list as $key => $crate) {
+                $order_list[] = $crate->getWidth() * $crate->getDepth() * $crate->getHeight();
+                $crate_list[$key]->rotateBestFit(235);
+            }
+            array_multisort($order_list, $crate_list);
+            $crate_list = &array_reverse($crate_list);
+        }
+        $standards = packingGetOptionList('standard_containers');
+        if (in_array($posted['packing_action'], array('invoice_crating')) || in_array($posted['packing_stacking'], array('checkout_stacking', true))) {
+            foreach ($standards as $i => $standard) {
+                $standards[$i]->max_angle = 5;
+                $standards[$i]->stackable = true;
+            }
+        }
+
+        if (in_array($posted['packing_action'], array('checkout_satchel'))) {
+            $standards          = array();
+            $satchel            = $posted['satchel'];
+            $satchel            = new Container($satchel['width'], $satchel['depth'], $satchel['height'], $satchel['weight'], $satchel['name']);
+            $satchel->max_angle = 5;
+            $satchel->stackable = true;
+            $standards[]        = $satchel;
+        }
+        $container_count = 0;
+        $container_list  = array();
+       while (count($crate_list))
+        {
+            $crate = array_shift($crate_list);
+            if (count($container_list) > 0)
+            {
+                foreach($container_list as $key => $container)
+                {
+                    $possibilities = & $container->findPossible($crate, true);
+                    if (count($possibilities) > 0)
+                    {
+                        $found = & reset($possibilities);
+                        $crate->setAngle($found['angle']);
+                        $container_list[$key]->addCrate($crate, $found['hot_spot']);
+                        continue(2);
+                    }
+                }
+                foreach($container_list as $key => $container) if (($container->standard_id + 1) < count($standards))
+                {
+                    $crate_list[] = $crate;
+                    foreach($container->crate_list as $crate) $crate_list[] = $crate;
+                    $order_list = array();
+                    foreach($crate_list as $crate) $order_list[] = $crate->getWidth() * $crate->getDepth() * $crate->getHeight();
+                    array_multisort($order_list, $crate_list);
+                    $crate_list = & array_reverse($crate_list);
+                    $add_me = $standards[$container->standard_id + 1];
+                    $add_me->standard_id = $container->standard_id + 1;
+                    $container_list[$key] = $add_me;
+                    continue(2);
+                }
+            }
+            foreach($standards as $key => $container)
+            {
+                $possibilities = & $container->findPossible($crate, true);
+                if (count($possibilities) > 0)
+                {
+                    $found = & reset($possibilities);
+                    $crate->setAngle($found['angle']);
+                    $container->addCrate($crate, $found['hot_spot']);
+                    $container->standard_id = $key;
+                    $container_list[] = $container;
+                    continue(2);
+                }
+            }
+        }
+        $approximate_containers = count($container_list);
+        return $container_list;
+    }
+    function packingGetOptionList($table_name)
+    {
+        static $option_cache = array();
+        if (isset($option_cache[$table_name])) return $option_cache[$table_name];
+        global $DB;
+        $table = '';
+        $option_list = array();
+        switch ($table_name)
+        {
+        case 'standard_satchels':
+            return array(3 => new Container(25.5, 23.5, 0.0, 1.0, 'Mini Satchel'), 4 => new Container(39.0, 28.5, 0.0, 1.0, '1kg Satchel'), 5 => new Container(40.5, 34.0, 0.0, 2.0, '2kg Satchel'), 6 => new Container(45.0, 22.0, 0.0, 3.0, '3kg Satchel'),);
+        case 'standard_containers':
+            return array(0 => new Container(590.0, 235.0, 238.0, 21640.0, "20' Container"), 1 => new Container(1201.0, 235.0, 238.0, 26500.0, "40' Container"),);
+        case 'standard_sizes':
+            return array_merge(packingGetOptionList('standard_satchels'), packingGetOptionList('standard_containers'));
+        case 'staff_id':
+            return getStaffList();
+        case 'joined_fields':
+            $joins = array();
+            return $joins;
+        case 'cache_dir':
+            return $_SERVER['DOCUMENT_ROOT'] . '/cache/packing/';
+        case 'all_fields':
+            return array_merge(packingGetOptionList('base_fields'), packingGetOptionList('ext_fields'));
+        case 'all_fields_types':
+            return array_merge(packingGetOptionList('base_fields_types'), packingGetOptionList('ext_fields_types'));
+        case 'base_fields':
+            $fields = array();
+            foreach(getTableColumns('packing') as $key) $fields[$key] = 'p.`' . $key . '`';
+            return $fields;
+        case 'base_fields_types':
+            return getTableFields('packing');
+        case 'extra_fields':
+        case 'ext_fields':
+            return array();
+        case 'ext_fields_types':
+            return array();
+        }
+        if ($table != '')
+        {
+            $query = $DB->query("SELECT " . $key . "," . $value . " FROM " . $table);
+            while ($row = $DB->fetch_array($query)) $option_list[$row[0]] = $row[1];
+        }
+        $option_cache[$table_name] = $option_list;
+        return $option_list;
+    }
+    function packingImgStringToContainer($imgstring)
+    {
+        $imgstring = explode(':', gzuncompress(base64_decode($imgstring)));
+        $container = new Container(array_shift($imgstring), array_shift($imgstring), array_shift($imgstring));
+        $crate_count = array_shift($imgstring);
+        for ($i = 0;$i < $crate_count;$i++)
+        {
+            $crate = new Crate(array_shift($imgstring), array_shift($imgstring));
+            $crate->setPosition(array_shift($imgstring), 0, array_shift($imgstring));
+            $crate->setProductID(array_shift($imgstring), array_shift($imgstring));
+            $container->crate_list[] = $crate;
+        }
+        return $container;
+    }
+    function packingOptimisePacking($container_list)
+    {
+        $standards = packingGetOptionList('standard_containers');
+        $optimal_list = $container_list;
+        foreach($container_list as $key => $container) foreach($standards as $standard_id => $standard)
+        {
+            $same = true;
+            foreach(array('width', 'depth', 'height', 'max_weight') as $field) if ($container->$field != $standard->$field) $same = false;
+            if ($same && $container->standard_id == 0) $container_list[$key]->standard_id = $standard_id;
+        }
+        $crate_list = array();
+        foreach($container_list as $container) foreach($container->crate_list as $crate) $crate_list[] = $crate;
+        $total_combinations = 1;
+        //Cycle through all container combinations
+        ////$total_combinations*=pow(count($standards),count($container_list));
+        //Cycle through all crate orders
+        $total_combinations*= fact(count($crate_list));
+        //Cycle through all crate positions
+        $total_combinations*= fact(count($crate_list));
+        //Cycle through all the crate rotations
+        foreach($crate_list as $crate) $total_combinations*= 2; //6;
+        echo 'There are ' . $total_combinations . ' combinations to test';
+        die();
+        $j = $i = 0;
+        while ($i < $total_results) //$j==0)
+        {
+            $test_list = array();
+            foreach($container_list as $container) $test_list[] = new Container($container->getWidth(), $container->getDepth(), $container->getHeight(), $container->max_weight, $container->getName());
+            $j = $i;
+            $crates_added = 0;
+            foreach($crate_list as $crate)
+            {
+                $count_possibles = 0;
+                $possibles = array();
+                foreach($test_list as $key => $container) $count_possibles+= count($possibles[$key] = $container->findPossible($crate));
+                if ($count_possibles == 0) break;
+                $want_pos = $j % $count_possibles;
+                $j/= $count_possibles;
+                foreach($possibles as $key => $found_possibles)
+                {
+                    if ($want_pos < count($found_possibles))
+                    {
+                        $crate->setAngle($found_possibles[$want_pos]['angle']);
+                        $test_list[$key]->addCrate($crate, $found_possibles[$want_pos]['hot_spot']);
+                        $crates_added++;
+                        $want_pos = 0;
+                        break;
+                    }
+                    else $want_pos-= count($found_possibles);
+                }
+                if ($want_pos > 0) break;
+            }
+            if ($crates_added == count($crate_list))
+            {
+                foreach($test_list as $key => $container) if (count($container->crate_list) == 0) unset($test_list[$key]);
+                if (count($test_list) < count($optimal_list))
+                {
+                    $optimal_list = $test_list;
+                }
+            }
+            $i++;
+        }
+        return $optimal_list;
+    }
+}

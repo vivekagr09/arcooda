@@ -1,0 +1,217 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - alert:
+// - issues:
+// - result:
+// - Freight:
+#}
+
+{% set global_page_title           = inputs.title|default('Freight Detail')       %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/freight'                           %}
+{% set global_page_breadcrumbs     = [
+	{title : 'Home',            url : '/'                  },
+    {title : 'My Account',      url : '/account/dashboard' },
+	{title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set alert     = inputs.alert                                                   %}
+{% set issues    = inputs.issues                                                  %}
+{% set result    = inputs.result                                                  %}
+{% set member_couriers    = inputs.member_couriers                                                  %}
+{% set courier_list    = inputs.courier_list                                                  %}
+
+
+{% extends '/layouts/account.twig' %}
+
+{% block account_body %}
+<div class="card">
+    {% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+    <div class="card-header ">
+        <h5 class="content_heading_color">Freight Details</h5>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-body card-body--padding--2">
+     <div class="addresses-list">
+        <a href="#" class="addresses-list__item addresses-list__item--new" data-toggle="modal" data-target="#account-Freight-add-modal">
+            <div class="addresses-list__plus"></div>
+            <div class="btn btn-secondary btn-sm">Add New</div>
+        </a>
+        <div class="addresses-list__divider"></div>
+
+        {% for key,courier in member_couriers %}
+            <div class="addresses-list__item card address-card">
+                {% if courier.main == 'y' %}
+                    <div class="address-card__badge tag-badge tag-badge--theme">Default</div>
+                {% endif %}
+                <div class="address-card__body">
+                    <div class="address-card__name">{{courier.courier_name|e }}</div>
+                    <div class="address-card__row">
+                        <div class="address-card__row-title">Account Number</div>
+                        <div class="address-card__row-content">{{ courier.account_num }}</div>
+                    </div>
+                    <div class="address-card__row">
+                        <div class="address-card__row-title">Notes</div>
+                        <div class="address-card__row-content">{{ courier.notes }}</div>
+                    </div>
+                    <div class="address-card__footer">
+                        <a href="#" data-toggle="modal" data-target="#account-Freight-edit{{ courier.id }}-modal">Edit</a>&nbsp;&nbsp;
+                        <a href="#" data-toggle="modal" data-target="#account--delete{{courier.id }}-modal">Remove</a>
+                    </div>
+                </div>
+            </div>
+            <div class="addresses-list__divider"></div>
+        {% endfor %}
+    </div>
+    <p class="mt-4"><b>NOTE</b> :  <span class="note-text">If you have your own freight/courier account, please add your details here. We will follow your instruction.</span></p>
+    {% set prefix = 'account-Freight-add' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Add Freight Detail</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="" method="post">
+            <div class="row">
+                    <input type="hidden" name="courier_acc_id" value="" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-name">Courier<span class="color-red">*</span></label>
+                            <select name="courier_id" class="form-control">
+                            {% for keycou,courier_data in courier_list %}
+                            <option value="{{keycou}}">{{courier_data}}</option>
+                            {% endfor %}
+                            <option value="0">Other</option>
+                        </select>
+                        </div>
+                        <div class="form-group courier_name-add" style="display:none;">
+                            <label for="{{ prefix }}-street-title">Courier Name<span class="color-red">*</span></label>
+                            <input class="form-control" type="text" name="courier_name" id="courier_name"  placeholder="Courier Number" />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-street-title">Account Number<span class="color-red">*</span></label>
+                            <input class="form-control" type="text" name="account_number" required placeholder="Account Number" />
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ prefix }}-main">Courier Insurance<span class="color-red">*</span></label>
+                            <select  name="insurance" class="form-control" id="{{ prefix }}-insurance">
+                            <option value="n" >No</option>
+                            <option value="y">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-main">Default</label>
+                            <select  name="main" class="form-control contactDefault" id="{{ prefix }}-main" {{ (member_couriers | length > 0) ? ' style="background-color: #f37aea;"' : 'style=" background-color: #d0f37a;"' }}>
+                            {% if member_couriers | length > 0 %}
+                            <option value="n" style="background-color:#fff">No</option>
+                            {% endif %}
+                            <option value="y" style="background-color:#fff">Yes</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-email">Notes<span class="color-red">*</span></label>
+                            <textarea rows="5"  name="notes" class="form-control" required placeholder="Please tell us what service you would like to use, whether we choose your courier's insurance, and any other instructions"></textarea>
+                        </div>
+                    </div>
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="hidden" value="add" name="action" />
+                <input type="submit" value="Add" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+    {% for key,courier in member_couriers %}
+        {% set prefix = 'account-Freight-edit' ~ courier.id %}
+        <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Freight Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body"><form action="" method="post">
+                <div class="row">
+                    <input type="hidden" name="courier_acc_id" value="{{courier.id}}" />
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-name">Courier<span class="color-red">*</span></label>
+                            <select name="courier_id" class="form-control">
+                            {% for keycou,courier_data in courier_list %}
+                            <option value="{{keycou}}" {{(courier.courier_id==keycou)?'selected':''}}>{{courier_data}}</option>
+                            {% endfor %}
+                            <option value="0" {{(courier.courier_id==0)?'selected':''}}>Other</option>
+                        </select>
+                        </div>
+                         <div class="form-group courier_name-add" style="{{(courier.courier_id==0)?'':'display:none;'}}">
+                            <label for="{{ prefix }}-street-title">Courier Name<span class="color-red">*</span></label>
+                            <input class="form-control" type="text" name="courier_name" id="courier_name"  placeholder="Courier Number" value="{{courier.courier_name}}" {{(courier.courier_id==0)?'required':''}}/>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-street-title">Account Number<span class="color-red">*</span></label>
+                            <input class="form-control" type="text" name="account_number" required placeholder="Account Number" value="{{courier.account_num}}"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-main">Courier Insurance<span class="color-red">*</span></label>
+                            <select  name="insurance" class="form-control" id="{{ prefix }}-insurance">
+                            <option value="n" {{ (courier.insurance == 'n') ? ' selected="selected"' : '' }}>No</option>
+                            <option value="y" {{ (courier.insurance == 'y') ? ' selected="selected"' : '' }}>Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ prefix }}-main">Default</label>
+                            <select  name="main" class="form-control contactDefault" id="{{ prefix }}-main" {{ (courier.main == 'n') ? ' style="background-color: #f37aea;"' : 'style=" background-color: #d0f37a;"' }}>
+                            {% if member_couriers | length > 1 and courier.main != 'y' %}
+                            <option value="n" {{ (courier.main == 'n') ? ' selected="selected"' : 'n' }} style="background-color:#fff">No</option>
+                            {% endif %}
+                            <option value="y" {{ (courier.main == 'y') ? ' selected="selected"' : 'y' }} style="background-color:#fff">Yes</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ prefix }}-email">Notes<span class="color-red">*</span></label>
+                            <textarea rows="5"  name="notes" class="form-control" required placeholder="Notes">{{courier.notes}}</textarea>
+                        </div>
+                    </div>
+            </div>
+                <hr />
+                <div class="form-group">
+                    <input type="hidden" value="update" name="action" />
+                    <input type="submit" class="btn btn-lg- btn-primary" value="Save" />
+                </div>
+            </form></div>
+        </div></div></div>
+
+        {% set prefix = 'account--delete' ~ courier.id %}
+        <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Freight Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body"><form action="" method="post">
+                <p>
+                    Deleting the following address: <br />
+                    <br />
+                    {{courier.courier_name|e|nl2br }}
+                    {% if courier.account_number %}<br />Account Number: {{ courier.account_number|e }}{% endif %}
+                </p>
+                <hr />
+                <div class="form-group">
+                    <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal" aria-label="Close">Cancel</button>
+                    <input type="hidden" value="{{ courier.id }}" name="courier_acc_id" />
+                    <input type="hidden" value="delete" name="action" />
+                    <input type="submit" value="Delete" class="btn btn-lg btn-danger" />
+                </div>
+            </form></div>
+        </div></div></div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

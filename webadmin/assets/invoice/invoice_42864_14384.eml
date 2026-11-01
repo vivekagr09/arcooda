@@ -1,0 +1,411 @@
+X-Account-Key: account2
+X-UIDL: 00009d444fd7bcb1
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <member@paypal.com.hk>
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on john.ourhunter.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.1 required=8.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_REPLYTO,HTML_MESSAGE,
+	HTML_TAG_BALANCE_HEAD,RCVD_IN_DNSWL_HI autolearn=ham version=3.3.1
+X-Original-To: sales@arcadespareparts.com
+Delivered-To: sales-arcadespareparts.com@john.ourhunter.com
+Received: from mx2.slc.paypal.com (mx0.slc.paypal.com [173.0.84.225])
+	by john.ourhunter.com (Postfix) with ESMTPS id 2A5E8DC0002
+	for <sales@arcadespareparts.com>; Sat,  9 Jan 2016 02:22:48 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; d=paypal.com.hk; s=pp-dkim1; c=relaxed/relaxed;
+	q=dns/txt; i=@paypal.com.hk; t=1452266614;
+	h=From:From:Subject:Date:To:MIME-Version:Content-Type;
+	bh=rs85Tp0Nhe03re/Ib4To5q8C0WOQNYJYje6PUxZkYto=;
+	b=jNnnwh4aM/7KLCLCoh1SvOcE16MwsbHULDUhlByqlldm+bADtc9GKtiJUv7UIPyq
+	dB/F9KJErNNb63Ai13/4bOb41MDeIHdN+Cfn2T/Apnv8QaK71ZVmhk4brnwQe4Qi
+	Wu8vDuPhvhstrtGO2cMYvmrvPujlVMWQD4apGy/ijhzL+5AlqUsbl0awzwvuGW32
+	B1KgBIaSVD42cFcra4BAShLcDcHtU7ZTiyxGxa3iNasozaEsmJxPtvM3NFMbJ0le
+	h/0fMRHMn6oZCkNiarUHYBwHsr8GGMOxEnWXRNfG133OiHxb9DbxCJRM2w2pkcbO
+	tjsPIAj7lxSjRdutUUd+Xg==;
+Received: (qmail 6033 invoked by uid 993); 8 Jan 2016 15:23:34 -0000
+Date: Fri, 08 Jan 2016 07:23:34 -0800
+Message-Id: <1452266614.6033@paypal.com>
+PP-Correlation-Id: 199d754b3b63b
+Subject: Notification of payment received
+X-MaxCode-Template: email-xclick-payment-notification
+To: Arcade Spare Parts <sales@arcadespareparts.com>
+From: Angelica Whittington via PayPal <member@paypal.com.hk>
+X-Email-Type-Id: PP341 - 199d754b3b63b
+Reply-To: sailorx_scout@yahoo.com
+X-XPT-XSL-Name: email_pimp/default/en_GB/xclick/XClickPaymentNotification.xsl
+Content-Type: multipart/alternative;
+ boundary=--NextPart_048F8BC8A2197DE2036A
+MIME-Version: 1.0
+X-Antivirus: avast! (VPS 160110-1, 2016/01/11), Inbound message
+X-Antivirus-Status: Clean
+
+----NextPart_048F8BC8A2197DE2036A
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=windows-1252
+
+8 Jan 2016 23:22:43 GMT+08:00 =7C Transaction ID: 1AW08175G04753447
+
+Dear Arcade Spare Parts,
+
+You received a payment of =24108.65 USD from Angelica Whittington =
+(sailorx_scout=40yahoo.com)
+
+Thanks for using PayPal. You can now send any items. To see all the =
+transaction details, log in to your PayPal account.
+
+It may take a few moments for this transaction to appear in your account.
+
+Seller Protection - Eligible
+
+
+----------------------------------------------------------------
+
+Buyer:
+Angelica Whittington
+sailorx_scout=40yahoo.com
+
+
+Confirmed delivery address
+Angelica Whittington
+21484 Green Hill Road&=2313;
+Bldg 39
+Farmington Hills, MI 48335
+United States
+
+Instructions to merchant:
+The buyer hasn't entered any instructions.
+
+Dispatch details:
+You haven=92t added any dispatch details.
+-----------------------------------
+Purchase Details
+-----------------------------------
+Description:Dance Dance Revolution Screws for Dance Floor Bracket, Item =
+no:12112
+Unit price:=240.91 USD
+Qty:10
+Amount:=249.10 USD
+Description:Dance Dance Revolution Floor Arrow (Pink), Item no:12218
+Unit price:=2416.50 USD
+Qty:2
+Amount:=2433.00 USD
+Description:Freight FedEx International Priority Service, Item no:
+Unit price:=2462.00 USD
+Qty:1
+Amount:=2462.00 USD
+Description:Paypal Surcharge (3.5%), Item no:
+Unit price:=243.70 USD
+Qty:1
+Amount:=243.70 USD
+Description:Shipping Insurance, Item no:
+Unit price:=240.85 USD
+Qty:1
+Amount:=240.85 USD
+
+Subtotal: =24108.65 USD
+Total: =24108.65 USD
+
+Payment: =24108.65 USD
+Payment sent to: sales=40arcadespareparts.com
+
+Invoice ID: 42863
+
+
+
+----------------------------------------------------------------
+
+
+
+Questions? Go to the Help Centre at: www.paypal.com/hk/help.
+
+Please do not reply to this email. This mailbox is not monitored and you =
+will not receive a response. For assistance, log in to your PayPal account =
+and click Help in the top right corner of any PayPal page.
+
+You can choose to receive plain text emails instead of HTML emails. To =
+change your Notifications preferences, log in to your PayPal account, go =
+to your Profile, and click My settings.
+
+Copyright =A9 1999-2016 PayPal. All rights reserved.
+
+Consumer advisory- PayPal Pte. Ltd., the holder of PayPal=92s stored value
+facility, does not require the approval of the Monetary Authority of =
+Singapore.
+Users are advised to read the terms and conditions carefully.
+
+PPID PP341 - 199d754b3b63b=20
+
+----NextPart_048F8BC8A2197DE2036A
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=windows-1252
+
+<html><head title=3D=22=22/><body><div class=3D=22ppmail=22><style =
+type=3D=22text/css=22>
+=09=09=09=09=09=09=09=09body, td =7Bfont-size: 12px;font-family: =
+arial,helvetica,sans-serif;=7D
+                               .itemtbl =7Bmargin-top:20px;=7D
+=09=09=09=09=09=09      .itemtbl tr td =7Bpadding: 10px;color: =23333;=7D
+=09=09=09=09    =09=09=09tr.itemheading td=7Bborder:1px solid =
+=23ccc;border-right:none;border-left:none;padding:5px 10px 5px 10px =
+=21important;color: =23333333 =21important;=7D
+=09=09=09=09=09=09=09=09.padtoptwty =7Bpadding-top:20px =21important;=7D
+=09=09=09=09=09=09=09=09tr.last td =7Bborder-bottom:none;=7D
+=09=09=09=09=09=09=09=09tr.itemrepeat td =7Bborder-bottom:1px dashed =
+=23ccc;=7D
+=09=09=09=09=09=09=09=09 .itemtbl =7Bmargin-top:20px;=7D
+=09=09=09=09=09=09=09    .itemtbl tr td =7Bpadding: 10px;color: =
+=23333;=7D=09
+=09=09=09=09=09=09=09    .content =7Bmargin-top: 30px;color:=23333 =
+=21important; =7D
+=09=09=09=09=09=09=09=09.mainheading=7Bcolor:=23333333;font-weight:bold;=7D
+=09=09=09=09      =09=09=09.confirm =7Bcolor: =234c8f3a;=7D
+=09=09=09=09=09=09=09=09.greeting =7Bcolor:=23333333 =
+=21important;font-weight:bold;=7D
+=09=09=09=09=09=09=09=09.status =
+=7Bfont-size:14px;color:=23C88039;font-weight:bold;text-decoration:none;=7D=
+=09
+=09=09=09=09=09=09=09=09.strong =7Bfont-weight: bold;=7D
+=09=09=09=09=09=09=09=09.valign =7Bvertical-align: middle;=7D
+=09=09=09=09=09=09=09=09.purchasebox =7Bwidth: 598px;=7D
+=09=09=09=09=09=09=09=09.purchasetitle =7Bborder-bottom:1px solid =
+=23ccc;padding:5px 0 5px 10px;=7D
+=09=09=09=09=09=09=09=09.purchaseboxmul =7Bborder:1px solid =
+=23ccc;margin:10px 0 10px 0;padding-bottom:10px;=7D
+=09=09=09=09=09=09=09=09.purchasetotal =7Bborder-top: 1px solid =
+=23ccc;border-bottom: 1px solid =23ccc;=7D
+=09=09=09=09=09=09=09=09.purchasetotal =7Bmargin: 7px 0 20px 0;=7D
+=09=09=09=09=09=09=09=09.purchasetotal tr td=7Bpadding-bottom:20px;=7D
+=09=09=09=09=09=09=09=09.purchasetotalmul =7Bborder-top: 1px solid =
+=23ccc;width : 580px;=7D
+=09=09=09=09=09=09=09=09.purchasetotalmul img , .purchasetotal img =
+=7Bmargin-top: 20px;=7D
+=09=09=09=09=09=09=09=09.purchasedetails tr =
+td=7Bcolor:=23333;padding-top:15px;=7D
+=09=09=09=09=09=09=09=09.purchasedetailsmul tr =
+td=7Bcolor:=23333;padding:20px 0 0 10px;=7D
+=09=09=09=09=09=09=09    .headinfo =7Bcolor:=23333333;=7D
+=09=09=09=09=09=09=09     hr =7Bcolor: =23dedede =21important;height:1px;=7D
+=09=09=09=09=09=09=09     .totaltbl =7Bmargin-top: 20px; width: 100%;=7D
+=09=09=09=09=09=09=09     .totaltbl tr td =7Btext-align:right;color: =
+=23333;padding:0 5px 0 0;width: 90px;=7D
+=09=09=09=09=09=09=09    .totaltblmlt =7Bmargin: 10px 0 0 10px;=7D
+=09=09=09=09=09=09=09    .totaltblmlt tr td =7Btext-align:right;color: =
+=23333;width: 85px;=7D
+=09=09=09=09=09=09=09    .totaltblmlt tr td.subhd , .totaltbl tr td.subhd =
+=7Bwidth: 390px;padding-right: 10px;text-align:right;=7D
+=09=09=09=09=09=09=09     .clr =7Bclear:both;=7D
+=09=09=09=09=09=09=09     .airtbl =7Bmargin-top : 30px;width:320px;=7D
+=09=09=09=09=09=09=09    .emphasis =7Bcolor:=23333333 =
+=21important;font-weight:bold;=7D
+=09=09=09=09=09=09=09     .padleftten =7Bpadding-left: 10px;=7D
+=09=09=09=09=09=09=09     .option =7Bcolor: =23aaaaaa;=7D
+=09=09=09=09=09=09=09     .fmf =7Bcolor:red;=7D
+=09=09=09=09=09=09=09      .airtbl tr td=7Bpadding-right: 15px;color: =
+=23757575;padding-bottom: 5px;=7D
+=09=09=09=09=09=09=09      .tblfooter =7Bcolor: =
+=23757575;padding-left:10px;=7D
+=09=09=09=09=09=09=09      .help=7Bmargin-right: 5px;vertical-align: =
+middle;=7D
+=09=09=09=09=09=09=09      .footercontainer=7Bwidth:400px;=7D
+=09=09=09=09=09=09=09      .exchange=7Bwidth:100%;=7D
+=09=09=09=09=09=09=09     =20
+/*For 26568 spec */
+=2EheaderDetails =7Bcolor:=23000000 =21important;font-weight:bold;=7D
+=2Edescription =7Bcolor:=23333333;=7D
+=2EtopBorder=7Bborder-top:1px solid =23CCCCCC;=7D
+=2EbottomBorder=7Bborder-bottom:1px solid =23CCCCCC;=7D
+=2EbottomMargin=7Bmargin:7px 0 20px;=7D
+=2EredFmf=7Bcolor:=23ff0000;=7D
+=2EpadBottom =7Bpadding-bottom:20px =21important;=7D
+=2EcontentNew =7Bcolor:=23666666;=7D
+HR.dotted =7Bwidth: 100%; margin-top: 0px; margin-bottom: 0px; =
+border-left: =23fff; border-right: =23fff; border-top: =23fff; =
+border-bottom: 2px dotted =23ccc;=7D
+=2EuseNextBox =7B
+background:=23FFFFFF =
+url(http://www.paypal.com/en_US/i/scr/scr_table_bg_1x70.gif) repeat-x =
+scroll left bottom;
+border:1px solid =23CCCCCC;
+border-collapse:separate;
+padding:10px 10 20px 10px;
+width:530px;
+margin-left:20px;
+margin-top:20px;
+color:=23333333;
+font-family:arial,helvetica,sans-serif;
+font-size:11px;
+=7D
+=2EboxHead=7Bwidth:530px;padding-bottom:10px =
+=21important;border-bottom:1px solid =23CCCCCC;text-align:left;=7D
+=2EboxHeadingTxt=7Bfont-size:12px;font-weight:bold;=7D
+=2EpadBoxTop =7Bpadding-top:10px =21important;=7D
+=2ESignupLink=7Bcolor:=23084482 =21important;=7D
+=09=09=09=09=09=09=09     </style>
+
+<table align=3D=22center=22 border=3D=220=22 cellpadding=3D=220=22 =
+cellspacing=3D=220=22 width=3D=22100%=22><tr><td/></tr></table><table =
+align=3D=22center=22 border=3D=220=22 cellpadding=3D=220=22 =
+cellspacing=3D=220=22 width=3D=22600=22><tr valign=3D=22top=22><td =
+width=3D=22100%=22><table align=3D=22center=22 border=3D=220=22 =
+cellpadding=3D=220=22 cellspacing=3D=220=22 style=3D=22color:=23333333 =
+=21important;font-family: arial,helvetica,sans-serif;font-size:12px;=22 =
+width=3D=22600=22><tr valign=3D=22top=22><td><img =
+src=3D=22http://images.paypal.com/en_US/i/logo/paypal_logo.gif=22 =
+border=3D=220=22 alt=3D=22PayPal logo=22/></td><td valign=3D=22middle=22 =
+align=3D=22right=22>8 Jan 2016 23:22:43 GMT+08:00<br/>Transaction ID: <a =
+target=3D=22new=22 =
+href=3D=22https://www.paypal.com/hk/cgi-bin/webscr?cmd=3D_view-a-trans&amp;=
+id=3D1AW08175G04753447=22>1AW08175G04753447</a></td></tr></table><div =
+style=3D=22margin-top: 30px;color:=23333 =21important;font-family: =
+arial,helvetica,sans-serif;font-size:12px;=22><span =
+style=3D=22color:=23333333 =21important;font-weight:bold;font-family: =
+arial,helvetica,sans-serif;=22>Dear Arcade Spare =
+Parts,</span><br/><br/><span =
+style=3D=22font-size:14px;color:=23C88039;font-weight:bold;text-decoration:=
+none;=22>You received a payment of =24108.65 USD from Angelica =
+Whittington</span><span =
+style=3D=22font-size:14px;color:=23C88039;font-weight:bold;text-decoration:=
+none;=22> (sailorx_scout=40yahoo.com)</span><br/><table =
+cellpadding=3D=225=22><tr><td valign=3D=22top=22>Thanks for using PayPal. =
+You can now send any items. To see all the transaction details, log in to =
+your PayPal account.<br/><br/>It may take a few moments for this =
+transaction to appear in your account.<br/><br/><span =
+style=3D=22font-weight:bold;color:=23333333;=22>Seller Protection - =
+</span><span style=3D=22color: =
+=234c8f3a;=22>Eligible</span></td><td/></tr></table><br/><div =
+style=3D=22margin-top:5px;=22><hr size=3D=221=22/></div><table =
+border=3D=220=22 cellpadding=3D=220=22 cellspacing=3D=220=22 =
+style=3D=22color:=23333 =21important;font-family: =
+arial,helvetica,sans-serif;font-size:12px; margin-bottom:20px;=22 =
+width=3D=2298%=22 align=3D=22left=22><tr><td =
+style=3D=22padding-top:5px;=22 valign=3D=22top=22 width=3D=2250%=22 =
+align=3D=22left=22><span =
+style=3D=22color:=23333333;font-weight:bold;=22>Buyer</span><br/>Angelica =
+Whittington<br/>sailorx_scout=40yahoo.com<br/></td><td =
+style=3D=22padding-top:5px;=22 valign=3D=22top=22><span =
+style=3D=22color:=23333333;font-weight:bold;=22>Instructions to =
+merchant</span><br/>The buyer hasn't entered any =
+instructions.</td></tr><tr><td style=3D=22padding-top:10px;=22 =
+valign=3D=22top=22 width=3D=2240%=22 align=3D=22left=22><span =
+style=3D=22font-family: =
+arial,helvetica,sans-serif;font-size:12px;=22><span =
+style=3D=22color:=23333333;font-weight:bold;=22>Delivery address =96 =
+</span><span style=3D=22color: =
+=234c8f3a;=22>confirmed</span></span><br/>Angelica Whittington<br/>21484 =
+Green Hill Road&=2313;
+Bldg 39<br/>Farmington Hills,=A0MI=A048335<br/>United States<br/></td><td =
+style=3D=22padding-top:10px;=22 valign=3D=22top=22><span =
+style=3D=22color:=23333333;font-weight:bold;=22>Dispatch =
+details</span><br/>You haven=92t added any dispatch =
+details.</td></tr></table><table align=3D=22center=22 border=3D=220=22 =
+cellpadding=3D=220=22 cellspacing=3D=220=22 =
+style=3D=22clear:both;color:=23333 =21important;font-family: =
+arial,helvetica,sans-serif;font-size:12px;margin-top:20px;=22 =
+width=3D=22598px=22><tr><td style=3D=22border:1px solid =
+=23ccc;border-right:none;border-left:none;padding:5px 10px 5px 10px =
+=21important;color: =23333333 =21important;=22 width=3D=22348=22 =
+align=3D=22left=22>Description</td><td style=3D=22border:1px solid =
+=23ccc;border-right:none;border-left:none;padding-right: 10px;=22 =
+width=3D=22100=22 align=3D=22right=22>Unit price</td><td =
+style=3D=22border:1px solid =
+=23ccc;border-right:none;border-left:none;padding-right: 10px;=22 =
+width=3D=2250=22 align=3D=22right=22>Qty</td><td style=3D=22border:1px =
+solid =23ccc;border-right:none;border-left:none;=22 width=3D=2280=22 =
+align=3D=22right=22>Amount</td></tr><tr style=3D=22padding: 10px;=22><td =
+width=3D=22348=22 align=3D=22left=22 style=3D=22border-bottom:1px dashed =
+=23ccc;padding: 10px;=22>Dance Dance Revolution Screws for Dance Floor =
+Bracket<br/>Item Number 12112</td><td style=3D=22border-bottom:1px dashed =
+=23ccc;padding: 10px;=22 width=3D=22100=22 align=3D=22right=22>=240.91 =
+USD</td><td style=3D=22border-bottom:1px dashed =23ccc;padding: 10px;=22 =
+width=3D=2250=22 align=3D=22right=22>10</td><td =
+style=3D=22border-bottom:1px dashed =23ccc;padding: 10px 0 10px 10px;=22 =
+width=3D=2280=22 align=3D=22right=22>=249.10 USD</td></tr><tr =
+style=3D=22padding: 10px;=22><td width=3D=22348=22 align=3D=22left=22 =
+style=3D=22border-bottom:1px dashed =23ccc;padding: 10px;=22>Dance Dance =
+Revolution Floor Arrow (Pink)<br/>Item Number 12218</td><td =
+style=3D=22border-bottom:1px dashed =23ccc;padding: 10px;=22 =
+width=3D=22100=22 align=3D=22right=22>=2416.50 USD</td><td =
+style=3D=22border-bottom:1px dashed =23ccc;padding: 10px;=22 =
+width=3D=2250=22 align=3D=22right=22>2</td><td =
+style=3D=22border-bottom:1px dashed =23ccc;padding: 10px 0 10px 10px;=22 =
+width=3D=2280=22 align=3D=22right=22>=2433.00 USD</td></tr><tr =
+style=3D=22padding: 10px;=22><td width=3D=22348=22 align=3D=22left=22 =
+style=3D=22border-bottom:1px dashed =23ccc;padding: 10px;=22>Freight FedEx =
+International Priority Service<br/></td><td style=3D=22border-bottom:1px =
+dashed =23ccc;padding: 10px;=22 width=3D=22100=22 =
+align=3D=22right=22>=2462.00 USD</td><td style=3D=22border-bottom:1px =
+dashed =23ccc;padding: 10px;=22 width=3D=2250=22 =
+align=3D=22right=22>1</td><td style=3D=22border-bottom:1px dashed =
+=23ccc;padding: 10px 0 10px 10px;=22 width=3D=2280=22 =
+align=3D=22right=22>=2462.00 USD</td></tr><tr style=3D=22padding: =
+10px;=22><td width=3D=22348=22 align=3D=22left=22 =
+style=3D=22border-bottom:1px dashed =23ccc;padding: 10px;=22>Paypal =
+Surcharge (3.5%)<br/></td><td style=3D=22border-bottom:1px dashed =
+=23ccc;padding: 10px;=22 width=3D=22100=22 align=3D=22right=22>=243.70 =
+USD</td><td style=3D=22border-bottom:1px dashed =23ccc;padding: 10px;=22 =
+width=3D=2250=22 align=3D=22right=22>1</td><td =
+style=3D=22border-bottom:1px dashed =23ccc;padding: 10px 0 10px 10px;=22 =
+width=3D=2280=22 align=3D=22right=22>=243.70 USD</td></tr><tr =
+style=3D=22padding: 10px;=22><td width=3D=22348=22 align=3D=22left=22 =
+style=3D=22border-bottom:none;padding: 10px;=22>Shipping =
+Insurance<br/></td><td style=3D=22border-bottom:none;padding: 10px;=22 =
+width=3D=22100=22 align=3D=22right=22>=240.85 USD</td><td =
+style=3D=22border-bottom:none;padding: 10px;=22 width=3D=2250=22 =
+align=3D=22right=22>1</td><td style=3D=22border-bottom:none;padding: 10px =
+0 10px 10px;=22 width=3D=2280=22 align=3D=22right=22>=240.85 =
+USD</td></tr></table><table align=3D=22center=22 border=3D=220=22 =
+cellpadding=3D=220=22 cellspacing=3D=220=22 style=3D=22border-top: 1px =
+solid =23ccc;border-bottom: 1px solid =23ccc;color:=23333 =
+=21important;font-family: =
+arial,helvetica,sans-serif;font-size:12px;margin-bottom:10px;=22 =
+width=3D=22595=22><tr><td><table border=3D=220=22 cellpadding=3D=220=22 =
+cellspacing=3D=220=22 style=3D=22color:=23333 =21important;font-family: =
+arial,helvetica,sans-serif;font-size:12px;margin-top: 10px;=22 =
+align=3D=22right=22><tr><td style=3D=22width:390px;text-align:right; =
+padding:0 10px 0 0;=22>Subtotal</td><td =
+style=3D=22width:90px;text-align:right; padding:0 5px 0 0;=22>=24108.65 =
+USD</td></tr><tr><td style=3D=22width:390px;text-align:right; padding:0 =
+10px 0 0;=22><span style=3D=22color:=23333333 =
+=21important;font-weight:bold;=22>Total</span></td><td =
+style=3D=22width:90px;text-align:right; padding:0 5px 0 0;=22>=24108.65 =
+USD</td></tr><tr><td style=3D=22width:390px;text-align:right; padding:20px =
+10px 0 0;=22><span style=3D=22color:=23333333 =
+=21important;font-weight:bold;=22>Payment</span></td><td =
+style=3D=22width:90px;text-align:right; padding:20px 5px 0 0;=22>=24108.65 =
+USD</td></tr><tr><td style=3D=22width:390px;text-align:right; padding:0 =
+10px 10px 0;=22>Payment sent to sales=40arcadespareparts.com</td><td =
+style=3D=22width:90px;text-align:right; padding:20px 5px 0 =
+0;=22/></tr></table></td></tr><tr><td style=3D=22color: =
+=23757575;padding-left:10px;padding-bottom:20px;=22>Invoice ID: =
+42863</td></tr></table><br/><br/><img =
+src=3D=22http://images.paypal.com/en_US/i/icon/icon_help_16x16.gif=22 =
+border=3D=220=22 style=3D=22margin-right: 5px;vertical-align: middle;=22 =
+alt=3D=22=22/>Questions? Go to the Help Centre at: =
+www.paypal.com/hk/help.<br/><br/><span =
+style=3D=22font-size:11px;color:=23333;=22>Please do not reply to this =
+email. This mailbox is not monitored and you will not receive a response. =
+For assistance, log in to your PayPal account and click =
+<strong>Help</strong> in the top right corner of any PayPal =
+page.</span><br/><br/><span style=3D=22font-size:11px;color:=23333;=22>You =
+can choose to receive plain text emails instead of HTML emails. To change =
+your Notifications preferences, log in to your PayPal account, go to your =
+Profile, and click <strong>My =
+settings</strong>.</span></div><br/><br/><span =
+class=3D=22xptFooter=22>Copyright =A9 1999-2016 PayPal. All rights =
+reserved.<br/><br/>Consumer advisory- PayPal Pte. Ltd., the holder of =
+PayPal=92s stored value<br/>facility, does not require the approval of the =
+Monetary Authority of Singapore.<br/>Users are advised to read the terms =
+and conditions carefully.<br/></span><br/><span style=3D=22color: =
+=23333333;font-family: arial,helvetica,sans-serif;font-size:11px;=22><span =
+class=3D=22xptFooter ppid=22>PayPal Email ID PP341 - =
+199d754b3b63b</span></span><img height=3D=221=22 width=3D=221=22 =
+src=3D=22https://paypal.112.2o7.net/b/ss/paypalglobal/1/H.22--NS/459342713?=
+c6=3D10C38426K64572359&amp;v0=3DPP341_0_&amp;pe=3Dlnk_o&amp;pev1=3Demail&am=
+p;pev2=3DD=3Dv0&amp;events=3DscOpen=22 border=3D=220=22 =
+alt=3D=22=22/></td></tr></table></div></body></html>=
+
+----NextPart_048F8BC8A2197DE2036A--
+
+

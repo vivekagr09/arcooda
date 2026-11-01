@@ -1,0 +1,43 @@
+{% set invoice          = inputs.invoice %}
+{% set invoice_products = inputs.invoice_products %}
+{% set invoice_charges  = inputs.invoice_charges %}
+
+<div class="card checkout-cardBox mb-0"><div class="card-body card-body--padding--2">
+	<h3 class="card-title">Your Order</h3>
+	<div class="checkout-table-Wrapper checkout-cardCont"><table class="checkout__totals">
+		<thead class="checkout__totals-header"><tr>
+			<th colspan="2">Product</th>
+			<th colspan="2">Total</th>
+		</tr></thead>
+		{% if invoice_products %}<tbody class="checkout__totals-products">{% for item in invoice_products %}<tr>
+			<td>{% if item.product.images %}
+				{% set image = item.product.images(item.colour_id, item.sub_product_id)[0] %}
+				<a href="{{ item.product.url|e }}"><img src="{{ image|e }}" alt="{{ image.alt|e }}" style="max-width:48px;max-height:48px;float:left;margin:0 8px 8px 0;min-height:48px" /></a>
+			{% endif %}</td>
+			<td><a href="{{ item.product.url|e }}">{{ item.product_name }}{% if item.colour_id > 0 %} ({{ item.product.Singlecolor_name(item.colour_id) }}){% endif %}</a></td>
+			<td>×{{ item.product_qty }}</td>
+			<td>
+				{% if item.product_offer_total > 0 %}
+					${{ item.product_offer_total }}
+				{% else %}
+					Please Ask
+				{% endif %}
+			</td>
+		</tr>{% endfor %}</tbody>{% endif %}
+		{% if invoice.ship_number %}<tbody class="checkout__totals-shipping"><tr>
+			<td>{{ invoice.ship_number|e }}</td>
+			<td>{{ invoice.ship_product_name|e }}</td>
+			<td>×1</td>
+			<td>${{ invoice.ship_online }}</td>
+		</tr></tbody>{% endif %}
+		{% if invoice_charges %}<tbody class="checkout__totals-charges">{% for item in invoice_charges %}<tr>
+			<td colspan="3">C{{ item.charge_id }} {{ item.charge_name }}</td>
+			<td>${{ item.charge_offer | number_format(2, '.', ',') }}</td>
+		</tr>{% endfor %}</tbody>{% endif %}
+		<tbody class="checkout__totals-subtotals"></tbody>
+		<tfoot class="checkout__totals-footer"><tr>
+			<th colspan="2">Total</th>
+			<td colspan="2">${{ invoice.invoice_offer }} {{ invoice.invoice_currency|e }}</td>
+		</tr></tfoot>
+	</table></div>
+</div></div>

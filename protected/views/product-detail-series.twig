@@ -1,0 +1,57 @@
+{% set global_page_title       = inputs.title %}
+{% set global_page_description = inputs.description %}
+{% set global_page_keywords    = inputs.keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set series          = inputs.series %}
+{% set related_product = inputs.related_product %}
+{% set setup_images    = inputs.setup_images %}
+
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+	{% include '/blocks/block-header.twig' with {inputs: {
+		title:'',
+		breadcrumb: global_page_breadcrumbs,
+	}} %}
+	<div class="block-split"><div class="container"><div class="block-split__row row no-gutters"><div class="block-split__item block-split__item-content col-auto" style="width:100%">
+		<div class="product product--layout--full"><div class="product__body">
+			<div class="product__card product__card--one"></div>
+
+			<div class="product__card product__card--two"></div>
+
+			<div class="product__header typography">
+				<div class="product-gallery__featured" style="display: flex; padding-bottom: 8px; border-bottom: 1px solid #ebebeb;">
+					<img src="{{ series.img }}" alt="s" title="s" width="96px;" />
+					<span class="product__title"><h1 style="position: relative; top: 50%; -webkit-transform: translateY(-50%);margin-left: 10px;">{{series.name | title }} Series</h1></span>
+				</div>
+				<p style="margin-top: 15px;">{{series.description}}</p>
+			</div>
+
+			<div class="product__info"><div class="product__info-card"><div class="product__info-body"><div class="product__meta"><div style="max-height:450px;overflow: auto" id="customize-scroll-bar">
+				{% for image in setup_images %}
+					<div  class="setup-instruction-image"><a href="{{ image.image_url|e }}" target="_blank" ><img src="{{ image.image_url|e }}" style="width:100%" alt="{{ image.caption }}" title="{{ image.caption }}" /></a></div>
+				{% endfor %}
+			</div></div></div></div></div>
+		</div></div>
+
+		<div class="block-space block-space--layout--divider-nl"></div>
+
+		<div class="block block-products-carousel" data-layout="grid-5"><div class="container"><div class="typography"><div class="spec__section">
+			<h2 class="section-header__title" style="padding-left: 38px;">{{ series.name | title }} Series Family</h2>
+
+			<div class="products-view__list products-list products-list--grid--5" data-layout="grid" data-with-features="false"><div class="products-list__content">
+				{% for product in related_product %}
+					<div class="products-list__item">
+						{% include '/components/product-card.twig' with {inputs: {
+							product: product,
+							exclude: ['meta']
+						}} %}
+					</div>
+				{% endfor %}
+			</div></div>
+		</div></div></div></div>
+	</div></div></div></div>
+
+	<div class="block-space block-space--layout--before-footer"></div>
+{% endblock %}

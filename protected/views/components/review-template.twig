@@ -1,0 +1,58 @@
+  <style type="text/css">
+        #display-review-data .markdown h1 {
+            font-size: 15px !important;
+        }
+        #display-review-data .markdown{
+             font-size: 15px !important;
+        }
+  </style>
+  <link rel="stylesheet" href="/css/flagicons.css" type="text/css" />
+  {% set reviews = inputs.reviews %}
+  {% set newreview = inputs.newreview  %}
+  {% set productname = inputs.productname  %}
+  {% if newreview %}
+    <div class="alert alert-success" role="alert">Thanks for your product review</div>
+   {% endif %}
+  {% for review in reviews %}
+    <div class="product-review" style="{% if loop.index is even %}background-color: #f7f7f7;{% endif %}; padding:48px;">
+       <div class="product-review-section" style="display: flex;justify-content: space-between;">
+            <div class="product-review-detail" style="display:flex;gap:15px;align-items: center;">
+                {% if review.avatar_image %}
+                     <img src="/avatar/svgavatars/ready-avatars/{{review.avatar_image}}" style="vertical-align:top;" width="32" height="32">
+                {% else %}
+                    <div>{{ svg('person-32.svg') }}</div>
+                {% endif %}
+                <div><b>{{review.user_name}}</b></div>
+                <div>
+                    <i class="flagicon-{{review.user_country|lower}}"></i>
+                </div>
+            </div>
+            <div>
+                <div class="product-card__rating">
+                    {% include '/components/rating.twig' with {inputs: {
+                        classes: 'product-card__rating-stars',
+                        rating: review.reviews
+                    }} %}
+                    <div class="product-card__rating-label">{{ review.reviews|number_format(1) }}</div>
+                </div>
+            </div>
+       </div>
+       <div style="margin-top:10px;">
+            <p>{{markdown(review.comment)}}</p>
+       </div>
+        <div>
+            {% for attachment in review.attachments %}
+
+
+                <a href="{{attachment.url}}?width=700&height=700" target="_blank" style="padding:20px;">
+                    <img src="{{attachment.url}}" width="20%" height="20%" alt="{{productname}} review {{review.user_country | getCountryName }}" title="{{productname}} review {{review.user_country | getCountryName }}"></a>
+            {% endfor %}      
+        </div>
+        {% if review.our_reply %}
+            <div class="row" style="padding-top: 20px;"><div class="col-md-1" style="padding-left: 40px;"><img src="/img/favicon.ico" width="30"></div> <div class="col-md-11" style="padding-left: 5px;background-color:#f2fbd9;"> 
+            <i>{{review.our_reply}}</i></div></div>
+        {% endif %}
+        
+    </div>
+    {# <div style="margin-top: 20px;border-bottom:1px solid #ebebeb;width:100%;"></div> #}
+   {% endfor %}

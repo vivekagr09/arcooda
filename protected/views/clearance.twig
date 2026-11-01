@@ -1,0 +1,36 @@
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+{% set newsletter_list        = inputs.newsletter_list %}
+{% set user = user() %}
+
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+	{% include '/blocks/block-header.twig' with {inputs: {
+	    title: 'Arcooda Clearance Items',
+	    breadcrumb: global_page_breadcrumbs,
+	}} %}
+
+   <div class="block">
+      <div class="container">
+         <div class="row">
+            <div class="col-12 col-lg-12 mt-4 mt-lg-0">
+               <div class="card">
+                  <div class="card-divider"></div>
+                  <div class="card-body card-body--padding--2">
+                     <div class="vehicles-list vehicles-list--layout--account">
+                     	<div class="vehicles-list__body">
+		                 		{{ markdown(inputs.description) }}
+                    		</div>
+                     </div>
+                  </div>
+               </div>
+                  
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="block-space block-space--layout--before-footer"></div>
+{% endblock %}

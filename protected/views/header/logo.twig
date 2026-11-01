@@ -1,0 +1,19 @@
+{#
+// inputs:
+#}
+{% set season_graphics    = inputs.season_graphic %}
+<a href="/" class="logo">
+    <div class="logo__slogan">
+        Coin Operated / Amusement / Arcade / Gaming / Video Game / and Merchandise products at the lowest possible prices.
+    </div>
+    <div class="logo__image">
+        <!-- logo -->
+		<!--img class="w-100" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAAAaCAMAAABSIURSAAAAYFBMVEX///8WM/4RKv9PX/trePfX2vcTL/8fLv0bNv4eOv4gPf65v+8ZOf/09vYLI/44TP2Ejvygp/kgM+QmOe9yfsqUoMUuQNN3jC+etEnQ4Wnc57lMYMNFVhM5UNEBFf4SKusAhaCqAAAAAXRSTlMAQObYZgAABNNJREFUeF7NloeO4zYURfnYq3p12///y9xH2p7NzmQDJMBiCI2sEY947yuULf5xpG2bF/FNhups933MxGi/kZlvlJlBaWXEtxul/FE1Y77QK2lcAZhhKWb92g8YI8rLbBkX5vgG1ksJq76Ip8yYXooD0JfMaurkWieT69y18pdj3/ezUcM8d1chlOvUKN3C4Bs5GlK0m1KapqWKmVm6gHXMfZJbGaWXWpgFxDjVd8QwWZfG+5KAThTakkY53yHmcXZyY0hS7voCnf3WRtXS5O1VmJyD84Emtv0LUvouh5myrFpG2hjJr7jINK3KZmlE39E8y9y5Q5QuZx9kJxcmYrQ/Vs6DzZlGoSV5eYcnCiFKDaHbjYM+DghCarCBzXgfcERcYqw7I/sL6Sl4inh6QymUhZVI18JhzPcY5BVEfhL3IkIOAYtNRsTMKOaLw71MKdkQgr2LAhT8wl6OHSr4OG57YTOymQk4CHqfEEWhzma3itHGYCnSdBEGt62PnH1l69MxyyQiC3tIjl30SKPdSqIAVBfFU24UScKnHkrZIXNgQGo/bqcYPHs1noBD0SXBCEPnC9EUIj3gArqQfaTh4SdY0JAN5IqohH1QjHLlPIbYu4QL+pF0lycDMzmMNUFWMY4EjKjAyUr4O0/4wYUAyGYCBFVA1Mjdr8hoA806YoWlBE8/LukRCGYMxRBQea51tL0OxI/3WGQQRhjUf7uMQJOxMc+rKKim3GAmAuHmPBDrjWWO83JCqiQZiM14VEj5aNXfkON2VKS7l+ERrTaIcVqUbV8hOtdUCrbbXUE0M8gP38PktPQSvotF4u7cZbXUIoYcYaYgVnRCa+ATGbiYrprx3mOfWrQbqtQQHA1pZhCj1AnLhkcXc7c0D36uwuRBpKeZUM0M8YliO6kckBrwrcdjzK6aYSXeTygBhNhM65lAG5eM7qYh+weSOO4L4pYriBCIgtPttRDYPYRDZLvvzCzNjI+ZrBtKc7GgToTSJTZT/bISJM79PLF/Ww2QwWamFsHAApCzIVxJNnM3qot2BRFpTuxEMI7/3NoyczU94lp/NhP81lADUM68dWvaMENb4gZ+Sp3IDzpCVDNswzYzrlwqcnwgo0Q6OpxsQvUDzIjCIgMFDKQGhGcCNhKbITaTPAwwOhakxOOxixjaFlHQsdtquGlY7FUCzmAzQy8zjODAqSIn4gmRbKy7uOfUbHc/sULmtxvFtdpiws/lbcYQZt12d1sRyC2CLUVR5OQl4J46JS4nwq3px/lEUAQzrVtq3ifzRviFBKRKRRydrq+IEDNJVxuBtCZ0TU1/jCBGwWagJxiNQC06VsmMDC5JwkuWicOAcS7mCZ2dx42F3mZiM5M38wlp5YgUgZvesmreoErRmpS5awb7Jj7MGCI45BA0vIAt1Z16fsFldo7A9zqOC/sfKXdXFN22r0s8+kJuL0RT8J7ImdaLkqCS2GJ3FyLiY9EImQvGRG+5R3kkaak+lshny0nzmfrW0VqpVKFy4YGiP3+qJCPMmHBOahjLz0gBUktjVUrvnzNDpUatuoRJp8cCwl+fRBoHZT5Qvmls6FlaSz+A+WV8vvM7RBG/X79ADKDqV6EA19+sNTZ3BkH836Ho336zKyutFn9iFNWjLv+Z+Dz+AsIcas9y+P6JAAAAAElFTkSuQmCC" /-->
+		{% if season_graphics.header_graphic %}
+		<img class="w-100" src="/graphicsimage/{{season_graphics.header_graphic}}" alt="logo"/>
+		{% else %}
+		<img class="w-100" src="/brand.png" alt="logo" />
+		{% endif %}
+        <!-- logo / end -->
+    </div>
+</a>

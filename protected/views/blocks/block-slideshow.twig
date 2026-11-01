@@ -1,0 +1,134 @@
+{#
+// inputs:
+// - slides: TwigBanner[] - an array of slides to show
+// - - url:          string - url
+// - - image:        TwigImage
+// - - mobile_image: TWigImage
+// - - offer:        string
+// - - title:        string
+// - - details:      string
+// - - button:       string
+#}
+
+{% set slides = inputs.slides %}
+<style type="text/css">
+    .lazy-bg {
+      background-color: #f0f0f0; /* Light gray placeholder */
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.3s ease;
+    }
+    .owl-carousel .owl-nav {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px; /* keeps arrows inside */
+  pointer-events: none;
+}
+
+.owl-carousel .owl-nav button {
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff !important;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+button.owl-next span{
+    color: #0000006e;
+    font-size: 140px;
+
+}
+button.owl-prev span {
+    color: #0000006e;
+    font-size: 140px;
+
+}
+.owl-carousel .owl-nav .owl-prev{
+    top: 40%;
+    left: 5%;
+    border: none !important;
+    outline: none !important;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+.owl-carousel .owl-nav .owl-next{
+    top: 40%;
+    right: 5%;
+    border: none !important;
+    outline: none !important;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+.owl-carousel .owl-nav span:hover {
+  color: white !important;
+}
+</style>
+<div class="block block-slideshow"><div class="container"><div class="block-slideshow__carousel"><div class="owl-carousel">
+    {% for slide in slides %}
+        {% if slide.url %}<a class="block-slideshow__item" href="{{ slide.url|e }}">{% else %}<span class="block-slideshow__item">{% endif %}
+            {% if slide.image        %}<span class="block-slideshow__item-image block-slideshow__item-image--desktop lazy-bg" data-bg="{{ image(slide.image) }}"></span>{% endif %}
+            {% if slide.mobile_image %}<span class="block-slideshow__item-image block-slideshow__item-image--mobile lazy-bg" data-bg="{{ image(slide.mobile_image) }}"></span>{% endif %}
+            {% if slide.offer        %}<span class="block-slideshow__item-offer">{{   slide.offer  |e|nl2br }}</span>{% endif %}
+            {% if slide.title        %}<span class="block-slideshow__item-title">{{   slide.title  |e|nl2br }}</span>{% endif %}
+            {% if slide.details      %}<span class="block-slideshow__item-details">{{ slide.details|e|nl2br }}</span>{% endif %}
+            {% if slide.button       %}<span class="block-slideshow__item-button">{{  slide.button |e|nl2br }}</span>{% endif %}
+        {% if slide.url %}</a>{% else %}</span>{% endif %}
+    {% endfor %}
+</div></div></div></div>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
+  const $carousel = $(".block-slideshow__carousel .owl-carousel");
+
+  function loadLazyBackgrounds($carousel) {
+    // Load .owl-item currently visible and 1 slide before/after
+    $carousel.find('.owl-item').each(function () {
+      const $item = $(this);
+      if ($item.hasClass('active') || $item.prev().hasClass('active') || $item.next().hasClass('active')) {
+        $item.find('.lazy-bg').each(function () {
+          const $el = $(this);
+          const bg = $el.data('bg');
+          if (bg && !$el.hasClass('bg-loaded')) {
+            $el.css('background-image', `url('${bg}')`);
+            $el.addClass('bg-loaded');
+          }
+        });
+      }
+    });
+  }
+
+  // Initialize Owl Carousel
+  $carousel.owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    nav: true,
+    dots: true,
+    onInitialized: function () {
+      loadLazyBackgrounds($carousel);
+    },
+    onChanged: function () {
+      loadLazyBackgrounds($carousel);
+    }
+  });
+
+  // Extra fallback after load
+  setTimeout(() => loadLazyBackgrounds($carousel), 300);
+});
+</script>
+

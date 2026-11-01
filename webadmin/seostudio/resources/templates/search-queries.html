@@ -1,0 +1,76 @@
+<div class="form-container">
+    <h2>{{ "Select Region" | rt }}</h2>
+
+    <form action="" method="POST">
+        <div class="tool-form">
+            {% if countries %}
+            <div class="input">
+                <select name="country" class="select-input">
+                    {% for code, name in countries %}
+                        <option value="{{ code }}" {% if code == activeCountry %} selected {% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+            <div class="button">
+                <button type="submit" class="loadable">{{ "Test" | rt }}</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="table-container">
+    <div class="table-actions" data-target="#keywords">
+        <h2>{{ "Top Search Queries" | rt }}</h2>
+        <div class="actions-container">
+            {% if keywords %}
+                {% include 'actions/copy.html' %}
+                {% include 'actions/download.html' %}
+            {% endif %}
+        </div>
+    </div>
+
+    <table id="keywords" data-name="{{ activeCountry | lower }}-%tool">
+        <thead>
+            <tr>
+                <th>{{ "Keyword" | rt }}</th>
+                <th class="center">{{ "Rank" | rt }}</th>
+                <th class="center">{{ "Volume" | rt }}</th>
+                <th class="center">{{ "CPC" | rt }}</th>
+                <th class="center">{{ "Difficulty" | rt }}</th>
+                <th class="center">{{ "Clicks" | rt }}</th>
+                <th class="center">{{ "Homepages" | rt }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for keyword in keywords %}
+                <tr>
+                    <td>
+                        <div class="ellipsis">{{ keyword.keyword }}</div>
+                    </td>
+                    <td class="center">{{ keyword.rank ?? '?' }}</td>
+                    <td class="center">{{ (keyword.searchVolume ?? 0) | number_format }}</td>
+                    <td class="center" data-value="{{ keyword.broadCostPerClick | number_format(2) }}">
+                        {% if keyword.broadCostPerClick %}
+                            ${{ keyword.broadCostPerClick | number_format(2) }}
+                        {% else %}
+                            –
+                        {% endif %}
+                    </td>
+                    <td class="center">
+                        <div class="colored-value">
+                            <div class="value">{{ keyword.rankingDifficulty ?? 0 }}</div>
+                            <div class="circle" style="background-color: {{ difficulty_color(keyword.rankingDifficulty ?? 0) }}"></div>
+                        </div>
+                    </td>
+                    <td class="center">{{ (keyword.seoClicks ?? 0) | number_format }}</td>
+                    <td class="center">{{ keyword.rankingHomepages ?? 0 }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">{{ "Nothing to show." | rt }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

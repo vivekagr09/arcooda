@@ -1,0 +1,86 @@
+{#
+// inputs:
+#}
+
+{#% set theme = data('theme.json') %#}
+{% set footer_links = data('footer-links.json') %}
+{% set season_graphics = season_graphics() %}
+
+{% set getsocialIcon                 = getsocialIcon()                 %} 
+
+<div class="site-footer">
+    {% include '/components/decor.twig' with {inputs: {
+        type: 'bottom',
+        classes: 'site-footer__decor',
+    }} %}
+    <div class="site-footer__widgets">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-xl-4">
+                    {% include '/footer/contacts.twig' %}
+                </div>
+                {% for links in footer_links %}
+                <div class="col-6 col-md-3 {{(links.name=='Work with Us')?'col-xl-4':'col-xl-2'}}">
+                    {% include '/footer/links.twig' with {inputs: {
+                        title: links.name,
+                        links: links.children,
+                    }} %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="site-footer__bottom" style="margin-top: 56px;">
+        <div class="container">
+            <div class="site-footer__bottom-row">
+                <div class="site-footer__copyright">
+                    <!-- copyright -->
+                    Copyright &copy; 2001-{{ "now"|date('Y') }} Arcooda. All rights reserved.
+                    <!-- copyright / end -->
+                </div>
+                {% if season_graphics.footer_graphic %}
+                    <div class="site-footer__payments">
+                        <img class="w-100" src="/graphicsimage/{{season_graphics.footer_graphic}}" alt="logo"/>
+                    </div>
+                {% endif %}
+                {#<div class="site-footer__payments">
+                    <img src="{{ image('images/payments.png')|e }}" alt="" />
+                </div>#}
+
+                <div class="footer-newsletter__social-links social-links" style="display: inherit;">
+
+
+
+
+                     <div class="site-footer__payments" style="margin-top: 7px;margin-right:10px;">Follow us on social networks</div>
+
+                        <ul class="social-links__list">
+
+
+                                        {% for value in getsocialIcon %}
+
+
+                         
+                                            <li>
+                                            
+                                            <span class="socialicons social-links__item social-links__item--{{value.classname}} row">
+                                               <a href="{{value.link}}" target="_blank">      
+                                                 {{value.fafaicon}}                   
+                                            </a>
+                                               </span>
+                                            </li>
+
+                        {% endfor %}
+                        </ul>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+.fa-instagram{
+        background: #815dc7 !important;
+}
+</style>

@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <LastAuthor>Issabella</LastAuthor>
+  <LastPrinted>2011-01-07T00:34:41Z</LastPrinted>
+  <Created>2011-01-07T00:35:42Z</Created>
+  <Version>11.6360</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>10005</WindowHeight>
+  <WindowWidth>10005</WindowWidth>
+  <WindowTopX>120</WindowTopX>
+  <WindowTopY>135</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top"/>
+   <Font ss:FontName="Times New Roman" x:Family="Roman" ss:Size="9.5"/>
+  </Style>
+  <Style ss:ID="s21">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom" ss:WrapText="1"/>
+  </Style>
+  <Style ss:ID="s23">
+   <Font ss:Size="18" ss:Bold="1" ss:Underline="Single"/>
+  </Style>
+  <Style ss:ID="s24">
+   <Alignment ss:Vertical="Bottom"/>
+   <Font x:Family="Swiss"/>
+  </Style>
+  <Style ss:ID="s26">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Font ss:Size="9"/>
+  </Style>
+  <Style ss:ID="s28">
+   <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+   <Font ss:Size="14"/>
+  </Style>
+  <Style ss:ID="s29">
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="3"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s30">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="3"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s31">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+   </Borders>
+   <Font ss:Size="7" ss:Italic="1" ss:Underline="Single"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Sheet1">
+  <Table ss:ExpandedColumnCount="6" ss:ExpandedRowCount="5" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="53.25" ss:DefaultRowHeight="12.5625">
+   <Column ss:Width="45.75"/>
+   <Column ss:Index="3" ss:StyleID="s21" ss:Width="246.75"/>
+   <Column ss:Width="37.5"/>
+   <Column ss:Width="71.25"/>
+   <Column ss:Width="65.25"/>
+   <Row ss:AutoFitHeight="0" ss:Height="23.0625">
+    <Cell ss:MergeAcross="5" ss:StyleID="s23"><Data ss:Type="String">Packing List</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="57" ss:StyleID="s24">
+    <Cell ss:MergeAcross="2" ss:StyleID="s26"><Data ss:Type="String">P/I NO H80898R4</Data></Cell>
+    <Cell ss:MergeAcross="2" ss:StyleID="s28"><Data ss:Type="String">Date 7-Jan-11</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="21" ss:StyleID="s29">
+    <Cell ss:Index="3" ss:StyleID="s30"/>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="15.9375" ss:StyleID="s31">
+    <Cell><Data ss:Type="String">Carton No.</Data></Cell>
+    <Cell><Data ss:Type="String">Item#</Data></Cell>
+    <Cell><Data ss:Type="String">Description:</Data></Cell>
+    <Cell><Data ss:Type="String">Quantity</Data></Cell>
+    <Cell><Data ss:Type="String">Measurement(cm)</Data></Cell>
+    <Cell><Data ss:Type="String">Gross weight(kg)</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">1</Data></Cell>
+    <Cell><Data ss:Type="String">77</Data></Cell>
+    <Cell><Data ss:Type="String">CGA  to VGA Converter (LCD Suitable)</Data></Cell>
+    <Cell><Data ss:Type="String">1</Data></Cell>
+    <Cell><Data ss:Type="String">11.5x1.3x9.0</Data></Cell>
+    <Cell><Data ss:Type="String">0.080</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Layout x:CenterHorizontal="1"/>
+    <PageMargins x:Bottom="0.39400000000000002" x:Left="0.39400000000000002"
+     x:Right="0.39400000000000002" x:Top="0.39400000000000002"/>
+   </PageSetup>
+   <Unsynced/>
+   <Print>
+    <ValidPrinterInfo/>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>0</VerticalResolution>
+   </Print>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>1</ActiveRow>
+     <ActiveCol>3</ActiveCol>
+     <RangeSelection>R2C4:R2C6</RangeSelection>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

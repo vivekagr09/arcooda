@@ -1,0 +1,40 @@
+{#
+// inputs:
+#}
+{% set pref = pref() %}
+
+{% set getsocialIcon                 = getsocialIcon()                 %} 
+<div class="card widget widget-categories" style="padding:14px;margin-top: 7px;">
+    {% if pref!='y' %}
+
+
+    <h5 class="">Newsletter</h5>
+    <div class="footer-newsletter__text" style="margin-bottom: 2px;">Enter your email address below to subscribe to our newsletter and keep up to date with discounts and special offers.</div>
+    <div class="widget-newsletter__form">
+        <form action="/account/news-letter" class="footer-newsletter__form">
+            <input type="hidden"  name="action" value="newsletter">
+            <input type="text" class="widget-newsletter__email_new" placeholder="Email Address..." required="required" name="newsletter-address"/>
+            <button class="footer-newsletter__form-button">Subscribe</button>
+        </form>
+    </div>
+    {% endif %}
+    <div class="footer-newsletter__text footer-newsletter__text--social" style="margin-top: 5px;">Follow us on social networks</div>
+    <div class="footer-newsletter__social-links social-links">
+            <ul class="social-links__list">
+           {% for value in getsocialIcon %}
+
+
+ 
+                    <li>
+                    
+                    <span class="socialicons social-links__item social-links__item--{{value.classname}} row">
+                       <a href="{{value.link}}" target="_blank">      
+                         {{value.fafaicon}}                   
+                    </a>
+                       </span>
+                    </li>
+
+{% endfor %}
+            </ul>
+    </div>
+</div>

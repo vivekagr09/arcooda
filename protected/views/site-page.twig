@@ -1,0 +1,70 @@
+{#
+// inputs:
+// - page_title:
+// - page_description:
+// - page_keywords:
+// - page_canonical:
+// - page_breadcrumbs:
+// - page:          TrigPage - The page to display
+#}
+
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+
+{% set page = inputs.page %}
+{% set member   = inputs.member %}
+
+{% extends '/layouts/default.twig' %}
+
+{% block site_body %}
+    {#% include '/blocks/block-header.twig' with {inputs: {
+        breadcrumb: global_page_breadcrumbs,
+    }} %#}
+    {#% include '/blocks/block-space.twig' with {inputs: {layout: 'spaceship-ledge-height'}} %#}
+    <div class="block faq"><div class="container container-xl">
+        <div class="faq__header"><h1 class="faq__header-title">{{ page.name|e }}</h1></div>
+        <div class="document__content card" style="{{(page.form_layout=='center' and page.contact_form == 'y')?'text-align:center':''}}">
+            {% if page.form_layout=='left' and  page.contact_form == 'y' %}
+                {% if page.contact_form == 'y' %}
+                <div class="row"><div class="{{page.contact_form == 'y'?'col-12 col-lg-6 pb-4 pb-lg-0':''}}">{% include 'mobile/inquiry-form.twig' %}</div>
+                {% endif %}
+                <div class="col-12 col-lg-6">{{ markdown(page.content) }}</div>
+            </div>
+            {% elseif page.form_layout=='right' and  page.contact_form == 'y'  %}
+                <div class="row"><div class="{{page.contact_form == 'y'?'col-12 col-lg-6 pb-4 pb-lg-0':''}}">{{ markdown(page.content) }}</div>
+                {% if page.contact_form == 'y' %}
+                <div class="col-12 col-lg-6">{% include 'mobile/inquiry-form.twig' %}</div>
+                {% endif %}
+                </div>
+            {% else %}
+                <div style="width:100%;">
+                    <div class="typography"><div class="faq__header-body">{{ markdown(page.content) }}</div></div>
+                </div>
+                {% if page.contact_form == 'y' %}
+                <div class="typography" style="width:100%;">
+                    <div class="faq__header-body">
+                {% include 'mobile/inquiry-form.twig' %}</div></div>
+                {% endif %}
+            {% endif %}
+
+        </div>
+        {# <div class="faq__header-body">{{ markdown(page.content) }}</div> #}
+        {% for chapter in page.chapters %}<div class="faq__section">
+            <h3 class="faq__section-title">{{ chapter.name|e }}</h3>
+            <div class="faq__section-body">{{ markdown(chapter.content) }}</div>
+        </div>{% endfor %}
+         {% if page.have_question == 'y' %}
+            <div class="faq__footer">
+                <div class="faq__footer-title">Still Have A Questions?</div>
+                <div class="faq__footer-subtitle">We will be happy to answer any questions you may have.</div>
+                <a href="/contact-us" class="btn btn-primary">Contact Us</a>
+            </div>
+        {% endif %}
+    </div></div>
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'before-footer',
+    }} %}
+{% endblock %}

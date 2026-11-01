@@ -1,0 +1,219 @@
+{#
+// inputs:
+#}
+
+{#% set currency_list = data('currency-list.json') %#}
+{#% set currency_list = {
+    EUR: '€ Euro',
+    GBP: '£ Pound Sterling',
+    USD: '$ US Dollar',
+    JPY: '¥ Japanese Yen',
+} %#}
+{#% set language_list = data('language-list.json') %#}
+
+{% set user = user() %}
+{% set cart = cart() %}
+{% set quote_cart = quote_cart() %}
+{% set comcount = comWisCount() %}
+{% set header_text = header_text() %}
+{% set season_graphics = season_graphics() %}
+{% set is_display_customer  = checkOnlineDisplayToCustomer() %}
+{% set topbar %}
+
+    {% set topbar_classes = classnames('topbar', 'topbar--classic') %}
+    <div class="{{ topbar_classes }}">
+        <div class="topbar__item-text"><a class="topbar__link" href="/about-us">About Us</a></div>
+        <div class="topbar__item-text"><a class="topbar__link" href="/contact-us">Contacts</a></div>
+        <div class="topbar__item-text"><a class="topbar__link" href="/store-location">Store Location</a></div>
+        <div class="topbar__item-text"><a class="topbar__link" href="/track-order">Track Order</a></div>
+        <div class="topbar__item-text"><a class="topbar__link" href="/blog">Blog</a></div>
+        <div class="topbar__item-spring"></div>
+        {#<div class="topbar__item-button"><a href="/compare" class="topbar__button">
+            <span class="topbar__button-label">Compare:</span>
+            <span class="topbar__button-title">5</span>
+        </a></div>
+        <div class="topbar__item-button topbar__menu">
+            <button class="topbar__button topbar__button--has-arrow topbar__menu-button" type="button">
+                <span class="topbar__button-label">Currency</span>
+                <span class="topbar__button-title">USD</span>
+                <span class="topbar__button-arrow">{{ svg_inline('arrow-down-sm-7x5.svg') }}</span>
+            </button>
+            <div class="topbar__menu-body">
+                {% for k,v in currency_list -%}
+                    <a class="topbar__menu-item" href="/currency/{{ k|e }}">{{ v|e }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="topbar__menu">
+            <button class="topbar__button topbar__button--has-arrow topbar__menu-button" type="button">
+                <span class="topbar__button-label">Language:</span>
+                <span class="topbar__button-title">EN</span>
+                <span class="topbar__button-arrow">{{ svg_inline('arrow-down-sm-7x5.svg') }}</span>
+            </button>
+            <div class="topbar__menu-body">
+                {% for k,v in language_list %}
+                <a class="topbar__menu-item" href="/language/{{ k|e }}">
+                    <span class="flagicon-{{ k|lower|e }}"></span><span>{{ v|e }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>#}
+    </div>
+{% endset %}
+
+<div class="header">
+    {#<!--div class="header__megamenu-area megamenu-area"></div-->
+    <!--div class="header__topbar-classic-bg"></div-->
+    <!--div class="header__topbar-classic">
+        {{ topbar }}
+    </div-->#}
+    {% if header_text %}
+    <div class="header__megamenu-area megamenu-area">
+        <div style="padding:10px;text-align: center;background-color: {{header_text.background_colour}};color:{{header_text.font_color}} ">{{header_text.content}}</div>
+    </div>
+    {% endif %}
+    <div class="header__navbar">
+        <div class="header__navbar-departments">
+            {% include '/header/departments.twig' %}
+        </div>
+        <div class="header__navbar-menu">
+             {% include '/header/main-menu.twig' with {inputs: {
+                season_graphic: season_graphics,
+            }} %}
+        </div>
+        {#
+        <div class="header__navbar-phone phone">
+            <a href="#" id="live-chat-btn" class="btn btn-success" onclick="OverlayChatWidgetV2.Show();return false">Live Chat</a>
+            <!-- <a href="tel:+61249689313" class="phone__body">
+                <div class="phone__title">Call Us:</div>
+                <div class="phone__number">(+61) 02 4968 9313</div>
+            </a> -->
+        </div>
+        #}
+    </div>
+    <div class="header__logo">
+       {% include '/header/logo.twig' with {inputs: {
+                season_graphic: season_graphics,
+            }} %}
+    </div>
+    <div class="header__search">
+        {% include '/header/search.twig' %}
+    </div>
+    <div class="header__indicators">
+        <div class="indicator header_compare">
+            <a title="wishlist" href="/p/wishlist" class="indicator__button">
+                <span class="indicator__icon">
+                    {{ svg('heart-32.svg') }}
+                    <span class="indicator__counter heart">{{comcount.wishlist}}</span>
+                </span>
+            </a>
+        </div>
+        <div class="indicator header_compare">
+            <a title="compare" href="/p/compare" class="indicator__button">
+                <span class="indicator__icon">
+                    {{ svg('compare.png') }}
+                     <span class="indicator__counter compare">{{comcount.compare}}</span>
+                    
+                </span>
+            </a>
+        </div>
+        <div class="indicator indicator--trigger--click" {{is_display_customer ? 'style="border:2px solid lightgreen;flashBorder 1s infinite;"' : ''}}>
+            <a href="/account/dashboard" class="indicator__button">
+                <span class="indicator__icon">
+                    {% if user.avatar_image %}
+                        <img src="/avatar/svgavatars/ready-avatars/{{user.avatar_image}}" style="vertical-align:top;" width="32" height="32">
+                    {% else %}
+                        {{ svg('person-32.svg') }}
+                    {% endif %}
+                </span>
+                {% if user %}
+                    <span class="indicator__title">Hello {{ user.name|e }}</span>
+                    <span class="indicator__value">My Account</span>
+                {% endif %}
+            </a>
+            <div class="indicator__content">
+                <div class="account-menu">
+                    {% if user %}
+
+                        {#<div class="account-menu__divider"></div>#}
+                        <a href="/account/dashboard" class="account-menu__user">
+                            {#<div class="account-menu__user-avatar">
+                                <img src="{{ image('images/avatars/avatar-4.jpg')|e }}" alt="" />
+                            </div>#}
+                            <div class="account-menu__user-info">
+                                <div class="account-menu__user-name">{{ user.name|e }} {{ user.surname|e }}</div>
+                                <div class="account-menu__user-email">{{ user.email|e }}</div>
+                            </div>
+                        </a>
+                        <div class="account-menu__divider"></div>
+                        <ul class="account-menu__links">
+                            <li><a href="/account/dashboard">My Dashboard</a></li>
+                            {#<li><a href="/account/inquiries">My Inquiries</a></li>#}
+                            <li><a href="/account/orders">My Orders</a></li>
+                            {#<li><a href="/account/settings">Settings</a></li>#}
+                            <li><a href="/account#myMachnsoft">My Machines & Software</a></li>
+                        </ul>
+                        <div class="account-menu__divider"></div>
+                        <ul class="account-menu__links">
+                            <li><a href="/account/logout">Logout</a></li>
+                        </ul>
+
+                    {% else %}
+
+                        <form class="account-menu__form" method="post" action="/account/login">
+                            <div class="account-menu__form-title">Log In to Your Account</div>
+                            <div class="form-group">
+                                <label for="header-username" class="sr-only">Email address</label>
+                                <input id="header-username" type="email" class="form-control form-control-sm" placeholder="Email address" required="required" name="username" autocomplete="username" />
+                            </div>
+                            <div class="form-group">
+                                <label for="header-current-password" class="sr-only">Password</label>
+                                <div class="account-menu__form-forgot">
+                                    <input id="header-current-password" type="password" class="form-control form-control-sm" placeholder="Password" name="current-password" autocomplete="current-password" />
+                                    <a href="/account/passwordFind" class="account-menu__form-forgot-link">Forgot?</a>
+                                </div>
+                            </div>
+                            <div class="form-group account-menu__form-button">
+                                <input type="hidden" name="action" value="login" />
+                                <button type="submit" class="btn btn-primary btn-sm">Login</button>
+                            </div>
+                            <div class="account-menu__form-link"><a href="/account/register">Create An Account</a></div>
+                        </form>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="indicator indicator--trigger--click">
+            <a href="/cart" class="indicator__button">
+                <span class="indicator__icon">
+                    {{ svg('cart-32-orange.svg') }}
+                    {% if quote_cart.items('quote') %}<span class="indicator__counter quote-indicator__counter">{{ quote_cart.items('quote')|length }}</span>{% endif %}
+                </span>
+
+                    <span class="indicator__title">Quote Cart</span>
+                {% if quote_cart.items('quote') %}
+                    <span class="indicator__value">{{ quote_cart.sub_total('quote') }} <span style="font-size: 13px;">usd</span></span>
+                {% endif %}
+            </a>
+            <div class="indicator__content">
+                {% include '/header/quote-cart.twig' %}
+            </div>
+        </div>
+        <div class="indicator indicator--trigger--click">
+            <a href="/cart" class="indicator__button">
+                <span class="indicator__icon">
+                    {{ svg('cart-33-blue.svg') }}
+                    {% if cart.items %}<span class="indicator__counter">{{ cart.items|length }}</span>{% endif %}
+                </span>
+                    <span class="indicator__title">Shopping Cart</span>
+                {% if cart.items %}
+                    <span class="indicator__value">{{ cart.sub_total }} <span style="font-size: 13px;">usd</span></span>
+                {% endif %}
+            </a>
+            <div class="indicator__content">
+                {% include '/header/dropcart.twig' %}
+            </div>
+        </div>
+    </div>
+</div>

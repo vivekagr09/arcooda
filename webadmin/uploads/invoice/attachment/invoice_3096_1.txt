@@ -1,0 +1,77 @@
+
+Chat Information
+Chat InformationWelcome to Rackspace. My name is Daniel and I am a Live assistant. How may I help you today?
+you: Hi Daniel, I'm boss has asked me to look around for quotes on dedicated servers, and one of the programmers here strongly recommends rackspace hosting
+you: my* boss
+Daniel: Excellent
+Daniel: To better assist you and if you don’t mind me asking, what exactly does your company do, and how are you going to use this server?
+you: We currently do online sales via www.converters.tv , highwaygroup.net , www.highwaygames.com , www.highway.net.au , www.carconverters.com.au and we also provide hosting and software support for other companies like www.coinopexpress.com , www.channelbeat.com and www.fortunewave.com
+Daniel: Nice...
+Daniel: So woudl this require a singloe server to start?
+Daniel: or multiple servers?
+Daniel: *single
+you: we would just need the single server
+Daniel: Sounds good..
+Daniel: Would you prefer to host on a Linux or Windows platform?
+you: definately linux and prefer cpanel
+Daniel: Sure, we preinstall/fully support Redhat linux(Enterprise 4.0), apache, php, mySQL, ssh, perl, and postgreSQL. We give you complete root access via ssh so you can upload/install/change anything you want onto the server just like it was in your office.
+Daniel: And we also offer and support Plesk(very similar to cpanel)...(Cpanel in invasive and uses it’s own versions of apache, Mysql, and php, that don’t function well with software patching)
+Daniel: Woudl this work for your requirements?
+you: sure
+Daniel: good...
+you: what level of support can we have with that though? I noticed on the website there are 2 levels, but they seem very similar
+Daniel: True
+Daniel: The managed is the most popular and I wiuld advise...
+Daniel: *would
+Daniel: With it we fully manage the hardware, network, cooling, power, OS, and updates, security, and backups,,,,
+Daniel: Complete..
+you: we have a merchant daemon software from the bank that will need to be installed, would rackspace offer support for installing things like this on the managed plan?
+Daniel: The Intensive handles appication enginnering as well...
+Daniel: We would function in leu of you IT dept.
+Daniel: Good question..
+Daniel: I woudl check with my linux specialist as I am more of a general sales guide...
+you: hehe, thanks
+Daniel: In fact, what I would like to do is put you in touch with one of our solutions specialists who will be able to discuss your options with you and see what would be the best way to progress with your project and to get you a customized proposal based on your nneds and requirements. For this I will just need a few details, firstly your full name, company name, email to send the quote to,and phone number please?
+Daniel:
+you: Daniel Gault
+you: Highway Group Pty Ltd (NSW, Australia)
+you: dgault@highwaygroup.net
+Daniel: Pleasure meeting you Daniel...
+you: +612 4968 9313
+Daniel: And also to make sure we are right for your companies needs pricewise, I can tell you that our linux solutions start from around $425 per month and, of course, with that we provide 24//7/365 Live FANATICAL Support, Guaranteed 100% Network UPTIME, Your Own Dedicated Support Team and Account Manager, and a 1-Hour Hardware Replacement, Guaranteed! …is this an area of pricing you can consider?
+you: thanks for your help
+Daniel: Sure..
+Daniel: Hold on
+Daniel: Do you have a specific time that you would like to have this project in place?
+Daniel: (last question)
+you: that's $425 USD I assume?
+Daniel: (would this be days, weeks, or months)
+Daniel: Yes
+Daniel: Sorry..USD
+you: I don't think that's in our price range, but I would like to pass on any quotes to the boss anyway ;)
+Daniel: Alright, I understand...
+Daniel: I guess a better way th phase it is If we could demonstrate the true value of hosting with us- not just the cost but how we will make this investment work for you and your business and help to increase your ROI- could you potentially stretch to consider the specified budget?
+you: for time frame, we don't really have any deadlines, my boss just isn't happy with the level of support with our current supplier
+Daniel: And these site help generate revenue directly I assume, correct?
+Daniel: So ZERO network downtime and 100 mb/second dedicated connection would be ideal to that solution...
+you: yes, most of our sales are over the phone, but refered from these websites
+Daniel: Ahhh
+Daniel: Ok..
+Daniel: So based upon the rough price above, would you like a customized proposal?
+Daniel: (to be clear)
+you: Is this ok? I not sure if I'm wasting your time, but the boss may still be interested at that cost
+Daniel: Yes..
+Daniel: Absolutely
+Daniel: I will have then contact you to move forward..
+you: will this be by phone or email? I'd prefer email
+Daniel: I woudl also like to point out that if you should need Plesk it woulod be around $60USD/month extra..
+Daniel: Good question..
+you: oh, ok
+Daniel: for an initial quote we'll need to speak by phone, you will not receive any unsolicited sales calls and it is merely for customization purposes and to answer your questions. A rep wants to make sure they understand your configuration/business needs but after they initial phone call they can work strictly through email if you like.
+you: ok, thank you
+Daniel: However they will set up an ideal time at yourt convenience for the call via email
+you: ok, thank you again
+Daniel: Your very welocme daniel
+Daniel: Have a good day
+Chat InformationThank you for chatting with us. Should you require further assistance, or wish to provide feedback on your chat, please email sales@rackspace.com.
+you: you too, goodbye

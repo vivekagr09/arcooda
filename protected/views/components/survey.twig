@@ -1,0 +1,43 @@
+{% set survey = inputs.survey %}
+{% set title = inputs.title %}
+{% set survey_image = inputs.survey_image %}
+
+{% if survey %}
+<div class="container" style="width: 100%;">
+	<div class="section-header">
+		<div class="section-header__body">
+			<h2 class="section-header__title">{{ title|e }}</h2>
+			<div class="section-header__divider"></div>
+		</div>
+	</div>
+	<div class="row">
+		<!-- Left side: Survey iframe -->
+		<div class="col-md-6">
+			<iframe id="surveyform" name="surveyform" src="{{ survey }}?front=true" width="100%" height="500px" style="border: none;" onload="resizeIframe(this)"></iframe>
+		</div>
+
+		<!-- Right side: Survey image -->
+		<div class="col-md-6">
+			{% if survey_image %}
+				<img src="surveysimage/{{ survey_image|e }}" alt="Survey Image" style="width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px;">
+			{% else %}
+				<p>No image available for this survey.</p>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endif %}
+<script type="text/javascript">
+function resizeIframe() {
+    var iframe = document.getElementById("surveyform");
+    if (iframe.contentWindow.document.body) {
+        iframe.style.height = (iframe.contentWindow.document.documentElement.scrollHeight + 10) + "px";
+    }
+}
+
+document.getElementById("surveyform").onload = function() {
+    setTimeout(resizeIframe, 100); // Delay to ensure content is fully loaded
+};
+</script>
+</script>
+

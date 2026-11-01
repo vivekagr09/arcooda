@@ -1,0 +1,17 @@
+
+{% set icon = inputs.icon %}
+
+<div class="container w-75 my-3 mx-auto bg-white p-3 shadow">
+	<nav class="navbar">
+		<div class="navbar-brand">
+			{{ icon.image.html({"width":"64"}) }}
+			<span class="h3 ml-3">{{ icon.name }}</span>
+		</div>
+
+	</nav>
+	<nav class="navbar">
+	    <div class="navbar-brand">
+			<span class="ml-3">{{ icon.descriptionval }}</span>
+		</div>
+	</div>
+</div>

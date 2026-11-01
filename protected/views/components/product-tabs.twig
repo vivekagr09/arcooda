@@ -1,0 +1,929 @@
+{#
+// inputs:
+// - layout: string  - one of [sidebar, full] (default: 'sidebar')
+// - classes: string - CSS classes to be applied to the root element (default: '')
+// - page: int
+// - pages: int
+// - page_url: string
+// - product: TwigProduct
+#}
+
+{% set layout   = inputs.layout|default('sidebar') %}
+{% set classes  = inputs.classes|default('') %}
+{% set user     = user() %}
+
+{% set page     = inputs.page     %}
+{% set pages    = inputs.pages    %}
+{% set page_url = inputs.page_url %}
+{% set product  = inputs.product  %}
+{% set machinelinked=product.getMatchingMachine %}
+{% set upgradelinking=product.getUpgradeLinking %}
+{% set product_manual=product.product_manual %}
+{% set product_firmware=product.product_firmware %}
+{% set owner_serial_numbers=product.owner_product_serial_numebr %}
+{% set root_classes = classnames(classes, 'product-tabs product-tabs--layout--'~layout) %}
+{% set productreviews = product.totalReviews %}
+{% set review_form_col_classes = classnames({
+    'col-xxl-8 col-xl-10 col-lg-9 col-12': layout == 'full',
+    'col-xxl-12 col-xl-10 col-12': layout == 'sidebar',
+}) %}
+
+<style type="text/css">
+#product-tab-includedItem ul{
+    margin:0px !important;
+}
+.second-product li {
+    margin-bottom: .0em!important;
+}
+.product--layout--full {
+    display: grid;
+    grid-auto-rows: auto;
+}
+
+.product--layout--full .product__tabs {
+    grid-row: unset !important;
+}
+
+.product-tabs__content {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 0 !important;
+}
+
+.product__tabs {
+    position: relative;
+    z-index: 1;
+}
+.product--layout--full {
+    align-items: start !important;
+}
+.product__tabs {
+    align-self: start !important;
+}
+.product__tabs {
+    min-height: 0 !important;
+}
+
+.product__tabs:has(:not(*)) {
+    display: none;
+}
+.second-product .markdown ul li {
+      margin-left: -21px!important;
+      padding-left: 0;
+}
+.product--layout--full {
+    align-items: start;
+}
+
+.product__tabs {
+    grid-column: 1 / -1;
+}
+.product--layout--full .product__info {
+    grid-column: 3;
+    grid-row: 1 / 6 !important;
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+
+    {% if 'y' == product.discontinued and product.recommendedproduct|length > 0%}
+    <div class="{{ root_classes }}" >
+        <div class="products-view__list products-list products-list--grid--4" data-layout="list" data-with-features="false" style="border: 1px solid red;
+    margin-bottom: 30px;">
+            <div class="typography" style="padding: 10px 10px 10px 20px;">
+                <h2> Recommended Products</h2>
+            </div>
+            <div class="products-list__head">
+                <div class="products-list__column products-list__column--image">Image
+                </div>
+                <div class="products-list__column products-list__column--product">Product
+                </div>
+                <div class="products-list__column products-list__column--price">Price
+                </div>
+            </div>
+            <div class="products-list__content">
+                {% for product in product.recommendedproduct %}<div class="products-list__item">{% include '/components/product-card.twig' with {inputs: {
+                        product: product,
+                        exclude: ['meta']
+                }} %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+        {% if 'yes' == product.factory_second %}
+         <div class="{{ root_classes }}" >
+            <div class="products-view__list products-list products-list--grid--4" data-layout="list" data-with-features="false">
+            <div class="product-tabs__content">
+                <div class="product-tabs__pane product-tabs__pane--active">
+             <div class="typography">
+                    <h2 style="color:red;"> This Product is a Factory Second</h2>
+                    <div class="second-product">{{ markdown(product.factory_second_description) }}</div>
+                    {% for secondimage in product.productSecondImage %}
+                                 <a href="{{ image(secondimage, {size: 700})|e }}" target="_blank"><img src="{{ image(secondimage, {size: 120})|e }}" alt="{{ secondimage.alt|e }}" title="{{ secondimage.alt|e }}" height="120" style="margin-right:10px;margin-bottom: 10px;"/></a>
+                    {% endfor %}
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endif %}
+    {% include '/components/product-bonous-gift.twig' with {inputs: {
+                  product: product,
+    }} %}
+    <div class="{{ root_classes }}" >
+        <ul class="product-tabs__list">
+            <li class="product-tabs__item product-tabs__item--active"><a href="#product-tab-description">Description</a></li>
+            <li class="product-tabs__item"><a href="#product-tab-specification">Specification</a></li>
+            <li class="product-tabs__item"><a href="#product-tab-review" class="reviewtab">Reviews<span style="font-size:14px; font-weight:800; color: blue; position: absolute; right: 8px; top:10px;" id="total_review_count">{{  product.totalRatings }}</span></a></li>
+             {% if product.videos %}<li class="product-tabs__item"><a href="#product-tab-videos">Videos</a></li>{% endif %}
+            {% if product.includedItem or product.includedArtWork or product.getSubProductIncluded | length >0  %}<li class="product-tabs__item"><a href="#product-tab-includedItem">What's Included</a></li>{% endif %}
+            {% if upgradelinking | length > 0 %}<li class="product-tabs__item"><a href="#product-tab-upgradelinking">Upgrades</a></li>{% endif %}
+            {% if machinelinked | length > 0 %}<li class="product-tabs__item"><a href="#product-tab-machine">{{(product.section==2)?'Spare Parts':'Machine Matching'}}</a></li>{% endif %}
+            {% if product.section==2 or product.section==3 %}
+            <li class="product-tabs__item"><a href="#product-tab-owner">Owner Section</a></li>
+            {% endif %}
+            {% if product.getSupportLinks|length > 0 %}
+            <li class="product-tabs__item"><a href="#product-tab-support">Support</a></li>
+            {% endif %}
+            {% if product.faqForEveryOne|length > 0 %}
+                <li class="product-tabs__item"><a href="#product-tab-faq-everyone">FAQ</a></li>
+            {% endif %}
+        </ul>
+    <div class="product-tabs__content">
+        <div class="product-tabs__pane product-tabs__pane--active" id="product-tab-description"><div class="typography">
+            {% if product.description -%}
+                <h2>{{product.name}} Description</h2>
+                {{ markdown(product.description) }}
+                {% if product.displayArtWork | length >0 %}
+                <div style="padding-top: 21px;">
+                {% for artwork in product.displayArtWork %}
+             
+                    <div class="widget-products__item">
+                        <div class="widget-products__image" style="width:112px;">
+                            <img src="/artimage/{{ artwork.product_image}}?crop=true" alt="{{ artwork.name|e }}" style="width:112px;height:80px;"/></a>
+                        </div>
+                        <div class="widget-products__info">
+                            <div class="widget-products__price " style="height: 14px;margin-bottom: 6px;"><a href="#">{{ artwork.name }}</a>
+                            </div>
+                            <div class="widget-products__name widget-products__prices">
+                                    <div>
+                                        {{artwork.description}}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+           
+            {% endfor %}
+            </div>
+                {% endif -%}    
+            {% endif -%}
+        </div></div>
+        <div class="product-tabs__pane" id="product-tab-specification"><div class="spec">
+           <h2>{{product.name}} Specification</h2>
+            
+            {% for section in product.specification %}
+            {% if section.type=='table' %}
+            <div class="spec__section">
+                <p  class="spec__section-title custom-h3">{{ section.name }}</p>
+                {% for feature in section.features %}
+                {% if feature.value %}
+                <div class="spec__row">
+                    <div class="spec__name">{{ feature.name }}</div>
+                    {% if feature.value4 %}
+                        <div class="spec__value w-50">
+                                <div class="row">
+                                <div class="col-3">{{ feature.value }}</div>
+                                <div class="col-3">{{ feature.value2 }}</div>
+                                <div class="col-3">{{ feature.value3 }}</div>
+                                <div class="col-3">{{ feature.value4 }}</div>
+                            </div>
+                        </div>
+                    {% elseif feature.value3 %}
+                        <div class="spec__value w-50"><div class="row">
+                            <div class="col-4">{{ feature.value }}</div>
+                            <div class="col-4">{{ feature.value2 }}</div>
+                            <div class="col-4">{{ feature.value3 }}</div>
+                        </div></div>
+                    {% elseif feature.value2 %}
+                        <div class="spec__value w-50"><div class="row">
+                            <div class="col-6">{{ feature.value }}</div>
+                            <div class="col-6">{{ feature.value2 }}</div>
+                        </div></div>
+                    {% else %}
+
+                        {% if feature.link %}
+                        <div class="spec__value">
+                            <a href="{{feature.link}}" target="_blank">{{ feature.value }}</a></div>
+                        {% else %}
+                        <div class="spec__value">{{ feature.value }}</div>
+                        {% endif %}
+                    {% endif %}
+                </div> {% endif %}{% endfor %}
+            </div>
+            {% elseif section.type=='tablemultiplerow' %}
+            <div class="spec__section">
+                <p  class="spec__section-title custom-h3">{{ section.name }}</p>
+                {% for newfeature in section.features %}
+                 <div class="spec__name" style="padding-top: 20px;"><i>{{ newfeature.name }}</i></div>
+                {% for feature in newfeature.value %}
+                {% if feature.value %}
+                <div class="spec__row">
+                    <div class="spec__name">{{ feature.name }}</div>
+                    {% if feature.value4 %}
+                        <div class="spec__value w-50">
+                                <div class="row">
+                                <div class="col-3">{{ feature.value }}</div>
+                                <div class="col-3">{{ feature.value2 }}</div>
+                                <div class="col-3">{{ feature.value3 }}</div>
+                                <div class="col-3">{{ feature.value4 }}</div>
+                            </div>
+                        </div>
+                    {% elseif feature.value3 %}
+                        <div class="spec__value w-50"><div class="row">
+                            <div class="col-4">{{ feature.value }}</div>
+                            <div class="col-4">{{ feature.value2 }}</div>
+                            <div class="col-4">{{ feature.value3 }}</div>
+                        </div></div>
+                    {% elseif feature.value2 %}
+                        <div class="spec__value w-50"><div class="row">
+                            <div class="col-6">{{ feature.value }}</div>
+                            <div class="col-6">{{ feature.value2 }}</div>
+                        </div></div>
+                    {% else %}
+
+                        {% if feature.link %}
+                        <div class="spec__value">
+                            <a href="{{feature.link}}" target="_blank">{{ feature.value }}</a></div>
+                        {% else %}
+                        <div class="spec__value">{{ feature.value }}</div>
+                        {% endif %}
+                    {% endif %}
+                </div> {% endif %}{% endfor %}{% endfor %}
+            </div>
+            {% elseif section.type=='multitable' %}
+            <div class="spec__section">
+                <p class="spec__section-title custom-h3">{{ section.name }}</p>
+                <table style="width: 100%;">
+                <tr>
+                {% for somefeature in section.features %}
+
+                  <td style="width: 40%" valign="top">
+                    {% for newfeature in somefeature %}
+                    <p class="spec__name" style="padding:10px;color:black;margin-bottom:-5px;margin-top:15px">{{ newfeature.name }}</p>
+                     {% for feature in newfeature.value %}
+                            {% if feature.value %}
+                            <div class="spec__row">
+                                <div class="spec__name" style="width:33%">{{ feature.name }}</div>
+                                {% if feature.value4 %}
+                                    <div class="spec__value" style="width:67%">
+                                            <div class="row">
+                                            <div class="col-3">{{ feature.value }}</div>
+                                            <div class="col-3">{{ feature.value2 }}</div>
+                                            <div class="col-3">{{ feature.value3 }}</div>
+                                            <div class="col-3">{{ feature.value4 }}</div>
+                                        </div>
+                                    </div>
+                                {% elseif feature.value3 %}
+                                    <div class="spec__value" style="width:67%"><div class="row">
+                                        <div class="col-4">{{ feature.value }}</div>
+                                        <div class="col-4">{{ feature.value2 }}</div>
+                                        <div class="col-4">{{ feature.value3 }}</div>
+                                    </div></div>
+                                {% elseif feature.value2 %}
+                                    <div class="spec__value" style="width:67%"><div class="row">
+                                        <div class="col-6">{{ feature.value }}</div>
+                                        <div class="col-6">{{ feature.value2 }}</div>
+                                    </div></div>
+                                {% else %}
+                                    {% if feature.link %}
+                                    <div class="spec__value"><a href="{{feature.link}}" target="_blank">{{ feature.value }}</a></div>
+                                    {% else %}
+                                    <div class="spec__value">{{ feature.value }}</div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                  </td>
+                {% endfor %}
+                </tr>
+            </table>
+            </div>
+            {% elseif section.type=='text' %}
+             <div class="spec__section">
+                <ul>
+                <li>{{ markdown(section.value) }}</li>
+                </ul>
+            </div>
+            {% else %}
+                <div class="spec__section">
+                    <p class="spec__section-title custom-h3">{{ section.name }}</p>
+                    {{ markdown(section.value) }}
+                </div>
+            {% endif %}
+            {% endfor %}
+            <div class="spec__disclaimer">Information on technical characteristics, the delivery set, the country of manufacture and the appearance of the goods is for reference only and is based on the latest information available at the time of publication.</div>
+        </div>
+        </div>
+        <div class="product-tabs__pane" id="product-tab-review" style="padding:0px;"><div class="spec">
+            <div id="display-review-data">
+                {% include '/components/review-template.twig' with {inputs: {
+                    reviews: productreviews.reviews,
+                    productname : product.name
+                }} %}
+            </div>
+            {% if productreviews.pages > 1 %}
+            <div class="posts-view__pagination">
+                <div class="posts-view__pagination">
+                    {% include '/components/pagination-new.twig' with {inputs: {
+                        page: productreviews.page,
+                        page_url: productreviews.page_url,
+                        pages: productreviews.pages,
+                    }} %}
+                </div>
+            </div>
+            {% endif %} 
+           <div style="text-align:center;margin:20px 0;" id="post-review-div">
+                {% if not product.isReviewExist and product.isProductPurchased %}
+                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#review-add-modal">Post Review</a> 
+                
+                {% endif %} 
+                
+          </div>
+          {% if not product.isProductPurchased %}
+            <div style="margin-top:50px;font-size:12px;font-weight:700;">
+                *Reviews section is provided by customers who purchased this product. If you have purchased the {{ product.name|e }} and would like to place a review please login and refresh this page. 
+            </div>
+           {% endif %}   
+        </div>
+        </div>
+        {% if product.includedItem or product.includedArtWork or product.getSubProductIncluded | length >0 %}<div class="product-tabs__pane" id="product-tab-includedItem">
+
+                <h2>Included Items</h2>
+                <div class="spec">
+                    {{ markdown(product.includedItem) }}
+                    {{ markdown(product.includedArtWork) }}
+                    {% if product.getSubProductIncluded | length > 0%}
+                        {% for key,pro in product.getSubProductIncluded %}
+                            <div class="spec__section" style="margin-top:40px;margin-bottom: 20px;">
+                                <p class="spec__section-title custom-h3">{{ product.nameWithoutSubpro }}-{{pro.name}}</p>
+                                <p><i>{{product.subproductDescription(key)}}</i></p>
+                                {{ markdown(product.includedSubProduct(key)) }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+        </div>{% endif %}
+ {% if product.videos %}<div class="product-tabs__pane" id="product-tab-videos" style="padding-left: 10px;padding-right: 10px;">
+
+                <h2>Videos</h2>
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-md-4 col-lg-5">
+                    
+                    <div class="navbar navbar-default">
+                        <ul class="nav product-tabs__list" id="video-nav">
+                            <li class="video-nav-item active"><a href="#" onclick="showAllVideos(this); return false;">All</a></li>
+                            <li class="video-nav-item"><a href="#" onclick="showPublicVideos(this); return false;">Public Only</a></li>
+                            <li class="video-nav-item"><a href="#" onclick="showMembersVideos(this); return false;"><span class=" members_only" style="background-color: #fff;"><img src="/img/favicon.ico" width="20px;"></span> Owner Only</a></li>
+                        </ul>
+                    </div>
+                    <ul class="nav nav-pills nav-stacked" style="max-width: 560px; max-height: 315px; overflow-y: auto; margin: auto;">
+                        {% set first=true %}
+                        {% set ownervideo=true %}
+                        {% for video in product.videos %}
+                            {% set publicity= ('y' == video.members_only) ? "video_members" : "video_public" %}
+                            {% set badge= ('y' == video.members_only) ? '<span class=" members_only" style="background-color: #fff;"><img src="/img/favicon.ico" width="20px;"></span>' : "" %}
+                            {% if 'y' == video.members_only %}
+                                {% if  product.is_product_owner %}
+                                    <li  style="width:100%" class="{{active}} video {{publicity}}"><a href="#video{{video.id}}" onclick='loadYoutube(this,"{{getvideoid(video.youtube_id)}}"); return false;'>{{badge}}{{video.name}}</a></li>
+                                    {% set ownervideo=false %}
+                                {% endif %}
+                            {% else %}
+                                 <li  style="width:100%" class="{{active}} video {{publicity}}"><a href="#video{{video.id}}" onclick='loadYoutube(this,"{{getvideoid(video.youtube_id)}}"); return false;'>{{badge}}{{video.name}}</a></li>
+                            {% endif %}
+                                {% set active = (first)?'active':'' %}
+                               
+                         
+                            {% set first=false %}
+                        {% endfor %}
+                        {% if ownervideo==true %}
+                        <li  style="width:100%;display:none;color:red;padding: 20px;" class=" video video_members"><i>Please <a href="/Register-Product/?id={{ product.id }}&amp;product_name={{ product.name|url_encode|e }}" target="_blank" style="text-decoration: underline;color:red;">register your machine</a> to view videos</i></a></li>
+                        {% endif %}
+                    </ul>
+                    </div>
+
+                <div class="col-md-8 col-lg-7">
+                    <div class="embed-responsive embed-responsive-16by9" id="video-player" style="max-width:560px;max-height:315px;margin:auto;">
+
+                        {% if product.videos | length > 0 %}
+
+                         <iframe width="100%" height="auto" src="https://www.youtube.com/embed/{{getvideoid(product.videos[0].youtube_id)}}" frameborder="0" allowfullscreen="allowfullscreen" id="youtube-frame"></iframe>
+                         {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>{% endif %}
+        {% if machinelinked | length > 0 %}
+        <div class="product-tabs__pane" id="product-tab-machine">
+            <div class="typography">
+            {% if product.section==2 %}
+                            <h2>Parts Available for {{product.name}}</h2>
+                
+            {% else %}
+                <h2>Arcade Machine Matching</h2>
+                <p>This {{product.name}} is compatible spare part of the below arcade machines</p>
+            {% endif %}              
+                   <div class="products-view">
+                            <div class="products-view__list products-list products-list--grid--4" data-layout="table" data-with-features="false">
+                                <div class="products-list__head" style="background-color: #bfbfb6;">
+                                    <div class="products-list__column products-list__column--image border-product" style="text-align: center;">Image</div>
+                                    <div class="products-list__column products-list__column--product" style="text-align: center;">Product</div>
+                                    <div class="products-list__column products-list__column--price" style="text-align: center;padding-left: 46px;">Stock</div>
+                                    <div class="products-list__column products-list__column--price" style="text-align: center;">Price</div>
+                                    
+                                </div>
+                                 {% for key,product in machinelinked %}
+                                <div class="products-list__content" style="{{(key%2==1)?'background-color: #f5f5f0;':''}}">
+                                <div class="products-list__item">
+                                    <div class="product-card">
+                                        <div class="product-card__image" style="text-align: center;">
+                                            <a href="{{ product.url|e }}" target="_blank">
+                                            <img src="{{ image(product.images[0], {size: 50}) }}" width="50">
+                                          </a>
+                                        </div>
+
+                                        <div class="product-card__info">
+                                            <div class="product-card__name">
+                                                <div>
+                                                    <a href="{{ product.url|e }}" target="_blank">{{ product.name|e }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="product-card__footer">
+                                            <div class="product-card__prices" style="text-align: center;flex-direction: inherit;">
+                                                <div class="product-card__price product-card__price--current">
+                                                    {% if product.availability in ['In Stock', 'Stock'] %}
+                                                    <div class="status-badge status-badge--style--success status-badge--has-text">
+                                                       <div class="status-badge__body">
+                                                          <div class="status-badge__text">{{ product.availability|e }}</div>
+                                                       </div>
+                                                    </div>
+                                                    {% else %}
+                                                    <div class="status-badge status-badge--style--danger status-badge--has-text">
+                                                       <div class="status-badge__body">
+                                                          <div class="status-badge__text">{{ product.availability|e }}</div>
+                                                       </div>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="product-card__prices" style="text-align: center;flex-direction: inherit;">
+                                                <div class="product-card__price product-card__price--current" > {{ product.price }}</div>
+                                            </div>
+                                            <button class="product-card__addtocart-icon product-card__action--quickview" type="button" aria-label="Add to cart" value="{{ product.url|e }}?source=quickview&amp;format=ajax">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                                                    <circle cx="7" cy="17" r="2"></circle>
+                                                    <circle cx="15" cy="17" r="2"></circle>
+                                                    <path
+                                                        d="M20 4.4V5l-1.8 6.3c-.1.4-.5.7-1 .7H6.7c-.4 0-.8-.3-1-.7L3.3 3.9c-.2-.6-.7-.9-1.2-.9H.4C.2 3 0 2.8 0 2.6V1.4c0-.2.2-.4.4-.4h2.5c1 0 1.8.6 2.1 1.6l.1.4 2.3 6.8c0 .1.2.2.3.2h8.6c.1 0 .3-.1.3-.2l1.3-4.4c0-.2-.2-.4-.4-.4H9.4c-.2 0-.4-.2-.4-.4V3.4c0-.2.2-.4.4-.4h9.2c.8 0 1.4.6 1.4 1.4z"
+                                                    ></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                {% endfor %}
+                            </div>
+                    </div>
+        </div>
+        </div>
+        {% endif %}
+
+        {% if upgradelinking | length > 0 %}
+        <div class="product-tabs__pane" id="product-tab-upgradelinking" >
+              <h2>Upgrades Available for {{product.name}}</h2>
+                       
+                <div class="products-view" style="margin-top: 20px;">
+                    <div class="products-view__list products-list products-list--grid--4" data-layout="table" data-with-features="false">
+                        <div class="products-list__head" style="background-color: #bfbfb6;">
+                            <div class="products-list__column products-list__column--image border-product" style="text-align: center;">Image</div>
+                            <div class="products-list__column products-list__column--product" style="text-align: center;">Product</div>
+                            <div class="products-list__column products-list__column--price" style="text-align: center;padding-left: 46px;">Stock</div>
+                            <div class="products-list__column products-list__column--price" style="text-align: center;">Price</div>
+                            
+                        </div>
+                         {% for key,product in upgradelinking %}
+                            <div class="products-list__content" style="{{(key%2==1)?'background-color: #f5f5f0;':''}}">
+                                <div class="products-list__item">
+                                    <div class="product-card">
+                                        <div class="product-card__image" style="text-align: center;">
+                                            <a href="{{ product.url|e }}" target="_blank">
+                                            <img src="{{ image(product.images[0], {size: 50}) }}" width="50">
+                                          </a>
+                                        </div>
+
+                                        <div class="product-card__info">
+                                            <div class="product-card__name">
+                                                <div>
+                                                    <a href="{{ product.url|e }}" target="_blank">{{ product.name|e }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="product-card__footer">
+                                            <div class="product-card__prices" style="text-align: center;flex-direction: inherit;">
+                                                <div class="product-card__price product-card__price--current">
+                                                    {% if product.availability in ['In Stock', 'Stock'] %}
+                                                    <div class="status-badge status-badge--style--success status-badge--has-text">
+                                                       <div class="status-badge__body">
+                                                          <div class="status-badge__text">{{ product.availability|e }}</div>
+                                                       </div>
+                                                    </div>
+                                                    {% else %}
+                                                    <div class="status-badge status-badge--style--danger status-badge--has-text">
+                                                       <div class="status-badge__body">
+                                                          <div class="status-badge__text">{{ product.availability|e }}</div>
+                                                       </div>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="product-card__prices" style="text-align: center;flex-direction: inherit;">
+                                                <div class="product-card__price product-card__price--current" > {{ product.price }} usd</div>
+                                            </div>
+                                            <button class="product-card__addtocart-icon product-card__action--quickview" type="button" aria-label="Add to cart" value="{{ product.url|e }}?source=quickview&amp;format=ajax">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                                                    <circle cx="7" cy="17" r="2"></circle>
+                                                    <circle cx="15" cy="17" r="2"></circle>
+                                                    <path
+                                                        d="M20 4.4V5l-1.8 6.3c-.1.4-.5.7-1 .7H6.7c-.4 0-.8-.3-1-.7L3.3 3.9c-.2-.6-.7-.9-1.2-.9H.4C.2 3 0 2.8 0 2.6V1.4c0-.2.2-.4.4-.4h2.5c1 0 1.8.6 2.1 1.6l.1.4 2.3 6.8c0 .1.2.2.3.2h8.6c.1 0 .3-.1.3-.2l1.3-4.4c0-.2-.2-.4-.4-.4H9.4c-.2 0-.4-.2-.4-.4V3.4c0-.2.2-.4.4-.4h9.2c.8 0 1.4.6 1.4 1.4z"
+                                                    ></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+        </div>
+        {% endif %}
+        {% if product.section==2 or product.section==3 %}
+        <div class="product-tabs__pane" id="product-tab-owner">
+            {% if product.is_product_owner %}
+            <div style="display: flex;height: 35px;">
+                <span><h5 style="margin-bottom: 35px;">My Serial Number : 
+                    {% for serial in owner_serial_numbers|slice(0, 3) %}
+                         <span style="padding: 5px;margin:5px; background-color: #63d44f;">{{serial}}</span>
+                    {% endfor %}
+                    {% if owner_serial_numbers | length > 3 %}
+                    <a style="font-size: 15px;" href="javascript:void(0)" id="dispaly-more-number">More</a>
+                    {% endif %}
+                </h5></span>
+                <span style="margin-left: auto;"><input type="checkbox" id="news_notification" name="news_notification" {{ (user.news_notification==1)?'checked':'' }}>
+                Notify me when there are updates in this section</span>
+            </div>
+            <div style="margin:10px;display:none;"  id="more-serial-no">
+                    {% for serial in owner_serial_numbers|slice(3, owner_serial_numbers | length) %}
+                         <span style="padding: 8px;margin: 5px; background-color: #63d44f; font-size: 18px; font-weight: 500">{{serial}}</span>
+                    {% endfor %}
+            </div>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#owner-tab-news" role="tab" aria-controls="pills-home" aria-selected="true">News</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#owner-tab-videos" role="tab" aria-controls="pills-profile" aria-selected="false">Videos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-manual-tab" data-toggle="pill" href="#owner-tab-manual" role="tab" aria-controls="pills-manual" aria-selected="false">Manuals</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-firmware-tab" data-toggle="pill" href="#owner-tab-firmware" role="tab" aria-controls="pills-firmware" aria-selected="false">Firmware</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-support-tab" data-toggle="pill" href="#owner-tab-support" role="tab" aria-controls="pills-support" aria-selected="false">Support</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-faq-tab" data-toggle="pill" href="#owner-tab-faq" role="tab" aria-controls="pills-faq" aria-selected="false">FAQ</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="owner-tab-news" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <p class="custom-h2">Owner News</p>
+                             {% include '/components/owner/news-section.twig' with {inputs: {
+                                blogs: product.getBloags,
+                            }} %}
+                        
+                  </div>
+                    <div class="tab-pane fade" id="owner-tab-videos" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="typography">
+                            <p class="custom-h2">Videos</p>
+                             {% include '/components/owner/video-section.twig' with {inputs: {
+                                product: product,
+                            }} %}
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="owner-tab-manual" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="typography">
+                             <p class="custom-h2">Manuals</p>
+                              {% include '/components/owner/manual-section.twig' with {inputs: {
+                                product: product,
+                                product_manual: product_manual,
+                            }} %} 
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="owner-tab-firmware" role="tabpanel" aria-labelledby="pills-firmware-tab">
+                        <div class="typography">
+                            <p class="custom-h2">Firmware</p>
+                            {% include '/components/owner/firmware-section.twig' with {inputs: {
+                                product: product,
+                                product_firmware: product_firmware,
+                            }} %}
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="owner-tab-support" role="tabpanel" aria-labelledby="pills-support-tab">
+                        <div class="typography">
+                             <p class="custom-h2">Support</p>
+                             {% include '/components/owner/support-section.twig' with {inputs: {
+                                product: product,
+                                product_support: product.product_links
+                            }} %}
+                        </div>
+                    </div>
+                  <div class="tab-pane fade" id="owner-tab-faq" role="tabpanel" aria-labelledby="pills-faq-tab">
+                        <div class="typography">
+                             <p class="custom-h2">FAQ</p>
+                             {% include '/components/owner/faq.twig' with {inputs: {
+                                product: product,
+                                faqs: product.faq,
+                            }} %}
+                        </div>
+                  </div>
+                </div> 
+            {% else %}
+                <div class="spec">
+                    <div style="background-color: #f3f2f2;padding: 48px;">
+                        <h2 style="text-align: center;">Owner Section</h2>
+                        <p style="font-size: 20px;line-height: 27px;">This section is for machine owners. <a href="/Register-Product/?id={{ product.id }}&amp;product_name={{ product.name|url_encode|e }}" target="_blank">Register Your Purchase</a> to gain access to news firmware/software updates,manual and more. </p>
+                    </div>
+                </div>
+
+            
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="product-tabs__pane" id="product-tab-support">
+            <div class="typography">              
+                <div class="products-view">
+                    <div class="products-view__list products-list products-list--grid--4" data-layout="table" data-with-features="false">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background-color: #bfbfb6;">
+                                    <th style="text-align: center; padding: 10px;">Date</th>
+                                    <th style="text-align: center; padding: 10px;">Name</th>
+                                    <th style="text-align: center; padding: 10px;">Notes</th>
+                                    <th style="text-align: center; padding: 10px;">File</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if product.getSupportLinks|length > 0 %}
+                                    {% for link in product.getSupportLinks %}
+                                        <tr style="{{ loop.index0 % 2 == 1 ? 'background-color: #f5f5f0;' : '' }}">
+                                            <td style="text-align: center; padding: 10px;">{{ link.date|date("d/m/Y") }}</td>
+                                            <td style="text-align: center; padding: 10px;">{{ link.name|e }}</td>
+                                            <td style="text-align: center; padding: 10px;">{{ link.description|e }}</td>
+                                            <td style="text-align: center; padding: 10px;">
+                                                <a href="{{ '/webadmin/uploads/product/links/' ~ link.attachment|e }}" target="_blank">
+                                                    {% if link.filetype == 'pdf' or link.filetype == 'pptx' %}
+                                                        {{ svg('pdf.png') }}
+                                                    {% elseif link.filetype == 'png' or link.filetype == 'jpg' or link.filetype == 'jpeg' %}
+                                                        {{ svg('jpg.png') }}
+                                                    {% elseif link.filetype == 'xlsx' %}
+                                                        {{ svg('xls.png') }}
+                                                    {% elseif link.filetype == 'docx' or link.filetype == 'doc' %}
+                                                        {{ svg('doc.png') }}
+                                                    {% else %}
+                                                        {{ svg('jpg.png') }}
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; padding: 10px;">No support links available</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-tabs__pane" id="product-tab-faq-everyone">
+            <div class="typography">              
+                <div class="products-view">
+                    {% include '/components/prduct-faq-tab.twig' with {inputs: {
+                        product: product,
+                        faqs: product.faqForEveryOne,
+                    }} %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% set prefix = 'review-add' %}
+{% set reviews_list = {
+    "5": "5 Stars Rating",
+    "4": "4 Stars Rating",
+    "3": "3 Stars Rating",
+    "2": "2 Stars Rating",
+    "1": "1 Stars Rating",
+} %}   
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" style="width: 100%;">
+                <table>
+                    <tr>
+                        <td width="23%">
+                            Add Review for - 
+                        </td>
+                        <td>
+                            <span style="background-color: yellow;">{{ product.name|e }}</span>
+                        </td>
+                    </tr>
+                </table>
+
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <form action="/review" method="post" name="reviewform" id="reviewform" id="dashboardReview">
+                <div class="row">
+                        <div class="col-md-12">
+                            <input type="hidden" name="product_id" value="{{ product.id }}" />
+                            <input type="hidden" name="user_id" value="{{ user.id }}" />
+                            <input type="hidden" name="user_name" value="{{ user.initials }}" />
+                            <input type="hidden" name="user_country" value="{{ user.country }}" />
+                            <div class="form-group">
+                                <label for="reviews"><b>Review Stars</b></label></br>
+                                <select class="form-control form-control-lg" id="reviews" name="reviews" style="max-width:50%;" required>
+                                    {# <option value="" disabled selected>Select your rating</option> #}
+                                    {% for key, value in reviews_list %}
+                                        <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="comment" class="col-form-label"><b>Your Review</b> <span style="font-size:14px;font-style:italic;">(for online display)</span></label></br>
+                                <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Please leave your comments." required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="feedback" class="col-form-label"><b>Private Feedback</b> <span style="font-size:14px;font-style:italic;">(Confidential, for Office Use Only)</span></label></br>
+                                <textarea class="form-control" id="feedback" name="feedback" rows="3" placeholder="Please leave your feedback."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="feedback" class="col-form-label"><b>Attachments</b></label></br>
+                                <div id="dropzone-container">
+                                    <label for="image-upload">Upload Images:</label>
+                                    <div class="dropzone" id="my-dropzone"></div>
+                                </div>
+                            </div>
+                            <div id="attached-file"></div>
+                        </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <input type="hidden" value="add" name="action" />
+                    <input type="submit" value="Post Your review" class="btn btn-lg- btn-primary" id="submitReview"/>
+                </div>
+            </form>
+        </div>
+    </div></div></div>
+    <script type="text/javascript">
+            $(document).ready(function() {
+                var myDropzone;
+                var productNumber = $('input[name="product_id"]').val();
+                const totalReviewPages = parseInt($('input[name="totalReviewPages"]').val());
+                let currentPage = 1; // Initialize the current page variable
+                const product_id = productNumber; // Replace with your actual product
+                var elementId = document.getElementById('my-dropzone');
+
+                if (elementId && elementId.dropzone) {
+                    elementId.dropzone.destroy();
+                }
+
+                myDropzone = new Dropzone("#my-dropzone", {
+                    url: '/contact/review_attachment.php?id=' + product_id,
+                    maxFilesize: 2, // Maximum file size in MB
+                    acceptedFiles: 'image/*', // Accept only images
+                    addRemoveLinks: true, // Allow file removal
+                    dictRemoveFile: "Remove", // Customize the remove link text
+                    autoProcessQueue: false, // Disable automatic upload on file selection
+                    parallelUploads: 5, // Allow multiple files to be uploaded at once
+                    uploadMultiple: true, // Enable multiple file uploads
+                    init: function() {
+                        var dropzoneInstance = this;
+                        
+                        // Clear any existing listeners to prevent duplicates
+                        this.off("success");
+                        
+                        this.on("success", function(file, responseArray) {
+                            JSON.parse(responseArray).forEach(function(response) {
+                                $('#attached-file').append('<input type="hidden" name="attachments[]" value="' + response + '">');
+                            });
+                        });
+
+                        this.on('queuecomplete', function() {
+                            // Submit the form after all files are uploaded
+                            $("form[name='reviewform']").submit();
+                        });
+                        
+                    }
+                });
+
+                $("form[name='reviewform']").validate({
+                    rules: {
+                        reviews: {
+                            required: true,
+                        },
+                        comment: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        reviews: {
+                            required: "Please select a rating"
+                        },
+                        comment: {
+                            required: "Please provide a review",
+                        },
+                    },
+                    submitHandler: function(form) {
+                        if (myDropzone.getQueuedFiles().length > 0) {
+                            myDropzone.processQueue();
+                        } else {
+                            // No files to upload, submit the form immediately
+                            $.ajax({
+                                url: $(form).attr('action'), // Get form action URL
+                                type: 'POST', // Form method
+                                data: $(form).serialize(), // Serialize form data
+                                success: function(response) {
+                                    var response = JSON.parse(response);
+                                    if (response.success) {
+                                        $('#display-review-data').html(response.html);
+                                        $('.posts-view__pagination').html(response.paginationHtml);
+                                        $('#review-add-modal').modal('hide');
+                                        $('#reviewform')[0].reset();
+                                        $('#post-review-div').hide();
+                                        $('#total_review_count').html(parseInt($('#total_review_count').html()+1));
+                                    } else {
+                                        alert('Error: ' + response.issues);
+                                    }
+                                },
+                                error: function(xhr) {
+                                    alert('Error: ' + xhr.responseText);
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+            $(document).ready(function() {
+                $(document).on('click', '.page-link', function(event) {
+                    event.preventDefault();  // Prevent page reload
+
+                    $.ajax({
+                        url: $(this).attr('href'), 
+                        type: 'GET',              
+                        success: function(response) {
+                             var response = JSON.parse(response);
+                               if(response.success){
+                                    $('#display-review-data').html(response.html);
+                                    $('.posts-view__pagination').html(response.paginationHtml);
+                               }else{
+                                    alert('there is some issue please try again later');
+                               }
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle errors here
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
+            });
+
+    </script>

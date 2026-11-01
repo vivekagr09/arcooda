@@ -1,0 +1,315 @@
+{#
+// inputs:
+// - title:
+// - description:
+// - keywords:
+// - addresses:
+// - member:
+// - orders:
+#}
+
+{% set global_page_title           = inputs.title|default('')                     %}
+{% set global_page_description     = inputs.description|default('')               %}
+{% set global_page_keywords        = input.keywords|default('')                   %}
+{% set global_page_canonical       = '/account/dashboard'                         %}
+{% set global_page_breadcrumbs     = [
+    {title : 'Home',            url : '/'                  },
+    {title : global_page_title, url : global_page_canonical},
+] %}
+{% set global_current_account_page = global_page_canonical                        %}
+
+{% set address   = inputs.addresses|first                                         %}
+{% set member    = inputs.member                                                  %}
+{% set orders    = inputs.orders                                                  %}
+{% set alert     = inputs.alert                                                    %}
+{% set issues    = inputs.issues                                                   %}
+{% set result    = inputs.result                                                   %}
+{% for shipping_address in inputs.addresses %}{% if shipping_address.default == 'y' %}
+    {% set address = shipping_address %}
+{% endif %}{% endfor %}
+
+{% extends '/layouts/account.twig' %}
+
+{% block account_body %}
+ <style type="text/css">
+    .card-table tbody td {
+        vertical-align: top;
+    }
+</style>
+{% if result %}<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>{% endif %}
+    <div class="dashboard">
+
+        <div class="dashboard__profile card profile-card"><div class="card-body profile-card__body">
+            <div class="">
+                {% if member.avatar_image %}
+                    <img src="/avatar/svgavatars/ready-avatars/{{member.avatar_image}}" style="vertical-align:top;" width="90" height="90" title="">
+                {% else %}
+                    <img src="/images/avatar.jpeg" style="vertical-align:top;" width="90" height="90" title="Make your own Avatar to use for comments, posts and product reviews">
+                {% endif %}
+            </div>
+            <div class="profile-card__name">{{ member.full_name|e }}</div>
+            <div class="profile-card__email">{{ member.email_address|e }}</div>
+            <div class="profile-card__edit"><a href="/account/profile" class="btn btn-secondary btn-sm">Edit Profile</a></div>
+            <div class="profile-card__edit" style="margin-top:10px;"><button onclick="openAvatorModel()" class="btn btn-secondary btn-sm">Edit Avator</button></div>
+        </div></div>
+        <div class="dashboard__address card address-card address-card--featured">
+            <!-- {% if address.default == 'y' %}<div class="address-card__badge tag-badge tag-badge--theme">Default</div>{% endif %} -->
+            <div class="card-header ">
+                       <h5 class="content_heading_color">Bill to Details</h5>
+                    </div>
+            <div class="address-card__body">
+                <div class="address-card__name">
+                    {% if member.company_name == ''%}
+                    {{ member.full_name|e }}
+                    {% else %}
+                    {{ member.company_name|e }}
+                    {% endif %}
+            </div>
+                <div class="address-card__row">
+                    <div class="address-card__row-title">{{ member.address_type | title }} Address</div>
+                    <div class="address-card__row-content" data-html="true">{{ markdown(member.address_full) }}
+                    </div>
+                
+
+
+                </div>
+               
+                {% if member.phone_no!='' %}
+                <div class="address-card__row">
+                    <div class="address-card__row-title">Phone Number</div>
+                    <div class="address-card__row-content">{{ member.phone_no }}</div>
+                </div>
+                {% endif %}
+                {% if member.full_name!='' %}
+                <div class="address-card__row">
+                    <div class="address-card__row-title">Contact Name</div>
+                    <div class="address-card__row-content">{{ member.full_name }}</div>
+                </div>
+                {% endif %}
+                {% if member.email_address!='' %}
+                <div class="address-card__row">
+                    <div class="address-card__row-title">Email Address</div>
+                    <div class="address-card__row-content">{{ member.email_address|e }}</div>
+                </div>
+                {% endif %}
+                <div class="address-card__footer"><a href="/account/profile">Edit Details</a></div>
+            </div>
+        </div>
+        {% if orders %}<div class="dashboard__orders card">
+            <div class="card-header"><h5>Recent Orders & Inquiries</h5></div>
+            <div class="card-divider"></div>
+            <div class="card-table"><div class="table-responsive-sm"><table>
+                <thead><tr>
+                    <th width="10%">Order</th>
+                    <th width="15%">Date</th>
+                    <th width="20%">Total</th>
+                    <th width="15%">Status</th>
+                    <th width="20%">Tracking</th>
+                    <th width="10%">Message</th>
+                    <th width="10%">Reorder</th>
+                    
+                </tr></thead>
+                <tbody>{% for order in orders[:5] %}<tr>
+                    <td><a href="/account/invoice?invoice_id={{order.id}}" target="_blank">{{ order.number }}</a>
+                        {% if order.status == 'Awaiting Payment' %}
+                            <button  type="button" class="btn btn-danger" style="border-color: #333; background: #333;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#c82333'" onclick="openCancelModel('{{order.number}}','{{order.id}}')">Cancel</button>
+                        {% endif %}
+                    </td>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.total|currency }}</td>
+                    <td>
+                        {{ order.status }}
+                        {% if order.status == 'Awaiting Payment' %}
+                        {# <a href="/payment/airwallex-checkout?id={{order.number}}&crc={{invoice[0].rand_num}}"> #}
+                        <button  type="button" class="btn btn-primary" style="border-color: #333; background: #333;" onmouseout="this.style.background='#333'" onmouseover="this.style.background='#0069d9'" onclick='window.location.href="/payment/payment-checkout?id={{order.id}}&crc={{order.rand_num}}"'>Pay</button>
+                        {# </a> #}
+                        {% endif %}
+                    </td>
+                    <td>{{(order.tracking_number)?order.tracking_number:'N/A'}}</td>
+                    <td><i class="fas fa-comments" onclick="openMsgModel('{{order.number}}','{{order.id}}')" style="font-size: 30px;cursor:pointer;"></i></td>
+                    <td><i class="fas fa-shopping-cart"  data-toggle="modal" data-target="#account-reorder{{ order.id }}-modal" style="font-size: 30px;cursor:pointer;"></i></td>
+                    
+                </tr>{% endfor %}</tbody>
+            </table></div></div>
+        </div>{% endif %}
+    </div>
+    {% set prefix = 'account-contact' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Send Message to our team</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="/account/orders" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <div class="row">
+                        <div class="col-md-4">
+                            <label for="{{ prefix }}-company_name">Our Reference <span class="color-red">*</span></label>
+                            <input type="text" name="order_id" class="form-control" id="order_id" readonly="true" required/>
+                            <input type="hidden" name="id" class="form-control" id="invoice_id"/>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="{{ prefix }}-company_name">Subject/Title <span class="color-red">*</span></label>
+                            <input type="text" name="subject" class="form-control" id="{{ prefix }}-company_name" required/>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="{{ prefix }}-company_name">Message<span class="color-red">*</span></label>
+                            <textarea name="message" class="form-control" id="{{ prefix }}-company_name" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group center-align">
+                <input type="hidden" value="contact" name="action" />
+                <input type="submit" value="Send Message" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+    {% set prefix = 'account-cancel' %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Do you want to cancel this order?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body"><form action="" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <div class="row">
+                        <div class="col-md-4">
+                            <label for="{{ prefix }}-company_name">Our Reference<span class="color-red">*</span></label>
+                            <input type="text" name="cancel_order_id" class="form-control" id="cancel_order_id" readonly="true" required/>
+                            <input type="hidden" name="id" class="form-control" id="cancel_invoice_id"/>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="{{ prefix }}-company_name">Reason of cancellation<span class="color-red">*</span></label>
+                            <textarea name="message" class="form-control" id="{{ prefix }}-company_name" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-group center-align">
+                <input type="hidden" value="cancelorder" name="action" />
+                <input type="submit" value="Send Message" class="btn btn-lg- btn-primary" />
+            </div>
+        </form></div>
+    </div></div></div>
+       {% for order in orders %}
+        {% set prefix = 'account-reorder' ~ order.id %}
+    <div class="modal fade" id="{{ prefix }}-modal" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reorder </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+            <div class="card-table">
+            <div class="table-responsive-sm">
+             <form action="/account/orders" method="post">
+                <input type="hidden" value="{{order.id}}" name="invoice_id">
+                <table>
+                    <thead><tr>
+                        <th></th>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th width="10%">Quantity</th>
+                        <th>Total</th>
+                    </tr></thead>
+                    <tbody>
+        {% set invoicepro = order.invoiceProduct(order.id) %}
+        {% set key =0 %}
+        {% for pro in invoicepro %}
+        {% if pro.product_id > 0 %}
+                   <tr>
+            {% set product = product_det(pro.product_id) %}
+            {% set image   = product.images(pro.colour_id)[0] %}
+                       <td><input type="checkbox" name="product[{{key}}][product_checked]" checked><br/><span>{{ (product.stockavailable(pro.product_id,pro.colour_id)<product.minOrder) ?((product.soldout)? 'Sorry this product is no longer available' : ''):'' }}</span></td>
+                       <td><img src="{{ image|e }}" alt="{{ image.alt|e }}" style="max-width:48px;max-height:48px;float:left;margin:0 8px 8px 0;min-height:48px;" /></td>
+                       <td>{{ product.name|e }}</td>
+                       <td>
+            {% if product.compareAtPrice %}
+                        <div class=" product__price--old">{{ product.compareAtPrice|currency }}</div>
+                        <div class=" product__price--new">{{ product.price|currency }}</div>
+            {% else %}
+                        <div class=" product__price--current">{{ product.price|currency }}</div>
+            {% endif %}</td>
+                       <td>
+                            <input type="hidden" value="{{ product.priceValue }}" name="product[{{key}}][product_price]" class="product_price">
+                            <input type="hidden" value="{{ pro.colour_id}}" name="product[{{key}}][color_cart]" class="colour_id">
+                            <input type="hidden" value="{{ pro.product_id}}" name="product[{{key}}][product_id]">
+                            <input type="hidden" value="{{ product.name|e }}" name="product[{{key}}][product_name]">
+                            <input type="hidden" value="{{ image|e }}" name="product[{{key}}][product_img]">
+                            <input type="hidden" value="{{ product.url|e }}" name="product[{{key}}][product_url]">
+                            <div class="input-number">
+                                <input class="input-number__input form-control form-control-lg product-qty-input"  name="product[{{key}}][product_qty]" type="number" min="{{ max(1, product.minOrder) }}" value="{{pro.product_qty}}" readonly/>
+                                <div class="input-number__add" onclick="functionadd(this)"></div>
+                                <div class="input-number__sub" onclick="functionsub(this)"></div>
+                            </div>
+                        </td>
+                       <td class="product_cost">{{ product.priceMultiplied(pro.product_qty)|currency }}</td>
+                   </tr>
+                    </tbody>
+            {% set key =key+1 %}
+            {% endif %}
+        {% endfor %}
+                </table>
+                <div class="form-group center-align">
+                    <input type="hidden" value="{{ order.id }}" name="id" />
+                    <input type="hidden" value="reorder" name="action" />
+                    <input type="submit" class="btn btn-lg- btn-primary " value="Add to Cart" />
+                </div>
+            </form>
+        </div>
+     </div>
+        </div>
+        </div></div></div>
+        <div class="modal fade" id="avator-modal" tabindex="-1" role="dialog">
+           <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title">Create Avatar </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                 </div>
+                 <div class="">
+                    <div class="card-table">
+                  <iframe id="avatorIframe" src="" width="100%" height="600px" frameborder="0"></iframe>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+    {% endfor %}
+    <script type="text/javascript">
+        function openMsgModel(orderid,invoiceid){
+            $('#order_id').val(orderid);
+            $('#invoice_id').val(invoiceid);
+            $('#account-contact-modal').modal('show');
+        }
+        function openCancelModel(orderid,invoiceid){
+            $('#cancel_order_id').val(orderid);
+            $('#cancel_invoice_id').val(invoiceid);
+            $('#account-cancel-modal').modal('show');
+        }
+        function openAvatorModel(){
+            var iframe = $('#avatorIframe');
+            var src = '/avatar/svgavatars.php';
+                iframe.attr('src', src); // Reload the iframe*/
+             $('#avator-modal').modal('show');
+        }
+        </script>
+{% endblock %}

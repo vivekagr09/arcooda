@@ -1,0 +1,82 @@
+X-Account-Key: account3
+X-UIDL: 00002eb14fd7c322
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <sales@converters.tv>
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on john.ourhunter.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.3 required=8.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HTML_MESSAGE,MIME_HTML_ONLY,NO_RELAYS autolearn=no
+	version=3.3.1
+X-Original-To: cbailey@highwaygroup.net
+Delivered-To: cbailey-highwaygroup.net@john.ourhunter.com
+Received: by john.ourhunter.com (Postfix, from userid 48)
+	id 7BCF6DC003C; Tue, 21 Feb 2017 10:38:03 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=converters.tv;
+	s=my-selector-name; t=1487633883;
+	bh=GMD7MQDsDRhfq2ovq951JEUSkskc1+m6y5l8eV2PlmU=;
+	h=To:Subject:Date:From:Message-ID:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=JqbELXuoUcn1K0Pa9+mT0s41XFs7mIusgYZ5lE24Ni4qNwd40kOCtCom5vAcxxP3T
+	 h47qHvO/oDHSqy/sow41aYo72VyV8RyyV0bpusPRYygnotRYJrs56Z/MoeYfT3sjbL
+	 T/+1MreV8Vks2GpKticuqsrS/qdFr0rKqg/9zdMw=
+To: Steve Josifovski <steve@highwaygroup.net>, Valentina Josifovski <valentina@highwaygroup.net>, Chris Bailey <cbailey@highwaygroup.net>, Kevin Smith <ksmith@highwaygroup.net>
+Subject: Payment Received - Invoice ICN#47887 - Mike Cox
+Date: Tue, 21 Feb 2017 10:38:03 +1100
+From: Alert - Payment Received <sales@converters.tv>
+Message-ID: <f08991580c2c4df1ce618bc4ad0bb856@www.converters.tv>
+X-Priority: 3
+X-Mailer: PHPMailer 5.2.7 (https://github.com/PHPMailer/PHPMailer/)
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+<head><title></title></head>
+
+<body><div style="font-family:verdana;margin:36px;font-size:11px;color:#777;"><p><b>Order Status: <span style="color:#f00;">Payment Received</span></b></p>
+<br />
+<p>Payment for this invoice has been received.. The details are as follows :</p>
+<br />
+Customer Name: [CREDIT_NAME]<br />
+Customer Company: [CREDIT_COMPANY]<br />
+Customer Reference: [CREDIT_REF]<br />
+Customer Email: [CREDIT_EMAIL]<br />
+Customer IP: [CREDIT_IP]<br />
+Customer Country: [GEOIP_COUNTRY]<br />
+Amount: [CREDIT_AMOUNT] AUD<br />
+Customer Amount: [CREDIT_CURRENCY_AMOUNT] [CREDIT_CURRENCY]<br />
+<br />
+<table border="1" cellspacing="0" cellpadding="2" width="100%" style="border-collapse:collapse;border:1px solid #ccc;font-size:inherit;"><tr><th align="left" width="50%" style="background-color:#eee;color:#333;">Bill To Address</th>	<th align="left" width="50%" style="background-color:#eee;color:#333;">Ship To Address</th></tr>
+<tr><td style="color:#777;">Pacific Electrical Contractors<br />
+Attn: Mike Cox<br />
+920 Grape Street<br />
+Medford, Oregon 97501<br />
+United States<br />
+<br />
+Ph: 541 773 7751<br />
+Email: mikecox@pacificelectrical.com</td>	<td style="color:#777;">Pacific Electrical Contractors<br />
+Attn: Mike Cox<br />
+920 Grape Street<br />
+Medford, Oregon 97501<br />
+United States<br />
+<br />
+Ph: 541 773 7751<br />
+Email: mikecox@pacificelectrical.com</td></tr></table>
+<br />
+<table border="1" cellspacing="0" cellpadding="2" width="100%" style="border-collapse:collapse;border:1px solid #ccc;font-size:inherit;"><tr><th style="background-color:#eee;color:#333;">Item ID</th>	<th style="background-color:#eee;color:#333;">Product Name</th>	<th style="background-color:#eee;color:#333;">Qty</th>	<th style="background-color:#eee;color:#333;">Price Each</th>	<th style="background-color:#eee;color:#333;">Amount</th></tr>
+<tr style="text-align:center"><td>827</td> <td style="text-align:left">RGB, MDA, CGA, EGA to VGA Converter<br /><div style="font-size:10px;padding-left:15px;"><i>Special Price !<br />
+Warranty: 24 Months</i></div></td><td>2</td><td>195.00</td><td>390.00</td></tr>
+<tr style="text-align:center"><td>F78</td><td style="text-align:left">TNT Express</td><td>1</td> <td>43.00</td><td>43.00</td>
+<tr style="text-align:center"><td>C21</td><td style="text-align:left">Shipping Insurance</td><td>1</td> <td>7.80</td><td>7.80 </td></tr>
+<tr style="text-align:center"><td colspan="3">&nbsp;</td><td class="head">Sub-Total :</td><td>440.80</td></tr><tr style="text-align:center;"><td colspan="3">&nbsp;</td><td class="head"><b>Grand Total</b></td><td>440.80 USD</td></tr></table>
+<br />
+<table border="1" cellspacing="0" cellpadding="2" style="margin:auto;border-collapse:collapse;border:1px solid #ccc;font-size:inherit;"><tr><th width="50%" style="background-color:#eee;color:#333;">Payment Method :</th> <td width="50%" style="color:#777;">Credit Card - Mastercard, Visa</td></tr>
+<tr><th style="background-color:#eee;color:#333;">Payment Approval :</th> <td style="color:#777;"><span style="color:red;"><b>Awaiting Payment</b></span></td></tr>
+<tr><th style="background-color:#eee;color:#333;">Additional Payment Details :</th> <td style="color:#777;"></td></tr></table>
+<br />
+<p>Links : <a href="https://www.converters.tv/webadmin/invoice/?action=view&amp;invoice_id=47887">View Invoice</a>, <a href="https://www.converters.tv/webadmin/invoice/?action=edit&amp;invoice_id=47887">Edit Invoice</a></p></div></body></html>
+
+

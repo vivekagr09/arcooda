@@ -1,0 +1,51 @@
+body{background:#f0f4f9;margin:0;padding:0}
+@media print{
+.print_hide{display:none}
+}
+div.invoice_content .unfinished{background:#ff0}
+div.invoice_content{width:100%;margin-left:auto;margin-right:auto}
+div.invoice_content table{text-align:left;width:95%;margin-left:auto;margin-right:auto;border-collapse:collapse;border:1px #ccc solid}
+div.invoice_content tr{background:#fff;color:#000;font-family:Verdana;font-weight:400}
+div.invoice_content pre{margin:0}
+div.invoice_content pre.alt{background:#eee}
+div.invoice_content td{padding:2px 1px 2px 1px}
+div.invoice_content .th,div.invoice_content th,div.invoice_content thead{background-color:#fec;color:#000;font-weight:700;text-align:center;font-size:75%}
+div.invoice_content table.vbox td,div.invoice_content table.vbox th,div.invoice_content table.vbox thead{border:1px solid #fff}
+div.invoice_content table.buttons{text-align:center}
+div.invoice_content table.wide{width:95%}
+div.invoice_content tr.alt{background-color:#eeeee0}
+div.invoice_content tr.highlight{background-color:#90eea0}
+div.invoice_content tr.mylock{background-color:#90a0ee}
+div.invoice_content tr.locked{background-color:#ee90a0}
+div.invoice_content tr.need_soon{background-color:#f0f}
+div.invoice_content tr.need_timeout{background-color:red}
+div.invoice_content td.collapse{width:1px}
+div.invoice_content th.collapse{width:1px}
+div.invoice_content td.left_title{text-align:right;background-color:#eeeee0;color:#000;font-weight:700}
+div.invoice_content input.infile,div.invoice_content input.intext,div.invoice_content select,div.invoice_content textarea{width:98%}
+div.invoice_content th a{color:#000}
+div.invoice_content td a{color:#000}
+div.invoice_content table.spacetable td{border:2px solid #fff}
+div.invoice_content div.tabHeader span a,div.invoice_content div.tabHeader span.tabHeaderInactive a{color:#000}
+div.invoice_content div.tabTable{background-color:#ffffbf}
+div.invoice_content div.tabHeader{border-bottom:1px solid #ffffbf;text-align:left;width:95%}
+div.invoice_content div.tabHeader span{color:#fff;background-color:#ffffbf;padding:0 10px}
+div.invoice_content div.tabHeader span.tabHeaderInactive{color:#000;background-color:#c2c2ff;padding:0 10px}
+[class*=" invoiceicon-"],[class^=invoiceicon-]{display:inline-block;width:64px;height:64px;*margin-right:.3em;line-height:64px;vertical-align:text-top;background-image:url(invoiceicon.png);background-position:64px 64px;background-repeat:no-repeat;margin-top:1px}
+.invoiceicon-factory,.invoiceicon-freight,.invoiceicon-supplier,.invoiceicon-transport,.invoiceicon-working{background-position:0 -128px}
+.invoiceicon-feedback{background-position:0 0}
+.invoiceicon-feedback2{background-position:-64px 0}
+.invoiceicon-payment{background-position:-128px 0}
+.invoiceicon-payment2{background-position:-192px 0}
+.invoiceicon-nointerest,.invoiceicon-notready{background-position:0 -64px}
+.invoiceicon-nohelp{background-position:-128px -64px}
+.invoiceicon-noreply{background-position:-64px -64px}
+.invoiceicon-spam{background-position:-192px -64px}
+.invoiceicon-cancelled,.invoiceicon-notsales{background-position:-256px -64px}
+.invoiceicon-processed{background-position:-64px -128px}
+.invoiceicon-shipping{background-position:-256px -128px}
+.invoiceicon-shipped{background-position:-256px 0}
+.invoiceicon-returned{background-position:-128px -128px}
+.invoiceicon-approval{background-position:-192px -128px}
+.invoiceicon-y{background-position:0 -192px}
+.invoiceicon-n{background-position:-64px -192px}

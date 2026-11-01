@@ -1,0 +1,129 @@
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'].'/webadmin/common.inc.php');
+
+$mtime=filemtime(__FILE__);
+
+function process_file($file)
+{
+	global $mtime;
+
+	$min_file=str_replace('.css','.min.css',$file);
+	if(is_file($min_file) && (!is_file($file) || filemtime($file)<filemtime($min_file)))
+	{
+		$mtime=max($mtime,filemtime($min_file));
+		$file=file_get_contents($min_file);
+	}
+	elseif(is_file($file))
+	{
+		$mtime=max($mtime,filemtime($file));
+		$file=file_get_contents($file);
+	}
+	else return "";
+
+	/**
+	 * Convert tabs to spaces, and remove double spaces
+	 */
+	$file=str_replace("\t"," ",$file);
+	while($file!=$temp) { $temp=$file; $file=str_replace("  "," ",$file); }
+
+	/**
+	 * Strip comments
+	 */
+	$mode=0;
+	$temp='';
+	$loop=true;
+	while($loop)
+	{
+		$loop=false;
+		if($mode==0 && ($comment1=strpos($file,'/*'))!==false)
+		{
+			$loop=true;
+			$mode=1;
+			$temp.=substr($file,0,$comment1);
+			$file=substr($file,$comment1+2);
+		}
+		if($mode==1 && ($comment2=strpos($file,'*/'))!==false)
+		{
+			$loop=true;
+			$mode=0;
+			$file=substr($file,$comment2+2);
+		}
+	}
+	if($mode==0) $temp.=$file;
+	$file=$temp;
+
+	/**
+	 * Process includes
+	 */
+	$temp=array();
+	foreach(explode("\n",$file) as $row)
+	{
+		$row=trim($row);
+		$match=array();
+		if($row=='') { /*Do Nothing*/ }
+		elseif(preg_match('/^\@import url\("([^"]*)"\);/',$row,$match))
+		{
+			while(preg_match('/^\@import url\("([^"]*)"\);/',$row,$match))
+			{
+				$temp[]=process_file($match[1]);
+				$row=substr($row,strlen($match[0]));
+			}
+			$temp[]=$row;
+		}
+		else $temp[]=$row;
+	}
+	$file=implode("\n",$temp);
+	unset($temp);
+
+	$temp=str_replace("\n\n","\n",$file);
+	while($temp!=$file)
+	{
+		$file=$temp;
+		$temp=str_replace("\n\n","\n",$file);
+	}
+	unset($temp);
+
+	return $file;
+}
+
+$filename="style.css";
+$file=reset(explode('?',end(explode('/',$_SERVER['REQUEST_URI']))));
+if(preg_match('/^[a-z0-9_]+\.css$/',$file) && is_file($file)) $filename=$file;
+
+if(isset($_GET['raw'])) $ob=file_get_contents($filename);
+else $ob=process_file($filename);
+$mtime=min($mtime,$_SERVER['REQUEST_TIME']);
+$etag='"'.md5($filename.$mtime).'"';
+
+//Shrink the file further
+//$ob=preg_replace('/\/\/.*\n/',"\n",$ob);			//No inline comments
+//$ob=preg_replace('/(\/\*[\s\S]*?\*\/)/','',$ob);	//No star comments
+//$ob=preg_replace('/\t/',' ',$ob);					//No tabs
+//$ob=preg_replace('/\s*\:\s*/',':',$ob);				//No spacing before : and no spacing after
+//$ob=preg_replace('/\s*\,\s*/',',',$ob);			//No spacing before , and single spacing after
+//$ob=preg_replace('/\s*;\s*/','; ',$ob);				//No spacing before ; and no spacing after
+//$ob=preg_replace('/\s*\{\s*/',' { ',$ob);			//Single spacing before { and no spacing after
+//$ob=preg_replace('/\s*\}\s*/'," }\n",$ob);			//No spacing before } and newline after
+//$temp=''; while($temp!=$ob=preg_replace('/  /',' ',$ob)) $temp=$ob;		//No double spaces
+//$temp=''; while($temp!=$ob=preg_replace('/\s*\n/',"\n",$ob)) $temp=$ob;	//No blank lines
+
+//Test the modification date
+if(preg_replace('/;.*$/','',$_SERVER['HTTP_IF_MODIFIED_SINCE'])==gmdate(DATE_RFC1123,$mtime) || $_SERVER['HTTP_IF_NONE_MATCH']==$etag)
+{
+	header($_SERVER['SERVER_PROTOCOL']." 304 Not Modified");
+	header('ETag: '.$etag);
+	die();
+}
+
+//Output the result
+if(!headers_sent())
+{
+	header('Content-Type: text/css');
+	header('Content-Length: '.strlen($ob));
+	header('Expires: '.gmdate(DATE_RFC1123,gmmktime(gmdate('H')+24)));
+	header('Last-Modified: '.gmdate(DATE_RFC1123,$mtime));
+	header('ETag: '.$etag);
+	header('Date: '.gmdate(DATE_RFC1123,$_SERVER['REQUEST_TIME']));
+}
+echo $ob;
+?>

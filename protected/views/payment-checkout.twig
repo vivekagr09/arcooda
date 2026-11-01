@@ -1,0 +1,154 @@
+{% set global_page_title = inputs.title|default('Payment') %}
+{% set global_page_description = inputs.description|default('') %}
+{% set global_page_keywords = input.keywords|default('') %}
+{% set global_page_canonical       = ''                                %}
+{% set global_page_breadcrumbs     = [
+{title : 'Home', url : '/'},
+{title : global_page_title, url : global_page_canonical},
+] %}
+{% set titletop = inputs.titletop %}
+{% set payment_methods = inputs.payment_methods %}
+{% set invoice = inputs.invoice %}
+{% set invoice_payments = inputs.invoice_payments %}
+{% set payment_due = inputs.payment_due %}
+{% from '/macros/controls.twig' import input_check, input_radio %}
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+{% include '/blocks/block-header.twig' with {inputs: {
+title: titletop,
+breadcrumb: global_page_breadcrumbs,
+}} %}
+<style type="text/css">
+    #comment::placeholder {
+      font-style: italic;
+      font-size: 15px;
+    }
+    /* Hide the spinner for number input */
+    .no-spin::-webkit-inner-spin-button,
+    .no-spin::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+</style>
+<div class="container" style="margin-top:50px;margin-bottom:100px;">
+     <form action="/airwallex/invoice" method="post">
+        <input type="hidden" name="invoice_id" value="{{invoice.id}}">
+        <input type="hidden" name="invoice_crc" value="{{invoice.rand_num}}">
+    <div class="row checkout-cardBox">
+        <div class="col">
+            <div class="card-body card-body--padding--2 accordion" style="margin-bottom: 0px;">
+                <h3 class="card-title">Payment Method</h3>
+               
+                    <div class="checkout-cardCont">
+                        <ul class="payment-methods__list">
+                            {% for method in payment_methods %}
+                                {# {% if method.payment_method_id != 'USD_BANK' %}
+                                {% if method.payment_method_id != 'BANK' %} #}
+                                <li
+                                    class="payment-methods__item payment-methods__item{{ invoice.paymenttype_id == method.payment_method_id ? '--active' : '' }}">
+                                    <label class="payment-methods__item-header">
+                                        {{ input_radio({
+                                        classes: 'payment-methods__item-radio',
+                                        name: 'paymenttype_id',
+                                        value: method.payment_method_id,
+                                        checked: invoice.paymenttype_id == method.payment_method_id,
+                                        required : true
+                                        }) }}
+                                        <span class="payment-methods__item-title">{{ method.payment_method_name|e
+                                            }}</span>
+                                    </label>
+
+                                    <div class="payment-methods__item-container">
+                                        <div class="payment-methods__item-details text-muted" id="{{method.payment_method_id}}">{{
+                                            markdown(method.payment_method_description) }}</div>
+                                        {% if method.payment_method_id == 'EUR_BANK5' %}
+                                             <i class="payment-methods__item-details text-muted" style="color: red!important;display: inline-block;">This EURO account can only accept payments in EURO. Payments made in USD to this account will be rejected by the bank.Please send ${{invoice.invoice_offereu}} Euro.  </i>
+                                        {%  endif %}
+                                    </div>
+                                </li>
+                                {# {% endif %}
+                                {% endif %} #}
+                            {% endfor %}
+                                                        
+                        </ul>
+                    </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card-body card-body--padding--2" style="border: 2px solid #dee2e6;">
+                <h3 class="card-title">Your Order</h3>
+                <div class="checkout-table-Wrapper checkout-cardCont">
+                    <p style="margin-bottom:1.5rem;"><a href="/account/invoice?invoice_id={{ invoice.id }}&crc={{invoice.rand_num}}" target="_blank" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';" style="font-size: 20px;">Invoice #{{ invoice.id}}</a></p>
+                    <div style="padding-right: 10%; padding-left: 15%;">
+                        <table class="checkout__totals">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-top: 2px; padding-bottom: 2px;">
+                                        {% if invoice.proforma_time > 0 %}
+                                            {{  invoice.proforma_time|date('d M Y') }}
+                                        {% else %}
+                                            {{ now.timestamp|date('d M Y') }}
+                                        {% endif %}
+                                    </td>
+                                    <td  style="padding-top: 2px; padding-bottom: 2px;">Order Total</td>
+                                    <td  style="padding-top: 2px; padding-bottom: 2px;">{{ invoice.invoice_offer }} {{invoice.invoice_currency}}</td>
+                                </tr>
+                                {% if invoice_payments|length > 0 %}
+                                    {% for payment in invoice_payments %}
+                                    <tr>
+                                        <td  style="padding-top: 2px; padding-bottom: 2px;">{{  payment.payment_time|date('d M Y') }}</td>
+                                        <td  style="padding-top: 2px; padding-bottom: 2px;">{{ payment.payment_amount < 0 ? 'Refund' : 'Payment' }}</td>
+                                        <td  style="padding-top: 2px; padding-bottom: 2px;">{{ payment.payment_amount }} {{invoice.invoice_currency}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% endif %}
+                            </tbody>
+                            <tbody style="border-top: 1px solid;">
+                                <tr>
+                                    <td>{{ now.timestamp|date('d M Y') }}</td>
+                                    <td>Balance to Pay</td>
+                                    <td style="float: right;color: #f10c0c;">{{ payment_due }} {{invoice.invoice_currency}}</td>
+                                </tr>
+                            </tbody>
+                            <tbody class="checkout_instruction"  style=" {{(invoice.paymenttype_id != 'BANK' and invoice.paymenttype_id !='USD_BANK')?'':'display:none;' }}">
+                                <tr>
+                                    <td style="width: 100%;" colspan="3"><input type="text" name="invoice_total" min="1" required value="{{ payment_due }}" style="text-align: right;width: 50%;height: 40px;background-color: #cfe5cf;" class="no-spin"/> {{invoice.invoice_currency}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="checkout_instruction"  style=" {{(invoice.paymenttype_id != 'BANK' and invoice.paymenttype_id !='USD_BANK')?'':'display:none;' }}">
+                        <textarea rows=5 name="comment" style="width:100%" id="comment" placeholder="Comments (Optional)"></textarea>
+                    </div>
+                    {% if payment_due >0 %}
+                    <div class="checkout_instruction" style=" {{(invoice.paymenttype_id != 'BANK' and invoice.paymenttype_id !='USD_BANK')?'':'display:none;' }}">
+                        <button type="submit" class="btn btn-primary btn-xl btn-block" type="button">Make Payment</button>
+                    </div>
+                    {% endif %}
+                    <div style="display:flex; margin-top:25px; {{(invoice.paymenttype_id != 'BANK' and invoice.paymenttype_id !='USD_BANK')?'':'display:none;' }}" class="checkout_instruction">
+                        <div style="font-size:12px;font-weight:500;white-space:nowrap;">PLEASE NOTE:&nbsp;</div>
+                        <div style="font-size:12px;font-weight:500;">Payments are processed by AIRWALLEX, after you press the Payment button, you will be taken to their website for payment processing and once completed, you will return back to our website with payment confirmation.</div>
+                    </div>
+                    <div class="checkout_bank" style=" {{(invoice.paymenttype_id != 'BANK' and invoice.paymenttype_id !='USD_BANK')?'display:none;':'' }}">When making bank payment, please list <span style="color: green;">IAR {{invoice.id}}</span> as the payment reference for easy following by our accounts department. </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            </form>
+</div>
+<script type="text/javascript">
+   $("[name='paymenttype_id").change(function(e) {
+            if(['BANK','USD_BANK'].includes($(this).val())){
+                $('.checkout_bank').show();
+                $('.checkout_instruction').hide();
+            }else{
+                 $('.checkout_bank').hide();
+                $('.checkout_instruction').show();
+            }
+            $('.payment-methods__item').removeClass('payment-methods__item--active');
+            $( this ).parent().parent().parent().parent().addClass('payment-methods__item--active');
+
+    });
+</script>
+{% endblock %}

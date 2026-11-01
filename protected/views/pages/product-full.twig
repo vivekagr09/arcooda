@@ -1,0 +1,17 @@
+{#
+// inputs:
+#}
+
+{% set categories = inputs.categories %}
+{% set specification = inputs.specification %}
+
+{% set cart_items = input.cart_items %}
+{% set test = input.test %}
+
+{% include '/components/product-page.twig' with {inputs: {
+    layout: 'full',
+    categories: categories,
+    specification: specification,
+    cart_items: cart_items,
+    test: test
+}} %}

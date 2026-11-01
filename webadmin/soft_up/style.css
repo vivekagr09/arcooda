@@ -1,0 +1,95 @@
+body
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+}
+
+div#supcontent .unfinished
+{
+	background-color:yellow;
+}
+
+div#supcontent a
+{
+	color: white;
+}
+
+div#supcontent
+{
+	width:		100%;
+	margin-left:	auto;
+	margin-right:	auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+	font-size: 9pt;
+}
+
+div#supcontent table
+{
+	text-align: left;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div#supcontent tr
+{
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+div#supcontent pre {margin: 0 0 0 0;}
+div#supcontent pre.alt {background-color: #EEEEEE;}
+
+div#supcontent td
+{
+/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div#supcontent th, div#supcontent thead
+{
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+}
+
+div#supcontent table.vbox td, div#supcontent table.vbox th, div#supcontent table.vbox thead
+{
+	border: 1px solid white;
+}
+
+div#supcontent table.buttons {	text-align: center; }
+div#supcontent table.wide {	width: 90%; }
+div#supcontent tr.alt		{ background-color: #EEEEE0; }
+div#supcontent tr.highlight { background-color: #90EEA0; }
+div#supcontent tr.mylock	{ background-color: #90A0EE; }
+div#supcontent tr.locked	{ background-color: #EE90A0; }
+div#supcontent td.collapse {	width: 1px; }
+div#supcontent th.collapse {	width: 1px; }
+div#supcontent td.left_title {	width: 30%;
+				text-align: right;
+				background-color: #EEEEE0;
+				color: #000000;
+				font-weight: bold; }
+div#supcontent input.intext, div#supcontent input.infile, div#supcontent textarea, div#supcontent select {	width: 98%; }
+
+div#supcontent th a
+{
+	color: #000000;
+}
+
+div#supcontent td a
+{
+	color: #000000;
+}
+
+div#supcontent table.spacetable td
+{
+	border:2px solid white;
+}

@@ -1,0 +1,1669 @@
+<?php
+if (!function_exists('productStrJoin')) {
+    function productStrJoin($product_id, $sub_id = '', $site_id = '', $product_qty = '')
+    {
+        return rtrim(sprintf(
+            "%s %s %s %s",
+            $product_id,
+            $sub_id,
+            $site_id,
+            $product_qty
+        ));
+    }
+}
+if (!function_exists("productStrSplit")) {
+    /**
+     * @param string|int $product_str
+     * @param int        $limit
+     *
+     * @return int[]
+     */
+    function productStrSplit($product_str, $limit = 0)
+    {
+        $temp   = explode(' ', strval($product_str));
+        $result = array();
+        $count  = 0;
+        foreach (array('product_id', 'sub_id', 'site_id', 'product_qty') as $key) {
+            $count++;
+            if (count($temp) && reset($temp) != '') {
+                $result[$key] = intval(array_shift($temp));
+            }
+
+            if ($limit > 0 && $count >= $limit) {
+                return $result;
+            }
+
+        }
+        return $result;
+    }
+}
+if (!function_exists('productFormatNumber')) {
+    function productFormatNumber($id)
+    {
+        return sprintf('%05d', $id);
+    }
+}
+if (!function_exists('productExists')) {
+    function productExists($product_id)
+    {
+        global $DB;
+        $product_id = intval($product_id);
+        $sql        = "SELECT p.id FROM products p WHERE id=" . $product_id;
+        $row        = $DB->query_first($sql, MYSQLI_ASSOC);
+        if ($row) {
+            return true;
+        }
+
+        return false;
+    }
+}
+if (!function_exists('productDimensionFromDatabase')) {
+    function productDimensionFromDatabase($product_id, $site_id = 39, $as_array = true)
+    {
+        global $DB;
+        $result = array();
+        $query  = $DB->query(sprintf(
+            "SELECT * FROM `products_dimen` WHERE `id` = %d",
+            $product_id
+        ));
+        while ($row = $DB->fetch_assoc($query)) {
+            $result[] = $row;
+        }
+
+        $DB->free_result($query);
+        if (!$as_array && count($result)) {
+            return reset($result);
+        }
+
+        return $result;
+    }
+}
+if (!function_exists('getcategoryParentFromDatabase')) {
+    function getcategoryParentFromDatabase($id)
+    {
+         global $DB, $_GLOBALS;
+         $parent=0;
+        $type = $DB->query_first(sprintf(
+            "SELECT `parent` FROM `product_types` WHERE `deleted_at` IS NULL AND `id` = %d LIMIT 1",
+            $id,
+        ), MYSQLI_ASSOC);
+        if($type){
+            $parent= $type['parent'];
+        }
+         return $parent;
+    }
+}
+
+/**
+ * @deprecated use is_arcooda_customer
+ *
+ * @return bool
+ */
+function is_arcoda_customer()
+{
+    return is_arcooda_customer();
+}
+
+/**
+ * @fixme this is a frontend-only function, should not be here
+ *
+ * @return bool
+ */
+function is_arcooda_customer()
+{
+    global $_GLOBALS;
+    global $DB;
+
+    if (!array_key_exists('member', $_GLOBALS)) {
+        return false;
+    }
+
+    if ($row = $DB->query_first(sprintf(
+        "SELECT COUNT(*) AS `total` FROM `highwaygroup`.`serial_numbers` WHERE `member_id` = %d LIMIT 1",
+        $_GLOBALS['member']['id']
+    ), MYSQLI_ASSOC)) {
+        if ($row['total'] > 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+if (!function_exists('productFromDatabase')) {
+    function productFromDatabase($product_id, $site_id = 39)
+    {
+        global $DB, $_GLOBALS;
+
+        $fields = array("`p`.*");
+        foreach (productGetOptionList("ext_fields") as $k => $v) {
+            $fields[] = $v . " AS `" . $k . "`";
+        }
+        $product = $DB->query_first(sprintf(
+            "SELECT %s FROM `products` AS `p` WHERE `p`.`id` = %d LIMIT 1",
+            implode(", ", $fields),
+            $product_id
+        ), MYSQLI_ASSOC);
+
+        if (!$product) {
+            return $product;
+        }
+        $product['arcoda_discount']=false;
+        $product['offer_discount']=false;
+        if($product['secondary_price']==$product['primary_price']){
+            if(is_arcooda_customer() && $product['sales_price_arcooda']>0){
+                $product['secondary_price']=$product['sales_price_arcooda'];
+                $product['arcoda_discount']=true;
+            }
+        }
+
+        $product['_subproduct']=subProductFromDatabase($product['id']);
+        if(count($product['_subproduct'])){
+            $defaultkey=array_search('y',array_column($product['_subproduct'], 'default', 'id'));
+            $defaultkey=($defaultkey==false)?0:$defaultkey;
+            $default_product=$product['_subproduct'][$defaultkey];
+            $product['cost_price']=$default_product['cost_price'];
+            $product['sales_price']=$default_product['sell_price'];
+            $product['secondary_price']=$default_product['sell_price'];
+            $product['primary_price']=$default_product['sell_price'];
+            if(is_arcooda_customer() && $default_product['sales_price_arcooda']>0){
+                $product['secondary_price']=$default_product['sales_price_arcooda'];
+                $product['arcoda_discount']=true;
+            }
+            if($default_product['special_flag']=='y' && date('Y-m-d',strtotime($default_product['special_expiry'])<= date('Y-m-d')) && $product['secondary_price']>$default_product['special_priceus']){
+                $product['secondary_price']=$default_product['special_priceus'];
+                $product['arcoda_discount'] = false;
+            }
+        }
+        // manage product price for linked product for offer price
+        if($product['section']!=2){
+            $linked_product= productGenericsFromDatabase($product['id'], '`products_upgrade_linking`','id','linking_id','ORDER BY `rank` ASC');
+            if(count($linked_product)){
+                foreach ($linked_product as $key => $prolink) {
+                    $product_array[$prolink['id']]=$prolink['product_id'];
+                }
+                if($product['order_rule']=='inquiry_for_everyone'){
+                    if(isset($_GLOBALS['quote_cart']) && count($_GLOBALS['quote_cart'])){
+                        $cart_array=array_column($_GLOBALS['quote_cart'],'product_id');
+                        foreach ($product_array as $key => $procheck) {
+                              if(in_array($procheck, $cart_array)){
+                                    $section=productGetValue($procheck,'section');
+                                    if($section==2){
+                                        if($product['secondary_price']>$linked_product[$key]['offer_price'] && $linked_product[$key]['show_front']=='y'){
+                                            $product['offer_discount']=true;
+                                            $product['secondary_price']=$linked_product[$key]['offer_price'];
+                                            break;
+                                        }
+                                    }
+                              }
+                        }
+                    }
+                }else{
+                    if(isset($_GLOBALS['shopping_cart']) && count($_GLOBALS['shopping_cart'])){
+                        $cart_array=array_column($_GLOBALS['shopping_cart'],'product_id');
+                        foreach ($product_array as $key => $procheck) {
+                              if(in_array($procheck, $cart_array)){
+                                    $section=productGetValue($procheck,'section');
+                                    if($section==2){
+                                        if($product['secondary_price']>$linked_product[$key]['offer_price'] && $linked_product[$key]['show_front']=='y'){
+                                            $product['offer_discount']=true;
+                                            $product['secondary_price']=$linked_product[$key]['offer_price'];
+                                            break;
+                                        }
+                                    }
+                              }
+                        }
+                    }
+                }
+            }
+
+        }
+        $product['image'] = basename($product['image']);
+        $product['thumb'] = basename($product['thumb']);
+
+        $parent_type_list = productGetOptionList("parent_type");
+        $product["base_type"] = $parent_type_list[$product["type"]] ?? $product['type'];
+
+        $type_list        = productGetOptionList("type");
+        $product["base_type_name"] = $type_list[$product["base_type"]] ?? '';
+        $product["type_name"]      = $type_list[$product["type"]] ?? '';
+
+        $product["product_url"] = sprintf(
+            '/products/%s/%s/%s-%d.html',
+            strtolower(trim(preg_replace("/[^a-z0-9]+/i", "-", $product["base_type_name"]), "-")),
+            strtolower(trim(preg_replace("/[^a-z0-9]+/i", "-", $product["type_name"]), "-")),
+            strtolower(trim(preg_replace("/[^a-z0-9]+/i", "-", $product["product_name"]), '-')),
+            $product["id"]
+        );
+        $product["product_number"] = sprintf("%06d", $product["id"]);
+
+        if ('' != $product['image'] && is_file(productGetOptionList('image_path') . $product['image'])) {
+            $product['image_url'] = $product['thumb_url'] = sprintf(
+                '/p/%s-%d.jpg',
+                urlencode(trim(preg_replace('/[^A-Za-z0-9]+/', '-', $product['name']), '-')),
+                $product['id']
+            );
+        }
+
+        if ('' != $product['thumb'] && is_file(productGetOptionList('thumb_path') . $product['thumb'])) {
+            $product['thumb_url'] = sprintf(
+                '/p/%s-%d.jpg',
+                urlencode(trim(preg_replace('/[^A-Za-z0-9]+/', '-', $product['name']), '-')),
+                $product['id']
+            );
+        }
+
+        if (!empty($_GLOBALS["site_settings"]["static_path"] ?? '') && substr($_SERVER["REQUEST_URI"], 0, 10) != "/webadmin/") {
+            if (array_key_exists('image_url', $product)) {
+                foreach (array(
+                    '/images/products/large/' . $product['id'] . '.jpg',
+                    '/images/products/thumb/' . $product['id'] . '.jpg',
+                ) as $v) {
+                    if (is_file($_GLOBALS["site_settings"]["static_path"] . $v)) {
+                        $product['image_url'] = $product['thumb_url'] = $_GLOBALS["site_settings"]["static_uri"] . $v;
+                        break;
+                    }
+                }
+            }
+            if (array_key_exists('thumb_url', $product)) {
+                foreach (array(
+                    '/images/products/thumb/' . $product['id'] . '.jpg',
+                    '/images/products/large/' . $product['id'] . '.jpg',
+                ) as $v) {
+                    if (is_file($_GLOBALS["site_settings"]["static_path"] . $v)) {
+                        $product['thumb_url'] = $_GLOBALS["site_settings"]["static_uri"] . $v;
+                        break;
+                    }
+                }
+            }
+        }
+        $product['qty'] = ($product['stock_type'] == 'consignment') ? $product['consignment_qty'] : $product['qty']; 
+        return $product;
+    }
+}
+if (!function_exists('productGetValue')) {
+    function productGetValue($product_id, $field, $site_id = 39)
+    {
+        global $DB;
+        $fields = getTableFields('`products`');
+        if (array_key_exists($field, $fields)) {
+            $row = $DB->query_first("SELECT `" . $field . "` FROM `products` AS `p` WHERE `p`.`id` = " . intval($product_id) . " LIMIT 1", MYSQLI_ASSOC);
+            return $row[$field];
+        }
+        $special_fields = array('special_expiry_unix' => 'UNIX_TIMESTAMP(special_expiry)', 'latest_expiry_unix' => 'UNIX_TIMESTAMP(latest_expiry)');
+        if (array_key_exists($field, $special_fields)) {
+            $row = $DB->query_first("SELECT " . $special_fields[$field] . " AS " . $field . " FROM `convert_convert`.`products` AS `p` WHERE `p`.`id` = " . intval($product_id) . " LIMIT 1", MYSQLI_ASSOC);
+            return $row[$field];
+        }
+        return null;
+    }
+}
+if (!function_exists('productPackingFromDatabase')) {
+    function productPackingFromDatabase($product_id, $site_id = 39, $as_array = false)
+    {
+        global $DB;
+        $result = array();
+        $query  = $DB->query("SELECT * FROM product_packing WHERE `deleted_at` IS NULL AND  product_id=" . intval($product_id )); 
+        while ($row = $DB->fetch_assoc($query)) {
+            $result[] = $row;
+        }
+
+        $DB->free_result($query);
+        if ($as_array || count($result) == 0) {
+            return $result;
+        }
+
+        return reset($result);
+    }
+}
+if (!function_exists('productcoloursfromfilter')) {
+    function productcoloursfromfilter()
+    {
+        global $DB;
+        $result = array();
+        $query  = $DB->query("SELECT * FROM product_colour");
+        while ($row = $DB->fetch_assoc($query)) {
+            $result[] = $row;
+        }
+        $DB->free_result($query);
+        return $result;
+    }
+}
+if (!function_exists('countProductSupported')) {
+    /**
+     * @param int[] $proarray
+     * @param int   $support_id
+     *
+     * @return int
+     */
+    function countProductSupported($proarray, $support_id)
+    {
+        global $DB;
+
+        // Ensure that $proarray is not empty
+        if (empty($proarray)) {
+            return 0;
+        }
+
+        if ($row = $DB->query_first(sprintf(
+            "SELECT COUNT(*) AS `total` FROM `products` WHERE `id` IN(%s) AND FIND_IN_SET('%d', `product_supported`)",
+            implode(', ', $proarray),
+            $support_id
+        ), MYSQLI_ASSOC)) {
+            return $row['total'];
+        }
+
+        return 0;
+    }
+}
+if (!function_exists('productGenericFromDatabase')) {
+    function productGenericFromDatabase($id, $table, $primary_key = 'id') {
+        global $DB;
+        return $DB->query_first(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s WHERE `%s` = %d LIMIT 1",
+            $table,
+            $primary_key,
+            $id
+        ), MYSQLI_ASSOC);
+    }
+}
+if (!function_exists('productManualsFromDatabase')) {
+    function productManualsFromDatabase($id)
+    {
+         global $DB, $_GLOBALS;
+            $result = array();
+            $query  = $DB->query("SELECT pm.`created_at` as prodduct_created,pm.`product_id`,pm.`pos`,pm.`id` as product_manual_id ,m.* FROM `product_manuals` as pm, `manuals` as m WHERE pm.`product_id` = " . intval($id) . " AND m.id=pm.manual_id AND m.status='y' ORDER BY `pos` ASC");
+            while ($row = $DB->fetch_assoc($query)) {
+                $result[$row["id"]] = $row;
+            }
+            $DB->free_result($query);
+            return $result;
+    }
+}
+if (!function_exists('productFirmwareFromDatabase')) {
+    function productFirmwareFromDatabase($id)
+    {
+         global $DB, $_GLOBALS;
+            $result = array();
+            $query  = $DB->query("SELECT fm.`created`,fm.`product_id`,fm.`pos`,fm.`id` as product_firmware_id,f.* FROM product_firmware as fm,`firmware` as f WHERE fm.`product_id` = " . intval($id) . " AND f.id=fm.firmware_id  AND f.status='y' ORDER BY `pos` ASC");
+            while ($row = $DB->fetch_assoc($query)) {
+                $result[$row["id"]] = $row;
+            }
+            $DB->free_result($query);
+            return $result;
+    }
+}
+if (!function_exists('productManualVirtual')) {
+    function productManualVirtual($manual)
+    {
+        if (is_null($manual)) {
+            return null;
+        }
+
+       // TODO(__FUNCTION__, func_get_args());return $manual; //TODO: Double check this function
+
+        $manual['file_name'] = basename($manual['file_name']);
+
+        $manual_path = productGetOptionList('manual_path');
+        $test        = $manual_path . $manual['file_name'];
+        if (is_file($test)) {
+
+            $split              = explode('.', $manual['file_original']);
+            $ext                = strtolower(array_pop($split));
+            $manual['view_url'] = sprintf("/manuals/%d.%s", $manual['id'], $ext);
+            if ('' !== $manual['slug']) {
+                $manual['view_url'] = sprintf("/manuals/%s-%d.%s", $manual['slug'], $manual['id'], $ext);
+            }
+
+            $manual['filetype'] = mime_content_type($test);
+
+            $manual['size'] = filesize($test);
+        }
+                return $manual;
+    }
+}
+if (!function_exists('productRelatedFromDatabase')) {
+    function productRelatedFromDatabase($id)
+    {
+        $result = productGenericsFromDatabase($id, '`products_related`','id','product_id','ORDER BY `rank` ASC');
+        return $result;
+    }
+}
+if (!function_exists('productGenericsFromDatabase')) {
+    function productGenericsFromDatabase($id, $table, $primary_key = 'id', $secondary_key = 'product_id',$orderby='') {
+        global $DB;
+        $result = array();
+        $query = $DB->query(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s WHERE `deleted_at` IS NULL AND `%s` = %d %s",
+            $table,
+            $secondary_key,
+            $id,
+            $orderby
+        ));
+        while ($row = $DB->fetch_assoc($query)) {
+            if (is_null($primary_key)) {
+                $result[] = $row;
+            } else {
+                $result[$row[$primary_key]] = $row;
+            }
+        }
+        $DB->free_result($query);
+        return $result;
+    }
+}
+if (!function_exists('productPartsofFromDatabase')) {
+    function productPartsofFromDatabase($id)
+    {
+        $result = productGenericsFromDatabase($id, '`products_partof`');
+        uasort($result, function($a, $b) {
+            return $b['partof_id'] - $a['partof_id'];
+        });
+        return $result;
+    }
+}
+if (!function_exists('productUpgradeLinkingFromDatabase')) {
+    function productUpgradeLinkingFromDatabase($id)
+    {
+        $result = productGenericsFromDatabase($id, '`products_upgrade_linking`');
+        uasort($result, function($a, $b) {
+            return $b['linking_id'] - $a['linking_id'];
+        });
+        return $result;
+    }
+}
+if (!function_exists('productArtWorkFromDatabase')) {
+    function productArtWorkFromDatabase($id)
+    {
+        global $DB;
+
+        $result = [];
+
+        if ($query = $DB->query(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s  Where `%s` = %d AND `deleted_at` IS NULL",
+            '`product_art_work`',
+            'product_id',
+             $id,
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $result[$row['id']] = $row;
+            }
+            $DB->free_result($query);
+        }
+
+        return $result;
+    }
+}
+if (!function_exists('productMonitorPartLinkingFromDatabase')) {
+    function productMonitorPartLinkingFromDatabase($id)
+    {
+        $result = productGenericsFromDatabase($id, '`products_monitor_part_linking`','id','monitor_id');
+        uasort($result, function($a, $b) {
+            return $b['linking_id'] - $a['linking_id'];
+        });
+        return $result;
+    }
+}
+if (!function_exists('productBrochureFromDatabase')) {
+    function productBrochureFromDatabase($id)
+    {
+        global $DB;
+
+        $result = [];
+
+        if ($query = $DB->query(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s WHERE `%s` = %d AND `deleted_at` IS NULL ORDER BY `rank` ASC",
+            '`product_brochure_image`',
+            'product_id',
+            $id
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $result[$row['id']] = $row;
+            }
+            $DB->free_result($query);
+        }
+
+        return $result;
+    }
+}
+if (!function_exists('productMonitorFromDatabase')) {
+    function productMonitorFromDatabase($id)
+    {
+        global $DB;
+
+        $result = [];
+
+        if ($query = $DB->query(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s  Where `%s` = %d AND `deleted_at` IS NULL ORDER BY `rank` ASC",
+            '`products_monitors`',
+            'product_id',
+             $id
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $result[$row['id']] = $row;
+            }
+            $DB->free_result($query);
+        }
+
+        return $result;
+    }
+}
+if (!function_exists('productContainersFromDatabase')) {
+    function productContainersFromDatabase($id)
+    {
+        return productGenericsFromDatabase($id, '`container_load`', 'product_id');
+    }
+}
+if (!function_exists('productPackingsFromDatabase')) {
+    function productPackingsFromDatabase($id)
+    {
+        $result = [];
+        foreach (productGenericsFromDatabase($id, '`product_packing`', 'packing_id') as $k => $v) {
+            $v['_volume'] = bcmul($v['width'], bcmul($v['height'], $v['depth'], 2), 3);
+            $v['_cubic'] = bcdiv($v['_volume'], '5000', 3);
+            $v['_weight'] = (bccomp($v['weight'], $v['_cubic'], 3) >= 0) ? $v['weight'] : $v['_cubic'];
+            $result[$k] = $v;
+        }
+        return $result;
+    }
+}
+if (!function_exists('getValueFromTableById')) {
+
+    function getValueFromTableById($id,$table)
+    {
+        global $DB;
+
+        if ($row = $DB->query_first(sprintf(
+            "SELECT `data_value` FROM %s WHERE  `id` = %d  LIMIT 1",
+            $table,
+            $id
+        ), MYSQLI_ASSOC)) {
+            return $row['data_value'];
+        }
+
+        return 'N/A';
+
+    }
+}
+function getcompareproduct($criteria,$id){
+    global $DB;
+    if (is_array($criteria)) {
+        $criteria_query = productQuery($criteria);
+    }
+    $results = array();
+    $query   = $DB->query(sprintf(
+        "SELECT `p`.`id` FROM `products` AS `p` INNER JOIN `compare_product` AS `cp` ON `cp`.`product_id` = `p`.`id` WHERE %s AND `cp`.`visitor_id`=%s ORDER BY `p`.sales_price asc",
+            $criteria_query,
+            $id
+    ));
+    while ($row = $DB->fetch_assoc($query)) {
+        $results[] = $row['id'];
+    }
+    $DB->free_result($query);
+    return $results;
+}
+if (!function_exists('subProductFromDatabase')) {
+    function subProductFromDatabase($id)
+    {
+        global $DB;
+
+        $result = [];
+
+        if ($query = $DB->query(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s  Where `%s` = %d AND `deleted_at` IS NULL ORDER BY `default` ASC",
+            '`product_sub_module`',
+            'product_id',
+             $id,
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $result[$row['id']] = $row;
+            }
+            $DB->free_result($query);
+        }
+
+        return $result;
+    }
+}
+function getwishlistproduct($criteria, $id) {
+    global $DB;
+
+    if (is_array($criteria)) {
+        $criteria_query = productQuery($criteria);
+    }
+
+    $results = array();
+    if ($query = $DB->query(sprintf(
+        "SELECT `p`.`id` FROM `products` AS `p` INNER JOIN `wishlist_product` AS `cp` ON `cp`.`product_id` = `p`.`id` WHERE %s AND `cp`.`visitor_id` = %s",
+        $criteria_query,
+        $id
+    ))) {
+        while ($row = $DB->fetch_assoc($query)) {
+            $results[] = $row['id'];
+        }
+        $DB->free_result($query);
+    }
+
+    return $results;
+}
+if (!function_exists('inventoryStockGetValue')) {
+    function inventoryStockGetValue($product_id,$color,$field)
+    {
+        global $DB;
+
+        $fields = getTableFields('products_inventory_stock');
+        if (array_key_exists($field, $fields)) {
+            if ($row = $DB->query_first(sprintf(
+                "SELECT `%s` FROM `products_inventory_stock` AS `pi` WHERE `pi`.`product_id` = %s and `pi`.`color_id` = %s LIMIT 1",
+                $field,
+                $product_id,
+                $color
+            ), MYSQLI_ASSOC)) {
+                return $row[$field];
+            }
+        }
+        return 0;
+    }
+}
+if (!function_exists('productQuery')) {
+    /**
+     * @fixme update to accept eq, lt, gt parameters
+     *
+     * @param mixed $criteria
+     *
+     * @return string
+     */
+    function productQuery($criteria = "")
+    {
+        if (is_string($criteria) && '' != $criteria) {
+            $criteria = array('any_text' => $criteria);
+        }
+
+        $sql         = "1";
+        $field_types = productGetOptionList('all_fields_types');
+        $fields      = productGetOptionList('all_fields');
+        $whereAND    = array();
+        if (is_array($criteria)) {
+            foreach ($criteria as $field => $value) {
+                if (isset($fields[$field]) && $field!='product_supported') {
+                    if (is_array($value)) {
+                        if (count($value) > 0) {
+                            $whereOR = array();
+                            if (substr($field_types[$field]['Type'], 0, 4) == 'set(') {
+                                foreach ($value as $sub_value) {
+                                    $whereOR[] = "FIND_IN_SET(" . formatSQLString($sub_value) . ", " . $fields[$field] . ")";
+                                }
+                            } else {
+                                $temp = array();
+                                foreach ($value as $sub_value) {
+                                    $temp[] = formatSQLString($sub_value);
+                                }
+                                if($field == 'type'){
+                                    $whereOR[] = $fields[$field] . " IN(" . implode(", ", $temp) . ")";
+                                    $whereOR[] = " p.`id` IN (SELECT product_id FROM products_linked_categories WHERE `deleted_at` IS NULL AND category_id  IN(" . implode(", ", $temp) . "))";
+                                }else{
+                                    $whereOR[] = $fields[$field] . " IN(" . implode(", ", $temp) . ")";
+                                }
+                                
+                                //foreach($value as $sub_value) $whereOR[] = $fields[$field] . " = " . formatSQLString($sub_value);
+                            }
+                            $whereAND[] = "	(" . implode(" OR ", $whereOR) . ")";
+                        } else {
+                            return array();
+                        }
+
+                    } else {
+                        if (array_key_exists($field, $field_types) && substr($field_types[$field]['Type'], 0, 4) == 'set(') {
+                            $whereAND[] = "FIND_IN_SET(" . formatSQLString($value) . ", " . $fields[$field] . ")";
+                        } else {
+                            if($field == 'type'){
+                                $whereAND[] = "(". $fields[$field] . " = " . formatSQLString($value)." OR  p.`id` IN (SELECT product_id FROM products_linked_categories WHERE `deleted_at` IS NULL AND category_id = " .$value. "))" ;
+                            }else{
+                               $whereAND[] = $fields[$field] . " = " . formatSQLString($value);
+                            }
+                            
+                        }
+
+                    }
+                    unset($fields[$field]);
+                }else{
+                    if($field=='color'){
+                      $whereOR = array();
+                       foreach ($value as $sub_value) {
+                            $whereOR[] = "FIND_IN_SET(" . formatSQLString($sub_value) . ",p.`colour`)";
+                        }
+                        $whereAND[] = " (" . implode(" OR ", $whereOR) . ")";
+                    }
+                    if($field=='product_supported'){
+                      $whereOR = array();
+                       foreach ($value as $sub_value) {
+                            $whereOR[] = "FIND_IN_SET(" . formatSQLString($sub_value) . ",p.`product_supported`)";
+                        }
+                        $whereAND[] = " (" . implode(" OR ", $whereOR) . ")";
+                    }
+                }
+            }
+        }
+
+        $search_for = array();
+        if (is_array($criteria) && array_key_Exists('any_text', $criteria)) {
+            if (is_array($criteria['any_text'])) {
+                $search_for = $criteria['any_text'];
+            }
+
+            if (is_string($criteria['any_text'])) {
+                $search_for = explode(' ', $criteria['any_text']);
+            }
+
+        }
+        if (count($search_for) > 0) {
+            $searchBits = array('`p`.`id`', '`p`.`product_name`', '`p`.`short_desc`', '`p`.`long_desc`', '`p`.`product_details`', '`p`.`admin_notes`');
+            foreach ($search_for as $findme) {
+                if (trim($findme) != "") {
+                    $whereOR = array();
+                    foreach ($searchBits as $key) {
+                        $whereOR[] = $key . " LIKE " . formatSQLLikeString($findme);
+                    }
+
+                    $whereAND[] = "(" . implode(" OR ", $whereOR) . ")";
+                }
+            }
+        }
+        if(array_key_exists('min_price', $criteria) && array_key_exists('max_price', $criteria)){
+            $whereAND[]='`p`.`sales_price` BETWEEN '.$criteria['min_price'].' AND '.$criteria['max_price'].'';
+        }
+        if (count($whereAND) > 0) {
+            $sql = implode(" AND ", $whereAND);
+        }
+
+        return $sql;
+    }
+}
+if (!function_exists('productpricerange')) {
+    function productpricerange($criteria = "")
+    {
+        global $DB;
+        if (is_string($criteria) && '' != $criteria) {
+            $criteria = array('any_text' => $criteria);
+        }
+
+        $sql     = "SELECT max(`p`.`sales_price`) max_price,min(`p`.`sales_price`) min_price FROM `products` AS `p` WHERE " . productQuery($criteria) . "";
+        $results = array();
+        $query   = $DB->query($sql);
+        $results = $DB->fetch_assoc($query);
+        /*while ($row = $DB->fetch_assoc($query)) {
+            $results['max_price'] = $row['id'];
+        }*/
+        $DB->free_result($query);
+        return $results;
+    }
+}
+if (!function_exists('productSearch')) {
+    /**
+     * @param string $where
+     *
+     * @return int[]
+     */
+    function productSearch($where = null)
+    {
+        global $DB;
+
+        // Legacy: productSearch used to accept a criteria array
+        if (is_array($where)) {
+            $where = productQuery($where);
+        }
+        $result = [];
+        if ($query = $DB->query(sprintf(
+            "SELECT `id` FROM `products` AS `p`%s ORDER BY `p`.`id` DESC",
+            (is_string($where)) ? sprintf(" WHERE %s", $where) : ""
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $result[] = $row['id'];
+            }
+            $DB->free_result($query);
+        }
+
+        return $result;
+    }
+    // @fixme: BAD, don't do this to the function, just make another one
+    /*
+    function productSearch($criteria = "", $flags = -1, $site_id = 39,$order='ORDER BY `p`.`id` DESC')
+    {
+        global $DB;
+        if (is_string($criteria) && '' != $criteria) {
+            $criteria = array('any_text' => $criteria);
+        }
+        $proquery= productQuery($criteria);
+
+        if(isset($criteria['special_flag']) && $criteria['special_flag']=='y'){
+            $today = date("'Y-m-d 00:00:00'");
+            $proquery=$proquery.' AND `p`.`special_priceus` > 0.0 AND (`p`.`special_expiry` >= '.$today.'   OR `p`.`special_expiry` = "0000-00-00 00:00:00")';
+        }
+        if(isset($criteria['feature']) && $criteria['feature']=='y'){
+            $today = date("'Y-m-d 00:00:00'");
+            $proquery=$proquery.' AND  (`p`.`featured_expiry` >= '.$today.'   OR `p`.`featured_expiry` = "0000-00-00 00:00:00")';
+        }
+
+        $sql     = "SELECT `p`.`id` FROM `products` AS `p` WHERE " . $proquery . " GROUP BY `p`.`id` " . $order . " ";
+        $results = array();
+        $query   = $DB->query($sql);
+        while ($row = $DB->fetch_assoc($query)) {
+            $results[] = $row['id'];
+        }
+
+        $DB->free_result($query);
+        return $results;
+    }
+    */
+}
+if (!function_exists('productRecommendedFromDatabase')) {
+    function productRecommendedFromDatabase($id)
+    {
+        return productGenericsFromDatabase($id, '`products_recommended`','id','product_id');
+    }
+}
+function getBuilderById($id,$product_id){
+        // Initialisation
+        global $DB, $_GLOBALS;
+        $errMsg = "";
+        $errHeader    = "<b>ProductBuilder Error in getBuilderById:</b>";
+        $errFooter    = "<i>For more information, please read documentation.</i>";
+        // Pulling data
+        $builder = $DB->query_first(sprintf("SELECT * FROM `pb_builders` WHERE `id`=%s", formatSQLString($id)), MYSQLI_ASSOC);
+
+        if (!empty($builder)) {
+            $builder['websites'] = array();
+
+            $websitesQuery = $DB->query(sprintf("SELECT * FROM `pb_websites` WHERE `builder_id`=%s", formatSQLString($id)));
+            while ($row = $DB->fetch_assoc($websitesQuery)) {
+                $builder['websites']= $row;
+            }
+
+            $builder['machines'] = array();
+            $machineQuery        = $DB->query(sprintf("SELECT * FROM `pb_machines` WHERE `builder_id`=%s  ORDER BY `price` ASC", formatSQLString($id)
+            ));
+            $machineid=0;
+            $keydata=0;
+            while ($row = $DB->fetch_assoc($machineQuery)) {
+                if($row['product_id']==$product_id){
+                    $machineid=$keydata;
+                    $options      = array();
+                    $optionsQuery = $DB->query(sprintf("SELECT * FROM `pb_machines_options` WHERE `machine_id`=%s ORDER BY `position` ASC", formatSQLString($row['id'])));
+                    while ($optionRow = $DB->fetch_assoc($optionsQuery)) {
+                        $option_data = getOptionById($optionRow['option_id']);
+                        $options[]   = array(
+                            "id"       => $optionRow['option_id'],
+                            "name"     => $option_data['name'],
+                            "title"    => $option_data['title'],
+                            "qty"      => $optionRow['qty'],
+                            "template" => $option_data['template'],
+                        );
+                    }
+
+                    $builder['machines'] = array(
+                        "id"                    => $row['id'],
+                        "name"                  => $row['name'],
+                        "product_id"            => $row['product_id'],
+                        "site_id"               => $row['site_id'],
+                        "sub_id"                => $row['sub_id'],
+                        "price"                 => $row['price'],
+                        "currency"              => $row['currency'],
+                        "description"           => $row['description'],
+                        "special_notes"         => $row['special_notes'],
+                        "delivery_pickup"       => $row['delivery_pickup'],
+                        "delivery_sea"          => $row['delivery_sea'],
+                        "delivery_air"          => $row['delivery_air'],
+                        "delivery_pickup_price" => $row["delivery_pickup_price"],
+                        "delivery_sea_price"    => $row["delivery_sea_price"],
+                        "delivery_air_price"    => $row["delivery_air_price"],
+                        "options"               => $options,
+                        "position"              => $row["position"],
+                        "category"              => $row['cat'],
+                    );
+                }
+                $keydata++;
+            }
+
+            $builder['category'] = array();
+            $categoryQuery       = $DB->query(sprintf(
+                "SELECT * FROM `pb_builder_category` WHERE `builder_id` = %s AND cat <> 0 ORDER BY `position` ASC",
+                formatSQLString($id)
+            ));
+            while ($row = $DB->fetch_assoc($categoryQuery)) {
+                $builder['category'][] = $row['cat'];
+            }
+            $builder['machine_id']=$machineid;
+        }
+
+        return $builder;
+}
+function getOptionById($id)
+    {
+        global $DB, $_GLOBALS;
+        // Initialisation
+        $errMsg = "";
+        $errHeader    = "<b>ProductBuilder Error in getOptionById:</b>";
+        $errFooter    = "<i>For more information, please read documentation.</i>";
+
+        // Pulling data
+        $option = $DB->query_first(sprintf("SELECT * FROM `pb_options` WHERE `id`=%s", formatSQLString($id)), MYSQLI_ASSOC);
+
+        if (!empty($option)) {
+            $option['options'] = array(
+                0 => array(), // Link Product
+                1 => array(), // Link Text
+                2 => array(), // Link Photo
+                3 => array(), // Link Video
+            );
+
+            $linkProductQuery = $DB->query(sprintf("SELECT * FROM `pb_options_product` WHERE `options_id`=%s", formatSQLString($option['id'])));
+            while ($row = $DB->fetch_assoc($linkProductQuery)) {
+                $option['options'][0][] = $row;
+            }
+
+            $linkTextQuery = $DB->query(sprintf("SELECT * FROM `pb_options_text` WHERE `options_id`=%s", formatSQLString($option['id'])));
+            while ($row = $DB->fetch_assoc($linkTextQuery)) {
+                $option['options'][1][] = $row;
+            }
+
+            $linkPhotoQuery = $DB->query(sprintf("SELECT * FROM `pb_options_photo` WHERE `options_id`=%s", formatSQLString($option['id'])));
+            while ($row = $DB->fetch_assoc($linkPhotoQuery)) {
+                $option['options'][2][] = $row;
+            }
+
+            $linkVideoQuery = $DB->query(sprintf("SELECT * FROM `pb_options_video` WHERE `options_id`=%s", formatSQLString($option['id'])));
+            while ($row = $DB->fetch_assoc($linkVideoQuery)) {
+                $option['options'][3][] = $row;
+            }
+
+        }
+        return $option;
+    }
+if (!function_exists('productScreenshotsFromDatabase')) {
+    function productScreenshotsFromDatabase($product_id, $sub_id = 0)
+    {
+        global $DB, $_GLOBALS;
+
+        $result = array();
+        if ($query  = $DB->query(sprintf(
+            "SELECT * FROM `product_screenshots` WHERE `id` = %d AND `deleted_at` IS NULL ORDER BY `rank` ASC",
+            $product_id
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $row['filename'] = basename($row['filename']);
+
+                if ('' != $row['filename'] && is_file(productGetOptionList('screenshot_path') . $row['filename'])) {
+                    $row['image_url'] = $row['thumb_url'] = '/' . $row['filename'];
+                }
+                if (!empty($_GLOBALS["site_settings"]["static_path"] ?? '') && substr($_SERVER["REQUEST_URI"], 0, 10) != "/webadmin/") {
+                    if (array_key_exists('image_url', $row)) {
+                        foreach (array(
+                            '/images/screenshots/large/' . $row['ss_id'] . '.jpg',
+                            '/images/screenshots/thumb/' . $row['ss_id'] . '.jpg',
+                        ) as $v) {
+                            if (is_file($_GLOBALS["site_settings"]["static_path"] . $v)) {
+                                $row['image_url'] = $row['thumb_url'] = $_GLOBALS["site_settings"]["static_uri"] . $v;
+                                break;
+                            }
+                        }
+                    }
+                    if (array_key_exists('thumb_url', $row)) {
+                        foreach (array(
+                            '/images/screenshots/thumb/' . $row['ss_id'] . '.jpg',
+                            '/images/screenshots/large/' . $row['ss_id'] . '.jpg',
+                        ) as $v) {
+                            if (is_file($_GLOBALS["site_settings"]["static_path"] . $v)) {
+                                $row['thumb_url'] = $_GLOBALS["site_settings"]["static_uri"] . $v;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                $result[$row['ss_id']] = $row;
+            }
+            $DB->free_result($query);
+        }
+
+        return $result;
+    }
+}
+if (!function_exists('productColorImagesFromDatabase')) {
+    function productColorImagesFromDatabase($product_id, $colour_id)
+    {
+        global $DB, $_GLOBALS;
+        $result = array();
+        if ($query  = $DB->query(sprintf(
+            "SELECT * FROM `products_images` WHERE `product_id` = %d AND `color_id` = %d and `active` = 'y' and `deleted_at` IS NULL ORDER BY `rank` ASC",
+            $product_id,
+            $colour_id
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $imagedis=basename($row['image']);
+                if ('' != $row['image'] && is_file(productGetOptionList('screenshot_path') . $imagedis)) {
+                    $row['image_url']   = $_GLOBALS["site_settings"]["home_uri"] . $row['image'];
+                    $row['thumb_url']   = $_GLOBALS["site_settings"]["home_uri"] . $row['image'];
+                    $result[$row['id']] = $row;
+                }
+            }
+            $DB->free_result($query);
+        }
+
+        return $result;
+    }
+}
+if (!function_exists('productSort')) {
+    function productSort($product_list, $order_by = 'product_id', $site_id = 39)
+    {
+        global $DB;
+        if (is_array($product_list) && count($product_list) < 2) {
+            return $product_list;
+        }
+
+        $sql     = " SELECT p.id FROM products p";
+        $choices = array();
+        $sql .= " LEFT JOIN `highwaygroup`.`currency` AS `c1` ON `p`.`cost_currency` = `c1`.`code` LEFT JOIN `highwaygroup`.`currency` AS `c2` ON `p`.`sales_currency` = `c2`.`code`";
+        $choices = array(
+            'product_name' => 'p.product_name',
+            'cost_price'   => 'p.cost_price*c1.usfrom',
+            'sales_price'  => "IF(p.price_flux='y',(p.cost_price*(100.0+p.markup))*c1.usfrom/100.0,p.sales_price*c2.usfrom)",
+        );
+        if (isset($choices[$order_by])) {
+            if (is_string($product_list)) {
+                $where = ' WHERE ' . $product_list;
+            } elseif (is_array($product_list)) {
+                $ranges  = convertListToRanges($product_list);
+                $whereOR = array();
+                foreach ($ranges as $range) {
+                    if ($range[0] == $range[1]) {
+                        $whereOR[] = 'p.id=' . $range[0];
+                    } else {
+                        $whereOR[] = '(p.id>=' . $range[0] . ' AND p.id<=' . $range[1] . ')';
+                    }
+
+                }
+                $where = " WHERE " . implode(' OR ', $whereOR);
+            }
+            $product_list = array();
+            $order        = " ORDER BY " . $choices[$order_by] . " ASC";
+            $query        = $DB->query($sql . $where . $order);
+            while ($row = $DB->fetch_array($query, MYSQLI_ASSOC)) {
+                $product_list[] = $row['id'];
+            }
+
+        } else {
+            asort($product_list);
+        }
+
+        return $product_list;
+    }
+}
+if (!function_exists('productSuppliersFromDatabase')) {
+    function productSuppliersFromDatabase($product_id)
+    {
+        global $DB;
+        $results = array();
+        $product = $DB->query_first("SELECT manufacturer,preferred_supplier,product_name,cost_price,cost_currency FROM products WHERE id=" . intval($product_id) . " LIMIT 1");
+        if (0 != $product['manufacturer']) {
+            $results[$product['manufacturer']] = array(
+                'supplier_id'   => $product['manufacturer'],
+                'product_name'  => $product['product_name'],
+                'cost_price'    => $product['cost_price'],
+                'cost_currency' => $product['cost_currency'],
+            );
+        }
+        if (0 != $product['preferred_supplier']) {
+            $results[$product['preferred_supplier']] = array(
+                'supplier_id'   => $product['preferred_supplier'],
+                'product_name'  => $product['product_name'],
+                'cost_price'    => $product['cost_price'],
+                'cost_currency' => $product['cost_currency'],
+            );
+        }
+        $query = $DB->query("SELECT * FROM supplier_product WHERE `deleted_at` IS NULL AND product_id=" . intval($product_id));
+        while ($row = $DB->fetch_assoc($query)) {
+            $results[$row['supplier_id']] = $row;
+        }
+        return $results;
+    }
+}
+if (!function_exists('productDefaultSuppliersFromDatabase')) {
+    function productDefaultSuppliersFromDatabase($product_id)
+    {
+        global $DB;
+        $results = array();
+        $results = $DB->query_first("SELECT * FROM supplier_product WHERE `deleted_at` IS NULL AND `main`='y' AND product_id=" . intval($product_id));
+        return $results;
+    }
+}
+if (!function_exists('productGroupCount')) {
+    function productGroupCount($item_list, $group_by = '', $split_sets = true)
+    {
+        global $DB;
+        if (is_array($item_list) && count($item_list) < 1) {
+            return $item_list;
+        }
+
+        if ('' === $group_by) {
+            return count($item_list);
+        }
+
+        if (!is_array($group_by)) {
+            $group_by = array($group_by);
+        }
+
+        if (count($group_by) == 0) {
+            return count($item_list);
+        }
+
+        $join_list   = array();
+        $field_list  = array('row_count' => 'COUNT(*) AS row_count');
+        $field_types = productGetOptionList('all_fields_types');
+        $fields      = productGetOptionList('all_fields');
+        foreach ($group_by as $field) {
+            if (array_key_exists($field, $fields)) {
+                $field_list[$field] = $fields[$field] . " AS `" . $field . "`";
+            }
+        }
+
+        foreach (productGetOptionList('joined_fields') as $join => $fields) {
+            foreach ($fields as $field => $field_string) {
+                if (in_array($field, $group_by)) {
+                    $join_list[$join]            = $join;
+                    $field_list[$field]          = $fields[$field] . " AS `" . $field . "`";
+                    $field_types[$field][1]      = 'set(...)';
+                    $field_types[$field]['Type'] = 'set(...)';
+                }
+            }
+        }
+
+        $group_list = $field_list;
+        unset($group_list['row_count']);
+        if (array_key_exists("category_id", $group_list)) {
+            $group_list["type_id"] = $group_list["category_id"];
+            unset($group_list["category_id"]);
+        }
+        if (count($group_list) == 0) {
+            return array(count($item_list));
+        }
+
+        if (is_string($item_list)) {
+            $sql = "SELECT " . implode(', ', $field_list) . " FROM `products` AS `p` " . implode(' ', $join_list) . " WHERE " . $item_list . " GROUP BY `" . implode('`, `', array_keys($group_list)) . "`";
+        } else {
+            $sql = "SELECT " . implode(', ', $field_list) . " FROM `products` AS `p` " . implode(' ', $join_list) . " WHERE `p`.`id` IN(" . implode(", ", $item_list) . ") GROUP BY `" . implode('`, `', array_keys($group_list)) . "`";
+        }
+
+        $query   = $DB->query($sql);
+        $results = array();
+        while ($row = $DB->fetch_assoc($query)) {
+            $pointers = array(&$results);
+            foreach ($group_by as $group) {
+                $key = $row[$group];
+                if ('' == $key) {
+                    $key = null;
+                }
+
+                $new_pointers = array();
+                foreach ((substr($field_types[$group]['Type'], 0, 4) == 'set(' && $split_sets) ? explode(',', $key) : array($key) as $key2) {
+                    foreach ($pointers as $key1 => $pointer) {
+                        if (!isset($pointers[$key1][$key2])) {
+                            $pointers[$key1][$key2] = array();
+                        }
+
+                        $new_pointers[] = &$pointers[$key1][$key2];
+                    }
+                }
+                $pointers = $new_pointers;
+            }
+            foreach ($pointers as $pointer_key => $pointer) {
+                if (is_array($pointers[$pointer_key])) {
+                    $pointers[$pointer_key] = 0;
+                }
+
+                $pointers[$pointer_key] += $row['row_count'];
+            }
+        }
+        $DB->free_result($query);
+        return $results;
+    }
+}
+if (!function_exists('productBulkPricingFromDatabase')) {
+    function productBulkPricingFromDatabase($product_id)
+    {
+        global $DB;
+
+        $results = array();
+        $query   = $DB->query(sprintf(
+            "SELECT * FROM `products_bulk_pricing` WHERE `product_id` = %d ORDER BY `qty` ASC",
+            $product_id
+        ));
+        while ($row = $DB->fetch_assoc($query)) {
+            $results[$row['id']] = $row;
+        }
+        $DB->free_result($query);
+
+        return $results;
+    }
+}
+if (!function_exists('productCount')) {
+    function productCount($where = "1")
+    {
+        global $DB;
+
+        if (is_array($where)) {
+            $where = productQuery($where);
+        }
+
+        if ($row = $DB->query_first(sprintf(
+            "SELECT COUNT(*) AS `total` FROM `products` WHERE %s LIMIT 1",
+            $where
+        ), MYSQLI_ASSOC)) {
+            return $row['total'];
+        }
+
+        return 0;
+    }
+}
+if (!function_exists("productGetOptionList")) {
+    function productGetOptionList($table_name)
+    {
+        static $option_cache = array();
+        if (isset($option_cache[$table_name])) {
+            return $option_cache[$table_name];
+        }
+
+        global $DB;
+        $table       = '';
+        $order       = '';
+        $option_list = array();
+        switch ($table_name) {
+            case 'id':
+                $table = 'products';
+                $key   = 'id';
+                $value = 'product_name';
+                break;
+            case 'available':
+                $table = "product_availability";
+                $key   = "id";
+                $value = "availability";
+                $order = "`rank` ASC";
+                break;
+            case 'condition':
+                $table = '`product_conditions`';
+                $key   = '`id`';
+                $value = '`condition`';
+                break;
+            case 'manufacturer':
+                $table = '`manufacturers`';
+                $key   = '`id`';
+                $value = '`manufacturer`';
+                break;
+            case 'country_location':
+                $table = "product_country_location";
+                $key   = "id";
+                $value = "name";
+                $order = "name";
+                break;
+            case 'type':
+                $table = "product_types";
+                $key   = "id";
+                $value = "name";
+                $order = "name ASC";
+                break;
+            case 'section':
+                $table = "product_types WHERE parent = 0";
+                $key   = "id";
+                $value = "name";
+                $order = "name ASC";
+                break;
+            case 'parent_type':
+                $table = "product_types";
+                $key   = "id";
+                $value = "parent";
+                break;
+            case 'style':
+                $table = "product_style";
+                $key   = "id";
+                $value = "style";
+                $order = "style ASC";
+                break;
+            case 'supplier':
+                $table = "suppliers";
+                $key   = "id";
+                $value = "supplier";
+                $order = "supplier ASC";
+                break;
+            case 'preferred_supplier':
+                //return supplierGetOptionList('id');
+                $table = 'suppliers';
+                $key   = 'id';
+                $value = 'supplier';
+                break;
+            case 'year_released':
+                $table = "year_released";
+                $key   = "id";
+                $value = "year_released";
+                $order = "year_released ASC";
+                break;
+
+            case 'availability':
+            case 'available':
+                $table = '`product_availability` WHERE `deleted_at` IS NULL';
+                $key   = '`id`';
+                $value = '`availability`';
+                $order = '`rank` ASC';
+                break;
+            case 'material':
+                $table = '`product_material` WHERE `deleted_at` IS NULL';
+                $key   = '`id`';
+                $value = '`material`';
+                $order = '`material` ASC';
+                break;
+            case 'product_supported':
+                $table = '`product_supported`';
+                $key   = '`id`';
+                $value = '`name`';
+                $order = '`rank` ASC';
+                break;
+                //return $cache[$key] = getAvailabilityList();
+
+            case 'location':
+            case 'storage':
+            case 'storage_location':
+                $table = '`product_storage_location` WHERE `deleted_at` IS NULL';
+                $key   = '`id`';
+                $value = '`location`';
+                $order = '`location` ASC';
+                break;
+
+            case 'item_waranty':
+            case 'item_warranty':
+            case 'products_waranty':
+            case 'products_warranty':
+            case 'waranty':
+            case 'warranty':
+                return getWarrantyTermsList();
+
+            /*
+            case 'icon_path':
+            return $_SERVER['DOCUMENT_ROOT'];
+             */
+            case 'type_tree':
+            case 'category_parent':
+                $cache=[];
+                $cache['category']        = array();
+                $cache['type_tree']       = array();
+                $cache['category_parent'] = array();
+                $query                    = $DB->query(sprintf(
+                    "SELECT `id`, `parent`, `name` FROM `product_types` WHERE `deleted_at` IS NULL ORDER BY `ordering` ASC"
+                ));
+                while ($row = $DB->fetch_assoc($query)) {
+                    $cache['category'][$row['id']]        = $row['name'];
+                    $cache['type_tree'][$row['parent']][] = $row['id'];
+                    $cache['category_parent'][$row['id']] = $row['parent'];
+                }
+                $DB->free_result($query);
+                return $cache;
+                break;
+            case 'product_series':
+                $fields = array();
+                $query       = $DB->query(sprintf(
+                    "SELECT `id`, `name` FROM `product_series`"
+                ));
+                while ($row = $DB->fetch_assoc($query)) {
+                    $fields[$row['id']] = $row['name'];
+                }
+                $DB->free_result($query);
+                return $fields;
+                break;
+             case 'category_section':
+                $cache=[];
+                $query       = $DB->query(sprintf(
+                    "SELECT `id`, `name` FROM `product_types` WHERE `deleted_at` IS NULL AND `parent` = 0 ORDER BY `ordering` ASC"
+                ));
+                while ($row = $DB->fetch_assoc($query)) {
+                    $cache[$row['id']] = $row['name'];
+                }
+                $DB->free_result($query);
+                return $cache;
+                break;
+            case 'image_path':
+                return $_SERVER['DOCUMENT_ROOT'] . '/webadmin/uploads/product/image/';
+
+            case 'thumb_path':
+                return $_SERVER['DOCUMENT_ROOT'] . '/webadmin/uploads/product/thumb/';
+
+            case 'screenshot_path':
+                return $_SERVER['DOCUMENT_ROOT'] . '/webadmin/uploads/screenshot/image/';
+
+            case 'screenshot_thumb_path':
+                return $_SERVER['DOCUMENT_ROOT'] . '/webadmin/uploads/screenshot/thumb/';
+
+            case 'cost_currency':
+            case 'sales_currency':
+                //return currencyGetOptionList('id');
+                return getCurrencyList();
+            case 'active':
+            case 'price_flux':
+                return array('y' => 'Yes', 'n' => 'No');
+            case 'all_fields':
+                return array_merge(productGetOptionList('base_fields'), productGetOptionList('ext_fields'));
+            case 'all_fields_types':
+                return array_merge(productGetOptionList('base_fields_types'), productGetOptionList('ext_fields_types'));
+            case 'base_fields':
+                $fields = array();
+                foreach (getTableColumns('products') as $key) {
+                    $fields[$key] = 'p.`' . $key . '`';
+                }
+
+                return $fields;
+            case 'base_fields_types':
+                return getTableFields('products');
+            case 'joined_fields':
+                return array(
+                    /*
+                    'LEFT JOIN `products_multiple_types` AS `pmt` ON `p`.`id` = `pmt`.`product_id` AND `p`.`sub_id` = `pmt`.`sub_id`' => array(
+                    'category_id' => "GROUP_CONCAT(DISTINCT `pmt`.`type_id` SEPARATOR ',')",
+                    ),
+                    'LEFT JOIN `products_suppliers` AS `ps` ON `p`.`id` = `ps`.`product_id` AND `p`.`sub_id` = `ps`.`sub_id`' => array(
+                    'supplier_id' => "`ps`.`supplier`",
+                    ),
+                     */
+                    'LEFT JOIN `products_pricing` AS `pp` ON `p`.`id` = `pp`.`pid`' => array(
+                        "sales_price"    => "`pp`.`sales_price`",
+                        //"sales_price_au" => "`pp`.`sales_price_au`",
+                        "cost_price"     => "`pp`.`cost_price`",
+                        //"cost_price_au" => "`pp`.`cost_price_au`",
+                        "price_flux"     => "`pp`.`price_flux`",
+                        "sales_currency" => "`pp`.`sales_currency`",
+                        "cost_currency"  => "`pp`.`cost_currency`",
+                        "markup"         => "`pp`.`markup`",
+                        //"unit_profit" => "`pp`.`unit_profit`",
+                        //"selected" => "`pp`.`selected`",
+                        //"decimal_points" => "`pp`.`decimal_points`",
+                    ),
+                    'LEFT JOIN `products_types` AS `pt` ON `p`.`type` = `pt`.`id`'  => array(
+                        "category_name" => "`pt`.`name`",
+                    ),
+                    /*
+                "LEFT JOIN `products_pricing` AS `pp1` ON `p`.`id` = `pp1`.`pid` LEFT JOIN `highwaygroup`.`currency` AS `cc1` ON `cc1`.`code` = IF(`p`.`special_flag` = 'y' AND `p`.`price_online` = 'y' AND `p`.`special_price` > 0.0 AND (`p`.`special_expiry` > " . $now . " OR `p`.`special_expiry` = '0000-00-00 00:00:00') AND (`p`.`special_start` <= " . $now . " OR `p`.`special_start` = '0000-00-00 00:00:00'), IF(`p`.`stock` = 'c' OR `p`.`stock` = 'ss', `pp1`.`sales_currency`, UPPER(`pp1`.`selected`)), IF(`p`.`stock` = 'c' OR `p`.`stock` = 'ss', IF(`pp1`.`price_flux` = 'y', `pp1`.`cost_currency`, `pp1`.`sales_currency`), UPPER(`pp1`.`selected`)))" => array(
+                'final_price' => "IF(`cc1`.`usto` IS NULL, 1.0, `cc1`.`usto`) * IF(`p`.`special_flag` = 'y' AND `p`.`price_online` = 'y' AND `p`.`special_price` > 0.0 AND (`p`.`special_expiry` > " . $now . " OR `p`.`special_expiry` = '0000-00-00 00:00:00') AND (`p`.`special_start` <= " . $now . " OR `p`.`special_start` = '0000-00-00 00:00:00'), `p`.`special_price`, IF(`p`.`stock` = 'c' OR `p`.`stock` = 'ss', IF(`pp1`.`price_flux` = 'y', ((`pp1`.`markup` + 100.0) * `pp1`.`cost_price`) / 100.0, `pp1`.`sales_price`), IF(`pp1`.`selected` = 'AUD', `pp1`.`sales_price_au`, `pp1`.`sales_price`)))",
+                ),
+                'LEFT JOIN `products_partof` AS `ppo` ON `p`.`id` = `ppo`.`product_id`' => array(
+                'partof_id' => "GROUP_CONCAT(DISTINCT `ppo`.`partof_id` SEPARATOR ',')",
+                ),
+                 */
+                );
+            case 'ext_fields':
+            case 'extra_fields':
+                $today = date("'Y-m-d 00:00:00'");
+                return array(
+                    "name"               => "`p`.`product_name`",
+                    "product_active"     => "`p`.`active`",
+                    "product_notes"      => "`p`.`notes`",
+                    "product_str"        => "`p`.`id`",
+                    "product_type"       => "`p`.`type`",
+                    "sales_currency"     => "IF(`p`.`stock_type` = 'consignment', `p`.`consignment_sales_currency`, `p`.`sales_currency`)",
+                    "cost_currency"     => "IF(`p`.`stock_type` = 'consignment', `p`.`consignment_cost_currency`, `p`.`cost_currency`)",
+                    "sales_price"        => "IF(`p`.`stock_type` = 'consignment', `p`.`sales_price`, `p`.`sales_price`)",
+                    "cost_price"        => "IF(`p`.`stock_type` = 'consignment', `p`.`consignment_cost_price`, `p`.`cost_price`)",
+                    "sales_price_arcooda"        => "IF(`p`.`stock_type` = 'consignment', `p`.`sales_price_arcooda`, `p`.`sales_price_arcooda`)",
+                    "sales_price_distributor"        => "IF(`p`.`stock_type` = 'consignment', `p`.`sales_price_distributor`, `p`.`sales_price_distributor`)",
+                    "sales_price_container"        => "IF(`p`.`stock_type` = 'consignment', `p`.`sales_price_container`, `p`.`sales_price_container`)",
+
+                    "time_added"         => "UNIX_TIMESTAMP(`p`.`date_added`)",
+                    "time_modified"      => "UNIX_TIMESTAMP(`p`.`last_modified`)",
+
+                    "on_special"         => "IF(`p`.`price_online` = 'y' AND IF(`p`.`price_flux` = 'y', IF(`p`.`stock_type` = 'consignment', `p`.`consignment_cost_price`, `p`.`cost_price`) * (IF(`p`.`stock_type` = 'consignment', `p`.`consignment_markup`, `p`.`markup`) + 100.0) / 100.0, IF(`p`.`stock_type` = 'consignment', `p`.`sales_price`, `p`.`sales_price`)) > 0.0 AND IF(`p`.`price_flux` = 'y', IF(`p`.`old_price` <> 0.0, `p`.`old_price`, IF(`p`.`stock_type` = 'consignment', `p`.`consignment_cost_price`, `p`.`cost_price`) * (IF(`p`.`stock_type` = 'consignment', `p`.`consignment_markup`, `p`.`markup`) + 100.0) / 100.0), IF(`p`.`old_price` > IF(`p`.`stock_type` = 'consignment', `p`.`sales_price`, `p`.`sales_price`), `p`.`old_price`, IF(`p`.`stock_type` = 'consignment', `p`.`sales_price`, `p`.`sales_price`))) > IF(`p`.`price_flux` = 'y', IF(`p`.`stock_type` = 'consignment', `p`.`consignment_cost_price`, `p`.`cost_price`) * (`p`.`markup` + 100.0) / 100.0, IF(`p`.`stock_type` = 'consignment', `p`.`sales_price`, `p`.`sales_price`)), 'y', 'n')",
+
+                    "primary_price"      => "IF(`p`.`price_flux` = 'y', IF(`p`.`old_price` <> 0.0, `p`.`old_price`, IF(`p`.`stock_type` = 'consignment', `p`.`consignment_cost_price`, `p`.`cost_price`) * (IF(`p`.`stock_type` = 'consignment', `p`.`consignment_markup`, `p`.`markup`) + 100.0) / 100.0), IF(`p`.`old_price` > IF(`p`.`stock_type` = 'consignment', `p`.`sales_price`, `p`.`sales_price`), `p`.`old_price`, IF(`p`.`stock_type` = 'consignment', `p`.`sales_price`, `p`.`sales_price`)))",
+                    "primary_currency"   => "IF(`p`.`stock_type` = 'consignment', `p`.`consignment_sales_currency`, `p`.`sales_currency`)",
+                   "secondary_price"    => "IF(`p`.`special_flag` = 'y' AND `p`.`special_priceus` > 0.0 AND (`p`.`special_expiry` >= " . $today . " OR `p`.`special_expiry` = '0000-00-00 00:00:00'), `p`.`special_priceus`, IF(`p`.`price_flux` = 'y', IF(`p`.`stock_type` = 'consignment', `p`.`consignment_cost_price`, `p`.`cost_price`) * (IF(`p`.`stock_type` = 'consignment', `p`.`consignment_markup`, `p`.`markup`) + 100.0) / 100.0, IF(`p`.`stock_type` = 'consignment', `p`.`sales_price`, `p`.`sales_price`)))",
+                    "secondary_currency" => "IF(`p`.`stock_type` = 'consignment', `p`.`consignment_sales_currency`, `p`.`sales_currency`)",
+                );
+            case 'ext_fields_types':
+                return array();
+            default:
+                trigger_error('productGetOptionList(' . json_encode($table_name) . ') is undefined');
+                break;
+        }
+        if ('' != $table) {
+            $query = $DB->query("SELECT " . $key . "," . $value . " FROM " . $table . (("" != $order) ? (" ORDER BY " . $order) : ""));
+            while ($row = $DB->fetch_array($query)) {
+                $option_list[$row[0]] = $row[1];
+            }
+
+            $DB->free_result($query);
+        }
+        $option_cache[$table_name] = $option_list;
+        return $option_list;
+    }
+}
+if (!function_exists('productGetLock')) {
+    function productGetLock($id)
+    {
+        global $DB;
+
+        if ($row = $DB->query_first(sprintf(
+            "SELECT * FROM `generic_locks` WHERE `section_name` = 'product' AND `generic_id` = %d AND `expiry_date` > NOW() LIMIT 1",
+            $id
+        ), MYSQLI_ASSOC)) {
+            $row['expiry_time'] = strtotime($row['expiry_date']);
+            return $row;
+        }
+
+        return null;
+    }
+}
+if (!function_exists('getproductSeriesByid')) {
+    function getproductSeriesByid($id)
+    {
+        global $DB;
+
+        if ($row = $DB->query_first(sprintf(
+            "SELECT * FROM `product_series` WHERE `id` = %d LIMIT 1",
+            $id
+        ), MYSQLI_ASSOC)) {
+            $row['image_name']=basename($row['img']);
+            return $row;
+        }
+
+        return null;
+    }
+}
+if (!function_exists('view360getActiveMarker')) {
+    function view360getActiveMarker($id, $table, $primary_key = 'id', $secondary_key = 'product_id',$orderby='')
+    {
+        global $DB;
+        $result = array();
+        $query = $DB->query(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s  Where `%s` = %d AND status=1 %s",
+            $table,
+            $secondary_key,
+            $id,
+            $orderby
+        ));
+        while ($row = $DB->fetch_assoc($query)) {
+            if (is_null($primary_key)) {
+                $result[] = $row;
+            } else {
+                $result[$row[$primary_key]] = $row;
+            }
+        }
+        $DB->free_result($query);
+        return $result;
+
+    }
+}
+if (!function_exists('view360GenericFromDatabase')) {
+    function view360GenericFromDatabase($id, $table, $primary_key = 'id') {
+        global $DB;
+        return $DB->query_first(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s WHERE `%s` = %d LIMIT 1",
+            $table,
+            $primary_key,
+            $id
+        ), MYSQLI_ASSOC);
+    }
+}
+if (!function_exists('view360GenericsFromDatabase')) {
+    function view360GenericsFromDatabase($id, $table, $primary_key = 'id', $secondary_key = 'product_id',$orderby='') {
+        global $DB;
+        $result = array();
+        $query = $DB->query(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s  Where `%s` = %d  %s",
+            $table,
+            $secondary_key,
+            $id,
+            $orderby
+        ));
+        while ($row = $DB->fetch_assoc($query)) {
+            if (is_null($primary_key)) {
+                $result[] = $row;
+            } else {
+                $result[$row[$primary_key]] = $row;
+            }
+        }
+        $DB->free_result($query);
+        return $result;
+    }
+}
+if (!function_exists('view360MarkerLocation')) {
+    function view360MarkerLocation($marker_id, $image_id) {
+        global $DB;
+
+        if ($row = $DB->query_first(sprintf(
+            "SELECT *, UNIX_TIMESTAMP(`created_at`) AS `created_time`, UNIX_TIMESTAMP(`updated_at`) AS `updated_time` FROM %s WHERE `%s` = %d AND `image_id` = %d LIMIT 1",
+            "`360_view_marker_location`",
+            "marker_id",
+            $marker_id,
+            $image_id
+        ), MYSQLI_ASSOC)) {
+            return $row;
+        }
+
+        return 0;
+    }
+}
+if (!function_exists("productStrSplit")) {
+    function productStrSplit($product_str, $limit = 0)
+    {
+        $temp   = explode(' ', $product_str);
+        $result = array();
+        $count  = 0;
+        foreach (array('product_id', 'sub_id', 'site_id', 'product_qty') as $key) {
+            $count++;
+            if (count($temp) && reset($temp) != '') {
+                $result[$key] = array_shift($temp);
+            }
+
+            if ($limit > 0 && $count >= $limit) {
+                return $result;
+            }
+
+        }
+        return $result;
+    }
+}
+
+// @todo We have multiple conflicting product modules
+include_once $_SERVER['DOCUMENT_ROOT'] . '/webadmin/products_new/query.inc.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/webadmin/products/functions/query_products.inc.php';

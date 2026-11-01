@@ -1,0 +1,29 @@
+{% set global_page_title       = inputs.page_title %}
+{% set global_page_description = inputs.page_description %}
+{% set global_page_keywords    = inputs.page_keywords %}
+{% set global_page_canonical   = inputs.page_canonical %}
+{% set global_page_breadcrumbs = inputs.page_breadcrumbs %}
+{% set layout          = inputs.layout %}
+{% set page            = inputs.page %}
+{% set page_url        = inputs.page_url %}
+{% set pages           = inputs.pages %}
+{% set products        = inputs.products %}
+{% set show            = inputs.show %}
+{% set sort            = inputs.sort %}
+{% set title           = inputs.title %}
+{% set total           = inputs.total %}
+
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+    {% include '/components/shop-page.twig' with {inputs: {
+    	grid:            'grid-4-sidebar',
+        layout:          layout|default('grid'),
+        page_url:        page_url,
+        page:            page,
+        pages:           pages,
+        products:        products,
+        show:            show,
+        title:           title,
+        filters:         'none',
+    }} %}
+{% endblock %}

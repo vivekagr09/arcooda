@@ -1,0 +1,50 @@
+{#
+// inputs:
+// - offcanvas: string - one of [none, mobile, always]
+// - filters: mixed[]
+// - latest_products: TwigProduct[]
+#}
+
+{% set offcanvas = inputs.offcanvas %}
+{% set filters = inputs.filters %}
+{% set latest_products = inputs.latest_products %}
+{% set slug = inputs.slug %}
+{% set root_classes = classnames('sidebar', 'sidebar--offcanvas--'~offcanvas) %}
+{% set product_series = inputs.product_series %}
+<div class="{{ root_classes }}">
+    <div class="sidebar__backdrop"></div>
+    <div class="sidebar__body">
+        <div class="sidebar__content">
+            {% include '/widgets/widget-filters.twig' with {inputs: {
+                offcanvas: offcanvas,
+                filters: filters,
+                slug:slug,
+            }} %}
+            {% if slug == 'monitors' %}
+            <div class="card widget widget-products d-none d-lg-block">
+                 <div style="white-space:nowrap;padding:20px;text-align:center;border-bottom:1px solid #ebebeb">
+
+                  <a href="/arcooda-monitor-comparison-table.html" target="_blank">Monitor Comparison Table</a>
+                   <div class="product__actions-divider"></div>
+               </div>
+            </div>
+            {% endif %}
+            {% if product_series %}
+                    {% include '/widgets/widget-series.twig' with {inputs: {
+                        classes: offcanvas == 'mobile' ? 'd-none d-lg-block' : '',
+                        product_series: product_series,
+                        product_msg: 'Product Series'
+                    }} %}
+            {% endif %}
+            {% if offcanvas != 'always' %}
+                {% if latest_products %}
+                    {% include '/widgets/widget-products.twig' with {inputs: {
+                        classes: offcanvas == 'mobile' ? 'd-none d-lg-block' : '',
+                        products: latest_products,
+                        product_msg: 'Featured Products'
+                    }} %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>

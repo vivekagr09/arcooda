@@ -1,0 +1,199 @@
+.header {
+    background-color: #6ac0c4;
+}
+.header, .sidebar-accordian .accordion-item, h6.progress_bar_title {
+    direction: rtl;
+}
+.accordion-button {
+    text-align: right;
+}
+.btn-group, .btn-group-vertical {
+    text-align: left;
+    left: 36px;
+}
+.time i {
+    transform: rotate(50deg);
+}
+.text-muted, .share a {
+    text-align: right !important;
+}
+#main {
+    direction: rtl;
+}
+.pull-right {
+    float: left;
+}
+.course-name {
+    margin-left: 0px;
+    margin-right: 6rem;
+}
+.navbar-expand-md .navbar-collapse {
+    justify-content: left;
+}
+.switch {
+    margin-top: 6px;
+}
+.get-started.course-name {
+    margin-top: 0px;
+}
+ul#pills-tab {
+    padding: 0px;
+}
+.your-rating span {
+    margin-left: 0px;
+    text-align: right;
+    float: right;
+}
+.your-rating a {
+    margin-right: 25px;
+}
+.force-overflow {
+    text-align: right;
+}
+.main-part {
+    width: 80%;
+}
+.sidebar {
+    top: 61px;
+}
+.topminus {
+    top: 0px !important;
+}
+/*media quary  */
+
+@media only screen and (min-width: 320px) and (max-width: 629px) {
+    .course-name {
+        margin-left: 0px;
+        margin-right: 0rem;
+    }
+    .get-started.course-name {
+        margin-top: 14px;
+    }
+    .get-started a {
+        padding: 7px 8px;
+    }
+    .share.pull-right {
+        float: right;
+    }
+    .logo img {
+        width: 63%;
+    }
+    .video-part iframe {
+        min-height: 20rem;
+    }
+    #main {
+        width: 100%;
+    }
+    .main-part {
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 630px) and (max-width: 991px) {
+    .course-name {
+        margin-right: -45px;
+    }
+    .get-started.course-name {
+        margin-top: 0px;
+    }
+    .share.pull-right {
+        float: right;
+    }
+    .logo img {
+        width: 75%;
+    }
+    .course-name {
+        margin-right: 2rem;
+    }
+    #main {
+        width: 100%;
+    }
+    .main-part {
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 991px) and (max-width: 1023px) {
+    .course-name {
+        margin-right: 2rem;
+    }
+    .sidebar {
+        top: 53px;
+    }
+    #main {
+        width: 100%;
+    }
+    .main-part {
+        width: 100%;
+    }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1100px) {
+    .course-name {
+        margin-right: 2rem;
+    }
+    #main {
+        width: 81%;
+    }
+    .topminus {
+        top: 0px !important;
+    }
+    .main-part {
+        width: 100%;
+    }
+    .sidebar {
+        width: 20%;
+        position: fixed;
+        top: 54px;
+        right: 0;
+        transition: 0.5s;
+        padding-top: 60px;
+        padding-left: 10px;
+        background-color: #fff;
+    }
+    section.about-wrapper {
+        height: 100%;
+        width: 20%;
+        /* position: fixed; */
+        z-index: 1;
+        top: 31px;
+        right: 0;
+        transition: 0.5s;
+        padding-top: 0px;
+        padding-left: 10px;
+        background-color: #fff;
+    }
+}
+@media only screen and (min-width: 1101px) and (max-width: 1800px) {
+    #main {
+        width: 81%;
+    }
+    .main-part {
+        width: 100%;
+    }
+    .topminus {
+        top: 0px !important;
+    }
+    .main-part {
+        width: 100%;
+    }
+    .sidebar {
+        width: 20%;
+        position: fixed;
+        top: 54px;
+        right: 0;
+        transition: 0.5s;
+        padding-top: 60px;
+        padding-left: 10px;
+        background-color: #fff;
+    }
+    section.about-wrapper {
+        height: 100%;
+        width: 20%;
+        /* position: fixed; */
+        z-index: 1;
+        top: 31px;
+        right: 0;
+        transition: 0.5s;
+        padding-top: 0px;
+        padding-left: 10px;
+        background-color: #fff;
+    }
+}

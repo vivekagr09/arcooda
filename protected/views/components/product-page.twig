@@ -1,0 +1,787 @@
+{#
+// inputs:
+// - layout  : string - one of [sidebar, full] (default: 'sidebar')
+// - sidebar : string - sidebar position, one of [start, end] (default: 'start')
+// - product : TwigProduct
+// - categories:
+#}
+{% set layout  = inputs.layout|default('full') %}
+{% set sidebar = inputs.sidebar|default('start') %}
+{% extends '/layouts/default.twig' %}
+{% set product    = inputs.product %}
+{#% set categories = data('shop-widget-categories.json') %#}
+{% set categories = inputs.categories %}
+{% set root_classes = classnames('block-split', {
+'block-split--has-sidebar': layout == 'sidebar',
+}) %}
+{% set cart_items = inputs.cart_items %}
+{% set test       = inputs.test %}
+{% set user         = user() %}
+{% set country_list = countries() %}
+{% set visitorcountry = getvisitorcountry() %}
+{% set product_classes = classnames('product', 'product--layout--'~layout) %}
+{% set alert           = inputs.alert %}
+{% set result          = inputs.result %}
+{% set view360         = inputs.view360 %}
+{% set bracket         = inputs.bracket %}
+
+{% set sidebar_template %}
+<div class="block-split__item block-split__item-sidebar col-auto">
+   {% include '/widgets/widget-categories.twig' with {inputs: {
+   categories: categories,
+   }} %}
+   {% include '/widgets/widget-products.twig' with {inputs: {}} %}
+</div>
+{% endset %}
+{% block site_body %}
+<style type="text/css">
+   /*<![CDATA[*/
+      #currencytooltip{z-index:999;top:-4px;position:relative;font-size:13px;border:1px solid;border-radius:50%;padding:4px 7px;margin-left:9px}
+      /*]]>*/
+      .product__info-card{
+         margin-bottom: 10px;
+      }
+      .monitor-compair-link:hover {
+          color: #007bff;   /* hover color */
+          text-decoration: underline;
+      }
+
+</style>
+{% if result %}
+<div class="alert alert-{{ result }}" role="alert">{{ alert|e }}</div>
+{% endif %}
+{% include '/blocks/block-header.twig' with {inputs: {
+breadcrumb: global_page_breadcrumbs,
+cart_items: cart_items,
+test: test,
+}} %}
+<div class="{{ root_classes }}">
+   <div class="container">
+      <div class="block-split__row row no-gutters">
+         {% if layout == 'sidebar' and sidebar == 'start' %}
+         {{ sidebar_template }}
+         {% endif %}
+         <div class="block-split__item block-split__item-content col-auto">
+            {% if 'y' == product.discontinued %}
+               <div style="color:#dc3545;padding: 0px 0px 12px 0px;font-size: 20px;">This Product Has Been Discontinued.</div>
+            {% endif %}
+            <div class="{{ product_classes }}">
+               <div class="product__body">
+                  <div class="product__card product__card--one"></div>
+                  <div class="product__card product__card--two"></div>
+                  {% include '/components/product-gallery.twig' with {inputs: {
+                  classes: 'product__gallery',
+                  layout: 'product-'~layout,
+                  product: product,
+                  }} %}
+                  <div class="product__header">
+                     {% if product.badges and product.isProductAvailableByRule %}
+                     <div class="product-card__badges" style="float:right">
+                        {% for badge in product.badges %}
+                        <div class="{{ classnames('tag-badge', 'tag-badge--'~badge|replace({' ': ''})) }}">
+                           {% if badge in ['Member'] %}
+                           VIP {{ badge }}
+                           {% else %}
+                           {{ badge }}
+                           {% endif %}
+                        </div>
+                        {% endfor %}
+                     </div>
+                     {% endif %}
+                     <h1 class="product__title">
+                        {{ product.name|e }}
+                        {% if product.color|length and product.Singlecolor_name(product.isradiochecked) %}
+                        ({{ product.Singlecolor_name(product.isradiochecked) }})
+                        {% endif %}
+                     </h1>
+                     {#
+                     <div>{{ product.excerpt }}</div>
+                     #}
+                     {% if 'y' != product.discontinued %}
+                     <div style="position:relative" class="product__subtitle">
+                        {% if 'USD' != getusercurrency and '' != getusercurrency %}
+                        <div style="display:none" id="CurrencyICon">
+                           <input type="hidden" id="getusercurrency" value="{{ getusercurrency }}" />
+                           <input type="hidden" id="membercurrencyval" value="{{ getmembercurrencyconverter() }}" />
+                           <i id="currencytooltip" data-html="true" class="currencytooltip far fa fa-solid fa-dollar-sign" data-toggle="tooltip" data-placement="top" title="" data-original-title="Approximate price is <span id="convertedcurrency"></span></i>
+                        </div>
+                        {% endif %}
+                        <form action="" method="post">
+                           <div class="product__prices-stock" style="padding-bottom:0px">
+                              <div class="product__prices">
+                                 {% if product.getSubProduct|length and product.isProductAvailableByRule %}
+                                 <table class="margin-left-th" style="width:100%">
+                                    {% for key, pro in product.getSubProduct %}
+                                    <tr style="line-height:30px">
+                                       <td width="10%"><input type="radio" name="sub_pro" value="{{ pro.id }}" data-key="{{ key }}"{{ key == pro.default ? ' checked="checked"' : '' }} /></td>
+                                       <td width="45%" style="{{ key == pro.default ? 'color:#0064f0;font-weight:400;' : '' }}">{{ pro.name|e }}</td>
+                                       <td width="45%">
+                                          {% if 0 == key %}
+                                          <div class="{{ product.subProductDiscount|length ? 'product__price product__price--new' : 'product__price product__price--current' }}">$<span class="product-price-update">{{ product.getSubProduct[pro.default].sales_price }} </span> <span id="labelUSD" style="font-size:20px">USD</span></div>
+                                          {% endif %}
+                                          {% if product.subProductDiscount|length and key == (product.getSubProduct|length - 1) %}
+                                          <div class="product__price"><span class="product__price--old">{{ product.subProductDiscount.price }}</span> <span style="font-size:15px;font-weight:400;color:#999;margin-bottom:5px">{{ product.subProductDiscount.msg }} ${{ product.subProductDiscount.discount }} USD</span></div>
+                                          {% endif %}
+                                       </td>
+                                    </tr>
+                                    {% endfor %}
+                                 </table>
+                                 <p style="margin-left:5%;margin-top:5px;color:#0064f0;cursor:pointer;font-size:15px" onclick="showmedef()"><i>Show me the differences</i></p>
+                                 {% if product.availability in ['Pre Order'] %}
+                                 <div class="row" style="margin-bottom:37px">
+                                    <div class="col-md-2"><span class="badge badge-warning" style="height:17px">{{ product.availability|e }}</span></div>
+                                    <div class="col-md-10">
+                                       <div><i>*
+                                          {% if 'y' == product.full_payment %}
+                                          Full payment needed 
+                                          {% if product.pre_order_close_date %}
+                                          by {{product.pre_order_close_date | date('jS F, Y')}}
+                                          {% endif %}
+                                          {% else %}
+                                          ${{ product.deposit_needed }} deposit needed, balance prior to shipping
+                                          {% endif %}
+                                          </i>
+                                       </div>
+                                       {% if product.arrival_date %}
+                                       <div><i>* Estimated delivery date is {{ product.arrival_date|e }}</i></div>
+                                       {% endif %}
+                                    </div>
+                                 </div>
+                                 {% endif %}
+                                 {% else %}
+                                 {% if product.isProductAvailableByRule %}
+                                 {% if product.compareAtPrice %}
+                                 <div class="product__price product__price--new">{{ product.price.format('[symbol_e]<span class="product-price-update">[price_inc_gst_e]</span> <span style="font-size:60%" id="labelUSD">[currency_e]</span>')|currency }}</div>
+                                 <div class="product__price"><span class="product__price--old">{{ product.compareAtPrice }}</span> <span style="font-size:16px;font-weight:400;color:#999;margin-bottom:5px">{{ product.getDiscountType }} Discount ${{ product.discount }} USD</span></div>
+                                 {% else %}
+                                 <div class="product__price product__price--current">{{ product.price.format('[symbol_e]<span class="product-price-update">[price_inc_gst_e]</span> <span style="font-size:60%" id="labelUSD">[currency_e]</span>')|currency }}</div>
+                                 {% endif %}
+                                 {% if product.totalRatings > 0 %}
+                                 <div class="product-card__rating" style="position: absolute;right: 0px;top: 15px;display: flex;">
+                                    <a href="#product-tab-review" onclick="document.querySelector('.reviewtab').click()">
+                                       {% include '/components/rating.twig' with {inputs: {
+                                       classes: 'product-card__rating-stars',
+                                       rating: product.rating
+                                       }} %}
+                                    </a>
+                                    <a href="#product-tab-review" onclick="document.querySelector('.reviewtab').click()">
+                                       <div class="product-card__rating-label" style="font-size: 13px;margin-left: 5px;">({{product.totalRatings }}) </div>
+                                    </a>
+                                 </div>
+                                 {% endif %}
+                                 <div style="margin-top:8px">
+                                    {% if product.special_order_fee %}
+                                    <span style="color:#dc3545">+ Special Order Fee {{ product.special_order_fee }} USD</span>
+                                    {% endif %}
+                                    {% if product.availability in ['Pre Order'] %}
+                                    <div class="row" style="margin-bottom:37px">
+                                       <div class="col-md-2"><span class="badge badge-warning" style="height:17px">{{ product.availability|e }}</span></div>
+                                       <div class="col-md-10">
+                                          <div><i>*
+                                             {% if 'y' == product.full_payment %}
+                                             Full payment needed {% if product.pre_order_close_date %}
+                                             by {{product.pre_order_close_date | date('jS F, Y')}}
+                                             {% endif %}
+                                             {% else %}
+                                             ${{ product.deposit_needed }} deposit needed, balance prior to shipping
+                                             {% endif %}
+                                             </i>
+                                          </div>
+                                          {% if product.arrival_date %}
+                                          <div><i>* Estimated delivery date is {{ product.arrival_date|e }}</i></div>
+                                          {% endif %}
+                                       </div>
+                                    </div>
+                                    {% elseif product.availability in ['In Stock', 'Stock'] %}
+                                    <span class="badge badge-success f-right">{{ product.availability|e }}</span>
+                                    {% else %}
+                                    <span class="badge badge-danger f-right">{{ product.availability|e }}</span>
+                                    {% endif %}
+                                 </div>
+                                 {% endif %}
+                                 {% endif %}
+                              </div>
+                           </div>
+                           {% if product.color|length %}
+                           <div class="product__actions">
+                              <div class="product-form__row">
+                                 <div class="product-form__title">
+                                    {% if product.checkpreorder in ['Pre Order'] %}
+                                    <div class="row" style="margin-bottom:37px">
+                                       <div class="col-md-2"><span class="badge badge-warning" style="height:17px">Pre Order</span></div>
+                                       <div class="col-md-10">
+                                          <div><i>*
+                                             {% if 'y' == product.full_payment %}
+                                             Full payment needed {% if product.pre_order_close_date %}
+                                             by {{product.pre_order_close_date | date('jS F, Y')}}
+                                             {% endif %}
+                                             {% else %}
+                                             ${{ product.deposit_needed }} deposit needed, balance prior to shipping
+                                             {% endif %}
+                                             </i>
+                                          </div>
+                                          {% if product.arrival_date %}
+                                          <div><i>* Estimated delivery date is {{ product.arrival_date|e }}</i></div>
+                                          {% endif %}
+                                       </div>
+                                    </div>
+                                    Color
+                                    {% else %}
+                                    {% if product.availabilityColor(product.isradiochecked) in ['In Stock', 'Stock'] %}
+                                    Color
+                                    <span class="badge badge-success f-right">{{product.availabilityColor(product.isradiochecked)}}</span>
+                                    {% else %}
+                                    Color
+                                    <span class="badge badge-danger f-right">{{product.availabilityColor(product.isradiochecked)}}</span>
+                                    {% endif %}
+                                    {% endif %}
+                                 </div>
+                                 <div class="product-form__control">
+                                    <div class="input-radio-color">
+                                       <div class="input-radio-color__list">
+                                          {% for color in product.color %}
+                                          <label class="input-radio-color__item{{ color.stock<product.minOrder ? (product.when_sold_out(color.id) ? ' input-radio-color__item--disabled' : ''):'' }}" style="color:{{ color.color_val }}" data-toggle="tooltip" title="" data-original-title="{{ color.colour }}">
+                                          <input type="radio" name="color_cart" value="{{ color.id }}"{{ product.isradiochecked == color.id ? ' checked="checked"' : '' }}{{ product.when_sold_out(color.id) ? ' disabled="disabled"' : '' }} />
+                                          <span></span>
+                                          </label>
+                                          {% endfor %}
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           {% endif %}
+                           {% if product.getLinkedProduct|length %}
+                           <div style="margin-left:5%;margin-bottom:37px">
+                              <h6>Available Options :</h6>
+                              {% for linkpro in product.getLinkedProduct %}
+                              <div style="font-size:12px;margin-bottom:2px">
+                                 <input type="checkbox" name="linkpro[]" value="{{ linkpro.id }}" class="available_options_class" data-value="{{ linkpro.price }}" />
+                                 <a href="{{ linkpro.product.url }}" target="_blank">{{ linkpro.name }}
+                                 <a>
+                                    <i>(+ ${{ linkpro.price }} USD{{ linkpro.discount > 0 ? (', save $' ~ linkpro.discount ~ ' USD') : '' }})</i>
+                              </div>
+                              {% endfor %}
+                           </div>
+                           {% endif %}
+                           {% if product.isProductAvailableByRule %}
+                           <div class="product__actions">
+                           <div class="product__actions-item product__actions-item--quantity">
+                           <div class="input-number">
+                           <input class="input-number__input form-control form-control-lg" id="product-qty-input" name="product_qty" type="number" min="{{ max(1, product.minOrder) }}" value="{{ max(1, product.minOrder) }}" />
+                             {% if product.monitoOptions.mounting_brackets == 'yes' %}
+                              <input type="hidden" name="bracketoption_id" value="" id="bracketoption_id"/>
+                           {% endif %} 
+                           <div class="input-number__add"></div>
+                           <div class="input-number__sub"></div>
+                           </div>
+                           {% if product.minOrder > 1 %}
+                           <small class="text-secondary">Min Quantity: {{ product.minOrder }}</small>
+                           {% endif %}
+                           </div>
+                           <input type="hidden" name="product_name" value="{{ product.name|e }}" />
+                           <input type="hidden" name="product_id" value="{{ product.id|e }}" />
+                           <input type="hidden" name="product_price" value="{{ product.priceValue|e }}" />
+                           <input type="hidden" name="product_img" value="{{ product.images[0]|e }}" />
+                           <input type="hidden" name="product_url" value="{{ product.url|e }}" />
+                           <div class="product__actions-item product__actions-item--addtocart">
+                           {% if product.orderRule == 'inquiry_for_everyone' %}
+                           <button class="btn btn-warning btn-lg btn-block"> &nbsp; &nbsp; &nbsp; &nbsp; Add to Inquiry &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </button>
+                           {% else %}
+                           <button class="btn btn-primary btn-lg btn-block"> &nbsp; &nbsp; &nbsp; &nbsp; Add to Cart &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </button>
+                           {% endif %}
+                           </div>
+                           </div>
+                           {% else %}
+                           <div style="margin-top:10px">
+                           {% if product.orderRule == 'invoice_only_for_arcooda_machine_owners' %}
+                           <div style="padding:5px">
+                           This product is only available to <b>Arcooda user or machine owner</b>.
+                           <p style="margin-top:10px">Please <a  href="/Register-Product/?id={{ product.id }}&amp;product_name={{ product.name|url_encode|e }}" target="_blank">register</a> your machine to gain access to purchase this product.</p>
+                           </div>
+                           {% else %}
+                           <div style="padding:5px">
+                           This product is only available to the following machine owners.
+                           <p style="margin-top:10px">{{ markdown(product.registeredMachineForRule) }}</p>
+                           <p style="margin-top:10px">Please <a href="/Register-Product/?id={{ product.id }}&amp;product_name={{ product.name|url_encode|e }}" target="_blank">register</a> your machine to gain access to purchase this product.</p>
+                           </div>
+                           {% endif %}
+                           </div>
+                           {% endif %}
+                        </form>
+                        {% if product.isProductAvailableByRule %}
+                        <div class="px-3 mt-3">
+                           {% if product.bypass_freight == 'n' %}
+                           <button class="btn btn-secondary btn-lg btn-inline" type="button" data-toggle="collapse" data-target="#delivery-options" aria-expanded="false" aria-controls="delivery-options">Delivery Options</button>
+                           {% endif %}
+                           <button class="btn btn-success btn-lg btn-inline" type="button" onclick="window.open('/contact/inquiry.php?id={{ product.id }}&amp;product_name={{ product.name|url_encode|e }}', 'quoteWin', 'width=576,height=600,resizable,scrollbars')">Send Inquiry</button>
+                           <div class="collapse border p-3 mt-3" id="delivery-options">
+                              {% if 2 == product.section %}
+                              <div class="form-group">
+                                 <h5>Freight Estimate <i class="far fa-question-circle fa-question-circle-checkout" data-toggle="tooltip" data-placement="top" title="To quote freight for this product, we will negotiate with transport company for the best rates. Unfortunately, transport costs change regularly and we need to manually quote each shipment. If we have shipped products to your country recently, please use the below guide as a reference."></i></h5>
+                              </div>
+                              <hr />
+                              <form action="/freight" method="POST" id="quote-form">
+                                 <hr />
+                                 <div class="form-group">
+                                    <label for="destination-input">Destination</label>
+                                    <select class="custom-select" name="destination" id="destination-quote-input">
+                                       <option value="US">United Stated</option>
+                                       {% for country in country_list %}
+                                       <option value="{{ country.code }}" {{ user.country == country.code ? ' selected="selected"' : '' }}>{{ country.name }}</option>
+                                       {% endfor %}
+                                    </select>
+                                    <hr />
+                                    <div class="form-group">
+                                       <label for="destination-input">Shipping Method</label>
+                                       <select class="custom-select" name="shipping" id="destination-method-input">
+                                          <option value="Sea">Sea Freight</option>
+                                          <option value="Air">Air Freight</option>
+                                       </select>
+                                    </div>
+                                    <div class="form-group">
+                                       <input type="hidden" class="form-control" name="location" id="location-input" value="{{ product.locationId|e }}" />
+                                       <input type="hidden" class="form-control" name="product_id" id="product_id-input" value="{{ product.id }}" />
+                                       <input type="hidden" class="form-control" name="cubic_weight" value="{{ product.cubic_weight }}"/>
+                                       <input type="hidden" class="form-control" name="shipping_weight" value="{{ product.weight }}"/>
+                                       <button type="button" class="btn btn-primary" onclick="quoteCalculator()">Calculate</button>
+                                       <button type="button"   style="margin-left:10%"  class="btn btn-warning" onclick="window.open('/contact/inquirytax.php?id={{ product.id }}&amp;product_name={{ product.name|url_encode|e }}&allow=tax', 'quoteWin', 'width=576,height=600,resizable,scrollbars')">Freight+Tax Quotation</button>
+                                    </div>
+                                 </div>
+                                 <hr />
+                              </form>
+                              <div class="my-3 d-none border-top py-3" id="freight-quote-content"></div>
+                              {% else %}
+                              <form action="/freight" method="POST" id="freight-form">
+                                 <div class="form-group">
+                                    <h5>Freight Calculator</h5>
+                                 </div>
+                                 <hr />
+                                 <div class="form-group">
+                                    <label for="destination-input">Destination</label>
+                                    <select class="custom-select" name="destination" id="destination-input">
+                                    {% for country in country_list %}
+                                    <option value="{{ country.code }}" {{ (visitorcountry == country.code) ? 'selected' : '' }}>{{ country.name }}</option>
+                                    {% endfor %}
+                                    </select>
+                                 </div>
+                                 <hr />
+                                 <div class="form-group">
+                                    <input type="hidden" class="form-control" name="width" id="width-input" value="{{ product.width }}" />
+                                    <input type="hidden" class="form-control" name="depth" id="depth-input" value="{{ product.depth }}" />
+                                    <input type="hidden" class="form-control" name="height" id="height-input" value="{{ product.height }}" />
+                                    <input type="hidden" class="form-control" name="mass" id="mass-input" value="{{ product.mass }}" />
+                                    <input type="hidden" class="form-control" name="value" id="value-input" value="{{ product.priceValue }}"/>
+                                    <div class="row">
+                                       <div class="col-md-6"  style="padding: 2px; text-align: center;">
+                                          <button type="button" class="btn btn-primary" onclick="freightCalculator()" style="min-width: 80%;">Express Quote</button>
+                                       </div>
+                                       <div class="col-md-6" style="padding: 2px; text-align: center;">
+                                          <button type="button"  style="min-width: 80%;" class="btn btn-warning" onclick="window.open('/contact/inquirytax.php?id={{ product.id }}&amp;product_name={{ product.name|url_encode|e }}&allow=tax', 'quoteWin', 'width=576,height=600,resizable,scrollbars')">Freight+Tax Quotation</button>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </form>
+                              {% endif %}
+                              <div class="my-3 d-none border-top py-3" id="freight-calculator-content"></div>
+                           </div>
+                           <div class="modal" tabindex="-1" role="dialog" id="inquiry-modal">
+                              <div class="modal-dialog modal-lg" role="document">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title">Inquiry</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">Test</div>
+                                    <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                       <button type="button" class="btn btn-primary" onclick="freightCalculator()">Calculate</button>
+                                       <button type="button"  style="margin-left:10%" class="btn btn-warning" onclick="window.open('/contact/inquirytax.php?id={{ product.id }}&amp;product_name={{ product.name|url_encode|e }}&allow=tax', 'quoteWin', 'width=576,height=600,resizable,scrollbars')">Freight+Tax Quotation</button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% if product.getproductBuilder|length %}
+                        <div style="width:100%">
+                           <button type="button" class="red-btn" onclick="scrolltobuilder()" style="{{ product.isProductAvailableByRule ? '' : 'margin-top:128px' }}">
+                              Product Builder Available
+                              <p style="font-size:10px"><i>full customization available</i></p>
+                           </button>
+                        </div>
+                        {% endif %}
+                     </div>
+                     
+                     {% endif %}
+                  </div>
+                  {% if product.get_product_coupon|length > 0%}
+                  {% for coupon in product.get_product_coupon %}
+                  <div class="product_coupon product__tabs" style="grid-row: 3 / span 1; grid-column: 1 / span 2; margin-top: 20px; padding: 10px;">
+                     <div class="coupon_description" style="border: 1px solid #A349A4; display: flex;justify-content:space-around; background: #F9F2F9; text-align: center;">
+                        <div style="font-size: 40px; color: #A349A4; margin-left: 50px;">{{ coupon.value * 100 }}% OFF</div>
+                        <div style="margin-top: 15px; color: #A349A4;">Discount Code: <span style="color: red; font-size: 20px;">{{ coupon.name|e }}</span></div>
+                        <div style="margin-top: 20px;">
+                           {% if coupon.expiry_date != '0000-00-00 00:00:00' and coupon.expiry_date != null %}
+                           Expiry: {{ coupon.expiry_date|date("d/m/Y") }}
+                           {% endif %}
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                  <div class="product__info" style="display: block !important; width: 100% !important;">
+                     {% if product.monitoOptions.mounting_brackets == 'yes'%}
+                        {% include '/components/product_bracket.twig' with {inputs: {
+                           bracketProducts: product.getMonitorBracket,
+                        }} %}
+                     {% endif %} 
+                     {% include '/components/product_addon.twig' with {inputs: {
+                     addOnProducts: product.getAddOnProducts,
+                     }} %}
+
+                     <div class="product__info-card">
+                        <div class="product__info-body">
+                           <div class="product__meta">
+                              {% if product.getProductBrochures|length %}
+                              <div>
+                                 <b>Brochures</b>
+                                 <div>
+                                    {% for brochure in product.getProductBrochures %}
+                                    {% set trimmedCaption = brochure.caption|trim %}
+                                    {# Replace spaces with hyphens and construct the href attribute #}
+                                    {% set image_url = "/brochure-image/" ~ trimmedCaption|replace({' ': '-', }) ~ '-' ~ brochure.id  ~ '.jpg'%}
+                                    <a href="{{ image_url }}" target=_blank><img src="/brochureimage/{{ brochure.name }}?crop=true&amp;width=130&amp;height=130" style="width:130px;height:130px;padding:5px" alt="{{ brochure.caption }}" title="{{ brochure.caption }}" /></a>
+                                    {% endfor %}
+                                 </div>
+                              </div>
+                              <br />
+                              {% endif %}
+                              <table>
+                                 <tr>
+                                    {% if 'y' != product.discontinued %}
+                                    {% if product.orderRule == 'invoice_for_everyone' or (product.isProductAvailableByRule and product.orderRule == 'invoice_only_for_restricted_owners') or (product.isProductAvailableByRule and product.orderRule == 'invoice_only_for_arcooda_machine_owners') %}
+                                 <tr>
+                                    <td style="border:1px solid #3d89f3;display:flex;padding:10px">
+                                       <img src="/svg/cart/blue.png" style="vertical-align:top;width:45px" />
+                                       <span style="display:inline-block;line-height:normal;padding-left:5px;vertical-align:inherit;margin-top:5px">
+                                       <b>Available for online order</b>
+                                       <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="This product is available for immediate order and payment. Please add the product to your cart and checkout through the payment gateway of your choice."></i>
+                                       </span>
+                                    </td>
+                                 </tr>
+                                 {% elseif product.orderRule == 'inquiry_for_everyone' %}
+                                 <tr>
+                                    <td style="border:1px solid #fbc108;;display:flex;padding:10px">
+                                       <img src="/svg/cart/yellow.png" style="vertical-align:top;width:45px" />
+                                       <span style="display:inline-block;line-height:normal;padding-left:5px;vertical-align:inherit;margin-top:5px">
+                                       <b>Manual order only</b>
+                                       <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Due to location, weight, supply or other factors, we are unable to quote freight and shipping schedules, and sorry cannot handle instant online payment for this product. However, please add this product to your shopping cart and our team will reply you with all options."></i>
+                                       </span>
+                                    </td>
+                                 </tr>
+                                 {% elseif product.orderRule == 'invoice_only_for_restricted_owners' %}
+                                 <tr>
+                                    <td style="border:1px solid #f93b3c;display:flex;padding:10px">
+                                       <img src="/svg/cart/red.png" style="vertical-align:top;width:45px" />
+                                       <span style="display:inline-block;line-height:normal;padding-left:5px;vertical-align:inherit;color:#f93b3c;margin-top:5px">
+                                       <b>Restricted Product</b>
+                                       <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Please register your machine to gain access to purchase this product. If you have already registered your machine, please log into your account."></i>
+                                       </span>
+                                    </td>
+                                 </tr>
+                                 {% elseif product.orderRule == 'invoice_only_for_arcooda_machine_owners' %}
+                                 <tr>
+                                    <td style="border:1px solid #f93b3c;display:flex;padding:10px">
+                                       <img src="/svg/cart/red.png" style="vertical-align:top;width:45px" />
+                                       <span style="display:inline-block;line-height:normal;padding-left:5px;vertical-align:inherit;color:#f93b3c;margin-top:5px">
+                                       VIP Members Only
+                                       <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="This product is only available to VIP Members. Please register your machine or game software purchase to apply to receive VIP discounts"></i>
+                                       </span>
+                                    </td>
+                                 </tr>
+                                 {% endif %}
+                                 
+                              {% endif %}
+                                 </tr>
+                              </table>
+                              <table style="margin-top:25px;border:1px solid #ebebeb;border-bottom:1px solid #ebebeb" class="margin-left-th">
+                                 {% if product.availability %}
+                                 <tr>
+                                    <th>Availability</th>
+                                    <td>
+                                       {% if product.discontinued == 'y' %}
+                                       <span class="badge badge-danger">Sold Out</span>
+                                       {% elseif product.availability in ['In Stock', 'Stock'] %}
+                                       <span class="badge badge-success">{{ product.availability|e }}</span>
+                                       {% else %}
+                                       <span class="badge badge-danger">{{ product.availability|e }}</span>
+                                       {% endif %}
+                                    </td>
+                                 </tr>
+                                 {% else %}
+                                 <tr>
+                                    <th colspan="3">Availability</th>
+                                 </tr>
+                                 {% for color in product.color %}
+                                 <tr>
+                                    <td style="width:33%">
+                                       <div>
+                                          <span class="radio-div display-color" style="background-color:{{ color.color_val }};margin-left:5px"></span>
+                                          <span>{{ color.colour }}</span>
+                                       </div>
+                                    </td>
+                                    <td style="width:33%">{{ product.id }}{{ color.code2 }}</td>
+                                    <td style="width:33%">
+                                       {% if product.availabilityColor(color.id) in ['In Stock', 'Stock'] %}
+                                       <span class="badge badge-success">{{product.availabilityColor(color.id)}}</span>
+                                       {% else %}
+                                       <span class="badge badge-danger">{{product.availabilityColor(color.id)}}</span>
+                                       {% endif %}
+                                    </td>
+                                 </tr>
+                                 {% endfor %}
+                                 {% endif %}
+                                 {% if product.sku %}
+                                 <tr>
+                                    <th>Product No.</th>
+                                    <td colspan="2">{{ product.sku|e }}</td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.condition %}
+                                 <tr>
+                                    <th>Condition</th>
+                                    <td colspan="2">{{ product.condition|e }}</td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.product_type %}
+                                 <tr>
+                                    <th>Product Type</th>
+                                    <td colspan="2">{{ product.product_type|e }}</td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.Warranty %}
+                                 <tr>
+                                    <th>Warranty</th>
+                                    <td colspan="2">{{ product.Warranty|e }}</td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.section in [2, 3] %}
+                                 <tr>
+                                    <th>Coin Operated</th>
+                                    <td colspan="2">{{ product.coin_operated|e }}</td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.product_series %}
+                                 <tr>
+                                    <th>Product Series</th>
+                                    <td colspan="2">
+                                       <a href="/series/{{ product.product_series.slug }}" target="_blank">{{ product.product_series.name|e }}
+                                       </a>
+                                    </td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.manufacturer %}
+                                 <tr>
+                                    <th>Manufacturer</th>
+                                    <td colspan="2"><a href="{{ product.category.url|e }}?m={{ product.manufacturer_id }}">{{ product.manufacturer|e }}</a></td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.man_code and product.manufacturer %}
+                                 <tr>
+                                    <th>{{ product.manufacturer|e }} Part No</th>
+                                    <td colspan="2">{{ product.man_code|e }}</td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.location %}
+                                 <tr>
+                                    <th>Location</th>
+                                    <td colspan="2"><a href="{{ product.category.url|e }}?cl[]={{ product.locationId }}">{{ product.location|e }}</a></td>
+                                 </tr>
+                                 {% endif %}
+                                 {% if product.style %}
+                                 <tr>
+                                    <th>Product Style</th>
+                                    <td colspan="2">{{ product.style|e }}</td>
+                                 </tr>
+                                 {% endif %}
+                              </table>
+                           </div>
+                           <form method="post" action="/p/compare_product" >
+                              <div style="display:flex;flex-wrap:wrap;white-space:nowrap;padding-bottom:17px">
+                                 <input type="hidden" name="product_id" value="{{ product.id|e }}" />
+                                 <div class="product__actions-divider"></div>
+                                 {% if product.is_product_wishlist %}
+                                 <a class="product__actions-item product__actions-item--wishlist" href="/p/removewishlist/{{ product.encryptid }}">
+                                 {{ svg('wish.png') }}
+                                 <span style="padding:2px">Remove wishlist</span>
+                                 </a>
+                                 {% else %}
+                                 <button class="product__actions-item product__actions-item--wishlist" type="submit" name="wishlist">
+                                 {{ svg('wishlist-16.svg') }}
+                                 <span>Add to wishlist</span>
+                                 </button>
+                                 {% endif %}
+                                 {% if product.is_product_compare %}
+                                 <a class="product__actions-item product__actions-item--compare" href="/p/removecompare/{{ product.encryptid }}">
+                                 {{ svg('com.png') }}
+                                 <span style="padding:2px"> Remove compare</span>
+                                 </a>
+                                 {% else %}
+                                 <button class="product__actions-item product__actions-item--compare" type="submit" name="compare">
+                                 {{ svg('compare-16.svg') }}
+                                 <span style="padding:5px"> Add to compare</span>
+                                 </button>
+                                 {% endif %}
+                              </div>
+                           </form>
+                          
+                           {% if product.product_series %}
+                           <div style="display:flex;flex-wrap:wrap;white-space:nowrap;padding-top:17px">
+                              <a href="/series/{{ product.product_series.slug }}" target="_blank"><img src="/brochureimage/{{ product.product_series.image_name }}?crop=true&amp;width=300&amp;height=70" width="300" height="70" /></a>
+                           </div>
+                           {% endif %}
+                        </div>
+                     </div>
+                     {% if product.category == 'Arcade Monitors' %}
+                        <div class="product__info-card">
+                           <div class="product__info-body">
+                           
+                          
+                              <div style="white-space:nowrap;padding:20px;text-align:center;border:1px solid #ebebeb;margin-bottom: 15px;">
+
+                                 <a href="/arcooda-monitor-comparison-table.html" target="_blank" class="monitor-compair-link">Monitor Comparison Table</a>
+                                  <div class="product__actions-divider"></div>
+                              </div>
+                          
+                           </div>
+                        </div>
+                      {% endif %}
+                           {% if product.related_product %}
+                              <div class="product__info-card">
+                                 <div class="product__info-body">
+                                    <div style="padding:5px;">
+                                       {% include '/widgets/widget-products.twig' with {inputs: {
+                                       classes: offcanvas == 'mobile' ? 'd-none d-lg-block' : '',
+                                       products: product.related_product,
+                                       product_msg: 'Featured Products',
+                                       }} %}
+                                    </div>
+                                  </div>
+                              </div>
+                           {% endif %}
+                       
+                        {% if user.wholesale!='y' and product.wholesaleprice|length %}
+                           <div class="product__info-card">
+                              <div class="product__info-body">
+                                 <div class="product__meta" style="display:none;">
+                                    <span style="color:#bb2727;font-weight:300;font-size:17px">Upgrade your account to wholesale buyer</span>
+                                    <table>
+                                       {% for wholesale in product.wholesaleprice %}
+                                       <tr>
+                                          <td>
+                                             <div>
+                                                <span class="radio-div display-color" style="background-color:{{ product.Singlecolor(product.isradiochecked) }}"></span>
+                                                <span>&times; {{ wholesale.qty }}</span>
+                                             </div>
+                                          </td>
+                                          <td>$...</td>
+                                          <td></td>
+                                       </tr>
+                                       {% endfor %}
+                                    </table>
+                                    <span>Are you missing out of the best deals possible on this product?</span>
+                                 </div>
+                              </div>
+                           </div>
+                        {% endif %}
+                     {% if product.icons|length %}
+                        <div class="product__shop-features shop-features">
+                           <ul class="shop-features__list">
+                              {% for icon in product.icons %}
+                              <li class="shop-features__item">
+                                 <div class="shop-features__item-icon">
+                                    <img src="{{ icon.image|e }}" width="48" height="48" alt="{{ icon.image.alt|e }}" />
+                                 </div>
+                                 <div class="shop-features__info">
+                                    <div class="shop-features__item-title">{{ icon.name }}</div>
+                                    <div class="shop-features__item-subtitle">{{ icon.text }}</div>
+                                 </div>
+                              </li>
+                              {% endfor %}
+                              <li class="shop-features__divider" role="presentation"></li>
+                           </ul>
+                        </div>
+                     {% endif %}
+                  </div>
+                  {% include '/components/product-tabs.twig' with {inputs: {
+                  layout: layout,
+                  classes: 'product__tabs',
+                  product: product,
+                  }} %}
+                  {% if product.getproductslider|length %}
+                     {% include '/components/product-slider.twig' with {inputs: {
+                     layout: layout,
+                     classes: 'product__tabs',
+                     slider: product.getproductslider,
+                     }} %}
+                  {% endif %}
+                  {% if product.getproductcarouselimages|length %}
+                     <div class="product-slider">
+                        <div class="typography">
+                           <div class="spec__section">
+                              <h2 class="section-header__title" style="padding-left:38px">Featured Product</h2>
+                              <div  style="margin-top:50px">
+                                 {% include '/components/product-carousel.twig' with {inputs: {
+                                 layout: layout,
+                                 classes: 'product__tabs',
+                                 productcarousel: product.getproductcarouselimages,
+                                 productcarouseldata: product.getproductcarousel,
+                                 }} %}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  {% endif %}
+                  {% if view360 %}
+                     {% include '/components/product-360view.twig' with {inputs: {
+                     layout: layout,
+                     classes: 'product__tabs',
+                     product: product.name,
+                     view360: view360,
+                     }} %}
+                  {% endif %}
+                  {% if product.productSupported|length %}
+                     {% include '/components/product-supported.twig' with {inputs: {
+                     layout: layout,
+                     classes: 'product__tabs',
+                     productSupported: product.productSupported,
+                     }} %}
+                  {% endif %}
+               </div>
+            </div>
+            {% if product.getproductBuilder|length %}
+               {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+               {% include '/components/product-builder.twig' with {inputs: {
+               layout: layout,
+               classes: 'product__tabs',
+               productBuilder: product.getproductBuilder,
+               }} %}
+            {% endif %}
+            {% if product.related %}
+               {% include '/blocks/block-space.twig' with {inputs: {layout: 'divider-nl'}} %}
+               {% include '/blocks/block-products-carousel.twig' with {inputs: {
+               title: 'Related Products',
+               layout: layout == 'sidebar' ? 'grid-4-sidebar' : 'grid-5',
+               products: product.related,
+               }} %}
+            {% endif %}
+         </div>
+         {% if layout == 'sidebar' and sidebar == 'end' %}
+            {{ sidebar_template }}
+         {% endif %}
+      </div>
+   </div>
+</div>
+{% include '/blocks/block-space.twig' with {inputs: {layout: 'before-footer'}} %}
+{% endblock %}

@@ -1,0 +1,1 @@
+<?php // The existence of this file disables the installer.php file.

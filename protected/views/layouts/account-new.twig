@@ -1,0 +1,156 @@
+{#
+Inputs:
+// global_page_title:
+// global_page_description:
+// global_page_keywords:
+// analytics:
+// direction:
+// account_body:
+// global_current_account_page:
+#}
+
+{% set getOwnerSection = getOwnerSection() %}
+
+{% extends '/layouts/default.twig' %}
+
+{% if global_page_title %}
+    {% if global_page_title|length < 80 %}
+        {% set global_page_title = global_page_title ~ ' - My Account' %}
+    {% endif %}
+{% else %}
+    {% set global_page_title = 'My Account' %}
+{% endif %}
+
+{% block site_body %}
+    {% set account_pages = [
+        {type: 'link',    label: 'My Dashboard',   url: '/account/dashboard'    },
+        {type: 'link',    label: 'My Details',   url: '/account/profile'    },
+        {type: 'link',    label: 'Shipping Details', url: '/account/shipping'   },
+        {type: 'link',    label: 'Notify Parties', url: '/account/notify_party'},
+        {type: 'link',    label: 'Contacts', url: '/account/contacts'},
+        {type: 'link',    label: 'Freight Account', url: '/account/freight'},
+        {type: 'link',    label: 'Site Preferences', url: '/account/preferences'},
+        {type: 'link',    label: 'Inquiry/Order History',    url: '/account/orders'     },
+        {type: 'link',    label: 'Password',         url: '/account/password'   },
+        {type: 'link',    label: 'My Comments',         url: '/account/comments'   },
+        {type: 'link',    label: 'My Reviews',         url: '/account/reviews'   },
+        {type: 'divider'                                                        },
+        {type: 'header',  label: 'My Machines & Software',                      },
+    ] %}
+
+    {% set additional_pages = [] %}
+
+    {% if getOwnerSection|length > 0 %}
+        {# Add a header for "My Machines & Software" #}
+        {# {% set additional_pages = [
+            {type: 'divider'},
+            {type: 'header', label: 'My Machines & Software'}
+        ] %} #}
+
+        {% for product in getOwnerSection %}
+            {# Create object for each product #}
+            {% set product_link = {
+                type: 'link',
+                label: product.name,
+                url: product.url ~ '#product-tab-owner',
+            } %}
+            {# Push object into additional_pages array #}
+            {% set additional_pages = additional_pages|merge([product_link]) %}
+        {% endfor %}
+
+        {# Merge additional_pages into account_pages #}
+        {% set account_pages = account_pages|merge(additional_pages) %}
+    {% endif %}
+
+
+    {# Add Logout link #}
+    {% set logout_link = [
+        {type: 'divider'},
+        {type: 'link', label: 'Logout', url: '/account/logout'} 
+        ] %}
+    {% set account_pages = account_pages|merge(logout_link) %}
+
+    {#% set account_pages = [
+        {type: 'link',    label: 'My Details',   url: '/account/profile'    },
+        {type: 'link',    label: 'Shipping Details', url: '/account/shipping'   },
+        {type: 'link',    label: 'Site Preferences', url: '/account/preferences'},
+        {type: 'link',    label: 'Inquiry History',  url: '/account/inquiries'  },
+        {type: 'link',    label: 'Order History',    url: '/account/orders'     },
+        {type: 'link',    label: 'Password',         url: '/account/password'   },
+        {type: 'divider'},
+        {type: 'link',    label: 'Logout',           url: '/account/logout'     },
+    ] %#}
+
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'after-header',
+    }} %}
+
+    <div class="block"><div class="container " container-xl>
+        <div class="row">
+            <div class="col-12 col-lg-3 d-flex-">
+                <div class="row mb-3 account-nav mt-4" style="margin-left:auto;margin-right:auto;">
+                    <div class="col-md-12 d-flex align-items-center justify-content-center p-4">
+                        <div class="row w-100">
+                            <div class="col-md-6 justify-content-center" style="text-align:center;">
+                                {% if member.avatar_image %}
+                                    <img src="/avatar/svgavatars/ready-avatars/{{ member.avatar_image }}" style="vertical-align: top;" width="90" height="90" title="">
+                                {% else %}
+                                    <img src="/images/avatar.jpeg" style="vertical-align: top;" width="90" height="90" title="Make your own Avatar to use for comments, posts and product reviews">
+                                {% endif %}
+                                <div class="profile-card__name">{{ member.full_name|e }}</div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="profile-card__edit">
+                                    <a href="/account/profile" class="btn btn-secondary btn-sm">Edit Profile</a>
+                                </div>
+                                <div class="profile-card__edit" style="margin-top:10px;">
+                                    <button onclick="openAvatorModel()" class="btn btn-secondary btn-sm">Edit Avatar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="account-nav flex-grow-1">
+                    <h4 class="account-nav__title">My Account</h4>
+                    <ul class="account-nav__list">{% for link in account_pages %}
+                        {% if link.type == 'link' %}
+                            <li class="account-nav__item {% if link.url == global_current_account_page %} account-nav__item--active {% endif %}"><a href="{{ link.url|e }}">{{ link.label|e }}</a></li>
+                        {% elseif link.type == 'divider' %}
+                            <li class="account-nav__divider" role="presentation"></li>
+                        {% elseif link.type == 'header' %}
+                            <li class="account-nav__title" id="myMachnsoft" style="font-size:18px;">{{ link.label|e }}</li>
+                        {% endif %}
+                    {% endfor %}</ul>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9 mt-4 mt-lg-0">{% block account_body %}{% endblock %}</div>
+        </div>
+    </div>
+   <div class="modal fade" id="avator-modal" tabindex="-1" role="dialog">
+       <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title">Create Avatar </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             </div>
+             <div class="">
+                <div class="card-table">
+                   <iframe id="avatorIframe" src="" width="100%" height="600px" frameborder="0"></iframe>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function openAvatorModel(){
+        var iframe = $('#avatorIframe');
+        var src = '/avatar/svgavatars.php';
+        iframe.attr('src', src); // Reload the iframe
+         $('#avator-modal').modal('show');
+    }
+</script>
+    {% include '/blocks/block-space.twig' with {inputs: {
+        layout: 'before-footer',
+    }} %}
+{% endblock %}

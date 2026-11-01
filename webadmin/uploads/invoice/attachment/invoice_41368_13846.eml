@@ -1,0 +1,711 @@
+X-Account-Key: account1
+X-UIDL: 0000bdef4fd7bcb0
+X-Mozilla-Status: 0011
+X-Mozilla-Status2: 00000000
+X-Mozilla-Keys:                                                                                 
+Return-Path: <zelda76@leekie.com>
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on john.ourhunter.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.7 required=8.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HTML_MESSAGE,RCVD_IN_DNSWL_LOW autolearn=ham
+	version=3.3.1
+X-Original-To: sales@converters.tv
+Delivered-To: converters-converters.tv@john.ourhunter.com
+Received: from mail-oi0-f53.google.com (mail-oi0-f53.google.com [209.85.218.53])
+	by john.ourhunter.com (Postfix) with ESMTPS id 66EFBDC0002
+	for <sales@converters.tv>; Wed, 26 Aug 2015 13:22:03 +1000 (AEST)
+Received: by oieu205 with SMTP id u205so43421529oie.0
+        for <sales@converters.tv>; Tue, 25 Aug 2015 20:24:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=leekie.com; s=mail;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=+GskOCEoD4liQhobFJjif9nqsPlja3G0Nvf7yP72XAQ=;
+        b=UXchrOuw5j8deAQyC3L/u1sLGr/xyORYbtczSa/dkv8nSGoYMEklcOLxjX83CW3+uY
+         8erWBMWw/ypOwgmsdMh6HgAJrqtMqyx5jZ28rPZOxmT3pq/4le9xAQtJG/tOQlcFOjUg
+         iTGmF4Lqhc62x2pIBA1/xA554kDrLQejvhRis=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=+GskOCEoD4liQhobFJjif9nqsPlja3G0Nvf7yP72XAQ=;
+        b=S3BzoVq1jYN6Ut2ENxgKceSrnRwE5/dyRrEE2SCQn3jFQRZQltdrtwwqyzPqxq0erQ
+         2oJcOlQ+cElwz2YD41e3v1+vRGTUpiAFQPj6VZu3kAzdeYpkomSxdqlp1Wf6RjLH7m0f
+         HEkb3+8LSmrvXnHdcM6AnOfPqurZEJey3d/+bb+QZqu8qzpI54RAFUZ3O+JIZWeVRak2
+         hclyYvrZ6Fw/2guw5vIc+WizJaMXjSm97ka8OqIAnl8kR+AJGsD2tzbvIL+wdJO7wsgc
+         pHGg2EZRcQeHJn1qLjCaPOtRUtI7AHU38iIot18ybZZzSKCLNUPnlWBO/40fo/3cM4n3
+         u7fg==
+X-Gm-Message-State: ALoCoQmzn7CXZMQlYBRD+g2nHl74Y04WgBu7W+SYsJ0f1O9D0l7dGca0tLnoHiofJxjZHc5o+i+f
+MIME-Version: 1.0
+X-Received: by 10.202.211.65 with SMTP id k62mr29287931oig.34.1440559451558;
+ Tue, 25 Aug 2015 20:24:11 -0700 (PDT)
+Received: by 10.76.83.169 with HTTP; Tue, 25 Aug 2015 20:24:11 -0700 (PDT)
+In-Reply-To: <CAFXNA5VAn6xsUGq=29xW9qWHETsXdH3EmR+hvV3m=c+v9u3y3Q@mail.gmail.com>
+References: <9a9222ad7ea6a673166775e4aa1f720a@www.converters.tv>
+	<CAFXNA5VAn6xsUGq=29xW9qWHETsXdH3EmR+hvV3m=c+v9u3y3Q@mail.gmail.com>
+Date: Wed, 26 Aug 2015 11:24:11 +0800
+Message-ID: <CAFXNA5U-t6qAtvJisC9rtoTL09WUh5JU-aWD++Yoo51VHjLnFw@mail.gmail.com>
+Subject: Re: QCN#41368 - PiP with 8 Inputs
+From: Sukardi Omar <skd.omr@leekie.com>
+To: Chris Bailey <sales@converters.tv>
+Content-Type: multipart/related; boundary=001a113d23e0641f68051e2e62d2
+
+--001a113d23e0641f68051e2e62d2
+Content-Type: multipart/alternative; boundary=001a113d23e0641f65051e2e62d1
+
+--001a113d23e0641f65051e2e62d1
+Content-Type: text/plain; charset=UTF-8
+
+Hi Chris,
+
+May i know this model : ID#707:
+http://www.converters.tv/products/hdtv_to_hdtv/707.html can support our
+requirements.
+
+[image: Inline image 1]
+But i need the Input for the primary video (1)  is HDMI and (2-5 ) is RCA
+and the output is HDMI.
+
+Thanks.
+
+Regards,
+
+Sukardi
+
+On Wed, Aug 26, 2015 at 11:13 AM, Sukardi Omar <skd.omr@leekie.com> wrote:
+
+> Hi Chris,
+>
+> Do you have any distributor in Philippines.
+>
+> Thanks.
+>
+> Regards,
+>
+> Sukardi
+>
+> On Tue, Aug 25, 2015 at 2:58 PM, Chris Bailey <sales@converters.tv> wrote:
+>
+>> Hello Sukardi,
+>>
+>> Thank you for your email and sorry, we do not have a Picture In Picture
+>> product with 8 inputs.
+>>
+>>
+>> I can suggest using a PiP product:
+>>
+>> ID#685:  http://www.converters.tv/products/pal_to_pal/685.html
+>>
+>> use this with an 8 way Switch:
+>>
+>> ID#707:  http://www.converters.tv/products/hdtv_to_hdtv/707.html
+>>
+>>
+>>
+>> Another unit I have that is HDMI PiP is:
+>>
+>> ID#15196:  http://www.converters.tv/products/vga_to_vga/15196.html
+>>
+>> Again you could use a 2x1 switch on each input to give you 8 x HDMI
+>> inputs for Pip display.
+>>
+>>
+>>
+>> I hope this is of assistance to you and if you would like some more
+>> details, please let me know.
+>>
+>> Thank you and looking forward to your reply.
+>>
+>> Best Regards,
+>> Chris Bailey
+>>
+>> ****************************************************************
+>> CONVERTERS.TV PTY LTD
+>> 44-48 Maitland Road, Mayfield East 2304, NSW, Australia
+>> Tel: +612 4968 9313
+>> Fax: +612 4968 9314
+>> Date: 25th August, 2015
+>> ****************************************************************
+>>
+>
+>
+>
+> --
+> Best Regards,
+>
+> Sukardi Omar
+> Ph. +63-2-887-6617
+> Mobile. +63-905-3390111
+>
+> Leekie Enterprises, Inc
+> 24th floor Burgundy Corporated Tower
+> 252 Sen Gil Puyat Avenue
+> Makati City - 1200
+> Philippines
+>
+> PGP Public Key :
+> http://keyserver.linux.it/pks/lookup?op=get&search=0x7D5DD416C8DF3B38
+> Key ID                 : C8DF3B38
+> Fingerprint        : CEE33D52F657A861C18EB4547D5DD416C8DF3B38
+>
+> *Please consider the environment - do you really need to print this
+> email? *
+>
+> The information in this e-mail and any attachment is confidential and is
+> intended for the exclusive use of the named recipient(s).
+> The e-mail may not be disclosed or used by any person other than the
+> addressee, nor may it be copied in any way.
+> If  you  are not  a named  recipient please notify  the sender immediately
+> and permanently delete any copies of this message. Any
+> unauthorized copying, use, disclosure or distribution of the material in
+> this e-mail or any attachments is strictly forbidden.
+> Any view  or opinions  presented are solely  those of the author and do
+> not necessarily represent those of Leekie Enterprises, Inc.
+> Risks are inherent in all internet communication. Each recipient is
+> responsible for protecting its system from viruses and / other
+> harmful codes and/or devices.The sender does not accept any
+> responsibility, and hereby disclaims all liabilities arising from or
+> in relation to any viruses and/or other harmful codes and/or devices that
+> may have been unintentionally transmitted within this
+> email.Those who  communicating  with  us  by email  will be deemed  to
+> have  consented to us  intercepting and monitoring those
+> communications.
+>
+
+
+
+-- 
+Best Regards,
+
+Sukardi Omar
+Ph. +63-2-887-6617
+Mobile. +63-905-3390111
+
+Leekie Enterprises, Inc
+24th floor Burgundy Corporated Tower
+252 Sen Gil Puyat Avenue
+Makati City - 1200
+Philippines
+
+PGP Public Key :
+http://keyserver.linux.it/pks/lookup?op=get&search=0x7D5DD416C8DF3B38
+Key ID                 : C8DF3B38
+Fingerprint        : CEE33D52F657A861C18EB4547D5DD416C8DF3B38
+
+*Please consider the environment - do you really need to print this email? *
+
+The information in this e-mail and any attachment is confidential and is
+intended for the exclusive use of the named recipient(s).
+The e-mail may not be disclosed or used by any person other than the
+addressee, nor may it be copied in any way.
+If  you  are not  a named  recipient please notify  the sender immediately
+and permanently delete any copies of this message. Any
+unauthorized copying, use, disclosure or distribution of the material in
+this e-mail or any attachments is strictly forbidden.
+Any view  or opinions  presented are solely  those of the author and do not
+necessarily represent those of Leekie Enterprises, Inc.
+Risks are inherent in all internet communication. Each recipient is
+responsible for protecting its system from viruses and / other
+harmful codes and/or devices.The sender does not accept any responsibility,
+and hereby disclaims all liabilities arising from or
+in relation to any viruses and/or other harmful codes and/or devices that
+may have been unintentionally transmitted within this
+email.Those who  communicating  with  us  by email  will be deemed  to have
+ consented to us  intercepting and monitoring those
+communications.
+
+--001a113d23e0641f65051e2e62d1
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Chris,<div><br></div><div>May i know this model :=C2=A0=
+<span style=3D"font-size:12.8000001907349px">ID#707:=C2=A0=C2=A0</span><a h=
+ref=3D"http://www.converters.tv/products/hdtv_to_hdtv/707.html" rel=3D"nore=
+ferrer" target=3D"_blank" style=3D"font-size:12.8000001907349px">http://www=
+.converters.tv/products/hdtv_to_hdtv/707.html</a>=C2=A0can support our requ=
+irements.</div><div><br></div><div><div style=3D"font-size:12.8000001907349=
+px"><img src=3D"cid:ii_14f2601775c09b6b" alt=3D"Inline image 1" width=3D"54=
+5" height=3D"380" class=3D"" tabindex=3D"0" style=3D"font-size: 12.80000019=
+07349px;"><br></div><div style=3D"font-size:12.8000001907349px">But i need =
+the Input for the primary video (1) =C2=A0is HDMI and (2-5 ) is RCA and the=
+ output is HDMI.</div><div style=3D"font-size:12.8000001907349px"><br></div=
+><div style=3D"font-size:12.8000001907349px">Thanks.</div><div style=3D"fon=
+t-size:12.8000001907349px"><br></div><div style=3D"font-size:12.80000019073=
+49px">Regards,</div><div style=3D"font-size:12.8000001907349px"><br></div><=
+div style=3D"font-size:12.8000001907349px">Sukardi=C2=A0</div></div></div><=
+div class=3D"gmail_extra"><br><div class=3D"gmail_quote">On Wed, Aug 26, 20=
+15 at 11:13 AM, Sukardi Omar <span dir=3D"ltr">&lt;<a href=3D"mailto:skd.om=
+r@leekie.com" target=3D"_blank">skd.omr@leekie.com</a>&gt;</span> wrote:<br=
+><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1=
+px #ccc solid;padding-left:1ex"><div dir=3D"ltr">Hi Chris,<div><br></div><d=
+iv>Do you have any distributor in Philippines.=C2=A0</div><div><br></div><d=
+iv>Thanks.</div><div><br></div><div>Regards,</div><div><br></div><div>Sukar=
+di</div></div><div class=3D"gmail_extra"><div><div class=3D"h5"><br><div cl=
+ass=3D"gmail_quote">On Tue, Aug 25, 2015 at 2:58 PM, Chris Bailey <span dir=
+=3D"ltr">&lt;<a href=3D"mailto:sales@converters.tv" target=3D"_blank">sales=
+@converters.tv</a>&gt;</span> wrote:<br><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Hell=
+o Sukardi,<br>
+<br>
+Thank you for your email and sorry, we do not have a Picture In Picture pro=
+duct with 8 inputs.<br>
+<br>
+<br>
+I can suggest using a PiP product:<br>
+<br>
+ID#685:=C2=A0 <a href=3D"http://www.converters.tv/products/pal_to_pal/685.h=
+tml" rel=3D"noreferrer" target=3D"_blank">http://www.converters.tv/products=
+/pal_to_pal/685.html</a><br>
+<br>
+use this with an 8 way Switch:<br>
+<br>
+ID#707:=C2=A0 <a href=3D"http://www.converters.tv/products/hdtv_to_hdtv/707=
+.html" rel=3D"noreferrer" target=3D"_blank">http://www.converters.tv/produc=
+ts/hdtv_to_hdtv/707.html</a><br>
+<br>
+<br>
+<br>
+Another unit I have that is HDMI PiP is:<br>
+<br>
+ID#15196:=C2=A0 <a href=3D"http://www.converters.tv/products/vga_to_vga/151=
+96.html" rel=3D"noreferrer" target=3D"_blank">http://www.converters.tv/prod=
+ucts/vga_to_vga/15196.html</a><br>
+<br>
+Again you could use a 2x1 switch on each input to give you 8 x HDMI inputs =
+for Pip display.<br>
+<br>
+<br>
+<br>
+I hope this is of assistance to you and if you would like some more details=
+, please let me know.<br>
+<br>
+Thank you and looking forward to your reply.<br>
+<br>
+Best Regards,<br>
+Chris Bailey<br>
+<br>
+****************************************************************<br>
+<a href=3D"http://CONVERTERS.TV" rel=3D"noreferrer" target=3D"_blank">CONVE=
+RTERS.TV</a> PTY LTD<br>
+44-48 Maitland Road, Mayfield East 2304, NSW, Australia<br>
+Tel: <a href=3D"tel:%2B612%204968%209313" value=3D"+61249689313" target=3D"=
+_blank">+612 4968 9313</a><br>
+Fax: <a href=3D"tel:%2B612%204968%209314" value=3D"+61249689314" target=3D"=
+_blank">+612 4968 9314</a><br>
+Date: 25th August, 2015<br>
+****************************************************************<br>
+</blockquote></div><br><br clear=3D"all"><div><br></div></div></div>-- <br>=
+<div><div dir=3D"ltr"><div><span style=3D"font-size:x-small">Best Regards,<=
+/span></div><div><span style=3D"font-size:x-small"><br></span></div><div><s=
+pan style=3D"font-size:x-small">Sukardi Omar</span><br></div><span style=3D=
+"font-size:x-small">Ph.=C2=A0</span><a value=3D"+6328876617" style=3D"color=
+:rgb(17,85,204);font-size:x-small">+63-2-887-6617</a><span style=3D"font-si=
+ze:x-small">=C2=A0</span><br style=3D"font-size:x-small"><span style=3D"fon=
+t-size:x-small">Mobile.=C2=A0</span><a value=3D"+639178855521" style=3D"col=
+or:rgb(17,85,204);font-size:x-small">+63-905-3390111</a><span style=3D"font=
+-size:x-small">=C2=A0</span><br style=3D"font-size:x-small"><br style=3D"fo=
+nt-size:x-small"><span style=3D"font-size:x-small">Leekie Enterprises, Inc<=
+/span><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">24t=
+h floor Burgundy Corporated Tower</span><br style=3D"font-size:x-small"><sp=
+an style=3D"font-size:x-small">252 Sen Gil Puyat Avenue</span><br style=3D"=
+font-size:x-small"><span style=3D"font-size:x-small">Makati City - 1200</sp=
+an><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">Philip=
+pines</span><br style=3D"font-size:x-small"><br style=3D"font-size:x-small"=
+><span style=3D"font-size:x-small">PGP Public Key :=C2=A0</span><a href=3D"=
+http://keyserver.linux.it/pks/lookup?op=3Dget&amp;search=3D0x7D5DD416C8DF3B=
+38" style=3D"color:rgb(17,85,204);font-size:x-small" target=3D"_blank">http=
+://keyserver.linux.it/pks/lookup?op=3Dget&amp;search=3D0x7D5DD416C8DF3B38</=
+a><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">Key ID =
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0: C8DF3B38=C2=A0</span><br style=3D"font-size:x-small"=
+><span style=3D"font-size:x-small">Fingerprint =C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0: CEE33D52F657A861C18EB4547D5DD4</span><span style=3D"font-s=
+ize:x-small">16C8DF3B38</span><br style=3D"font-size:x-small"><br style=3D"=
+font-size:x-small"><table border=3D"1" width=3D"700" style=3D"font-size:x-s=
+mall"><tbody><tr><td align=3D"center"><b><font color=3D"green" size=3D"1">P=
+lease consider the environment - do you really need to print this email?=C2=
+=A0</font></b><font color=3D"green" size=3D"1"><br></font></td></tr></tbody=
+></table><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">=
+The information in this e-mail and any attachment is confidential and is in=
+tended for the exclusive use of the named recipient(s).</span><br style=3D"=
+font-size:x-small"><span style=3D"font-size:x-small">The e-mail may not be =
+disclosed or used by any person other than the addressee, nor may it be cop=
+ied in any way.=C2=A0</span><br style=3D"font-size:x-small"><span style=3D"=
+font-size:x-small">If =C2=A0you =C2=A0are not =C2=A0a named=C2=A0 recipient=
+ please notify =C2=A0the sender immediately and permanently delete any copi=
+es of this message. Any</span><br style=3D"font-size:x-small"><span style=
+=3D"font-size:x-small">unauthorized copying, use, disclosure or distributio=
+n of the material in this e-mail or any attachments is strictly forbidden.<=
+/span><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">Any=
+ view =C2=A0or opinions =C2=A0presented are solely =C2=A0those of the autho=
+r and do not necessarily represent those of Leekie Enterprises, Inc.</span>=
+<br style=3D"font-size:x-small"><span style=3D"font-size:x-small">Risks are=
+ inherent in all internet communication. Each recipient is responsible for =
+protecting its system from viruses and / other</span><br style=3D"font-size=
+:x-small"><span style=3D"font-size:x-small">harmful codes and/or devices.Th=
+e sender does not accept any responsibility, and hereby disclaims all liabi=
+lities arising from or</span><br style=3D"font-size:x-small"><span style=3D=
+"font-size:x-small">in relation to any viruses and/or other harmful codes a=
+nd/or devices that may have been unintentionally transmitted within this</s=
+pan><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">email=
+.Those who=C2=A0 communicating=C2=A0 with =C2=A0us =C2=A0by email=C2=A0 wil=
+l be deemed =C2=A0to have =C2=A0consented to us =C2=A0intercepting and moni=
+toring those</span><br style=3D"font-size:x-small"><span style=3D"font-size=
+:x-small">communications.</span><br></div></div>
+</div>
+</blockquote></div><br><br clear=3D"all"><div><br></div>-- <br><div class=
+=3D"gmail_signature"><div dir=3D"ltr"><div><span style=3D"font-size:x-small=
+">Best Regards,</span></div><div><span style=3D"font-size:x-small"><br></sp=
+an></div><div><span style=3D"font-size:x-small">Sukardi Omar</span><br></di=
+v><span style=3D"font-size:x-small">Ph.=C2=A0</span><a value=3D"+6328876617=
+" style=3D"color:rgb(17,85,204);font-size:x-small">+63-2-887-6617</a><span =
+style=3D"font-size:x-small">=C2=A0</span><br style=3D"font-size:x-small"><s=
+pan style=3D"font-size:x-small">Mobile.=C2=A0</span><a value=3D"+6391788555=
+21" style=3D"color:rgb(17,85,204);font-size:x-small">+63-905-3390111</a><sp=
+an style=3D"font-size:x-small">=C2=A0</span><br style=3D"font-size:x-small"=
+><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">Leekie E=
+nterprises, Inc</span><br style=3D"font-size:x-small"><span style=3D"font-s=
+ize:x-small">24th floor Burgundy Corporated Tower</span><br style=3D"font-s=
+ize:x-small"><span style=3D"font-size:x-small">252 Sen Gil Puyat Avenue</sp=
+an><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">Makati=
+ City - 1200</span><br style=3D"font-size:x-small"><span style=3D"font-size=
+:x-small">Philippines</span><br style=3D"font-size:x-small"><br style=3D"fo=
+nt-size:x-small"><span style=3D"font-size:x-small">PGP Public Key :=C2=A0</=
+span><a href=3D"http://keyserver.linux.it/pks/lookup?op=3Dget&amp;search=3D=
+0x7D5DD416C8DF3B38" style=3D"color:rgb(17,85,204);font-size:x-small" target=
+=3D"_blank">http://keyserver.linux.it/pks/lookup?op=3Dget&amp;search=3D0x7D=
+5DD416C8DF3B38</a><br style=3D"font-size:x-small"><span style=3D"font-size:=
+x-small">Key ID =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0: C8DF3B38=C2=A0</span><br style=3D"=
+font-size:x-small"><span style=3D"font-size:x-small">Fingerprint =C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0: CEE33D52F657A861C18EB4547D5DD4</span><sp=
+an style=3D"font-size:x-small">16C8DF3B38</span><br style=3D"font-size:x-sm=
+all"><br style=3D"font-size:x-small"><table border=3D"1" width=3D"700" styl=
+e=3D"font-size:x-small"><tbody><tr><td align=3D"center"><b><font color=3D"g=
+reen" size=3D"1">Please consider the environment - do you really need to pr=
+int this email?=C2=A0</font></b><font color=3D"green" size=3D"1"><br></font=
+></td></tr></tbody></table><br style=3D"font-size:x-small"><span style=3D"f=
+ont-size:x-small">The information in this e-mail and any attachment is conf=
+idential and is intended for the exclusive use of the named recipient(s).</=
+span><br style=3D"font-size:x-small"><span style=3D"font-size:x-small">The =
+e-mail may not be disclosed or used by any person other than the addressee,=
+ nor may it be copied in any way.=C2=A0</span><br style=3D"font-size:x-smal=
+l"><span style=3D"font-size:x-small">If =C2=A0you =C2=A0are not =C2=A0a nam=
+ed=C2=A0 recipient please notify =C2=A0the sender immediately and permanent=
+ly delete any copies of this message. Any</span><br style=3D"font-size:x-sm=
+all"><span style=3D"font-size:x-small">unauthorized copying, use, disclosur=
+e or distribution of the material in this e-mail or any attachments is stri=
+ctly forbidden.</span><br style=3D"font-size:x-small"><span style=3D"font-s=
+ize:x-small">Any view =C2=A0or opinions =C2=A0presented are solely =C2=A0th=
+ose of the author and do not necessarily represent those of Leekie Enterpri=
+ses, Inc.</span><br style=3D"font-size:x-small"><span style=3D"font-size:x-=
+small">Risks are inherent in all internet communication. Each recipient is =
+responsible for protecting its system from viruses and / other</span><br st=
+yle=3D"font-size:x-small"><span style=3D"font-size:x-small">harmful codes a=
+nd/or devices.The sender does not accept any responsibility, and hereby dis=
+claims all liabilities arising from or</span><br style=3D"font-size:x-small=
+"><span style=3D"font-size:x-small">in relation to any viruses and/or other=
+ harmful codes and/or devices that may have been unintentionally transmitte=
+d within this</span><br style=3D"font-size:x-small"><span style=3D"font-siz=
+e:x-small">email.Those who=C2=A0 communicating=C2=A0 with =C2=A0us =C2=A0by=
+ email=C2=A0 will be deemed =C2=A0to have =C2=A0consented to us =C2=A0inter=
+cepting and monitoring those</span><br style=3D"font-size:x-small"><span st=
+yle=3D"font-size:x-small">communications.</span><br></div></div>
+</div>
+
+--001a113d23e0641f65051e2e62d1--
+--001a113d23e0641f68051e2e62d2
+Content-Type: image/png; name="image.png"
+Content-Disposition: inline; filename="image.png"
+Content-Transfer-Encoding: base64
+Content-ID: <ii_14f2601775c09b6b>
+X-Attachment-Id: ii_14f2601775c09b6b
+
+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
+QIAAAQIECBAgkBEQmDJADhMgQIAAAQIECBAgUK+AwFRv71VOgAABAgQIECBAgEBGQGDKADlMgAAB
+AgQIECBAgEC9AgJTvb1XOQECBAgQIECAAAECGQGBKQPkMAECBAgQIECAAAEC9QoITPX2XuUECBAg
+QIAAAQIECGQEBKYMkMMECBAgQIAAAQIECNQrIDDV23uVEyBAgAABAgQIECCQERCYMkAOEyBAgAAB
+AgQIECBQr4DAVG/vVU6AAAECBAgQIECAQEZAYMoAOUyAAAECBAgQIECAQL0CAlO9vVc5AQIECBAg
+QIAAAQIZAYEpA+QwAQIECBAgQIAAAQL1CghM9fZe5QQIECBAgAABAgQIZAQEpgyQwwQIECBAgAAB
+AgQI1CsgMNXbe5UTIECAAAECBAgQIJAREJgyQA4TIECAAAECBAgQIFCvgMBUb+9VToAAAQIECBAg
+QIBARkBgygA5TIAAAQIECBAgQIBAvQICU729VzkBAgQIECBAgAABAhkBgSkD5DABAgQIECBAgAAB
+AvUKCEz19l7lBAgQIECAAAECBAhkBASmDJDDBAgQIECAAAECBAjUKyAw1dt7lRMgQIAAAQIECBAg
+kBEQmDJADhMgQIAAAQIECBAgUK+AwFRv71VOgAABAgQIECBAgEBGQGDKADlMgAABAgQIECBAgEC9
+AgJTvb1XOQECBAgQIECAAAECGQGBKQPkMAECBAgQIECAAAEC9QoITPX2XuUECBAgQIAAAQIECGQE
+BKYMkMMECBAgQIAAAQIECNQrIDDV23uVEyBAgAABAgQIECCQERCYMkAOEyBAgAABAgQIECBQr4DA
+VG/vVU6AAAECBAgQIECAQEZAYMoAOUyAAAECBAgQIECAQL0CAlO9vVc5AQIECBAgQIAAAQIZAYEp
+A+QwAQIECBAgQIAAAQL1CghM9fZe5QQIECBAgAABAgQIZAQEpgyQwwQIECBAgAABAgQI1CsgMNXb
+e5UTIECAAAECBAgQIJAREJgyQA4TIECAAAECBAgQIFCvgMBUb+9VToAAAQIECBAgQIBARkBgygA5
+TIAAAQIECBAgQIBAvQICU729VzkBAgQIECBAgAABAhkBgSkD5DABAgQIECBAgAABAvUKHB2YVqvV
+d63FYvH9c58QIECAAAECBAgQIEBgbIHSGeXowDQ2gPkJECBAgAABAgQIECDQRqD5Yk+b+++6j8C0
+S8VtBAgQIECAAAECBAgQSCl1DkylX/LSFQIECBAgQIAAAQIECLxGoJlNSry6tF7DqwJTqclfg+Ax
+BAgQIECAAAECBAgQGErgVYFpvbhmaGomuaEWbh4CBAgQIECAAAECBAhsBJqZpJlVNsdf+/HVgWl7
+wuYCt4/5NwECBAgQIECAAAECBPoS6DOLdApM28mtz4X2hWtcAgQIECBAgAABAgTmK7CdQbYzStfK
+OgWm9eTbC9pecNcFejwBAgQIECBAgAABAgR2CWxnj+1ssusxx962WBUadXux64UUGvrYmtyfAAEC
+BAgQIECAAIHAAkNmj2KBad2PXQvf9El42kj4SIAAAQIECBAgQIDAsQJjZY2igWlT9KFiNvfxkQAB
+AgQIECBAgAABAl0EhnhRpvN7mHYVOMTCd83rNgIECBAgQIAAAQIE4gus88ZQmeOHvjibBXjFqS9l
+4xIgQIAAAQIECBCoQ6CZL4asuLfA1CxirOKaa/A5AQIECBAgQIAAAQIEjhXo5ZS8Yxfh/gQIECBA
+gAABAgQIEJiigMA0xa5YEwECBAgQIECAAAECkxAQmCbRBosgQIAAAQIECBAgQGCKAgLTFLtiTQQI
+ECBAgAABAgQITEJAYJpEGyyCAAECBAgQIECAAIEpCghMU+yKNREgQIAAAQIECBAgMAkBgWkSbbAI
+AgQIECBAgAABAgSmKCAwTbEr1kSAAAECBAgQIECAwCQEBKZJtMEiCBAgQIAAAQIECBCYooDANMWu
+WBMBAgQIECBAgAABApMQEJgm0QaLIECAAAECBAgQIEBgigIC0xS7Yk0ECBAgQIAAAQIECExCQGCa
+RBssggABAgQIECBAgACBKQoITFPsijURIECAAAECBAgQIDAJAYFpEm2wCAIECBAgQIAAAQIEpigg
+ME2xK9ZEgAABAgQIECBAgMAkBP4flSfboKAWXXkAAAAASUVORK5CYII=
+--001a113d23e0641f68051e2e62d2--
+
+

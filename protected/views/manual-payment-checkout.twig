@@ -1,0 +1,130 @@
+{% set global_page_title = inputs.title|default('Payment') %}
+{% set global_page_description = inputs.description|default('') %}
+{% set global_page_keywords = input.keywords|default('') %}
+{% set global_page_canonical       = ''                                %}
+{% set global_page_breadcrumbs     = [
+{title : 'Home', url : '/'},
+{title : global_page_title, url : global_page_canonical},
+] %}
+{% set titletop = inputs.titletop %}
+{% set payment_methods = inputs.payment_methods %}
+{% set issues    = inputs.issues                                                   %}
+{% from '/macros/controls.twig' import input_check, input_radio %}
+{% extends '/layouts/default.twig' %}
+{% block site_body %}
+{% include '/blocks/block-header.twig' with {inputs: {
+title: titletop,
+breadcrumb: global_page_breadcrumbs,
+}} %}
+<style type="text/css">
+    #comment::placeholder {
+      font-style: italic;
+      font-size: 15px;
+    }
+    /* Hide the spinner for number input */
+    .no-spin::-webkit-inner-spin-button,
+    .no-spin::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+</style>
+{% if issues.length>0 %}
+    {% for issue in issues %}
+    <span class="invalid-feedback"><strong>{{ issue }}</strong></span>
+    {% endfor %}
+{% endif %}
+<div class="container" style="margin-top:50px;margin-bottom:100px;">
+    <form action="/payment/manual-payment" method="post">
+        <div class="row checkout-cardBox">
+            <div class="col">
+                <div class="card-body card-body--padding--2 accordion" style="margin-bottom: 0px;">
+                    <h3 class="card-title">Payment Method</h3>
+                    <div class="checkout-cardCont">
+                        <ul class="payment-methods__list">
+                            {% for method in payment_methods %}
+                                <li
+                                    class="payment-methods__item payment-methods__item{{ invoice.paymenttype_id == method.payment_method_id ? '--active' : '' }}">
+                                    <label class="payment-methods__item-header">
+                                        {{ input_radio({
+                                        classes: 'payment-methods__item-radio',
+                                        name: 'paymenttype_id',
+                                        value: method.payment_method_id,
+                                        checked: invoice.paymenttype_id == method.payment_method_id,
+                                        required : true
+                                        }) }}
+                                        <span class="payment-methods__item-title">{{ method.payment_method_name|e
+                                            }}</span>
+                                    </label>
+
+                                    <div class="payment-methods__item-container">
+                                        <div class="payment-methods__item-details text-muted" id="{{method.payment_method_id}}">{{
+                                            markdown(method.payment_method_description) }}</div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                                                        
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card-body card-body--padding--2" style="border: 2px solid #dee2e6;">
+                    <h3 class="card-title">Your Payment</h3>
+                    <div class="checkout-table-Wrapper checkout-cardCont">
+                        <div class="checkout_instruction" style="padding-right: 10%; padding-left: 15%;margin-top:20px;">
+                            <table class="checkout__totals">
+                                <tbody>
+                                    <tr>
+                                        <th  style="padding-top: 2px; padding-bottom: 2px;">Your Name / Company</th>
+                                        <td  style="padding-top: 2px; padding-bottom: 2px;"><input type="text" name="cc_name" style="width:100%;" required/></td>
+                                    </tr>
+                                    <tr>
+                                        <th  style="padding-top: 2px; padding-bottom: 2px;">Invoice # / Reference</th>
+                                        <td  style="padding-top: 2px; padding-bottom: 2px;"><input type="text" name="cc_reference" style="width:100%;" required /></td>
+                                    </tr>
+                                    <tr>
+                                        <th  style="padding-top: 2px; padding-bottom: 2px;">Email Address</th>
+                                        <td  style="padding-top: 2px; padding-bottom: 2px;"><input type="email" name="cc_email" style="width:100%;" required /></td>
+                                    </tr>
+                                    <tr><th>&nbsp;</th><td>&nbsp;</td></tr>
+                                    <tr style="position:relative;">
+                                        <th  style="padding-top: 2px; padding-bottom: 2px;">Payable Amount</th>
+                                        <td  style="padding-top: 2px; padding-bottom: 2px;"><input type="text" name="cc_amount" min="1" style="width:80%;text-align:right;background-color: #cfe5cf;" class="no-spin"/><span style="position:absolute;right:-40px;" required>USD</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="checkout_instruction">
+                            <textarea rows=5 name="cc_notes" style="width:100%" id="comment" placeholder="Comments (Optional)" required></textarea>
+                        </div>
+                        <div class="checkout_instruction">
+                            <input type="hidden" name="action" value="payment"/>
+                            <button type="submit" class="btn btn-primary btn-xl btn-block" type="button">Make Payment</button>
+                        </div>
+                        <div style="display:flex; margin-top:25px;" class="checkout_instruction">
+                            <div style="font-size:12px;font-weight:500;white-space:nowrap;">PLEASE NOTE:&nbsp;</div>
+                            <div style="font-size:12px;font-weight:500;">Payments are processed by AIRWALLEX, after you press the Payment button, you will be taken to their website for payment processing and once completed, you will return back to our website with payment confirmation.</div>
+                        </div>
+                        <div class="checkout_bank" style="display:none;margin: 197px 0;">When making bank payment, please list <span style="color: red;">your invoice number and name</span> as the payment reference for easy following by our accounts department. </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+   $("[name='paymenttype_id").change(function(e) {
+            if(['BANK','USD_BANK'].includes($(this).val())){
+                $('.checkout_bank').show();
+                $('.checkout_instruction').hide();
+            }else{
+                 $('.checkout_bank').hide();
+                $('.checkout_instruction').show();
+            }
+            $('.payment-methods__item').removeClass('payment-methods__item--active');
+            $( this ).parent().parent().parent().parent().addClass('payment-methods__item--active');
+
+    });
+</script>
+{% endblock %}

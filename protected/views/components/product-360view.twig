@@ -1,0 +1,195 @@
+{% set layout   = inputs.layout|default('sidebar') %}
+{% set classes  = inputs.classes|default('') %}
+{% set product     = inputs.product     %}
+{% set view360     = inputs.view360   %}
+{% set viewsetting     = view360.get360setting   %}
+
+<link rel="stylesheet" type="text/css"  href="/skins/global.css"/>
+<script type="text/javascript" src="/skins/FWDViewer.js"></script>
+<script type="text/javascript">
+		
+		FWDUtils.onReady(function(){
+			var viewer =  new FWDViewer({
+				//----main----//
+				divHolderId:"myDiv",
+				skinPath:"/skins/{{viewsetting.skin_type}}",
+				playListId:"viewerPlaylist",
+				displayType:"{{viewsetting.display_type}}",
+				initializeOnlyWhenVisible:"no",
+				useVectorIcons:"{{viewsetting.vector_icons}}",
+				startDraggingMode:"{{viewsetting.dragging_mode}}",
+				useEntireScreenFor3dObject:"{{viewsetting.drag_spin}}",
+				stopRotationHorizontalAtEnds:"{{viewsetting.rotations_horizontal}}",
+				stopRotationVerticalAtEnds:"{{viewsetting.rotations_vertical}}",
+				inverseRotation:"{{viewsetting.inverse_drag}}",
+				addDragAndSpinSupport:"{{viewsetting.entire_screen}}",
+				disableMouseWheelZoom:"{{viewsetting.mousewheel_zoom}}",
+				autoScale:"{{viewsetting.auto_scale}}",
+				dragVertical:"{{viewsetting.drag_vertical}}",
+				startSlideShowOnLeave:"no",
+				startAtImage:0,
+				startAtSet:parseInt("{{viewsetting.start_set}}"),
+				viewerWidth:parseInt("{{viewsetting.max_width}}"),
+				viewerHeight:parseInt("{{viewsetting.max_height}}"),
+				viewerMinHeight:parseInt("{{viewsetting.min_height}}"),
+				imageWidth:500,
+				imageHeight:500,
+				imageOffsetX:parseInt("{{viewsetting.image_offset_x}}"),
+				imageOffsetY:parseInt("{{viewsetting.image_offset_y}}"),
+				zoomFactor:parseInt("{{viewsetting.zoom_fection}}"),
+				zoomSpeed:.2,
+				dragRotationSpeed:parseFloat("{{viewsetting.rotation_speed}}"),
+				dragAndSpinSpeed:.6,
+				buttonsRotationSpeed:300,
+				slideShowDelay:700,
+				backgroundColor:"#FFFFFF",
+				// Preloader.
+				preloaderText:"Loading object: ",
+				preloaderPosition:"center",
+				preloaderOffsetX:40,
+				preloaderOffsetY:40,
+				showPreloaderProgressBar:"yes",
+				preloaderWidth:"70%",
+				preloaderProgressBarBackgroundColor:"#8b859b",
+				preloaderProgressBarFillColor:"#bfbf06",
+				preloaderWindowBackgroundOpacity:.7,
+				preloaderFontColor:"#000000",
+				preloaderBackgroundSize:"large",
+				preloaderBackgroundColor:"#FFFFFF",
+				// Lightbox.
+				lightBoxWidth:1000,
+				lightBoxHeight:700,
+				lightBoxBackgroundOpacity:.8,
+				lightBoxBackgroundColor:"#000000",
+				// Controller.
+				buttons:"roteteleft,rotateright, scrollbar,  fullscreen",
+				buttonsToolTips:" Rotate left, Rotate right, Zoom level: , Full screen/Normal screen",
+				showControllerBackground:'yes',
+				controllerHorizontalPosition:"center",
+				controllerVerticalPosition:"bottom",
+				inverseNextAndPrevRotation:"yes",
+				addKeyboardSupport:"yes",
+				slideShowAutoPlay:"no",
+				startSpaceBetweenButtons:28,
+				spaceBetweenButtons:20,
+				startSpaceForScrollBarButtons:20,
+				startSpaceForScrollBar:20,
+				hideControllerDelay:300,
+				controllerMaxWidth:815,
+				controllerBackgroundOpacity:1,
+				controllerOffsetWidth:20,
+				controllerOffsetY:20,
+				scrollBarOffsetX:0,
+				scrollBarHandlerOffsetX:4,
+				scrollBarHandlerToolTipOffsetY:4,
+				zoomInAndOutToolTipOffsetY:-10,
+				buttonsToolTipOffsetY:-10,
+				link:"http://www.google.com",
+				buttonToolTipBackgroundColor:"#FFFFFF",
+				buttonToolTipFontColor:"#3A334B",
+				// Navigator.
+				showNavigator:"yes",
+				navigatorPosition:"topRight",
+				navigatorWidth:100,
+				navigatorOffsetX:10,
+				navigatorOffsetY:10,
+				navigatorBackgroundColor:"#FFFFFF",
+				navigatorHandlerColor:"#bfbf06",
+				navigatorBorderColor:"#E5E4E8",
+				// Info window.
+				infoWindowWidth:920,
+				infoWindowBackgroundOpacity:0,
+				infoWindowBackgroundColor:"#FFFFFF",
+				infoWindowScrollBarColor:"#8b859b",
+				// Markers.
+				showMarkersInfo:"no",
+				markerToolTipOffsetY:6,
+				// Context menu.
+				showScriptDeveloper:"no",
+				contextMenuLabels:"",
+				contextMenuBorderColor:"rgba(0,0,0,0)",
+				contextMenuSpacerColor:"#E5E4E8",
+				contextMenuItemTextNormalColor:"#3a334b",
+				contextMenuItemTextSelectedColor:"#FFFFFF",
+				contextMenuItemBackgroundNormalColor:"#FFFFFF",
+				contextMenuItemBackgroundSelectedColor:"#bfbf06",
+				contextMenuItemDisabledColor:"#cccccc"
+			});	
+			viewer.addListener(FWDViewer.ZOOM, zoomHandler);
+			viewer.addListener(FWDViewer.All_IMAGES_LOADED, allImagesLoadedHandler);
+		});
+		function zoomHandler(e){
+	            if(e.scale > 1.5){
+	                $('.360-images').addClass('show-360-images');
+	            }else{
+	                $('.360-images').removeClass('show-360-images');
+	            }
+		}
+		function allImagesLoadedHandler(){
+            $('.360-images').removeClass('show-360-images');
+        }
+
+</script>
+<div class="product-slider">
+		<div class="typography" >
+	     	<div class="spec__section" style="position: relative;">
+                <h2 class="section-header__title" style="padding-left: 38px;">{{product }} Features</h2>
+                {% if view360.get360SideImages | length > 0 %}
+                <div  class="360-images images-360-left show-360-images" ><img src="/brochureimage/{{view360.get360SideImages.image_left}}?crop=true&width=250&height=250" width="250px;"></div>
+                <div  class="360-images images-360-right show-360-images"><img src="/brochureimage/{{view360.get360SideImages.image_right}}?crop=true&width=250&height=250" width="250px;"></div>
+                {% endif %}
+               	<div id="myDiv" style="overflow:hidden;z-index:500" ></div>
+               	<div id="viewerPlaylist" style="display:none;">
+               		<ul data-markers="">
+               			{% for marker in view360.get360marker %}
+               				 	{% if marker.type =='tooltip_plus' %}
+	               				 	<li data-marker-type="tooltip-plus" data-marker-id="marker-{{marker.id}}" data-marker-window-width="{{marker.window_width}}" 
+	               				 	data-marker-window-height="540"
+	               				 	data-reg-point="{{marker.regression_point}}" data-marker-normal-state-path="/img/tooltip_plus.png" data-marker-selected-state-path="/img/marker1-rollover.png" data-marker-width="24" data-marker-height="24">
+									<img src="/360viewimage/{{marker.image}}"/>
+									<p style="white-space:pre-wrap;">{{view360.removedoublecode(marker.discription)}}</p>
+									</li>
+								{% elseif marker.type =='tooltip_play' %}
+									<li data-marker-type="tooltip-play"  data-marker-id="marker-{{marker.id}}" data-marker-window-width="{{marker.window_width}}"  data-reg-point="left"  data-marker-normal-state-path="/img/tooltip_play.png" data-marker-selected-state-path="/img/marker4-rollover.png" data-marker-width="24" data-marker-height="24">
+									<iframe src="https://www.youtube.com/embed/{{view360.getvideoid(marker.link_url)}}?fs=0" frameborder="0" width="{{(marker.window_width == '') ? '100%' : marker.window_width }}" height="{{(marker.window_height == '') ? '142px' : marker.window_height }}" allowfullscreen></iframe>
+									<p style="white-space:pre-wrap;">{{view360.removedoublecode(marker.discription)}}</p>
+									</li>
+								{% elseif marker.type == 'infowindow' %}
+									<li data-marker-type="infowindow" data-marker-id="marker-{{marker.id}}" data-reg-point="center" data-marker-normal-state-path="/img/infowindow.png" data-marker-selected-state-path="/img/marker2-rollover.png" data-marker-width="24" data-marker-height="24" data-tool-tip-label="{{marker.name}}</br><p style='text-align:center;font-size:10px;'><i>( click for more info )</i></p>">
+										<div class="third">
+											<h1>{{marker.name}}</h1>
+										{% if marker.link_url %}
+											<div class="youtube">
+												<iframe src="https://www.youtube.com/embed/{{view360.getvideoid(marker.link_url)}}?fs=0" frameborder="0" width="100%" allowfullscreen></iframe>
+											</div>
+										{% endif %}
+
+											<p style="white-space:pre-wrap;" innerHtml="sfs">{{marker.discription}}</p>
+										</div>
+									</li>
+								{% elseif marker.type =='link' %}
+									<li data-marker-type="link" data-marker-id="marker-{{marker.id}}" data-reg-point="center" data-marker-normal-state-path="/img/link.png" data-marker-selected-state-path="/img/marker3-rollover.png" data-marker-width="24" data-marker-height="24" data-tool-tip-label="{{marker.link_url}}" data-marker-url="{{marker.link_url}}" data-marker-target="_blank"></li>
+								{% else %}
+								{% endif %}
+               				{% endfor %}
+               		</ul>
+               		<div data-paylist="">
+					<div>
+						{% for shotv in view360.get360View %}
+						<ul>
+							<li data-small-image-path="/360viewimage/{{shotv.name}}?thumb=true"></li>
+							<li data-large-image-path="/360viewimage/{{shotv.name}}?thumb=false&crop=true&width=1600&height=1600"></li>
+							{% for marker in view360.get360marker %}
+								{% set marker_location     = view360.view360MarkerLocation(marker.id,shotv.id)   %}
+								{% if marker_location %}
+								<li data-marker-id="marker-{{marker.id}}" data-marker-x="{{marker_location.left-200}}" data-marker-y="{{marker_location.top+5}}" data-tooltip-offset-x="0"></li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					{% endfor %}
+					</div>
+				</div>
+               	</div>
+            </div>
+        </div>
+</div>

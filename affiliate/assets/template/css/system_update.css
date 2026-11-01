@@ -1,0 +1,67 @@
+    :root {
+        --main-bg-color: #f8f9fa;
+        --console-bg-color: #000;
+        --console-font-color: #fff;
+        --success-color: #4CAF50;
+        --error-color: #F44336;
+        --warning-color: #FFC107;
+        --footer-bg: #E0E8F0;
+    }
+    body {
+        background-color: var(--main-bg-color);
+        font-family: 'Roboto Mono', monospace;
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.3s ease;
+    }
+    .terminal-container {
+        width: 85%;
+        margin: 20px auto;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .terminal-home {
+        padding: 1.5em;
+        background-color: var(--console-bg-color);
+        color: var(--console-font-color);
+        max-height: 70vh;
+        overflow-y: scroll;
+        border-radius: 0 0 12px 12px;
+    }
+    .console {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.5;
+        transition: color 0.3s ease;
+    }
+    .console.success {
+        color: var(--success-color);
+    }
+    .console.error {
+        color: var(--error-color);
+    }
+    .console.warning {
+        color: var(--warning-color);
+    }
+    .custom-button {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin: 0 5px;
+    }
+    .custom-red {
+        background-color: var(--error-color);
+    }
+    .custom-yellow {
+        background-color: var(--warning-color);
+    }
+    .custom-green {
+        background-color: #198754;
+    }
+    footer {
+        background: var(--footer-bg);
+        padding: 1em;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }

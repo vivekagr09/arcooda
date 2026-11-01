@@ -1,0 +1,34 @@
+{% macro input_radio(args={}) %}
+    {% set classes = args.classes|default('') %}
+    {% set name = args.name|default('') %}
+    {% set checked = args.checked|default(false) %}
+    {% set disabled = args.disabled|default(false) %}
+    {% set value = args.value|default('') %}
+    {% set required = args.required|default(false) %}
+
+    <span class="{{ classnames(classes, 'input-radio') }}">
+        <span class="input-radio__body">
+            <input class="input-radio__input"{% if name %} name="{{ name }}"{% endif %} {% if value %} value="{{ value }}"{% endif %} type="radio"{% if checked %} checked{% endif %}{% if disabled %} disabled{% endif %} {% if required %} required{% endif %} />
+            <span class="input-radio__circle"></span>
+        </span>
+    </span>
+{% endmacro %}
+
+{% macro input_check(args={}) %}
+    {% set classes = args.classes|default('') %}
+    {% set id = args.id|default('') %}
+    {% set name = args.name|default('') %}
+    {% set value = args.value|default('') %}
+    {% set checked = args.checked|default(false) %}
+    {% set disabled = args.disabled|default(false) %}
+    {% set value = args.value|default('') %}
+    {% set required = args.required|default(false) %}
+
+    <span class="{{ classnames('input-check', classes) }}">
+        <span class="input-check__body">
+            <input class="input-check__input" type="checkbox"{% if id %} id="{{ id }}"{% endif %} {% if value %} value="{{ value }}"{% endif %} {% if name %} name="{{ name }}"{% endif %}{% if value %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}{% if disabled %} disabled="disabled"{% endif %} {% if required %} required{% endif %} />
+            <span class="input-check__box"></span>
+            <span class="input-check__icon">{{ svg('check-9x7.svg') }}</span>
+        </span>
+    </span>
+{% endmacro %}

@@ -1,0 +1,145 @@
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F0F4F9;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+@media print {
+	.print_hide {
+		display: none;
+	}
+}
+
+div.shipinvoice_content .unfinished {
+	background-color: yellow;
+}
+
+div.shipinvoice_content a {
+	color: black;
+}
+
+div.shipinvoice_content {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+}
+
+div.shipinvoice_content table {
+	text-align: left;
+	width: 95%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border: 1px #CCCCCC solid;
+}
+
+div.shipinvoice_content tr {
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Verdana;
+	font-weight: normal;
+}
+
+div.shipinvoice_content pre {
+	margin: 0 0 0 0;
+}
+
+div.shipinvoice_content pre.alt {
+	background-color: #EEEEEE;
+}
+
+div.shipinvoice_content td {
+	/*	padding: 3px; */
+	padding: 2px 1px 2px 1px;
+}
+
+div.shipinvoice_content th,
+div.shipinvoice_content thead {
+	background-color: #FFEECC;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	font-size: 75%;
+}
+
+div.shipinvoice_content table.vbox td,
+div.shipinvoice_content table.vbox th,
+div.shipinvoice_content table.vbox thead {
+	border: 1px solid white;
+}
+
+div.shipinvoice_content table.buttons {
+	text-align: center;
+}
+
+div.shipinvoice_content table.wide {
+	width: 95%;
+}
+
+div.shipinvoice_content tr.alt {
+	background-color: #EEEEE0;
+}
+
+div.shipinvoice_content tr.highlight {
+	background-color: #90EEA0;
+}
+
+div.shipinvoice_content tr.mylock {
+	background-color: #90A0EE;
+}
+
+div.shipinvoice_content tr.locked {
+	background-color: #EE90A0;
+}
+
+div.shipinvoice_content td.collapse {
+	width: 1px;
+}
+
+div.shipinvoice_content th.collapse {
+	width: 1px;
+}
+
+div.shipinvoice_content td.left_title {
+	text-align: right;
+	background-color: #EEEEE0;
+	color: #000000;
+	font-weight: bold;
+}
+
+div.shipinvoice_content input.intext,
+div.shipinvoice_content input.infile,
+div.shipinvoice_content textarea,
+div.shipinvoice_content select {
+	width: 98%;
+}
+
+div.shipinvoice_content th a {
+	color: #000000;
+}
+
+div.shipinvoice_content td a {
+	color: #000000;
+}
+
+div.shipinvoice_content table.spacetable td {
+	border: 2px solid white;
+}
+
+div.shipinvoice_content div.flagHeader {
+	border-bottom: 1px solid green;
+	text-align: left;
+	width: 95%
+}
+
+div.shipinvoice_content div.flagHeader span {
+	color: white;
+	background-color: green;
+	padding: 0px 20px;
+}
+
+div.shipinvoice_content div.flagHeader span a {
+	color: white;
+}

@@ -1,0 +1,42 @@
+{% set product = inputs.product %}
+{% set product_manual = inputs.product_manual %}
+<div class="products-view">
+    <div class="table-responsive" >
+        <table class="compare__table compare-table" style="border: 1px solid #ebebeb;">
+           <tbody>
+              <tr class="compare-table__row">
+                <th class="compare-table__column compare-table__column--product" style="width:20%;">Date</th>
+                <th class="compare-table__column compare-table__column--product" style="text-align: left;width:30%;" >Name</th>
+                <th class="compare-table__column compare-table__column--product" style="text-align: left;width:40%;">Notes</th>
+                <th class="compare-table__column compare-table__column--product" style="width:10%">File</th>
+              </tr>
+              {% for key,manual in product_manual %}
+              {% set filetype=product.getfiletype(manual.file_name) %}
+              <tr class="compare-table__row" style="{{(key%2==1)?'background-color: #f5f5f0;':''}}">
+                 <td class="compare-table__column compare-table__column--product" > {{ manual.created_at |date("d/m/Y") }}</td>
+                <td class="compare-table__column compare-table__column--product media-heading" style="text-align: left;"> <a style="cursor:pointer;font-size: 14px;" title='View' href='/manual/view-{{manual.id}}.html?type=manual' target="_blank"> {{ manual.name|e }}</a></td>
+                <td class="compare-table__column compare-table__column--product" style="text-align: left;font-size: 14px;"> {{ manual.comment|e }}</td>
+                <td class="compare-table__column compare-table__column--product">
+                    <a style="cursor:pointer;" title='View' href='/manual/view-{{manual.id}}.html?type=manual' target="_blank">
+                        {% if filetype == 'pdf' or filetype == 'pptx' %} 
+                        {{svg('pdf.png')}}
+                        {% elseif (filetype == 'png') or (filetype == 'jpg') or (filetype == 'jpeg') %} 
+                        {{svg('jpg.png')}}
+
+                            {% elseif (filetype == 'xlsx') %}
+                                {{svg('xls.png')}}
+                            
+                            {% elseif (filetype == 'docx' or filetype == 'doc') %}
+                            {{svg('doc.png')}}
+                                
+                            {% else %}
+                              {{svg('jpg.png')}}
+                                           
+                            {% endif %}
+                      </a></td>
+              </tr>
+               {% endfor %}
+           </tbody>
+        </table>
+     </div>
+</div>

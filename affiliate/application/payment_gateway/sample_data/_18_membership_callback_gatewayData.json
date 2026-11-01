@@ -1,0 +1,7 @@
+{
+  "method": "customCallback",
+  "id": "9",
+  "action": "cancel",
+  "return_url": "http://localhost/aff/6-0-0-0/membership/changeUrlAfterSuccessPayment/9",
+  "cancel_url": "http://localhost/aff/6-0-0-0/usercontrol/purchase_plan"
+}

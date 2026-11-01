@@ -1,0 +1,188 @@
+{#
+// inputs:
+// - image:   boolean - featured image
+// - sidebar: string  - one of [left, right, none]
+// - page: int
+// - pages: int
+// - page_url: string
+// - categories:
+// - posts:
+// - comments:
+#}
+
+{% set image   = inputs.image %}
+{% set sidebar = inputs.sidebar|default('none') %}
+
+{% set page     = inputs.page %}
+{% set pages    = inputs.pages %}
+{% set page_url = inputs.page_url %}
+
+{#% set posts      = data('blog-posts.json') %#}
+{% set posts      = inputs.posts %}
+{#% set comments   = data('blog-post-comments.json') %#}
+{% set comments   = inputs.comments %}
+{% set categories = inputs.categories %}
+
+{% set post = posts[0] %}
+
+{% set post_header_classes = classnames('post-view__header post-header', {
+    'post-header--has-image': image,
+}) %}
+
+<div class="block post-view">
+    <div class="{{ post_header_classes }}">
+        {% if image and post.image %}
+            <div class="post-header__image" style="background-image:url('{{ image(post.image)|e }}')"></div>
+        {% endif %}
+        <div class="post-header__body">
+            <div class="post-header__categories">
+                <ul class="post-header__categories-list">
+                    <li class="post-header__categories-item">
+                        <a href="" class="post-header__categories-link">Latest News</a>
+                    </li>
+                </ul>
+            </div>
+            <h1 class="post-header__title">{{ post.name|e }}</h1>
+            <div class="post-header__meta">
+                <ul class="post-header__meta-list">
+                    {#<li class="post-header__meta-item">By <a href="" class="post-header__meta-link">Jessica Moore</a></li>#}
+                    <li class="post-header__meta-item">{{ post.date_long|e }}</li>
+                    {#<li class="post-header__meta-item"><a href="" class="post-header__meta-link">4 Comments</a></li>#}
+                </ul>
+            </div>
+        </div>
+        {% include '/components/decor.twig' with {inputs: {
+            type: 'bottom',
+            classes: 'post-header__decor',
+        }} %}
+    </div>
+
+    <div class="container">
+        <div class="post-view__body">
+            {% if sidebar == 'left' %}
+                <div class="post-view__item post-view__item-sidebar">
+                    {% include '/components/blog-sidebar.twig' with {inputs: {categories: categories}} %}
+                </div>
+            {% endif %}
+            <div class="post-view__item post-view__item-post">
+                <div class="post-view__card post">
+                    <div class="post__body typography">
+                        {{ markdown(post.text) }}
+                        {% for extra in post.getAllImages %}
+                            <figure><img src="{{ extra.src|e }}" alt="{{ extra.caption|e }}" title="{{ extra.caption|e }}" /></figure>
+                        {% endfor %}
+                         {% for video in post.getAllVideos %}
+                            <iframe width="100%" height="400" src="https://www.youtube.com/embed/{{post.getvideoid(video.youtube_id)}}" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+                        {% endfor %}
+                    </div>
+
+
+                {% if posts[1] or posts[2] %}
+                <div class="post-view__card post-navigation">
+                    <div class="post-navigation__body">
+                        {% if posts[1] %}
+                        <a class="post-navigation__item post-navigation__item--prev" href="{{ posts[1].url|e }}">
+                            {% if posts[1].image %}
+                                <div class="post-navigation__item-image">
+                                    <img src="{{ image(posts[1].image)|e }}" alt="{{ posts[1].image.alt|e }}" width="100" />
+                                </div>
+                            {% endif %}
+                            <div class="post-navigation__item-info">
+                                <div class="post-navigation__direction">
+                                    <div class="post-navigation__direction-arrow">
+                                        {{ svg('arrow-rounded-left-7x11.svg') }}
+                                    </div>
+                                    <div class="post-navigation__direction-title">
+                                        Previous post
+                                    </div>
+                                </div>
+                                <div class="post-navigation__item-title">
+                                    {{ posts[1].name }}
+                                </div>
+                            </div>
+                        </a>
+                        {% endif %}
+
+                        {% if posts[2] %}
+                        <a class="post-navigation__item post-navigation__item--next" href="{{ posts[2].url|e }}">
+                            <div class="post-navigation__item-info">
+                                <div class="post-navigation__direction">
+                                    <div class="post-navigation__direction-title">
+                                        Next post
+                                    </div>
+                                    <div class="post-navigation__direction-arrow">
+                                        {{ svg('arrow-rounded-right-7x11.svg') }}
+                                    </div>
+                                </div>
+                                <div class="post-navigation__item-title">
+                                    {{ posts[2].name }}
+                                </div>
+                            </div>
+                            {% if posts[2].image %}
+                                <div class="post-navigation__item-image">
+                                    <img src="{{ image(posts[2].image)|e }}" alt="{{ posts[2].image.alt|e }}" width="100" />
+                                </div>
+                            {% endif %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {#<div class="post-view__card">
+                    <h2 class="post-view__card-title">Comments ({{ comments.count }})</h2>
+
+                    <div class="post-view__card-body comments-view">
+                        {% include '/components/comments-list.twig' with {inputs: {
+                            comments: comments.items,
+                            classes: 'comments-view__list',
+                        }} %}
+
+                        <div class="comments-view__pagination">
+                            {% include '/components/pagination.twig' with {inputs: {
+                                page: page,
+                                page_url: page_url,
+                                pages: pages,
+                            }} %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-view__card">
+                    <h2 class="post-view__card-title">Write A Comment</h2>
+
+                    <form class="post-view__card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="comment-first-name">First Name</label>
+                                <input type="text" class="form-control" id="comment-first-name" placeholder="First Name" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="comment-last-name">Last Name</label>
+                                <input type="text" class="form-control" id="comment-last-name" placeholder="Last Name" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="comment-email">Email Address</label>
+                                <input type="email" class="form-control" id="comment-email" placeholder="Email Address" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment-content">Comment</label>
+                            <textarea class="form-control" id="comment-content" rows="6"></textarea>
+                        </div>
+                        <div class="form-group mb-0">
+                            <button type="submit" class="btn btn-primary mt-md-4 mt-2">Post Comment</button>
+                        </div>
+                    </form>
+                </div>#}
+            </div>
+            {% if sidebar == 'right' %}
+                <div class="post-view__item post-view__item-sidebar">
+                    {% include '/components/blog-sidebar.twig' with {inputs: {categories: categories}} %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% include '/blocks/block-space.twig' with {inputs: {layout: 'before-footer'}} %}
