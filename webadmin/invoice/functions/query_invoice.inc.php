@@ -387,6 +387,10 @@ if (!function_exists('invoiceToDatabase')) {
             }
         }
 
+        if (function_exists('invoiceProductSupplierCountry') && array_key_exists('def_country', $item)) {
+            $item['def_country'] = invoiceProductSupplierCountry($item['def_country']);
+        }
+
         $invoice_id = $DB->modelSave(
             $item,
             INVOICE_TABLENAME,
@@ -400,7 +404,6 @@ if (!function_exists('invoiceToDatabase')) {
             'message_notes'   => end($DB->all_queries),
         );
         invoiceHistoryToDatabase($invoice_id, $message);
-
         $changes = array();
         foreach ($before as $k => $v) {
             if (array_key_exists($k, $item) && $item[$k] != $v) {

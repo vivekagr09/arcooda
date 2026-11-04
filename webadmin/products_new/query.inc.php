@@ -1721,7 +1721,7 @@ if (!function_exists('productAverageCostPrice')) {
         $stock = array();
 
         if ($query = $DB->query(sprintf(
-            "SELECT `unit_cost` + `unit_freight` AS `cost_price`,`unit_currency`, `movement`, `movement` AS `remain` FROM  `products_inventory` WHERE `movement` > 0 AND `stock_type` = 'NEW' AND `product_id` = %d ORDER BY `created_at` ASC",
+            "SELECT `total_cost` AS `cost_price`, 'USD' AS `unit_currency`, `movement`, `movement` AS `remain` FROM  `products_inventory` WHERE `movement` > 0 AND `stock_type` = 'NEW' AND `product_id` = %d ORDER BY `created_at` ASC",
             $product_id
         ))) {
             while ($row = $DB->fetch_assoc($query)) {
@@ -1762,6 +1762,113 @@ if (!function_exists('productAverageCostPrice')) {
             return bcdiv($sum, $count, 2);
         }
         return $price;
+    }
+}
+if (!function_exists('productWarehouseAverageCost')) {
+    /**
+     * Warehouse average cost and available stock, plus the combined totals.
+     * Remaining stock is reduced the same way as productAverageCostPrice:
+     * purchases are kept in date order and later sales consume the oldest stock.
+     * A sale is applied to its own warehouse. A sale with no warehouse consumes
+     * the oldest stock across warehouses.
+     *
+     * @param int $product_id
+     *
+     * @return array{
+     *     warehouses: array<int, array{warehouse_id:int, warehouse:string, stock:int, average_cost:string}>,
+     *     stock: int,
+     *     average_cost: string
+     * }
+     */
+    function productWarehouseAverageCost($product_id)
+    {
+        global $DB;
+
+        $product_id = intval($product_id);
+        $lots = array();
+        $names = array();
+
+        if ($query = $DB->query(sprintf(
+            "SELECT `i`.`warehouse_id`, `i`.`movement`, `i`.`total_cost`, `w`.`company` AS `warehouse`
+            FROM `products_inventory` AS `i`
+            LEFT JOIN `tbl_warehouse` AS `w` ON `w`.`id` = `i`.`warehouse_id`
+            WHERE `i`.`stock_type` = 'NEW' AND `i`.`product_id` = %d
+            ORDER BY `i`.`created_at` ASC, `i`.`id` ASC",
+            $product_id
+        ))) {
+            while ($row = $DB->fetch_assoc($query)) {
+                $warehouseId = intval($row['warehouse_id']);
+                $movement = intval($row['movement']);
+                if (!array_key_exists($warehouseId, $names)) {
+                    $names[$warehouseId] = (string) ($row['warehouse'] ?? '');
+                }
+                if ($movement > 0) {
+                    $lots[] = array(
+                        'warehouse_id' => $warehouseId,
+                        'cost_price'   => (string) $row['total_cost'],
+                        'remain'       => $movement,
+                    );
+                    continue;
+                }
+                if ($movement >= 0) {
+                    continue;
+                }
+
+                $qty = 0 - $movement;
+                foreach ($lots as $i => $lot) {
+                    if ($warehouseId > 0 && $lot['warehouse_id'] !== $warehouseId) {
+                        continue;
+                    }
+                    $before = $lots[$i]['remain'];
+                    $lots[$i]['remain'] = max(0, $before - $qty);
+                    $qty -= $before - $lots[$i]['remain'];
+                    if ($qty <= 0) {
+                        break;
+                    }
+                }
+            }
+            $DB->free_result($query);
+        }
+
+        $warehouses = array();
+        foreach ($lots as $lot) {
+            $warehouseId = $lot['warehouse_id'];
+            if (!array_key_exists($warehouseId, $warehouses)) {
+                $warehouses[$warehouseId] = array(
+                    'warehouse_id' => $warehouseId,
+                    'warehouse'    => $names[$warehouseId] ?? '',
+                    'stock'        => 0,
+                    'cost_sum'     => '0.00',
+                );
+            }
+            if ($lot['remain'] <= 0 || bccomp($lot['cost_price'], '0.00', 2) === 0) {
+                continue;
+            }
+            $price = convertCurrency($lot['cost_price'], 'USD', 'USD', false, 4);
+            $warehouses[$warehouseId]['stock'] += $lot['remain'];
+            $warehouses[$warehouseId]['cost_sum'] = bcadd(
+                $warehouses[$warehouseId]['cost_sum'],
+                bcmul($price, (string) $lot['remain'], 2),
+                2
+            );
+        }
+
+        $totalStock = 0;
+        $totalSum = '0.00';
+        foreach ($warehouses as $warehouseId => $warehouse) {
+            $totalStock += $warehouse['stock'];
+            $totalSum = bcadd($totalSum, $warehouse['cost_sum'], 2);
+            $warehouses[$warehouseId]['average_cost'] = ($warehouse['stock'] > 0)
+                ? bcdiv($warehouse['cost_sum'], (string) $warehouse['stock'], 2)
+                : '0.00';
+            unset($warehouses[$warehouseId]['cost_sum']);
+        }
+
+        return array(
+            'warehouses'   => $warehouses,
+            'stock'        => $totalStock,
+            'average_cost' => ($totalStock > 0) ? bcdiv($totalSum, (string) $totalStock, 2) : '0.00',
+        );
     }
 }
 if (!function_exists('productReservedByColourTotalStock')) {

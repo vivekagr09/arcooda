@@ -412,6 +412,41 @@ if (!function_exists("invoiceProductsFromPost")) {
         return $products;
     }
 }
+if (!function_exists('invoiceProductSupplierCountry')) {
+    /**
+     * Checkout stores a product_country_location id. invoice_products.supplier_country
+     * is a short country code. MariaDB STRICT_TRANS_TABLES rejects the raw id.
+     *
+     * @param mixed $value
+     *
+     * @return string
+     */
+    function invoiceProductSupplierCountry($value)
+    {
+        global $DB;
+
+        $value = trim((string) $value);
+        if ($value === '' || !ctype_digit($value)) {
+            return $value;
+        }
+
+        static $cache = array();
+        $locationId = intval($value);
+        if (array_key_exists($locationId, $cache)) {
+            return $cache[$locationId];
+        }
+
+        $code = '';
+        if ($row = $DB->query_first(sprintf(
+            "SELECT `code` FROM `product_country_location` WHERE `id` = %d LIMIT 1",
+            $locationId
+        ), MYSQLI_ASSOC)) {
+            $code = strtoupper(trim((string) ($row['code'] ?? '')));
+        }
+
+        return $cache[$locationId] = ($code !== '') ? $code : $value;
+    }
+}
 if (!function_exists("invoiceProductsToDatabase")) {
     /**
      * @param int       $id
@@ -439,9 +474,9 @@ if (!function_exists("invoiceProductsToDatabase")) {
             "SHOW COLUMNS FROM %s",
             INVOICE_PRODUCT_TABLENAME
         ))) {
-            while ($row = $DB->fetch_array($query)) {
-                if ('auto_increment' != $row[5]) {
-                    $fields[$row[0]] = $row[4];
+            while ($row = $DB->fetch_assoc($query)) {
+                if (stripos((string) $row['Extra'], 'auto_increment') === false) {
+                    $fields[$row['Field']] = $row;
                 }
             }
             $DB->free_result($query);
@@ -449,7 +484,7 @@ if (!function_exists("invoiceProductsToDatabase")) {
 
         $re_sort = array();
         foreach ($products as $key => $product) {
-            $re_sort[$key] = $product['product_rank'];
+            $re_sort[$key] = $product['product_rank'] ?? 0;
         }
 
         asort($re_sort);
@@ -464,10 +499,25 @@ if (!function_exists("invoiceProductsToDatabase")) {
                 $product[INVOICE_PRODUCT_SECONDARYKEY] = $id;
             }
 
-            foreach ($product as $key => $value) {
-                if (array_key_exists($key, $fields)) {
-                    $insert_vals[$key] = addslashes($value);
+            foreach ($fields as $key => $column) {
+                $value = null;
+                if (array_key_exists($key, $product) && $product[$key] !== null && !is_array($product[$key]) && !is_object($product[$key])) {
+                    $value = (string) $product[$key];
+                } elseif ('NO' === $column['Null'] && $column['Default'] === null) {
+                    $value = preg_match('/int|decimal|float|double|bit|year|numeric/i', $column['Type']) ? '0' : '';
+                } else {
+                    continue;
                 }
+
+                if ('supplier_country' === $key) {
+                    $value = invoiceProductSupplierCountry($value);
+                }
+
+                $insert_vals[$key] = addslashes($value);
+            }
+
+            if (!count($insert_vals)) {
+                continue;
             }
 
             $DB->query(sprintf(

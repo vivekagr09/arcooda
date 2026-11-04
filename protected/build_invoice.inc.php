@@ -21,7 +21,8 @@ use app\models\TwigProduct;
 session_start();
 global $_GLOBALS;
 global $DB;
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 moduleLoad('bulk'); //bulkFromDatabase, bulkProductsFromDatabase
 moduleLoad('freight'); //getFreightServices
 moduleLoad('insurance'); //insuranceCalculateAmount
@@ -46,6 +47,33 @@ if (!function_exists('bcceil')) {
         }
 
         return bcadd($number, '0.0', 0);
+    }
+}
+if (!function_exists(__NAMESPACE__ . '\\invoiceProductCost')) {
+    /**
+     * Convert a product cost without round() or the sale-price decimal.
+     *
+     * @param string|int|float $amount
+     * @param string           $fromCur
+     * @param string           $toCur
+     *
+     * @return string
+     */
+    function invoiceProductCost($amount, $fromCur, $toCur)
+    {
+        $amount = (string) $amount;
+        if ($amount === '') {
+            return '0.0000';
+        }
+        if ($toCur === $fromCur || $toCur === '' || $fromCur === '') {
+            return $amount;
+        }
+        $exRates = getExchangeRateList();
+        if (!isset($exRates[$toCur], $exRates[$fromCur]) || bccomp((string) $exRates[$toCur], '0', 8) === 0) {
+            return $amount;
+        }
+
+        return bcmul($amount, bcdiv((string) $exRates[$fromCur], (string) $exRates[$toCur], 8), 4);
     }
 }
 
@@ -1004,7 +1032,7 @@ if (is_array($cart_array_data)) {
                     'sub_id'                => $product['sub_id'] ?? 0,
                     'supplier_country'      => $product['country_location'],
                     'supplier_currency'     => 'USD',
-                    'product_cost'          => convertCurrencyNEw($product['cost_price'], $product['cost_currency'],'USD', false, $product['decimal']),
+                    'product_cost'          => invoiceProductCost($product['cost_price'], $product['cost_currency'], 'USD'),
                     'product_offer'         => $product['sales_price'],
                     'is_free'               => $v['is_free'],
                     'free_with_product'     => $v['free_with_product'],
@@ -1371,7 +1399,12 @@ if (is_array($cart_array_data)) {
                     $productQtyAftrFree = $productQtyAftrFree - 1;
                 }
                 foreach ($price_keys as $k2) {
-                    $invoice_product['product_' . $k2 . '_total'] = bcmul($productQtyAftrFree, $invoice_product['product_' . $k2], $invoice_product['decimal']);
+                    $invoice_product['product_' . $k2 . '_total'] = bcmul($productQtyAftrFree, $invoice_product['product_' . $k2], ($k2 === 'cost') ? 4 : $invoice_product['decimal']);
+                    if ($k2 === 'cost') {
+                        $invoice_product['product_costau'] = invoiceProductCost($invoice_product['product_cost'], 'USD', 'AUD');
+                        $invoice_product['product_costus'] = $invoice_product['product_cost'];
+                        continue;
+                    }
                     $invoice_product['product_' . $k2 . 'au'] = convertCurrencyNEw($invoice_product['product_' . $k2], $invoice['invoice_currency'], 'AUD');
                     $invoice_product['product_' . $k2 . 'us'] = convertCurrencyNEw($invoice_product['product_' . $k2], $invoice['invoice_currency'], 'USD');
                 }
@@ -1455,7 +1488,7 @@ if (is_array($cart_array_data)) {
                     'generic_code'          => $bulk['bulk_number'],
                     'prod_count'            => $count,
                     'product_condition'     => $bulk['bulk_condition'],
-                    'product_cost'          => convertCurrencyNEw($bulk['bulk_cost'], $bulk['bulk_currency'], $invoice['invoice_currency']),
+                    'product_cost'          => invoiceProductCost($bulk['bulk_cost'], $bulk['bulk_currency'], $invoice['invoice_currency']),
                     'product_id'            => 0,
                     'product_name'          => $bulk['title'],
                     'product_offer'         => convertCurrencyNEw($bulk['bulk_offer'], $bulk['bulk_currency'], $invoice['invoice_currency']),
@@ -1538,6 +1571,11 @@ if (is_array($cart_array_data)) {
                 $invoice_product['product_notes'] = trim(implode("\n", $notes));
 
                 foreach ($price_keys as $k2) {
+                    if ($k2 === 'cost') {
+                        $invoice_product['product_costau'] = invoiceProductCost($invoice_product['product_cost'], $invoice['invoice_currency'], 'AUD');
+                        $invoice_product['product_costus'] = invoiceProductCost($invoice_product['product_cost'], $invoice['invoice_currency'], 'USD');
+                        continue;
+                    }
                     $invoice_product['product_' . $k2 . 'au'] = convertCurrencyNEw($invoice_product['product_' . $k2], $invoice['invoice_currency'], 'AUD');
                     $invoice_product['product_' . $k2 . 'us'] = convertCurrencyNEw($invoice_product['product_' . $k2], $invoice['invoice_currency'], 'USD');
                 }
@@ -1578,6 +1616,11 @@ foreach ($invoice_discounts as $k => $v) {
     }
 
     foreach ($price_keys as $k2) {
+        if ($k2 === 'cost') {
+            $invoice_product['product_costau'] = invoiceProductCost($invoice_product['product_cost'], $invoice['invoice_currency'], 'AUD');
+            $invoice_product['product_costus'] = invoiceProductCost($invoice_product['product_cost'], $invoice['invoice_currency'], 'USD');
+            continue;
+        }
         $invoice_product['product_' . $k2 . 'au'] = convertCurrencyNEw($invoice_product['product_' . $k2], $invoice['invoice_currency'], 'AUD');
         $invoice_product['product_' . $k2 . 'us'] = convertCurrencyNEw($invoice_product['product_' . $k2], $invoice['invoice_currency'], 'USD');
     }

@@ -278,7 +278,6 @@ function item_suppliers_row($count = '[ROW_COUNT]', $row_data = array(),$selles_
                 <?php
                     $averate_cost=0.00;
                     if($row_data['product_id']>0){
-
                          $averate_cost= productAverageCostPrice($row_data['product_id']);
                     }
 

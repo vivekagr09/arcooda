@@ -19,54 +19,71 @@ if (0 == $dpoints) {
 ?>
 
 <script type="text/javascript">
+function price2(value) {
+    var n = parseFloat(value);
+    if (isNaN(n) || !isFinite(n)) {
+        return '0.00';
+    }
+    return n.toFixed(2);
+}
 $('body').on('change','.change_sales_price',function(){
     var rowid=$(this).attr('data-row');
     var cost_usd = getValue('subproductprice['+rowid+'][price_usd]');
-    setValue('subproductprice['+rowid+']['+$(this).attr('data-profit')+']',($(this).val()-cost_usd).toFixed(2));
-    var markup=((($(this).val()-cost_usd)/cost_usd)*100).toFixed(2);
+    setValue('subproductprice['+rowid+']['+$(this).attr('data-profit')+']',price2($(this).val()-cost_usd));
+    var markup=price2(((($(this).val()-cost_usd)/cost_usd)*100));
     setValue('subproductprice['+rowid+']['+$(this).attr('data-markup')+']',markup);
 })
 $('body').on('change','.change_markup',function(){
     var rowid=$(this).attr('data-row');
-    var cost_usd = getValue('subproductprice['+rowid+'][price_usd]');
-    var salesprice= (((cost_usd*$(this).val())/100)+parseInt(cost_usd)).toFixed(2);
-    var profitus=(salesprice-cost_usd).toFixed(2);
+    var cost_usd = parseFloat(getValue('subproductprice['+rowid+'][price_usd]')) || 0;
+    var salesprice= price2(((cost_usd*parseFloat($(this).val())||0)/100)+cost_usd);
+    var profitus=price2(salesprice-cost_usd);
     setValue('subproductprice['+rowid+']['+$(this).attr('data-sales')+']',salesprice);
     setValue('subproductprice['+rowid+']['+$(this).attr('data-profit')+']',profitus);
 });
 $('body').on('change','.change_profit',function(){
     var rowid=$(this).attr('data-row');
-    var cost_usd = getValue('subproductprice['+rowid+'][price_usd]');
-    var salesprice= (parseFloat(cost_usd)+parseFloat($(this).val())).toFixed(2);
-    var markup=(((salesprice-cost_usd)/cost_usd)*100).toFixed(2);
+    var cost_usd = parseFloat(getValue('subproductprice['+rowid+'][price_usd]')) || 0;
+    var salesprice= price2(cost_usd+parseFloat($(this).val()));
+    var markup=price2(((salesprice-cost_usd)/cost_usd)*100);
     setValue('subproductprice['+rowid+']['+$(this).attr('data-sales')+']',salesprice);
     setValue('subproductprice['+rowid+']['+$(this).attr('data-markup')+']',markup);
 });
 $('body').on('click','.copy-default-data',function(){
     var defaultkey=$(this).attr('data-default');
     var datakey=$(this).attr('data-key');
-    setValue('subproductprice['+datakey+'][markup]',getValue('subproductprice['+defaultkey+'][markup]'));
-    setValue('subproductprice['+datakey+'][markup_arcooda]',getValue('subproductprice['+defaultkey+'][markup_arcooda]'));
-    setValue('subproductprice['+datakey+'][markup_distributor]',getValue('subproductprice['+defaultkey+'][markup_distributor]'));
-    setValue('subproductprice['+datakey+'][markup_container]',getValue('subproductprice['+defaultkey+'][markup_container]'));
+    setValue('subproductprice['+datakey+'][markup]',price2(getValue('subproductprice['+defaultkey+'][markup]')));
+    setValue('subproductprice['+datakey+'][markup_arcooda]',price2(getValue('subproductprice['+defaultkey+'][markup_arcooda]')));
+    setValue('subproductprice['+datakey+'][markup_distributor]',price2(getValue('subproductprice['+defaultkey+'][markup_distributor]')));
+    setValue('subproductprice['+datakey+'][markup_container]',price2(getValue('subproductprice['+defaultkey+'][markup_container]')));
     
     $('.change_markup').trigger("change")
 });
+$('body').on('blur', '#sectionPricing input[type="number"], #sectionPricing input[name$="[special_priceus]"]', function () {
+    if (this.value !== '') {
+        this.value = price2(this.value);
+    }
+});
 $('body').on('change','.change_codt_price',function(){
     var rowid=$(this).attr('data-row');
-    var cost_usd = $(this).val();
-    setValue('subproductprice['+rowid+'][product_profitus_arcooda]',getValue('subproductprice['+rowid+'][sales_price_arcooda]')-cost_usd);
-    setValue('subproductprice['+rowid+'][markup_arcooda]',(((getValue('subproductprice['+rowid+'][sales_price_arcooda]')-cost_usd)/cost_usd)*100).toFixed(2));
-    setValue('subproductprice['+rowid+'][product_profitus_distributor]',getValue('subproductprice['+rowid+'][sales_price_distributor]')-cost_usd);
-    setValue('subproductprice['+rowid+'][markup_distributor]',(((getValue('subproductprice['+rowid+'][sales_price_distributor]')-cost_usd)/cost_usd)*100).toFixed(2));
-    setValue('subproductprice['+rowid+'][product_profitus_container]',getValue('subproductprice['+rowid+'][sales_price_container]')-cost_usd);
-    setValue('subproductprice['+rowid+'][markup_container]',(((getValue('subproductprice['+rowid+'][sales_price_container]')-cost_usd)/cost_usd)*100).toFixed(2));
-    setValue('subproductprice['+rowid+'][product_profitus]',getValue('subproductprice['+rowid+'][sell_price]')-cost_usd);
-    setValue('subproductprice['+rowid+'][markup]',(((getValue('subproductprice['+rowid+'][sell_price]')-cost_usd)/cost_usd)*100).toFixed(2));
+    var cost_usd = parseFloat(this.value) || 0;
+    setValue('subproductprice['+rowid+'][product_profitus_arcooda]',price2(getValue('subproductprice['+rowid+'][sales_price_arcooda]')-cost_usd));
+    setValue('subproductprice['+rowid+'][markup_arcooda]',price2(((getValue('subproductprice['+rowid+'][sales_price_arcooda]')-cost_usd)/cost_usd)*100));
+    setValue('subproductprice['+rowid+'][product_profitus_distributor]',price2(getValue('subproductprice['+rowid+'][sales_price_distributor]')-cost_usd));
+    setValue('subproductprice['+rowid+'][markup_distributor]',price2(((getValue('subproductprice['+rowid+'][sales_price_distributor]')-cost_usd)/cost_usd)*100));
+    setValue('subproductprice['+rowid+'][product_profitus_container]',price2(getValue('subproductprice['+rowid+'][sales_price_container]')-cost_usd));
+    setValue('subproductprice['+rowid+'][markup_container]',price2(((getValue('subproductprice['+rowid+'][sales_price_container]')-cost_usd)/cost_usd)*100));
+    setValue('subproductprice['+rowid+'][product_profitus]',price2(getValue('subproductprice['+rowid+'][sell_price]')-cost_usd));
+    setValue('subproductprice['+rowid+'][markup]',price2(((getValue('subproductprice['+rowid+'][sell_price]')-cost_usd)/cost_usd)*100));
     
 });
 //<![CDATA[
 $(function() {
+    $('#sectionPricing').find('input[type="number"], input[name$="[special_priceus]"]').each(function () {
+        if (this.value !== '') {
+            this.value = price2(this.value);
+        }
+    });
     var vip_price = getValue('item[sales_price_arcooda]');
     var dist_sample = getValue('item[sales_price_distributor]');
     var dist_container = getValue('item[sales_price_container]');
@@ -145,17 +162,17 @@ $(function() {
                 break;
             case 'markup_container':
                 io.cost_usd = convertCurrency(io.cost, io.cost_cur, "USD", false, io.precision);
-                io.sales_price_container = (((io.cost_usd*io.markup_container)/100)+parseInt(io.cost_usd)).toFixed(2);
+                io.sales_price_container = (((io.cost_usd*io.markup_container)/100)+parseFloat(io.cost_usd)).toFixed(2);
                 io.product_profitus_container = (io.sales_price_container - io.cost_usd);
                 break;
             case 'markup_arcooda':
                 io.cost_usd = convertCurrency(io.cost, io.cost_cur, "USD", false, io.precision);
-                io.sales_price_arcooda = (((io.cost_usd*io.markup_arcooda)/100)+parseInt(io.cost_usd)).toFixed(2);
+                io.sales_price_arcooda = (((io.cost_usd*io.markup_arcooda)/100)+parseFloat(io.cost_usd)).toFixed(2);
                 io.product_profitus_arcooda = (io.sales_price_arcooda - io.cost_usd);
                 break;
             case 'markup_distributor':
                 io.cost_usd = convertCurrency(io.cost, io.cost_cur, "USD", false, io.precision);
-                io.sales_price_distributor = (((io.cost_usd*io.markup_distributor)/100)+parseInt(io.cost_usd)).toFixed(2);
+                io.sales_price_distributor = (((io.cost_usd*io.markup_distributor)/100)+parseFloat(io.cost_usd)).toFixed(2);
                 io.product_profitus_distributor = (io.sales_price_distributor - io.cost_usd);
                 break;
             case 'product_profitus_container' :
@@ -194,7 +211,7 @@ $(function() {
                 break;
             case 'markup':
                 io.cost_usd = convertCurrency(io.cost, io.cost_cur, "USD", false, io.precision);
-                var salesprice=(((io.cost_usd*io.mark)/100)+parseInt(io.cost_usd)).toFixed(2);
+                var salesprice=(((io.cost_usd*io.mark)/100)+parseFloat(io.cost_usd)).toFixed(2);
                 io.sale = convertCurrency(salesprice, 'USD', io.sale_cur, false, io.precision);
                 io.sale_usd = convertCurrency(io.sale, io.sale_cur, "USD", false, io.precision);
                 io.prof_usd = convertCurrency(io.sale_usd - io.cost_usd, "USD", "", false, io.precision);
@@ -218,23 +235,43 @@ $(function() {
         io.precision = String(io.precision);
         io.flux = (io.flux ? "y" : "n");
         //io.mark = sprintf("%0.4f", (io.mark - 1.0) * 100.0);
+        var priceKeys = {
+            cost: 1,
+            sale: 1,
+            cost_usd: 1,
+            sale_usd: 1,
+            mark: 1,
+            prof_usd: 1,
+            sales_price_arcooda: 1,
+            product_profitus_arcooda: 1,
+            markup_arcooda: 1,
+            sales_price_distributor: 1,
+            product_profitus_distributor: 1,
+            markup_distributor: 1,
+            sales_price_container: 1,
+            markup_container: 1,
+            product_profitus_container: 1
+        };
         for (var k in matches) {
-            matches[k].val(io[k]);
+            if (matches[k][0] === document.activeElement) {
+                continue;
+            }
+            matches[k].val(priceKeys[k] ? price2(io[k]) : io[k]);
         }
         SetsupplierDefaultvalue();
     }
      $('body').on('keyup change','#item_sales_price',function(){
         var val=$(this).val();
         if(vip_price == 0 & val != '' & val > 0) {
-            setValue('item[sales_price_arcooda]',val);
+            setValue('item[sales_price_arcooda]',price2(val));
             $("[name='item[sales_price_arcooda]']").change();
         }
         if(dist_sample == 0 & val != '' & val > 0) {
-            setValue('item[sales_price_distributor]',val);
+            setValue('item[sales_price_distributor]',price2(val));
             $("[name='item[sales_price_distributor]']").change();
         }
         if(dist_container == 0 & val != '' & val > 0) {
-            setValue('item[sales_price_container]',val);
+            setValue('item[sales_price_container]',price2(val));
             $("[name='item[sales_price_container]']").change();
         }
     })
@@ -244,10 +281,10 @@ function SetsupplierDefaultvalue() {
     var con_rows = supplierContactGetRows();
     for (var i = 0; i < con_rows.length; i++){ 
         if($('input[name="item_suppliers['+con_rows[i]+'][main]"]').is(':checked') || con_rows.length==1){
-            setValue('item_suppliers['+con_rows[i]+'][cost_price]',toCurrency(getValue('item[cost_price]'),getValue('item[cost_currency]'),getValue('item_suppliers['+con_rows[i]+'][sup_currency]')));
-            setValue('item_suppliers['+con_rows[i]+'][cprice_usd]',toCurrency(getValue('item[cost_price]'),getValue('item[cost_currency]'),'USD'));
-            setValue('item_suppliers['+con_rows[i]+'][onlineprice_usd]',toCurrency(getValue('item[sales_price]'),getValue('item[sales_currency]'),'USD'));
-            setValue('item_suppliers['+con_rows[i]+'][markup]',getValue('item[markup]'));
+            setValue('item_suppliers['+con_rows[i]+'][cost_price]',price2(toCurrency(getValue('item[cost_price]'),getValue('item[cost_currency]'),getValue('item_suppliers['+con_rows[i]+'][sup_currency]'))));
+            setValue('item_suppliers['+con_rows[i]+'][cprice_usd]',price2(toCurrency(getValue('item[cost_price]'),getValue('item[cost_currency]'),'USD')));
+            setValue('item_suppliers['+con_rows[i]+'][onlineprice_usd]',price2(toCurrency(getValue('item[sales_price]'),getValue('item[sales_currency]'),'USD')));
+            setValue('item_suppliers['+con_rows[i]+'][markup]',price2(getValue('item[markup]')));
         }
     }
 }
@@ -281,7 +318,7 @@ function openpricingtab(evt, id) {
     <table class="table_fields" style="<?= ((count($sub_product)>0)?'display:none;':'')?>">
         <tr>
             <th>Cost Price :</th>
-              <td><input name="item[cost_price]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16"  value="<?=convertCurrency($item['cost_price'], $item['cost_currency'], 'USD', false, 2);?>" <?=($item['stock_type']!='consignment')?'readonly':'' ?>/> <b>USD</b>
+              <td><input name="item[cost_price]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16"  value="<?=convertCurrency($item['cost_price'], $item['cost_currency'], 'USD', false, 2);?>" <?=($item['stock_type']!='consignment')?'readonly':'' ?>/> <b>USD</b>
                 <input type="hidden" name="item[cost_currency]" value="USD">
                 </td>
         </tr>
@@ -295,13 +332,13 @@ function openpricingtab(evt, id) {
                 <table style="margin-left: 0px;width: 100%;">
                     <tr class="alt">
                       
-                       <td style="width: 30%;"><input id="item_sales_price" name="item[sales_price]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=convertCurrency($item['sales_price'], $item['sales_currency'], '', false, $item['precision'])?>"/><b> USD</b>
+                       <td style="width: 30%;"><input id="item_sales_price" name="item[sales_price]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=convertCurrency($item['sales_price'], $item['sales_currency'], '', false, 2)?>"/><b> USD</b>
                             <input type="hidden" name="item[sales_currency]" value="USD">
                         </td>
                         <th style="width: 7%;background: none;">Profit :</th>
-                        <td style="width: 34%;"><input name="item[product_profitus]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=bcsub($item['sales_price'],$item['product_costus'],$item['precision']) ?>" /> <b>USD</b></td>
+                        <td style="width: 34%;"><input name="item[product_profitus]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) bcsub($item['sales_price'], $item['product_costus'], 2), 2, '.', '') ?>" /> <b>USD</b></td>
                          <th style="width: 7%;background: none;">Markup :</th>
-                        <td style="width: 25%;"><input name="item[markup]" type="number" size="16" step="any" value="<?php hecho(number_format((float) $item['markup'], 2, '.', ''))?>" /> <b>%</b></td>
+                        <td style="width: 25%;"><input name="item[markup]" type="number" size="16" step="0.01" value="<?php hecho(number_format((float) $item['markup'], 2, '.', ''))?>" /> <b>%</b></td>
                     </tr>
                 </table>
             </td>
@@ -312,18 +349,17 @@ function openpricingtab(evt, id) {
                 <table style="margin-left: 0px;width: 100%;">
                     <tr style="background: #eed;">
                       
-                        <td style="width: 30%;"><input name="item[sales_price_arcooda]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=($item['sales_price_arcooda'])?number_format((float)($item['sales_price_arcooda']), 2, '.', ''):'0.000000' ?>" /><b> USD</b>
+                        <td style="width: 30%;"><input name="item[sales_price_arcooda]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) $item['sales_price_arcooda'], 2, '.', '') ?>" /><b> USD</b>
                             <?php if($item['sales_price']>0 && $item['sales_price_arcooda']>0){ ?>
-                            <span style="color:red;font-size: 9px;"><i>Discount $ <?= $item['sales_price']-$item['sales_price_arcooda']?> USD (Save <?= number_format((float)(($item['sales_price']-$item['sales_price_arcooda'])*100/$item['sales_price']), 2, '.', '') ?> %)</i></span>
+                            <span style="color:red;font-size: 9px;"><i>Discount $ <?=number_format((float) ($item['sales_price'] - $item['sales_price_arcooda']), 2, '.', '')?> USD (Save <?= number_format((float)(($item['sales_price']-$item['sales_price_arcooda'])*100/$item['sales_price']), 2, '.', '') ?> %)</i></span>
                         <?php } ?>
                         </td>
                         <th style="width: 7%;">Profit :</th>
-                        <td style="width: 34%;"><input name="item[product_profitus_arcooda]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=number_format((float)(bcsub($item['sales_price_arcooda'],
-                            $item['product_costus'],$item['precision'])), 2, '.', '')  ?>" /> <b>USD</b>
+                        <td style="width: 34%;"><input name="item[product_profitus_arcooda]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) bcsub($item['sales_price_arcooda'], $item['product_costus'], 2), 2, '.', '') ?>" /> <b>USD</b>
 
                         </td>
                          <th style="width: 7%;">Markup :</th>
-                        <td style="width:25%"><input name="item[markup_arcooda]" type="number" size="16" step="any" value="<?php hecho(number_format((float)($item['markup_arcooda']), 2, '.', ''))?>" /> <b>%</b></td>
+                        <td style="width:25%"><input name="item[markup_arcooda]" type="number" size="16" step="0.01" value="<?php hecho(number_format((float)($item['markup_arcooda']), 2, '.', ''))?>" /> <b>%</b></td>
                     </tr>
                 </table>
             </td>
@@ -334,16 +370,15 @@ function openpricingtab(evt, id) {
                 <table style="margin-left: 0px;    width: 100%;">
                     <tr class="alt">
                       
-                        <td style="width: 30%;"><input name="item[sales_price_distributor]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=($item['sales_price_distributor'])?number_format((float)($item['sales_price_distributor']), 2, '.', ''):'0.000000' ?>" /><b> USD</b>
+                        <td style="width: 30%;"><input name="item[sales_price_distributor]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) $item['sales_price_distributor'], 2, '.', '') ?>" /><b> USD</b>
                             <?php if($item['sales_price']>0 && $item['sales_price_arcooda']>0){ ?>
-                            <span style="color:red;font-size: 9px;"><i>Discount $ <?= $item['sales_price']-$item['sales_price_distributor']?> USD (Save <?= number_format((float)(($item['sales_price']-$item['sales_price_distributor'])*100/$item['sales_price']), 2, '.', '') ?> %)</i></span> 
+                            <span style="color:red;font-size: 9px;"><i>Discount $ <?=number_format((float) ($item['sales_price'] - $item['sales_price_distributor']), 2, '.', '')?> USD (Save <?= number_format((float)(($item['sales_price']-$item['sales_price_distributor'])*100/$item['sales_price']), 2, '.', '') ?> %)</i></span> 
                         <?php } ?>
                         </td>
                         <th style="width: 7%;background: none;">Profit :</th>
-                        <td style="width: 34%;"><input name="item[product_profitus_distributor]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=number_format((float)(bcsub($item['sales_price_distributor'],
-                            $item['product_costus'],$item['precision'])), 2, '.', '')  ?>" /> <b>USD</b></td>
+                        <td style="width: 34%;"><input name="item[product_profitus_distributor]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) bcsub($item['sales_price_distributor'], $item['product_costus'], 2), 2, '.', '') ?>" /> <b>USD</b></td>
                          <th style="width: 7%;background: none;">Markup :</th>
-                        <td style="width: 25%;"><input name="item[markup_distributor]" type="number" size="16" step="any" value="<?php hecho(number_format((float)($item['markup_distributor']), 2, '.', ''))?>" /> <b>%</b></td>
+                        <td style="width: 25%;"><input name="item[markup_distributor]" type="number" size="16" step="0.01" value="<?php hecho(number_format((float)($item['markup_distributor']), 2, '.', ''))?>" /> <b>%</b></td>
                     </tr>
                 </table>
             </td>
@@ -354,19 +389,17 @@ function openpricingtab(evt, id) {
                 <table style="margin-left: 0px;width: 100%;">
                     <tr style="background: #eed;">
                       
-                        <td style="width: 30%;"><input name="item[sales_price_container]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" type="number" size="16" step="any" value="<?=($item['sales_price_container'])?number_format((float)($item['sales_price_container']), 2, '.', ''):'0.000000' ?>" /><b> USD</b>
+                        <td style="width: 30%;"><input name="item[sales_price_container]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" type="number" size="16" step="0.01" value="<?=number_format((float) $item['sales_price_container'], 2, '.', '') ?>" /><b> USD</b>
                             <?php if($item['sales_price']>0 && $item['sales_price_arcooda']>0){ ?>
-                           <span style="color:red;font-size: 9px;"><i>Discount $ <?= $item['sales_price']-$item['sales_price_container']?> USD (Save <?= number_format((float)(($item['sales_price']-$item['sales_price_container'])*100/$item['sales_price']), 2, '.', '') ?> %)</i></span>
+                           <span style="color:red;font-size: 9px;"><i>Discount $ <?=number_format((float) ($item['sales_price'] - $item['sales_price_container']), 2, '.', '')?> USD (Save <?= number_format((float)(($item['sales_price']-$item['sales_price_container'])*100/$item['sales_price']), 2, '.', '') ?> %)</i></span>
                            <?php } ?> 
                         </td>
                         <th style="width: 7%;">Profit :</th>
-                        <td style="width: 34%;"><input name="item[product_profitus_container]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=number_format((float)(bcsub($item['sales_price_container'],
-                            $item['product_costus'],$item['precision'])), 2, '.', '')  ?>" /> <b>USD</b><span style="color:red;font-size: 9px">
+                        <td style="width: 34%;"><input name="item[product_profitus_container]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) bcsub($item['sales_price_container'], $item['product_costus'], 2), 2, '.', '') ?>" /> <b>USD</b><span style="color:red;font-size: 9px">
                                 <?php $temp = reset($item_containers); ?>
-                                <i>20ft =$<?= number_format((bcsub($item['sales_price_container'],
-                            $item['cost_price'],$item['precision']))*$temp['contload_20ft_qty'])?> USD 40ft =$ <?= number_format((bcsub($item['sales_price_container'],$item['cost_price'],$item['precision']))*$temp['contload_40ft_qty'])?> USD</i></span></td>
+                                <i>20ft =$<?= number_format((float) (bcsub($item['sales_price_container'], $item['cost_price'], 2) * $temp['contload_20ft_qty']), 2, '.', '') ?> USD 40ft =$ <?= number_format((float) (bcsub($item['sales_price_container'], $item['cost_price'], 2) * $temp['contload_40ft_qty']), 2, '.', '') ?> USD</i></span></td>
                          <th style="width: 7%;">Markup :</th>
-                        <td style="width: 25%;"><input name="item[markup_container]" type="number" size="16" step="any" value="<?php hecho(number_format((float)($item['markup_container']), 2, '.', ''))?>" /> <b>%</b></td>
+                        <td style="width: 25%;"><input name="item[markup_container]" type="number" size="16" step="0.01" value="<?php hecho(number_format((float)($item['markup_container']), 2, '.', ''))?>" /> <b>%</b></td>
                     </tr>
                 </table>
             </td>
@@ -391,7 +424,7 @@ foreach ($sub_product as $key => $pro) {
      <table class="table_fields tabcontent" id="product_price_<?php echo  $pro['id']; ?>" style="<?=(($pro["default"]=="y")?"display:block;":"")?>">
         <tr>
             <th>Cost Price :</th>
-            <td><input name="<?= $itemkeyname ?>[price_usd]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" data-row="<?= $pro['id'] ?>" value="<?= $pro['price_usd'] ?>" class="change_codt_price"/> <b>USD</b>
+            <td><input name="<?= $itemkeyname ?>[price_usd]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" data-row="<?= $pro['id'] ?>" value="<?=number_format((float) $pro['price_usd'], 2, '.', '') ?>" class="change_codt_price"/> <b>USD</b>
                 </td>
         </tr>
         <tr style="height: 20px;">
@@ -404,12 +437,12 @@ foreach ($sub_product as $key => $pro) {
                 <table style="margin-left: 0px;width: 100%;">
                     <tr class="alt">
                       
-                        <td style="width: 30%;"><input name="<?= $itemkeyname ?>[sell_price]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?= $pro['sell_price']?>" class="change_sales_price" data-profit="product_profitus" data-markup="markup"/><b> USD</b>
+                        <td style="width: 30%;"><input name="<?= $itemkeyname ?>[sell_price]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) $pro['sell_price'], 2, '.', '') ?>" class="change_sales_price" data-profit="product_profitus" data-markup="markup"/><b> USD</b>
                         </td>
                         <th style="width: 7%;background: none;">Profit :</th>
-                        <td style="width: 33%;"><input name="<?= $itemkeyname ?>[product_profitus]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=bcsub($pro['sell_price'],$pro['price_usd'], $item['precision']) ?>" class="change_profit" data-sales="sell_price" data-markup="markup"/> <b>USD</b></td>
+                        <td style="width: 33%;"><input name="<?= $itemkeyname ?>[product_profitus]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) bcsub($pro['sell_price'], $pro['price_usd'], 2), 2, '.', '') ?>" class="change_profit" data-sales="sell_price" data-markup="markup"/> <b>USD</b></td>
                          <th style="width: 7%;background: none;">Markup :</th>
-                        <td style="width: 26%;"><input name="<?= $itemkeyname ?>[markup]" type="number" size="16" data-row="<?= $pro['id'] ?>" step="any" value="<?php hecho($pro['markup'])?>" class="change_markup" data-sales="sell_price" data-profit="product_profitus"/> <b>%</b></td>
+                        <td style="width: 26%;"><input name="<?= $itemkeyname ?>[markup]" type="number" size="16" data-row="<?= $pro['id'] ?>" step="0.01" value="<?php hecho(number_format((float) $pro['markup'], 2, '.', ''))?>" class="change_markup" data-sales="sell_price" data-profit="product_profitus"/> <b>%</b></td>
                     </tr>
                 </table>
             </td>
@@ -420,18 +453,17 @@ foreach ($sub_product as $key => $pro) {
                 <table style="margin-left: 0px;width: 100%;">
                     <tr style="background: #eed;">
                       
-                        <td style="width: 30%;"><input name="<?= $itemkeyname ?>[sales_price_arcooda]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=($pro['sales_price_arcooda'])?$pro['sales_price_arcooda']:'0.000000' ?>" class="change_sales_price" data-profit="product_profitus_arcooda" data-markup="markup_arcooda"/><b> USD</b>
+                        <td style="width: 30%;"><input name="<?= $itemkeyname ?>[sales_price_arcooda]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) $pro['sales_price_arcooda'], 2, '.', '') ?>" class="change_sales_price" data-profit="product_profitus_arcooda" data-markup="markup_arcooda"/><b> USD</b>
                             <?php if($pro['sell_price']>0 && $pro['sales_price_arcooda']>0){ ?>
-                            <span style="color:red;font-size: 9px;"><i>Discount $ <?= $pro['sell_price']-$pro['sales_price_arcooda']?> USD (Save <?= number_format((float)(($pro['sell_price']-$pro['sales_price_arcooda'])*100/$pro['sell_price']), 2, '.', '') ?> %)</i></span>
+                            <span style="color:red;font-size: 9px;"><i>Discount $ <?=number_format((float) ($pro['sell_price'] - $pro['sales_price_arcooda']), 2, '.', '')?> USD (Save <?= number_format((float)(($pro['sell_price']-$pro['sales_price_arcooda'])*100/$pro['sell_price']), 2, '.', '') ?> %)</i></span>
                         <?php } ?>
                         </td>
                         <th style="width: 7%;">Profit :</th>
-                        <td style="width: 33%;"><input name="<?= $itemkeyname ?>[product_profitus_arcooda]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=number_format(bcsub($pro['sales_price_arcooda'],
-                            $pro['price_usd'],$item['precision'])) ?>" class="change_profit" data-sales="sales_price_arcooda" data-markup="markup_arcooda"/> <b>USD</b>
+                        <td style="width: 33%;"><input name="<?= $itemkeyname ?>[product_profitus_arcooda]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) bcsub($pro['sales_price_arcooda'], $pro['price_usd'], 2), 2, '.', '') ?>" class="change_profit" data-sales="sales_price_arcooda" data-markup="markup_arcooda"/> <b>USD</b>
 
                         </td>
                          <th style="width: 7%;">Markup :</th>
-                        <td style="width:26%"><input name="<?= $itemkeyname ?>[markup_arcooda]" data-row="<?= $pro['id'] ?>" type="number" size="16" step="any" value="<?php hecho($pro['markup_arcooda'])?>" class="change_markup" data-sales="sales_price_arcooda" data-profit="product_profitus_arcooda"/> <b>%</b></td>
+                        <td style="width:26%"><input name="<?= $itemkeyname ?>[markup_arcooda]" data-row="<?= $pro['id'] ?>" type="number" size="16" step="0.01" value="<?php hecho(number_format((float) $pro['markup_arcooda'], 2, '.', ''))?>" class="change_markup" data-sales="sales_price_arcooda" data-profit="product_profitus_arcooda"/> <b>%</b></td>
                     </tr>
                 </table>
             </td>
@@ -442,16 +474,15 @@ foreach ($sub_product as $key => $pro) {
                 <table style="margin-left: 0px;    width: 100%;">
                     <tr class="alt">
                       
-                        <td style="width: 30%;"><input name="<?= $itemkeyname ?>[sales_price_distributor]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" data-row="<?= $pro['id'] ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=($pro['sales_price_distributor'])?$pro['sales_price_distributor']:'0.000000' ?>" class="change_sales_price" data-profit="product_profitus_distributor" data-markup="markup_distributor"/><b> USD</b>
+                        <td style="width: 30%;"><input name="<?= $itemkeyname ?>[sales_price_distributor]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" data-row="<?= $pro['id'] ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) $pro['sales_price_distributor'], 2, '.', '') ?>" class="change_sales_price" data-profit="product_profitus_distributor" data-markup="markup_distributor"/><b> USD</b>
                             <?php if($pro['sell_price']>0 && $pro['sales_price_distributor']>0){ ?>
-                            <span style="color:red;font-size: 9px;"><i>Discount $ <?= $pro['sell_price']-$pro['sales_price_distributor']?> USD (Save <?= number_format((float)(($pro['sell_price']-$pro['sales_price_distributor'])*100/$pro['sell_price']), 2, '.', '') ?> %)</i></span> 
+                            <span style="color:red;font-size: 9px;"><i>Discount $ <?=number_format((float) ($pro['sell_price'] - $pro['sales_price_distributor']), 2, '.', '')?> USD (Save <?= number_format((float)(($pro['sell_price']-$pro['sales_price_distributor'])*100/$pro['sell_price']), 2, '.', '') ?> %)</i></span> 
                         <?php } ?>
                         </td>
                         <th style="width: 7%;background: none;">Profit :</th>
-                        <td style="width: 33%;"><input name="<?= $itemkeyname ?>[product_profitus_distributor]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="any" type="number" size="16" value="<?=number_format(bcsub($pro['sales_price_distributor'],
-                            $pro['price_usd'],$item['precision'])) ?>" class="change_profit" data-sales="sales_price_distributor" data-markup="markup_distributor"/> <b>USD</b></td>
+                        <td style="width: 33%;"><input name="<?= $itemkeyname ?>[product_profitus_distributor]" data-row="<?= $pro['id'] ?>" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" step="0.01" type="number" size="16" value="<?=number_format((float) bcsub($pro['sales_price_distributor'], $pro['price_usd'], 2), 2, '.', '') ?>" class="change_profit" data-sales="sales_price_distributor" data-markup="markup_distributor"/> <b>USD</b></td>
                          <th style="width: 7%;background: none;">Markup :</th>
-                        <td style="width: 26%;"><input name="<?= $itemkeyname ?>[markup_distributor]" type="number" data-row="<?= $pro['id'] ?>" size="16" step="any" value="<?php hecho($pro['markup_distributor'])?>"  class="change_markup" data-sales="sales_price_distributor" data-profit="product_profitus_distributor"/> <b>%</b></td>
+                        <td style="width: 26%;"><input name="<?= $itemkeyname ?>[markup_distributor]" type="number" data-row="<?= $pro['id'] ?>" size="16" step="0.01" value="<?php hecho(number_format((float) $pro['markup_distributor'], 2, '.', ''))?>"  class="change_markup" data-sales="sales_price_distributor" data-profit="product_profitus_distributor"/> <b>%</b></td>
                     </tr>
                 </table>
             </td>
@@ -462,19 +493,17 @@ foreach ($sub_product as $key => $pro) {
                 <table style="margin-left: 0px;width: 100%;">
                     <tr style="background: #eed;">
                       
-                        <td style="width: 30%;"><input name="<?= $itemkeyname ?>[sales_price_container]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" data-row="<?= $pro['id'] ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" type="number" size="16" step="any" value="<?=($pro['sales_price_container'])?$pro['sales_price_container']:'0.000000' ?>" class="change_sales_price" data-profit="product_profitus_container" data-markup="markup_container"/><b> USD</b>
+                        <td style="width: 30%;"><input name="<?= $itemkeyname ?>[sales_price_container]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" data-row="<?= $pro['id'] ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" type="number" size="16" step="0.01" value="<?=number_format((float) $pro['sales_price_container'], 2, '.', '') ?>" class="change_sales_price" data-profit="product_profitus_container" data-markup="markup_container"/><b> USD</b>
                             <?php if($pro['sell_price']>0 && $pro['sales_price_container']>0){ ?>
-                           <span style="color:red;font-size: 9px;"><i>Discount $ <?= $item['sales_price']-$pro['sales_price_container']?> USD (Save <?= number_format((float)(($pro['sell_price']-$pro['sales_price_container'])*100/$pro['sell_price']), 2, '.', '') ?> %)</i></span>
+                           <span style="color:red;font-size: 9px;"><i>Discount $ <?=number_format((float) ($pro['sell_price'] - $pro['sales_price_container']), 2, '.', '')?> USD (Save <?= number_format((float)(($pro['sell_price']-$pro['sales_price_container'])*100/$pro['sell_price']), 2, '.', '') ?> %)</i></span>
                            <?php } ?> 
                         </td>
                         <th style="width: 7%;">Profit :</th>
-                        <td style="width: 33%;"><input name="<?= $itemkeyname ?>[product_profitus_container]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" data-row="<?= $pro['id'] ?>" step="any" type="number" size="16" value="<?=number_format(bcsub($pro['sales_price_container'],
-                            $pro['price_usd'],$item['precision'])) ?>" class="change_profit" data-sales="sales_price_container" data-markup="markup_container"/> <b>USD</b><span style="color:red;font-size: 9px">
+                        <td style="width: 33%;"><input name="<?= $itemkeyname ?>[product_profitus_container]" min="<?= bcadd("0.0", "0.0", $item['precision']) ?>" max="<?= bcadd("9999999.999", "0.0", $item['precision']) ?>" data-row="<?= $pro['id'] ?>" step="0.01" type="number" size="16" value="<?=number_format((float) bcsub($pro['sales_price_container'], $pro['price_usd'], 2), 2, '.', '') ?>" class="change_profit" data-sales="sales_price_container" data-markup="markup_container"/> <b>USD</b><span style="color:red;font-size: 9px">
                                 <?php $temp = reset($item_containers); ?>
-                                <i>20ft =$<?= number_format((bcsub($pro['sales_price_container'],
-                            $pro['price_usd'],$item['precision']))*$temp['contload_20ft_qty'])?> USD 40ft =$ <?= number_format((bcsub($pro['sales_price_container'],$pro['price_usd'],$item['precision']))*$pro['contload_40ft_qty'])?> USD</i></span></td>
+                                <i>20ft =$<?= number_format((float) (bcsub($pro['sales_price_container'], $pro['price_usd'], 2) * $temp['contload_20ft_qty']), 2, '.', '') ?> USD 40ft =$ <?= number_format((float) (bcsub($pro['sales_price_container'], $pro['price_usd'], 2) * $temp['contload_40ft_qty']), 2, '.', '') ?> USD</i></span></td>
                          <th style="width: 7%;">Markup :</th>
-                        <td style="width: 26%;"><input name="<?= $itemkeyname ?>[markup_container]" type="number" data-row="<?= $pro['id'] ?>" size="16" step="any" class="change_markup" data-sales="sales_price_container" data-profit="product_profitus_container" value="<?php hecho($pro['markup_container'])?>" /> <b>%</b></td>
+                        <td style="width: 26%;"><input name="<?= $itemkeyname ?>[markup_container]" type="number" data-row="<?= $pro['id'] ?>" size="16" step="0.01" class="change_markup" data-sales="sales_price_container" data-profit="product_profitus_container" value="<?php hecho(number_format((float) $pro['markup_container'], 2, '.', ''))?>" /> <b>%</b></td>
                     </tr>
                 </table>
             </td>
@@ -490,7 +519,7 @@ foreach ($sub_product as $key => $pro) {
                         </td>
                         <th id="specialsth<?=$pro['id']?>" style="width: 20%;<?=('y' == $pro['special_flag']) ? '' : 'display:none'?>">Specials Price :</th>
                         <td id="specialstd<?=$pro['id']?>" style="width: 33%;<?=('y' == $pro['special_flag']) ? '' : 'display:none'?>" >
-                            <input type="text" style="text-align:right;" name="<?= $itemkeyname ?>[special_priceus]" value="<?= $pro['special_priceus'] ?>"/> <b>USD</b>
+                            <input type="text" style="text-align:right;" name="<?= $itemkeyname ?>[special_priceus]" value="<?=number_format((float) $pro['special_priceus'], 2, '.', '') ?>"/> <b>USD</b>
                         </td>
                         <th id="special1th<?=$pro['id']?>" style="width: 10%;<?=('y' == $pro['special_flag']) ? '' : 'display:none'?>" >Expires :</th>
                         <td id="special1td<?=$pro['id']?>" style="width: 26%;<?=('y' == $pro['special_flag']) ? '' : 'display:none'?>"  ><input type="date" name="<?= $itemkeyname ?>[special_expiry]" value="<?=(is_null($pro['special_expiry'])) ? '' : substr($pro['special_expiry'], 0, 10) ?>" />

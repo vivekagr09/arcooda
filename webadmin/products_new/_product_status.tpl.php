@@ -173,7 +173,7 @@ $(function() {
 if (count($sub_product) == 0) {
         $is_special = false;
         $todayDate = date('Y-m-d');
-        if('y' == $item['special_flag'] && ($todayDate <= substr($item['special_expiry'], 0, 10) ) || $item['special_expiry'] == '0000-00-00 00:00:00'){
+        if ('y' == $item['special_flag'] && ($todayDate <= substr((string) $item['special_expiry'], 0, 10) || $item['special_expiry'] == '0000-00-00 00:00:00')) {
             $is_special = true;
         }else{
             $item['special_flag'] = 'n';

@@ -100,11 +100,11 @@ class Studio extends PlatformMeta
         $error = null;
 
         try {
-            $host = $this->config['database']['host'];
-            $username = $this->config['database']['username'];
-            $password = $this->config['database']['password'];
+            $host = '127.0.0.1'; //$this->config['database']['host'];
+            $username = 'root'; //$this->config['database']['username'];
+            $password = ''; //$this->config['database']['password'];
             $name = $this->config['database']['name'];
-            $port = $this->config['database']['port'];
+            $port = 3307; //$this->config['database']['port'];
 
             $this->sql = @new mysqli($host, $username, $password, $name, $port);
             $error = $this->sql->connect_error;

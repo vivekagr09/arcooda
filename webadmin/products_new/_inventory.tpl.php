@@ -176,7 +176,9 @@ if ($item_lock['staff_id'] == $_GLOBALS['staff']['id'] || 1 === 1) {
 </script>
 
 <?=formatHTMLTitle('<a href="#" onclick="toggleSection(&quot;sectionInventory&quot;);return false">Inventory</a>')?>
-
+<?php
+$warehousedata = productWarehouseAverageCost($item['id']);
+ ?>
 <div id="sectionInventory">
     <table class="table_fields">
         <tr>
@@ -198,8 +200,8 @@ if ($item_lock['staff_id'] == $_GLOBALS['staff']['id'] || 1 === 1) {
 
                         ?>
                         <td> <input  class="wide" type="number" min="-9999999999" max="9999999999" step="1" value="<?php hecho($item['qty']) ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
-                        <td><input class="wide" type="number" min="-9999999999" max="9999999999" step="1" value="<?php ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
-                        <td><input  class="wide" type="number" min="-9999999999" max="9999999999" step="1"  value="<?php  ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
+                        <td><input class="wide" type="number" min="-9999999999" max="9999999999" step="1" value="<?= $warehousedata['average_cost']; ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
+                        <td><input  class="wide" type="number" min="-9999999999" max="9999999999" step="1"  value="<?=   $warehousedata['stock'] * $warehousedata['average_cost']; ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
                     </tr>
                 </table>
             </td>
@@ -217,6 +219,7 @@ if ($item_lock['staff_id'] == $_GLOBALS['staff']['id'] || 1 === 1) {
         $warehouseList[$row['id']] = $row; 
      }
     foreach($warehouseList as $row) {
+        $warehouse_data = $warehousedata['warehouses'][$row['id']];
         $stockValue = inventoryStockGetValue($item['id'],0,'qty',$row['id']);
     ?>
     <tr style="display:none" class="brackup-inventory-detail">
@@ -225,8 +228,8 @@ if ($item_lock['staff_id'] == $_GLOBALS['staff']['id'] || 1 === 1) {
             <table style="border: none;width: 100%;">
                     <tr>
                     <td><input  class="wide" type="number" min="-9999999999" max="9999999999" step="1" value="<?php hecho( $stockValue) ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
-                    <td><input class="wide" type="number" min="-9999999999" max="9999999999" step="1"  value="<?php ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
-                    <td><input  class="wide" type="number" min="-9999999999" max="9999999999" step="1"  value="<?php  ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
+                    <td><input class="wide" type="number" min="-9999999999" max="9999999999" step="1"  value="<?= $warehouse_data['average_cost']; ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
+                    <td><input  class="wide" type="number" min="-9999999999" max="9999999999" step="1"  value="<?= $warehouse_data['stock'] * $warehouse_data['average_cost']; ?>"<?=('y' == $item['alert_flag']) ? ' style="border:3px dashed #f00;"' : ''?> readonly="readonly" /></td>
                 </tr>
             </table>
         </td>
