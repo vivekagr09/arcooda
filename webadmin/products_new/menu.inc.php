@@ -48,6 +48,8 @@ if ($temp = $DB->query_first(sprintf(
 	<tr><td><ul class="blocklist">
         <li><a href="/webadmin/products_new/?action=add_inventory"><?=htmlspecialchars(_("Add Inventory"))?></a></li>
         <li><a href="/webadmin/products_new/?action=list_inventory"><?=htmlspecialchars(_("List Added Inventory"))?></a></li>
+        <li><a href="/webadmin/warehouse_transfer/"><?=htmlspecialchars(_("Transfer Inventory"))?></a></li>
+        <li><a href="/webadmin/warehouse_transfer/list.php"><?=htmlspecialchars(_("List Transferred Inventory"))?></a></li>
         <li><a href="/webadmin/warehouse/?action=list"><?=htmlspecialchars(_("Inventory Warehouse"))?></a></li>
     </ul></td></tr>
 

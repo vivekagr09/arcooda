@@ -79,6 +79,10 @@ table.wide tr.exists { background:#db9; }
             <th><a href="<?=$sort_url?>product_qty">Qty</a><?=('item_qty' == $order_by) ? $ord_img : ''?></th>
             <th><a href="<?=$sort_url?>date_added">Cost<br />Price<br />(USD)</a><?=('cost_price' == $order_by) ? $ord_img : ''?></th>
             <th><a href="<?=$sort_url?>active">Sales<br />Price<br />(USD)</a><?=('sales_price_us' == $order_by) ? $ord_img : ''?></th>
+<?php if (!empty($from_warehouse)) { ?>
+            <th>Current Warehouse Stock</th>
+            <th>Transfer Price</th>
+<?php } ?>
             <th>&nbsp;</th>
         </tr>
 <?php
@@ -169,6 +173,12 @@ if ('' != $item['view_url']) {
             <td style="text-align:center;<?=$styles . (($reserved > 0) ? "background:#CACEEF" : '')?>" onmouseover="<?php hecho('tt_in(' . jecho($reserve_tooltip, 1) . ')')?>" onmouseout="tt_out();"><?=$item['qty']?></td>
             <td style="text-align:center;<?=$styles?>"><?=$cost_price?></td>
             <td style="text-align:center;<?=$styles?>"><?=$sales_price?></td>
+<?php if (!empty($from_warehouse)) {
+    $warehouse_row = isset($warehouse_stock[$item['id']]) ? $warehouse_stock[$item['id']] : array('stock' => 0, 'average_cost' => '0.00');
+?>
+            <td style="text-align:center;"><?=intval($warehouse_row['stock'])?></td>
+            <td style="text-align:center;"><?=htmlspecialchars($warehouse_row['average_cost'])?></td>
+<?php } ?>
 
 <?php
 $links = array();
@@ -228,6 +238,12 @@ if ('' != $item['view_url']) {
             <td style="text-align:center;<?=$styles . (($reserved > 0) ? "background:#CACEEF" : '')?>" onmouseover="<?php hecho('tt_in(' . jecho($reserve_tooltip, 1) . ')')?>" onmouseout="tt_out();"><?=$item['qty']?></td>
             <td style="text-align:center;<?=$styles?>"><?=$cost_price?></td>
             <td style="text-align:center;<?=$styles?>"><?=$sales_price?></td>
+<?php if (!empty($from_warehouse)) {
+    $warehouse_row = isset($warehouse_stock[$item['id']]) ? $warehouse_stock[$item['id']] : array('stock' => 0, 'average_cost' => '0.00');
+?>
+            <td style="text-align:center;"><?=intval($warehouse_row['stock'])?></td>
+            <td style="text-align:center;"><?=htmlspecialchars($warehouse_row['average_cost'])?></td>
+<?php } ?>
 
 <?php
 $links = array();

@@ -184,6 +184,15 @@ foreach ($big_list as $prod_id) {
         $item["bulk_sizes"] = json_encode($bulk_sizes);
     }
 
+    $fromWarehouse = intval(isset($_REQUEST['from_warehouse']) ? $_REQUEST['from_warehouse'] : 0);
+    if ($fromWarehouse > 0) {
+        $summary = productWarehouseAverageCost($prod_id);
+        $warehouseRow = isset($summary['warehouses'][$fromWarehouse]) ? $summary['warehouses'][$fromWarehouse] : null;
+        $item['warehouse_id'] = $fromWarehouse;
+        $item['warehouse_stock'] = $warehouseRow ? intval($warehouseRow['stock']) : 0;
+        $item['warehouse_cost'] = $warehouseRow ? $warehouseRow['average_cost'] : '0.00';
+    }
+
     $all_products[] = $item;
 }
 function getcolorhtmlforbuilderoption($color){

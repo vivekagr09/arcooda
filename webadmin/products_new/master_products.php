@@ -96,6 +96,41 @@ if ('desc' == $order) {
     $item_list = array_reverse($item_list);
 }
 
+$from_warehouse = intval(isset($_REQUEST['from_warehouse']) ? $_REQUEST['from_warehouse'] : 0);
+$warehouse_stock = array();
+$warehouse_name = '';
+if ($from_warehouse > 0) {
+    if ($warehouse_row = $DB->query_first(sprintf(
+        "SELECT `company` FROM `tbl_warehouse` WHERE `id` = %d LIMIT 1",
+        $from_warehouse
+    ), MYSQLI_ASSOC)) {
+        $warehouse_name = $warehouse_row['company'];
+    }
+    $allowed = array();
+    if ($query = $DB->query(sprintf(
+        "SELECT DISTINCT `product_id` FROM `products_inventory` WHERE `stock_type` = 'NEW' AND `warehouse_id` = %d",
+        $from_warehouse
+    ))) {
+        while ($row = $DB->fetch_assoc($query)) {
+            $productId = intval($row['product_id']);
+            $summary = productWarehouseAverageCost($productId);
+            if (isset($summary['warehouses'][$from_warehouse]) && intval($summary['warehouses'][$from_warehouse]['stock']) > 0) {
+                $warehouse_stock[$productId] = $summary['warehouses'][$from_warehouse];
+                $allowed[$productId] = true;
+            }
+        }
+        $DB->free_result($query);
+    }
+    $filtered = array();
+    foreach ($item_list as $productId) {
+        if (isset($allowed[intval($productId)])) {
+            $filtered[] = $productId;
+        }
+    }
+    $item_list = $filtered;
+    echo '<div style="margin:auto;width:95%;"><p><b>Showing products with stock in ' . htmlspecialchars($warehouse_name) . '.</b></p></div>';
+}
+
 $items_per_page = 50;
 if ($_GLOBALS['staff']['products_per_page'] > 0) {
     $items_per_page = $_GLOBALS['staff']['products_per_page'];
